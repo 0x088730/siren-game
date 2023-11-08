@@ -1,0 +1,41 @@
+sakura.png
+size:1894,984
+filter:Linear,Linear
+pma:true
+Bow2
+bounds:180,44,91,161
+offsets:22,26,118,209
+rotate:90
+Bowtie
+bounds:343,2,174,192
+offsets:7,10,184,209
+rotate:90
+Hair
+bounds:501,351,631,603
+rotate:90
+Hair2
+bounds:1371,67,216,295
+Hair3
+bounds:2,36,99,176
+rotate:90
+Hand L
+bounds:537,15,290,334
+offsets:0,0,291,334
+Hand R
+bounds:1600,540,292,442
+offsets:0,2,292,444
+Head
+bounds:1589,68,241,260
+rotate:90
+Leg L
+bounds:301,178,198,804
+Leg R
+bounds:2,137,297,845
+body
+bounds:829,37,312,540
+offsets:21,20,395,560
+rotate:90
+breast
+bounds:1600,311,264,227
+sword
+bounds:1106,364,492,618

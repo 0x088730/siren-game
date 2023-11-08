@@ -1,0 +1,24 @@
+robot.png
+size:1024,1024
+filter:Linear,Linear
+scale:0.8
+голова
+bounds:2,2,439,356
+offsets:0,2,439,358
+rotate:90
+нога Л
+bounds:381,504,236,584
+offsets:0,0,236,585
+rotate:90
+нога П
+bounds:381,742,274,617
+offsets:0,0,274,619
+rotate:90
+рука Л
+bounds:360,7,223,502
+rotate:90
+рука П
+bounds:381,232,270,544
+rotate:90
+тело
+bounds:2,443,377,573

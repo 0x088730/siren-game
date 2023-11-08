@@ -1,0 +1,34 @@
+unit.png
+size:1024,1024
+filter:Linear,Linear
+scale:0.8
+body
+bounds:390,570,267,450
+offsets:0,246,267,696
+breast
+bounds:238,11,227,185
+offsets:4,1,231,186
+hair
+bounds:2,51,234,273
+offsets:0,0,234,275
+hand L
+bounds:390,338,230,266
+offsets:1,0,233,267
+rotate:90
+hand R
+bounds:238,198,138,394
+offsets:0,0,138,395
+rotate:90
+head
+bounds:659,755,326,265
+headband
+bounds:659,643,110,361
+rotate:90
+leg L
+bounds:238,373,150,647
+offsets:2,2,152,650
+leg R
+bounds:2,326,234,694
+offsets:0,2,234,696
+weapon
+bounds:467,54,142,142

@@ -1,0 +1,20 @@
+enemy1.png
+size:1248,1197
+filter:Linear,Linear
+pma:true
+голова
+bounds:2,41,543,442
+нога 01
+bounds:469,919,276,777
+rotate:90
+нога 02
+bounds:469,610,307,715
+rotate:90
+рука 01
+bounds:547,277,331,674
+rotate:90
+рука 02
+bounds:547,2,273,622
+rotate:90
+тело
+bounds:2,485,465,710

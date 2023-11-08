@@ -1,0 +1,134 @@
+mech1_work.png
+size:2014,1813
+filter:Linear,Linear
+pma:true
+arm_L
+bounds:1267,684,285,328
+arm_R
+bounds:1087,505,178,492
+b_L
+bounds:1251,14,164,187
+rotate:90
+b_R
+bounds:1564,30,196,221
+rotate:90
+bangs_back
+bounds:1928,995,84,218
+offsets:0,0,86,218
+bangs_front
+bounds:1267,503,179,302
+offsets:1,0,180,302
+rotate:90
+bangs_mid
+bounds:1440,10,105,170
+body
+bounds:696,443,389,554
+dash
+bounds:2,999,1121,812
+offsets:110,193,1407,1198
+head
+bounds:2,400,692,597
+head_new
+bounds:1125,1208,666,603
+knife_01
+bounds:1793,1215,596,172
+rotate:90
+knife_hand
+bounds:1787,5,189,221
+reg_L
+bounds:1125,1014,192,798
+rotate:90
+reg_R
+bounds:2,107,291,839
+rotate:90
+vfx/Comp 1_00000
+bounds:1564,228,108,319
+offsets:194,69,500,500
+rotate:90
+vfx/Comp 1_00001
+bounds:1564,228,108,319
+offsets:194,69,500,500
+rotate:90
+vfx/Comp 1_00002
+bounds:992,83,138,358
+offsets:172,69,500,500
+vfx/Comp 1_00003
+bounds:992,83,138,358
+offsets:172,69,500,500
+vfx/Comp 1_00004
+bounds:1554,706,144,383
+offsets:173,69,500,500
+rotate:90
+vfx/Comp 1_00005
+bounds:1554,706,144,383
+offsets:173,69,500,500
+rotate:90
+vfx/Comp 1_00006
+bounds:1413,182,149,319
+offsets:170,67,500,500
+vfx/Comp 1_00007
+bounds:1413,182,149,319
+offsets:170,67,500,500
+vfx/Comp 1_00008
+bounds:843,107,147,334
+offsets:177,65,500,500
+vfx/Comp 1_00009
+bounds:843,107,147,334
+offsets:177,65,500,500
+vfx/Comp 1_00010
+bounds:1251,180,160,321
+offsets:171,65,500,500
+vfx/Comp 1_00011
+bounds:1251,180,160,321
+offsets:171,65,500,500
+vfx/Comp 1_00012
+bounds:1571,547,157,357
+offsets:175,64,500,500
+rotate:90
+vfx/Comp 1_00013
+bounds:1571,547,157,357
+offsets:175,64,500,500
+rotate:90
+vfx/Comp 1_00014
+bounds:1554,852,160,372
+offsets:173,64,500,500
+rotate:90
+vfx/Comp 1_00015
+bounds:1554,852,160,372
+offsets:173,64,500,500
+rotate:90
+vfx/Comp 1_00016
+bounds:394,6,99,382
+offsets:204,63,500,500
+rotate:90
+vfx/Comp 1_00017
+bounds:394,6,99,382
+offsets:204,63,500,500
+rotate:90
+vfx/Comp 1_00018
+bounds:2,2,103,390
+offsets:205,64,500,500
+rotate:90
+vfx/Comp 1_00019
+bounds:2,2,103,390
+offsets:205,64,500,500
+rotate:90
+vfx/Comp 1_00020
+bounds:1571,445,100,362
+offsets:211,67,500,500
+rotate:90
+vfx/Comp 1_00021
+bounds:1571,445,100,362
+offsets:211,67,500,500
+rotate:90
+vfx/Comp 1_00022
+bounds:1564,338,105,355
+offsets:214,69,500,500
+rotate:90
+vfx/Comp 1_00023
+bounds:1564,338,105,355
+offsets:214,69,500,500
+rotate:90
+vfx/Comp 1_00024
+bounds:1132,137,117,366
+offsets:203,71,500,500

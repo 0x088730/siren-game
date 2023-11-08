@@ -1,0 +1,58 @@
+@font-face {
+  font-family: Anime Ace;
+  src: url('./fonts/anime-ace/animeace.ttf');
+}
+
+.Main {
+  /* background-color: #001512; */
+  background: url('./images/background.jpg');
+  background-size: cover;
+  width: 100%;
+  min-height: 760px;
+  height: 100vh;
+  min-width: 1200px;
+  position: relative;
+  overflow: hidden;
+}
+#root{
+  overflow-y: hidden;
+}
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+p{
+  margin: 0;
+}
+
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
