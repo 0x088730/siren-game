@@ -99,7 +99,6 @@ export default class Battle extends Phaser.Scene {
     this.enemy_1_die = false
     this.attacking = false
   }
-
   create() {
     // createCharacterAnims(this.anims)
     this.characterAvatar()
@@ -144,7 +143,7 @@ export default class Battle extends Phaser.Scene {
     this.load.setPath('/')
   }
 
-  enemyModel_1() {  
+  enemyModel_1() {
     this.enemySpineTmp_1 = this.add
       .spine(1330, 900, ENEMY_SPINE, 'idle', true)
       .setScale(-0.3, 0.3)
@@ -485,6 +484,8 @@ export default class Battle extends Phaser.Scene {
   }
 
   attack(type: number) {
+    console.log(this.sirenSpine, this.sirenAttack1)
+
     switch (type) {
       case 1: this.sirenAttack = this.sirenAttack1
         break
@@ -726,7 +727,11 @@ export default class Battle extends Phaser.Scene {
     const unit = global.rooms.filter(obj => obj.chapter === global.chapter && obj.section === global.section).at(0)
     const unit1 = global.rooms.filter(obj => obj.chapter === global.chapter && obj.section === global.section).at(1)
     
-    let damage = (this.attackType === 2 || this.attackType === 3) ? (global.damage + 40) :global.damage
+    let damage = 190
+    if(this.attackType === 1) damage = global.damage + 40
+    else if(this.attackType === 2) damage = global.damage + 190
+    else if(this.attackType === 3) damage = global.damage + 70
+    // let damage = (this.attackType === 2 || this.attackType === 3) ? (global.damage + 40) :global.damage
     let enemy_damage = unit?.damage
     let enemy_damage1 = unit1?.damage
     
@@ -741,10 +746,13 @@ export default class Battle extends Phaser.Scene {
     if (owner === this.siren.owner) {
       if(attacker === 2) {
         this.damagePlay(critical, owner, enemy_damage)
+        this.siren.getDamaged(enemy_damage)
         store.dispatch(setAtkBtnState(true))
       }
-      if(attacker === 3) this.damagePlay(critical, owner, enemy_damage1)
-      this.siren.getDamaged(damage)
+      if(attacker === 3) {
+        this.damagePlay(critical, owner, enemy_damage1)
+        this.siren.getDamaged(enemy_damage1)
+      }
       if (this.siren.hp <= 0) {
         this.sirenSpine.setVisible(false)
         this.sirenAttack1.setVisible(false)
@@ -815,7 +823,7 @@ export default class Battle extends Phaser.Scene {
     this.resultWidget.on('claim', () => {
       store.dispatch(setGameStatus(0))
       // getProfile(global.walletAddress, 'siren-1')
-      document.body.style.backgroundImage = 'url(assets/background/main.png)'
+      document.body.style.backgroundImage = 'url(assets/background/main.gif)'
       this.scene.start('game')
       this.registry.destroy()
     })

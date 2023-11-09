@@ -42,9 +42,9 @@ code {
 .btn-group {
   display: grid;
   position: absolute;
-  left: 164px;
-  top: 114px;
-  grid-gap: 20px;
+  left: 185px;
+  top: 190px;
+  grid-gap: 35px;
 }
 
 .btn-ligroup {

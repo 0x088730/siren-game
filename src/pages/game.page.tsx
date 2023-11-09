@@ -128,7 +128,7 @@ export const GamePage = ({
                   <div className="btn-group">
                     <div className="btn-wrapper">
                       <ButtonComponent onClick={start}>
-                        <img src="assets/images/play pve.png" />
+                        <img src="assets/images/play pve.png"/>
                       </ButtonComponent>
                     </div>
                     <div className="btn-wrapper">
@@ -138,7 +138,7 @@ export const GamePage = ({
                     </div>
                     <div className="btn-wrapper">
                       <ButtonComponent onClick={inventory}>
-                        <img src="assets/images/inventory.png" style={{width: '573px', height: '176px'}}/>
+                        <img src="assets/images/inventory.png"/>
                       </ButtonComponent>
                     </div>
                   </div>

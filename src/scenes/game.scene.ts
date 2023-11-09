@@ -68,7 +68,7 @@ export default class Game extends Phaser.Scene {
         this.inventoryWidget.setVisible(true)
         this.characterWidget.showStatus(true)
         this.scene.start('game')
-        this.changeBackground('url(assets/background/main.png')
+        this.changeBackground('url(assets/background/main.gif')
         // itemModify(global.walletAddress, 'siren-1', itemName, 1, global.room.chapter, global.room.section, global.chapter, global.section, (resp: any) => {
         //   if (resp.purchase !== undefined)
         //     changeItem(resp)
@@ -120,7 +120,7 @@ export default class Game extends Phaser.Scene {
     this.roomWidget
       .on('cancel', () => {
         store.dispatch(setGameStatus(0))
-        this.changeBackground('url(assets/background/main.png')
+        this.changeBackground('url(assets/background/main.gif')
         this.roomWidget.destroy()
       })
       .on('start', (chapter: number, section: number) => {
