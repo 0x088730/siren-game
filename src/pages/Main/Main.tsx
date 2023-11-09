@@ -21,6 +21,7 @@ import {
   swapEggs,
   swapResources,
   upgradeWall,
+  checkCooldown
 } from '../../store/user/actions'
 import { showMinutes } from '../../utils/timer'
 
@@ -78,7 +79,6 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
   //   address: 123,
   //   connect: () => {},
   // }
-  const [map, setMap] = useState(0)
   const [openSwap, setOpenSwap] = useState(false)
   const [openUpgradeWall, setOpenUpgradeWall] = useState(false)
   const [openRock, setOpenRock] = useState(false)
@@ -86,17 +86,13 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
   const [openMining, setOpenMining] = useState(false)
   const [levelState, setLevelState] = React.useState(global.level)
 
+  const [btnTitle, setBtnTitle] = useState("START")
   const [items, setItems] = useState([
-    { item: 0, timer: 0, posx: 80, posy: 100, type: 1 },
-    { item: 0, timer: 0, posx: 80, posy: 250, type: 2 },
-    { item: 0, timer: 0, posx: 80, posy: 400, type: 1 },
-    // { item: 0, timer: 0, posx: '80px', posy: '550px', type: 2 },
-    // { item: 0, timer: 0, posx: '200px', posy: '100px', type: 1 },
-    // { item: 0, timer: 0, posx: '200px', posy: '250px', type: 1 },
-    // { item: 0, timer: 0, posx: '200px', posy: '400px', type: 1 },
-    // { item: 0, timer: 0, posx: '200px', posy: '550px', type: 2 },
+    { counting: 0, timer: 0, },
+    { counting: 0, timer: 0, },
+    { counting: 0, timer: 0, },
   ])
-
+  
   const [birds, setBirds] = useState([
     { item: 0, timer: 0 },
     { item: 0, timer: 0 },
@@ -107,7 +103,6 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
     { item: 0, timer: 0 },
     { item: 0, timer: 0 },
   ])
-
   const diamonds = [1, 2]
 
   const [selectedIndex, setSelectedIndex] = useState(0)
@@ -124,18 +119,41 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
     handleBirdOpen()
   }
 
-  const setItem = (item: any) => {
+  const onRockStart = (cooldown: any) => {
+    console.log("cooldown")
     dispatch(
-      stakeDiamond(address, selectedIndex, item, (res: any) => {
+      stakeDiamond(address, selectedIndex, cooldown, (res: any) => {
         if (res.success === false) return
-        const _items = [...items]
-        _items[selectedIndex].item = item
-        _items[selectedIndex].timer = STAKE_TIMER
-        setItems(_items)
         setSiren(res.data)
         handleClose()
+        coolDownStatus(cooldown)
       }),
     )
+  }
+  useEffect(() => {
+    coolDownStatus(selectedIndex)
+  }, [selectedIndex])
+  const coolDownStatus = (cooldown: any) => {
+    dispatch(
+      checkCooldown(address, `diamond${selectedIndex + 1}`, (res: any) => {       
+        let cooldownSec = res.data
+        const _items = [...items]
+        _items[selectedIndex].timer = res.data
+        _items[selectedIndex].counting = 1
+        setItems(_items)
+        if( cooldownSec === 999999){
+          _items[selectedIndex].timer = 0
+        } 
+        else if(cooldownSec<=0){
+          _items[selectedIndex].timer = 0
+          setBtnTitle("CLAIM")
+        }
+        else{
+          _items[selectedIndex].timer = cooldownSec
+        }
+      }),
+    )
+
   }
 
   const setBirdItem = (index: any, item: any) => {
@@ -150,16 +168,24 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
       }),
     )
   }
+  
+  const onRockClaim = () => {
+    if (items[selectedIndex].counting !== 0 && items[selectedIndex].timer === 0) {
+      setOpenRock(false)
+      onClaim(selectedIndex)
+    } else alert('please wait...')
+  }
 
   const onClaim = (index: number) => {
     dispatch(
       claimDiamond(address, index, (res: any) => {
         if (res.success === false) return setResource(resource)
         const _items = [...items]
-        _items[index].item = 0
+        _items[index].counting = 0
         _items[index].timer = 0
         if(typeof res.data.resource === 'number') setResource(res.data.resource)
         setItems(_items)
+        setBtnTitle("START")
       }),
     )
   }
@@ -199,19 +225,7 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
     setOpenUpgradeWall(false)
   }
 
-  const onWell = () => {
-    setItem(1)
-  }
-
-  const onRockClaim = () => {
-    if (items[selectedIndex].item !== 0 && items[selectedIndex].timer === 0) {
-      setOpenRock(false)
-      onClaim(selectedIndex)
-    } else alert('please wait...')
-  }
-
   const [open, setOpen] = React.useState(false)
-  // const handleOpen = () => setOpen(true)
   const handleOpen = () => setOpenRock(true)
   const handleClose = () => setOpen(false)
 
@@ -283,7 +297,7 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
 
         const eDate = new Date(dt.staked_at)
 
-        _items[dt.position].item = dt.diamond
+        _items[dt.position].counting = dt.diamond
         _items[dt.position].timer =
           STAKE_TIMER - Math.floor((curSec - endSec) / 1000)
         if (_items[dt.position].timer < 0) _items[dt.position].timer = 0
@@ -360,7 +374,7 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
                         }}
                         variant="contained"
                         color="success"
-                        onClick={(e) => setItem(item)}
+                        onClick={(e) => onRockStart(item)}
                       >
                         20 Siren
                       </Button>
@@ -560,12 +574,13 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
           setWall={onUpgradeWall}
         />
         <RockModal
-          open={openRock}
-          item={items[selectedIndex].item}
+          openRock={openRock}
+          counting={items[selectedIndex].counting}
           timer={items[selectedIndex].timer}
           setOpen={setOpenRock}
-          setWell={onWell}
+          onRock={() => onRockStart(1)}
           setRockClaim={onRockClaim}
+          btnTitle={btnTitle}
         />
         <DepositModal
           open={openDeposit}
@@ -720,7 +735,7 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
                       className={styles.item}
                       width={'100'}
                       // width={index===1?150:100}
-                      src={`/images/place_${item.type}.png`}
+                      src={`/images/place_1.png`}
                     />
                   </Box>
                 </Box>

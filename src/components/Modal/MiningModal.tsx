@@ -193,6 +193,7 @@ const MiningModal = ({
     } else if (btnType === 'Claim') {
       dispatch(
         checkCooldown(address, 'level-up', (res: any) => {
+          console.log("request======", res)
           let cooldownSec = res.data
           console.log(cooldownSec)
           if( cooldownSec === 999999){
@@ -200,7 +201,6 @@ const MiningModal = ({
           }
           else if(cooldownSec<=0){
             dispatch(claimSiren(address,(res:any)=>{
-              console.log(res)
               setSirenAmount(res.data.siren)
               setEggs(res.data.eggs)
               setBtnType('Start')

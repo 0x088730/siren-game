@@ -33,6 +33,8 @@ export default class ClaimWidget extends Phaser.GameObjects.Container {
   claimBtn: Phaser.GameObjects.Image
   claimLabel!: Phaser.GameObjects.Text
 
+  itemLabel: string = "HP"
+
   constructor(scene: Phaser.Scene, x: number, y: number) {
     super(scene, x, y)
     this.scene = scene
@@ -54,7 +56,7 @@ export default class ClaimWidget extends Phaser.GameObjects.Container {
       .setScale(0.5, 0.5)
       .setOrigin(0.5, 0.5)
       .setVisible(false)
-     
+
     this.claimBtn = this.scene.add
       .image(960, 780, 'big-btn')
       .setInteractive()
@@ -62,16 +64,25 @@ export default class ClaimWidget extends Phaser.GameObjects.Container {
       .setVisible(false)
       .on('pointerover', () => {
         this.add(this.selectedItem)
-        this.setVisible(false)
-        this.claimBtn.setVisible(false)
-        this.claimLabel.setVisible(false)
-        this.hpPlus.setText(`HP + ${this.selectedItem.crystals * 50}`)
+        if (this.selectedItem.itemType === 'gem') {
+          this.itemLabel = "DAMAGE"
+        } else if (this.selectedItem.itemType === 'chimera') {
+          this.itemLabel = "HP"
+        } else if (this.selectedItem.itemType === 'infernal') {
+          this.itemLabel = "CRITICAL"
+        }
+        this.hpPlus.setText(`${this.itemLabel} + ${this.selectedItem.crystals * 50}`)
         this.hpPlus.setVisible(true)
         this.hpTween.play()
+          .on('complete', () => {
+            this.setVisible(false)
+            this.claimBtn.setVisible(false)
+            this.claimLabel.setVisible(false)
+          })
       })
 
     this.claimLabel = this.scene.add
-      .text(960, 780, `CLAIM`, { font: '25px Anime Ace', color: 'white', stroke: 'white'})
+      .text(960, 780, `CLAIM`, { font: '25px Anime Ace', color: 'white', stroke: 'white' })
       .setScale(0.8, 0.8)
       .setOrigin(0.5, 0.5)
       .setVisible(false)
@@ -79,26 +90,7 @@ export default class ClaimWidget extends Phaser.GameObjects.Container {
     this.selectedItem = new GameItem(scene, 0, 0, 'gem', 1)
       .setVisible(false)
       .setInteractive()
-      .on('pointerdown', () => {
-
-        // when I click the gem on inventory.
-        // if(this.selectedItem.itemType === 'chimera') {
-          
-          this.hpPlus.setText(`HP + ${this.selectedItem.crystals * 50}`)
-          this.hpPlus.setVisible(true)
-          this.hpTween.play()
-        // }
-        // else {
-          this.emit(
-            'randomly-selected',
-            this.selectedItem.itemType,
-            this.selectedItem.crystals,
-          )
-        // }
-      })
     this.add(this.selectedItem)
-
-    // Items
     this.itemContainer = new Phaser.GameObjects.Container(
       scene,
       0,
@@ -111,31 +103,16 @@ export default class ClaimWidget extends Phaser.GameObjects.Container {
     const xPos = -3600
     for (i = 0; i < this.maxItems; i++) {
       let item
-      
-        item = new GameItem(
-       
-          scene,
-          xPos + i * 85,
-          0,
-          'gem',
-          1,
-        ).setDisplaySize(80, 80)
-      
-      
+      item = new GameItem(scene, xPos + i * 85, 0, 'gem', 1)
+        .setDisplaySize(80, 80)
       this.items.add(item)
       this.itemContainer.add(item)
     }
 
-    this.itemContainerTween = scene.tweens.add({
-      duration: 3000,
-
-      // Move 200 pixels to the right
-      ease: 'Power2',
+    this.itemContainerTween = scene.tweens.add({duration: 3000, ease: 'Power2',
       onComplete: () => {
-        //console.log(this.itemContainer)
         this.scene.time.delayedCall(500, () => {
           this.itemContainer.setVisible(false)
-          
           const item = this.items.getAt(19)
           this.selectedItem.setType(item.itemType, item.crystals)
           this.selectedItem.setVisible(true)
@@ -143,14 +120,11 @@ export default class ClaimWidget extends Phaser.GameObjects.Container {
           this.claimLabel.setVisible(true)
         })
       },
-      // 3 seconds
       paused: true,
-
       targets: this.itemContainer,
-
       x: '+=2000',
     })
-    
+
     this.boxTween = scene.tweens
       .add({
         duration: 500,
@@ -185,7 +159,6 @@ export default class ClaimWidget extends Phaser.GameObjects.Container {
         paused: true,
         x: 950,
         y: 190,
-        // 950, 190
       })
       .on('complete', () => {
         this.emit(
@@ -207,19 +180,18 @@ export default class ClaimWidget extends Phaser.GameObjects.Container {
 
   appear() {
     this.setVisible(true)
-    let t,c;
+    let t, c;
     for (let i = 0; i < this.maxItems; i++) {
       const { type, crystals } = this.getRandomType()
-      if(i===19){
+      if (i === 19) {
         t = type
         c = crystals
       }
-      
+
       this.items.getAt(i).setType(type, crystals)
     }
-    
+
     let itemName = `${t}_${c}`
-    //console.log(itemName)
     itemModify(global.walletAddress, global.currentCharacterName, itemName, 1, global.room.chapter, global.room.section, global.chapter, global.section, (resp: any) => {
       if (resp.purchase !== undefined)
         changeItem(resp)
@@ -261,9 +233,7 @@ export default class ClaimWidget extends Phaser.GameObjects.Container {
     this.tweenSpark1 = scene.tweens.add({
       alpha: 1,
       duration: 2000,
-      // Fade in duration in milliseconds
       ease: 'Power1',
-      // Repeat the tween in reverse
       repeat: -1,
 
       targets: this.spark1,
@@ -276,7 +246,6 @@ export default class ClaimWidget extends Phaser.GameObjects.Container {
       ease: 'Cubic',
       // Repeat the tween in reverse
       repeat: -1,
-
       targets: this.spark2,
       // Fade in duration in milliseconds
       yoyo: true, // Infinite repeats

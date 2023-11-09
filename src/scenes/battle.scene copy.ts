@@ -279,9 +279,9 @@ export default class Battle extends Phaser.Scene {
       this.siren.characterFthrow.setAlpha(0)
     }
     this.attack(this.attackType)
-    store.dispatch(addTurn())
-    if (this.attackType === 2)  store.dispatch(setSecondTurn())
-    if (this.attackType === 3)  store.dispatch(setThirdTurn())
+    // store.dispatch(addTurn())
+    // if (this.attackType === 2)  store.dispatch(setSecondTurn())
+    // if (this.attackType === 3)  store.dispatch(setThirdTurn())
   }
   createCharacter() {
     // if(global.currentCharacterName === 'siren-1')

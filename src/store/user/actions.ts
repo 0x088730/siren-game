@@ -193,6 +193,8 @@ export function claimHunter(address: any, cb: any) {
   }
 }
 export function setCooldown(address: any, type: string, value: boolean, cb: any) {
+  console.log("request>>>>>>")
+
   return async (dispatch: any) => {
     const res = await api(`user/set/cooldown`, 'post', {
       walletAddress: address,

@@ -4,6 +4,7 @@ import {
   increment,
   decrement,
   setCharacterStatus,
+  setTurnFormat
 } from '../common/state/game/reducer'
 import store from '../store'
 import ClaimWidget from '../widgets/claimWidget'
@@ -108,7 +109,8 @@ export default class Game extends Phaser.Scene {
   }
 
   room() {
-    
+    store.dispatch(setTurnFormat())
+
     store.dispatch(setGameStatus(2))
     
     this.changeBackground('url(assets/background/chapter.jpg')

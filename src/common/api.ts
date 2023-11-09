@@ -9,6 +9,7 @@ export const getProfile = async (walletAddress: string, character: string) => {
         character
     })).data
     const user = data.user
+
     let currentCharacter = user.characters.filter((character : any)=>character.characterName===user.currentCharacterName)[0]
     global.hp = currentCharacter.hp
     global.damage = currentCharacter.damage
@@ -71,6 +72,7 @@ export const itemRevive = async (walletAddress :string, character: string = 'sir
     })).data;
 
     const user = data.user
+
     let currentCharacter = user.characters.filter((character : any)=>character.characterName===user.currentCharacterName)[0]
     cb({
         characters: currentCharacter,

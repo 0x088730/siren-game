@@ -59,6 +59,9 @@ export default class CharacterWidget extends Phaser.GameObjects.Container {
   lvTexts: Phaser.GameObjects.Text[] = []
   private avatarTween: Array<Phaser.Tweens.Tween> = []
   private weaponTween: Array<Phaser.Tweens.Tween> = []
+  gemBuilding: boolean = false
+  bemEmbeding: boolean = false
+  gemClick: boolean = true
   constructor(scene: Phaser.Scene, x: number, y: number) {
     super(scene, x, y)
     this.scene = scene
@@ -111,7 +114,7 @@ export default class CharacterWidget extends Phaser.GameObjects.Container {
         color: '#ffffff',
       })),
     )
-    if(global.energy < 0) global.energy = 0
+    if (global.energy < 0) global.energy = 0
     this.add(
       (this.energy = this.scene.add.text(-600, -307, `${global.energy}`, {
         font: '17px Anime Ace',
@@ -143,7 +146,7 @@ export default class CharacterWidget extends Phaser.GameObjects.Container {
           this.siren3.stop()
           this.siren3.setVisible(false)
           this.setVisible(false)
-          for(let i=0; i < this.rarityTexts.length; i++){
+          for (let i = 0; i < this.rarityTexts.length; i++) {
             this.rarityTexts[i].setVisible(false)
             this.lvTexts[i].setVisible(false)
           }
@@ -192,7 +195,7 @@ export default class CharacterWidget extends Phaser.GameObjects.Container {
           .image(row * 200 + 260, col * 200 - 200, `weapon-${weaponList[i]}`)
           .setDisplaySize(200, 200)
           .setInteractive()
-          .on('pointerdown', () => {})),
+          .on('pointerdown', () => { })),
       )
       this.weaponTween[i] = scene.tweens.add({
         duration: 800,
@@ -311,8 +314,8 @@ export default class CharacterWidget extends Phaser.GameObjects.Container {
 
     this.gem = new Phaser.Structs.List<StockItem>(null)
     this.embedGem = new Phaser.Structs.List<Phaser.GameObjects.Image>(null)
-    this.gemBuild()
-    this.embedBuild()
+    // this.gemBuild()
+    // this.embedBuild()
     this.setVisible(false)
     scene.add.existing(this)
     this.sirenSpine = this.scene.add
@@ -327,12 +330,8 @@ export default class CharacterWidget extends Phaser.GameObjects.Container {
   }
 
   gemChange() {
-    //console.log(global)
-
     let characterList = global.characters
-
     if (global.characters.length !== 0) {
-
       for (let i = 0; i < avatarList.length; i++) {
         const row = Math.floor(i % 2)
         const col = Math.floor(i / 2)
@@ -345,22 +344,21 @@ export default class CharacterWidget extends Phaser.GameObjects.Container {
           characterList.filter((character) => character.characterNo === i)
             .length > 0
             ? 'LVL:' +
-              Math.floor(
-                characterList
-                  .filter((character) => character.characterNo === i)[0]
-                  .exp.valueOf() /
-                  100 +
-                  1,
-              ).toString()
+            Math.floor(
+              characterList
+                .filter((character) => character.characterNo === i)[0]
+                .exp.valueOf() /
+              100 +
+              1,
+            ).toString()
             : ''
         let rarity =
           characterList.filter((character) => character.characterNo === i)
             .length > 0
             ? characterList
-                .filter((character) => character.characterNo === i)[0]
-                .rarity.toString()
+              .filter((character) => character.characterNo === i)[0]
+              .rarity.toString()
             : ''
-
         const lvtext: any = this.scene.add.text(
           row * 300 - 120,
           col * 300 - 60,
@@ -376,18 +374,6 @@ export default class CharacterWidget extends Phaser.GameObjects.Container {
         } else if (rarity === '2') {
           rarity = 'legendary'
         }
-
-        // const raritytext = this.scene.add.text(row * 220+15, col * 220 - 280, rarity, {
-        //   fontSize: "20px",
-        //   fontFamily: "Anime Ace",
-
-        //   color: rarity==="common"?"gray":rarity==="rare"?"violet":rarity==="legendary"?"#efda4e":""
-        // });
-        // raritytext.setStroke("black",5);
-        // raritytext.setAngle(-45); // Adjust the angle here as per your requirement
-        // raritytext.setOrigin(0.5)
-        // this.add(raritytext);
-
         const raritytext = this.scene.add.text(
           row * 300 - 180,
           col * 305 - 240,
@@ -399,31 +385,22 @@ export default class CharacterWidget extends Phaser.GameObjects.Container {
               rarity === 'common'
                 ? 'gray'
                 : rarity === 'rare'
-                ? 'violet'
-                : rarity === 'legendary'
-                ? '#efda4e'
-                : '',
+                  ? 'violet'
+                  : rarity === 'legendary'
+                    ? '#efda4e'
+                    : '',
           },
         )
-
         raritytext.setStroke('black', 5)
         raritytext.setAngle(-45)
         raritytext.setOrigin(0.5)
         raritytext.setVisible(false)
         this.rarityTexts.push(raritytext) // Add the raritytext to the array
-
-        // You can add more rarity texts to the array if needed
-
-        
-        
         this.model[i]
           .setPosition(row * 300 - 90, col * 300 - 160)
-
           .setTexture(modelName)
           .removeListener('pointerdown')
           .on('pointerdown', () => {
-
-            
             if (
               global.characters.filter(
                 (character) => character.characterNo === i,
@@ -434,29 +411,25 @@ export default class CharacterWidget extends Phaser.GameObjects.Container {
               setCurrentCharacter('siren-' + (i + 1)).then(() => {
                 getProfile(global.walletAddress, 'siren-' + (i + 1)).then(
                   () => {
-                    let embed = global.embed.filter(item=>item.character===global.currentCharacterName)
+                    let embed = global.embed.filter(item => item.character === global.currentCharacterName)
                     this.updateHpCritical(
                       global.hp,
                       global.critical,
                       global.damage,
                       embed,
                     )
-                    //console.log(global)
                     this.openModel(i)
                     this.embedBuild()
                     for (let i = 0; i < this.rarityTexts.length; i++) {
                       this.rarityTexts[i].setVisible(false)
                       this.remove(this.rarityTexts[i])
-                      
                     }
-                    this.rarityTexts=[]
+                    this.rarityTexts = []
                     for (let i = 0; i < this.lvTexts.length; i++) {
                       this.lvTexts[i].setVisible(false)
-
                       this.remove(this.lvTexts[i])
-                      
                     }
-                    this.lvTexts=[]
+                    this.lvTexts = []
                   },
                 )
               })
@@ -467,68 +440,42 @@ export default class CharacterWidget extends Phaser.GameObjects.Container {
     }
     this.add(this.rarityTexts) // Add the array of rarity texts to the scene
     this.add(this.lvTexts)
-    for(let i=0; i < this.rarityTexts.length; i++){
+    for (let i = 0; i < this.rarityTexts.length; i++) {
       this.rarityTexts[i].setVisible(true)
       this.lvTexts[i].setVisible(true)
     }
   }
   gemBuild() {
-    let itemList = new Phaser.Structs.List<StockItem>(null)
     let data = global.purchase
-    //this.energy.setText(`${global.energy}`)
-    this.energySwapEdit.setVisible(false)
-    this.energySwapText.setVisible(false)
-    this.energySwapText1.setVisible(false)
-    this.waterText.setVisible(false)
-    this.waterText1.setVisible(false)
-    this.waterText2.setVisible(false)
-    this.swapBtn.setVisible(false)
-    let embed = global.embed.filter(item=>item.character===global.currentCharacterName)
+    let embed = global.embed.filter(item => item.character === global.currentCharacterName)
     this.updateHpCritical(global.hp, global.critical, global.damage, embed)
+
     for (let j = 0; j < this.gem.length; j++) {
       this.gem.getAt(j).destroy()
-      // this.gem.getAt(j).setVisible(false)
-      // this.remove(this.gem.getAt(j))
     }
+
     this.gem = new Phaser.Structs.List<StockItem>(null)
-    data = global.purchase
     for (let i = 0; i < data.length; i++) {
       let type = data[i].item
-      const row = Math.floor(i / 3)
-      const col = Math.floor(i % 3)
       const count = data[i].stock
       if (count > 0 && type !== 'loot') {
         type = type.replace('_', '-')
+        this.gemBuilding = false
         const newItem = new StockItem(this.scene, 0, 0, type, count)
           .setInteractive()
           .on('pointerdown', () => {
-            itemModify(
-              global.walletAddress,
-              global.currentCharacterName,
-              data[i].item,
-              -1,
-              global.room.chapter,
-              global.room.section,
-              global.chapter,
-              global.section,
-              (resp: any) => {
-                //console.log(resp)
-
+            if (this.gemBuilding === false) {
+              this.gemBuilding = true
+              itemModify(global.walletAddress, global.currentCharacterName, data[i].item, -1, global.room.chapter, global.room.section, global.chapter, global.section, (resp: any) => {
                 if (resp.purchase !== undefined) {
                   changeItem(resp)
-                  let embed = global.embed.filter(item=>item.character===global.currentCharacterName)
-                  //console.log(global.embed)
-                  this.updateHpCritical(
-                    global.hp,
-                    global.critical,
-                    global.damage,
-                    embed,
-                  )
+                  let embed = global.embed.filter(item => item.character === global.currentCharacterName)
+                  this.updateHpCritical(global.hp, global.critical, global.damage, embed,)
                   this.gemBuild()
                   this.embedBuild()
                 }
-              },
-            )
+              })
+            }
           })
         this.add(newItem)
         this.gem.add(newItem)
@@ -540,14 +487,10 @@ export default class CharacterWidget extends Phaser.GameObjects.Container {
   embedBuild() {
     for (let j = 0; j < this.embedGem.length; j++) {
       this.embedGem.getAt(j).destroy()
-      // this.embedGem.getAt(j).setVisible(false)
-      // this.remove(this.embedGem.getAt(j))
     }
-    //console.log(global.embed, global.currentCharacterName)
     const embed = global.embed.filter(
       (obj) => obj.character === global.currentCharacterName,
     )
-    //console.log(embed)
     for (let i = 0; i < embed.length; i++) {
       let type = embed[i].item
       const count = embed[i].stock
@@ -565,7 +508,6 @@ export default class CharacterWidget extends Phaser.GameObjects.Container {
               embed[i].item,
               (resp: any) => {
                 if (resp.purchase !== undefined) changeItem(resp)
-                //console.log(global.embed)
                 this.embedBuild()
                 this.gemBuild()
               },
@@ -584,8 +526,6 @@ export default class CharacterWidget extends Phaser.GameObjects.Container {
       global.currentCharacterName,
       0,
       (resp: any) => {
-        //console.log(resp)
-
         global.energy = resp.energy
         global.resource = resp.resource
         this.energy.setText(`${global.energy}`)

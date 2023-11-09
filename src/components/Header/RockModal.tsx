@@ -7,35 +7,28 @@ import { useSelector } from 'react-redux'
 import { showHourMinutes } from '../../utils/timer'
 
 interface Props {
-  open: any,
-  item: any,
+  openRock: any,
+  counting: any,
   timer: any,
   setOpen: any,
-  setWell: any,
+  onRock: any,
   setRockClaim: any,
+  btnTitle: any,
 }
 
 const RockModal = ({
-  open,
-  item,
+  openRock,
+  counting,
   timer,
   setOpen,
-  setWell,
+  onRock,
   setRockClaim,
+  btnTitle,
 }: Props) => {
   const userModule = useSelector((state: any) => state.userModule)
 
-  const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false)
-
-  const onRock = () => {
-    if(userModule.user.Siren >= 30)
-      setWell()
-  }
-
-  const onClaim = () => {
-      setRockClaim()
-  }
+  const [remainedTime, setRemainedTime] = useState(timer)
 
   const style = {
     position: 'absolute' as const,
@@ -45,23 +38,28 @@ const RockModal = ({
     width: '450px',
     height: '580px',
     background: "url(/assets/images/set.png)",
-    backgroundSize: '100% 100%',    
+    backgroundSize: '100% 100%',
     bgcolor: 'transparent',
     boxShadow: 24,
     p: 4,
     pt: 1,
   }
 
+  useEffect(() => {
+    setRemainedTime(timer)
+  }, [timer])
+  
+
   return (
     <>
       <Modal
-        open={open}
+        open={openRock}
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
         <Box sx={style} className="w-[450px]">
-        <img
+          <img
             alt=""
             src="/images/support/support_md_close_btn.png"
             style={{
@@ -94,7 +92,6 @@ const RockModal = ({
                   flexDirection: 'column',
                   alignItems: 'center',
                   gap: '20px',
-                  // marginTop: '5px'
                 }}
               >
                 <h2 className="font-bold text-2xl mb-4 text-white upgrade-label"
@@ -110,27 +107,26 @@ const RockModal = ({
                   TIME: 3 HOURS<br></br>
                 </h2>
                 <Button
-                  // variant="contained"
-                  // color="primary"
                   style={{
                     background: "url(/assets/images/big-button.png)",
                     backgroundSize: 'cover',
-                    backgroundRepeat: 'no-repeat',   
-                    fontFamily: 'Anime Ace',  
+                    backgroundRepeat: 'no-repeat',
+                    fontFamily: 'Anime Ace',
                     color: 'white',
-                    border: 'none',    
+                    border: 'none',
                     width: '200px',
-                    height: '42px'     
+                    height: '42px'
                   }}
                   onClick={(/* e */) => {
-                    if (item === 0)
+                    if (btnTitle === "START")
                       onRock()
-                    else {
-                      onClaim()
+                    if (btnTitle === "CLAIM") {
+                      setRockClaim()
                     }
                   }}
                 >
-                  {item === 0 ? 'START' : timer === 0 ? 'CLAIM' : `${showHourMinutes(timer)}`}
+                  {(remainedTime === 0 ? btnTitle : showHourMinutes(remainedTime))}
+                  {/* {counting === 0 ? 'START' : timer === 0 ? 'CLAIM' : `${showHourMinutes(timer)}`} */}
                 </Button>
                 <h2 className="font-bold text-2xl mb-4 text-white upgrade-label"
                   style={{
@@ -142,7 +138,7 @@ const RockModal = ({
                   }}
                 >
                   PRICE: 20 SIREN<br></br>
-                </h2>                
+                </h2>
               </Box>
             </Grid>
           </Grid>

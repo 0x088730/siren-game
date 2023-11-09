@@ -65,7 +65,7 @@ export default class ResultWidget extends Phaser.GameObjects.Container {
       this.claimBox.setVisible(true)
     }
     else {
-      if (owner === 2) {
+      if (owner === 2 || owner === 3) {
         this.caption.setText('Back')
         this.claimBox.setVisible(false)
         this.background.setVisible(false)

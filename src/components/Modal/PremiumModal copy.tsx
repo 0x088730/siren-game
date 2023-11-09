@@ -73,13 +73,13 @@ const PreniumModal = ({ open, setOpen }: Props) => {
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: '500px',
-    height: '650px',
-    background: "url(/assets/images/set.png)",
-    backgroundSize: '100% 100%',
-    bgcolor: 'transparent',
+    width: 300,
+    bgcolor: '#d5cbcb',
+    border: '2px solid #000',
     boxShadow: 24,
-    p: 4,
+    borderRadius: 3,
+    textAlign: 'center',
+    p: 2,
     pt: 1,
   }
 
@@ -91,34 +91,63 @@ const PreniumModal = ({ open, setOpen }: Props) => {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={style} className="w-[450px]">
-          <img
-            alt=""
-            src="/images/support/support_md_close_btn.png"
+        <Box sx={style}>
+          <h2
+            id="parent-modal-title"
             style={{
-              position: 'absolute',
-              top: 0,
-              right: 0,
-              width: '8%',
-              transform: 'translate(26%, -27%)',
-              cursor: 'pointer',
-              zIndex: 5,
+              textAlign: 'center',
+              backgroundColor: 'white',
+              borderRadius: 100,
+              display: 'inline-block',
+              padding: '4px 12px',
             }}
-            onClick={handleClose}
-          />
-          <Grid container>
-            <Grid item xs={12} sm={12} md={12}>
-              <div
-                className='well-back'
-                style={{
-                  width: '350px',
-                  height: '300px',
-                  background: "url(images/premium.png)",
-                  backgroundSize: 'cover',
-                  margin: 'auto',
-                  marginTop: '50px',
-                }}
-              ></div>
+            className="mb-2"
+          >
+            Premium
+          </h2>
+
+          <Box
+            sx={{
+              width: '200px',
+              margin: 'auto',
+              backgroundColor: 'white',
+              borderRadius: '30px',
+              padding: '25px',
+            }}
+          >
+            <img alt="" src="/images/premium.png" />
+          </Box>
+
+          <Box sx={{ margin: '12px 0' }}>
+            <p
+              style={{
+                display: 'flex',
+                justifyContent: 'left',
+                fontWeight: '700',
+                width: '190px',
+                margin: 'auto',
+                whiteSpace: 'nowrap',
+              }}
+            >
+              {' '}
+              <RocketLaunchIcon /> Swap: Eggs, Res + 30%
+            </p>
+            <p
+              style={{
+                display: 'flex',
+                justifyContent: 'left',
+                fontWeight: '700',
+                width: '190px',
+                margin: 'auto',
+                whiteSpace: 'nowrap',
+              }}
+            >
+              {' '}
+              <AlarmIcon /> Time: 30 Days
+            </p>
+          </Box>
+          <Grid container sx={{ justifyContent: 'center' }}>
+            <Grid item sm={12}>
               <Box
                 sx={{
                   display: 'flex',
@@ -127,46 +156,13 @@ const PreniumModal = ({ open, setOpen }: Props) => {
                   gap: '20px',
                 }}
               >
-                <h2 className="font-bold text-2xl mb-4 text-white upgrade-label"
-                  style={{
-                    fontFamily: 'Anime Ace',
-                    fontSize: '20px',
-                    marginTop: '15px',
-                    marginBottom: '0px',
-                    textAlign: 'center',
-                  }}
-                >
-                  TIME: 30 DAYS<br></br>
-                  WATER CLAIM: +30%<br></br>                  
-                  WALL HP: +20%<br></br>
-                </h2>
                 <Button
-                  style={{
-                    background: "url(/assets/images/big-button.png)",
-                    backgroundSize: 'cover',
-                    backgroundRepeat: 'no-repeat',
-                    fontFamily: 'Anime Ace',
-                    color: 'white',
-                    border: 'none',
-                    width: '200px',
-                    height: '42px'
-                  }}
+                  variant="contained"
+                  color="primary"
                   onClick={(e) => onBuyPremium()}
                 >
-                  buy
-                  {/* {counting === 0 ? 'START' : timer === 0 ? 'CLAIM' : `${showHourMinutes(timer)}`} */}
+                  Buy for {PREMIUM_COST} BUSD
                 </Button>
-                <h2 className="font-bold text-2xl mb-4 text-white upgrade-label"
-                  style={{
-                    fontFamily: 'Anime Ace',
-                    fontSize: '20px',
-                    marginTop: '15px',
-                    marginBottom: '0px',
-                    textAlign: 'center',
-                  }}
-                >
-                  PRICE: <span style={{color: '#eab308'}}>20 BUSD</span><br></br>
-                </h2>
               </Box>
             </Grid>
           </Grid>

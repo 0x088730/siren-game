@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import React, { useState, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 
-import { setGameStatus } from '../common/state/game/reducer'
+import { setGameStatus, setTurnFormat } from '../common/state/game/reducer'
 import { ButtonComponent } from '../components/button.component'
 import { GameHeaderComponent } from '../components/game-header.component'
 import { useWeb3Context } from '../hooks/web3Context'
