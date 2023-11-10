@@ -737,7 +737,7 @@ export default class Battle extends Phaser.Scene {
     
     let critical = false
     const r = Math.random()
-    if (global.critical > r * 100) {
+    if (global.critical > r * 100 && this.attackType === 1) {
       damage *= 1.5
       damage = Math.floor(damage)
       critical = true

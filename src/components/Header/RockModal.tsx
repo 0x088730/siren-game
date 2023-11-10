@@ -35,7 +35,7 @@ const RockModal = ({
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: '450px',
+    width: '500px',
     height: '580px',
     background: "url(/assets/images/set.png)",
     backgroundSize: '100% 100%',

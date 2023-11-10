@@ -56,7 +56,7 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
   })
 
   useEffect(() => {
-    if(global.wall===0){
+    if (global.wall === 0) {
       history.back();
     }
     const handleWindowResize = () => {
@@ -92,7 +92,7 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
     { counting: 0, timer: 0, },
     { counting: 0, timer: 0, },
   ])
-  
+
   const [birds, setBirds] = useState([
     { item: 0, timer: 0 },
     { item: 0, timer: 0 },
@@ -135,20 +135,20 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
   }, [selectedIndex])
   const coolDownStatus = (cooldown: any) => {
     dispatch(
-      checkCooldown(address, `diamond${selectedIndex + 1}`, (res: any) => {       
+      checkCooldown(address, `diamond${selectedIndex + 1}`, (res: any) => {
         let cooldownSec = res.data
         const _items = [...items]
         _items[selectedIndex].timer = res.data
         _items[selectedIndex].counting = 1
         setItems(_items)
-        if( cooldownSec === 999999){
+        if (cooldownSec === 999999) {
           _items[selectedIndex].timer = 0
-        } 
-        else if(cooldownSec<=0){
+        }
+        else if (cooldownSec <= 0) {
           _items[selectedIndex].timer = 0
           setBtnTitle("CLAIM")
         }
-        else{
+        else {
           _items[selectedIndex].timer = cooldownSec
         }
       }),
@@ -168,7 +168,7 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
       }),
     )
   }
-  
+
   const onRockClaim = () => {
     if (items[selectedIndex].counting !== 0 && items[selectedIndex].timer === 0) {
       setOpenRock(false)
@@ -183,7 +183,7 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
         const _items = [...items]
         _items[index].counting = 0
         _items[index].timer = 0
-        if(typeof res.data.resource === 'number') setResource(res.data.resource)
+        if (typeof res.data.resource === 'number') setResource(res.data.resource)
         setItems(_items)
         setBtnTitle("START")
       }),
@@ -205,12 +205,12 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
   }
 
   const onExchange = (swapAmount: number) => {
-    dispatch(swapResources(address, swapAmount, (res: any) => {}))
+    dispatch(swapResources(address, swapAmount, (res: any) => { }))
     setOpenSwap(false)
   }
 
   const onExchangeEgg = (swapAmount: number) => {
-    dispatch(swapEggs(address, swapAmount, (res: any) => {}))
+    dispatch(swapEggs(address, swapAmount, (res: any) => { }))
     setOpenSwap(false)
   }
 
@@ -218,7 +218,7 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
     dispatch(
       upgradeWall(address, (res: any) => {
         setWallLevelState(res.wall)
-        global.wall=res.wall
+        global.wall = res.wall
         setSiren(res.Siren)
       }),
     )
@@ -268,7 +268,7 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
       // md: 800,
       md: 665,
     },
-    
+
     border: 'none',
     outline: 'none',
     // maxHeight: '500px',
@@ -614,7 +614,7 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
         >
           <div
             className="wall-wallet"
-            // style={{ backgroundImage:"url('/images/border"+(wallLevelState)+".png')" }}
+          // style={{ backgroundImage:"url('/images/border"+(wallLevelState)+".png')" }}
           >
             <img
               src={'assets/images/border' + wallLevelState + '.png'}
@@ -649,7 +649,7 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
                 }}
                 onClick={(e) => setOpenSwap(true)}
               >
-                <img alt="" src="/images/storage.png" style={{transform: 'translate(-50%, -50%)'}} className={styles.item}/>
+                <img alt="" src="/images/storage.png" style={{ transform: 'translate(-50%, -50%)' }} className={styles.item} />
               </Box>
               <Box
                 sx={{
@@ -660,7 +660,7 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
                 }}
                 onClick={(e) => setOpenDeposit(true)}
               >
-                <img alt="" src="/images/home.png" style={{transform: 'translate(-50%, -50%)', maxWidth: '250px'}} className={styles.item}/>
+                <img alt="" src="/images/home.png" style={{ transform: 'translate(-50%, -50%)', maxWidth: '250px' }} className={styles.item} />
               </Box>
               <Box
                 sx={{
@@ -679,32 +679,32 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
                 <img
                   alt=""
                   className={styles.item}
-                  style={{transform: 'translate(0, -100%)'}}
+                  style={{ transform: 'translate(-5%, -115%)' }}
                   width={'80%'}
                   src={`/images/bird_place.png`}
                 />
               </Box>
               <Box
                 sx={{
-                  zIndex: 20,                  
+                  zIndex: 20,
                   transform: 'translate(100%, -180px)',
                   height: 'fit-content',
                   cursor: 'pointer',
                 }}
                 onClick={(e) => setOpenMining(true)}
               >
-                <img alt="" src="/images/mining.png"  style={{transform: 'translate(-50%, -50%)'}} className={styles.item}/>
+                <img alt="" src="/images/mining.png" style={{ transform: 'translate(-50%, -50%)' }} className={styles.item} />
               </Box>
             </Box>
             <Box
               sx={{
-                position:'absolute',
+                position: 'absolute',
                 display: 'flex',
                 width: '30%',
-                margin:'auto',
-                top:'25%',
-                left:'50%',
-                transform:"translateX(-50%)"
+                margin: 'auto',
+                top: '25%',
+                left: '50%',
+                transform: "translateX(-50%)"
               }}
             >
               {items.map((item, index) => (
@@ -727,7 +727,7 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
                   <Box
                     sx={{
                       zIndex: 10,
-                      transform:index===1?'translateY(-30%) ':index===2?'translateY(30%) ':''
+                      transform: index === 1 ? 'translateY(-30%) ' : index === 2 ? 'translateY(30%) ' : ''
                     }}
                   >
                     <img
@@ -744,6 +744,59 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
 
             {/* </div> */}
           </div>
+        </Box>
+
+        <Box
+          sx={{
+            zIndex: 20,
+            height: 'fit-content',
+            width: 'fit-content',
+          }}
+        >
+          <img
+            alt=""
+            style={{position: 'absolute', left: '2%', top: '55%'}}
+            src={`/images/greentree1.png`}
+          />
+        </Box>
+        <Box
+          sx={{
+            zIndex: 20,
+            height: 'fit-content',
+            width: 'fit-content',
+          }}
+        >
+          <img
+            alt=""
+            style={{position: 'absolute', left: '15%', top: '65%', width: '280px', height: '300px' }}
+            src={`/images/pinktree.png`}
+          />
+        </Box>
+        <Box
+          sx={{
+            zIndex: 20,
+            height: 'fit-content',
+            width: 'fit-content',
+          }}
+        >
+          <img
+            alt=""
+            style={{position: 'absolute', right: '5%', top: '55%',}}
+            src={`/images/greentree2.png`}
+          />
+        </Box>
+        <Box
+          sx={{
+            zIndex: 20,
+            height: 'fit-content',
+            width: 'fit-content',
+          }}
+        >
+          <img
+            alt=""
+            style={{position: 'absolute', left: '50%', bottom: '-5%',}}
+            src={`/images/rock.png`}
+          />
         </Box>
       </Box>
 
