@@ -27,8 +27,6 @@ export default class Game extends Phaser.Scene {
   }
 
   changeBackground(src: string) {
-    const video = document.getElementById('backgroundVideo') as HTMLElement
-    video.style.display = "none"
     document.body.style.backgroundImage = src
   }
 
@@ -46,9 +44,6 @@ export default class Game extends Phaser.Scene {
       .on('closed', () => {
         // this.btnContainer.setVisible(true)
         store.dispatch(setInventoryStatus(false))
-        this.changeBackground("")
-        const video = document.getElementById('backgroundVideo') as HTMLElement
-        video.style.display = "block"
       })
       .on('loot', () => {
         this.changeBackground('url(assets/images/claim-bg.jpg)')
@@ -60,22 +55,30 @@ export default class Game extends Phaser.Scene {
     this.characterWidget
       .on('closed', () => {
         store.dispatch(setCharacterStatus(false))
-        this.changeBackground("")
-        const video = document.getElementById('backgroundVideo') as HTMLElement
-        video.style.display = "block"
       })
     
     this.claimWidget = new ClaimWidget(this, 960, 540).on(
       'randomly-selected',
       (itemType: string, crystals: number) => {
         const itemName = `${itemType}_${crystals}`
+        // store.dispatch(decrement('loot'))
+        // store.dispatch(increment(itemName))
         store.dispatch(setInventoryStatus(false))
         this.claimWidget.setVisible(false)
         this.inventoryWidget.setVisible(true)
         this.characterWidget.showStatus(true)
         this.scene.start('game')
-        // const video = document.getElementById('backgroundVideo') as HTMLElement
-        // video.style.display = "block"
+        const video = document.getElementById('backgroundVideo') as HTMLElement
+        video.style.display = "block"
+        this.changeBackground('url(assets/background/main.gif')
+        // itemModify(global.walletAddress, 'siren-1', itemName, 1, global.room.chapter, global.room.section, global.chapter, global.section, (resp: any) => {
+        //   if (resp.purchase !== undefined)
+        //     changeItem(resp)
+        // })
+        // itemModify(global.walletAddress, 'siren-1', 'loot', -1, global.room.chapter, global.room.section, global.chapter, global.section, (resp: any) => {
+        //   if (resp.purchase !== undefined)
+        //     changeItem(resp)
+        // })
       },
     )
     this.roomWidget = new RoomWidget(this, 880, 530)
@@ -98,9 +101,6 @@ export default class Game extends Phaser.Scene {
     this.inventoryWidget.build()
     store.dispatch(setInventoryStatus(true))
     this.inventoryWidget.setVisible(true)
-    this.changeBackground("url(assets/background/main.gif)")
-    const video = document.getElementById('backgroundVideo') as HTMLElement
-    video.style.display = "none"
   }
 
   character() {
@@ -108,9 +108,6 @@ export default class Game extends Phaser.Scene {
     this.characterWidget.gemBuild()
     store.dispatch(setCharacterStatus(true))
     this.characterWidget.showStatus(true)
-    this.changeBackground("url(assets/background/main.gif)")
-    const video = document.getElementById('backgroundVideo') as HTMLElement
-    video.style.display = "none"
   }
 
   room() {
@@ -125,9 +122,9 @@ export default class Game extends Phaser.Scene {
     this.roomWidget
       .on('cancel', () => {
         store.dispatch(setGameStatus(0))
-        // this.changeBackground('url(assets/background/main.gif')
         const video = document.getElementById('backgroundVideo') as HTMLElement
-        video.style.display = "block"
+    video.style.display = "none"
+        this.changeBackground('url(assets/background/main.gif')
         this.roomWidget.destroy()
       })
       .on('start', (chapter: number, section: number) => {

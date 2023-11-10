@@ -24,7 +24,8 @@
     <title>Legends Of Siren</title>
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root" style="z-index: 1;"></div>
+    
     <div
       style="
         font-family: Anime Ace;
@@ -35,6 +36,10 @@
     >
       .
     </div>
-    <div id="phaser-container" class="min-w-[1024px]"></div>
+    <div id="phaser-container" class="min-w-[1024px]">
+      <video id="backgroundVideo" preload="true" autoplay loop muted style="display: block; z-index: -10;">
+        <source src="./assets/background/main.mp4">
+      </video>
+    </div>
   </body>
 </html>
