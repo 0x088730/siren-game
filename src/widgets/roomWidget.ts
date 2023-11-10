@@ -2,7 +2,7 @@ import RoomItemWidget from './roomItemWidget'
 import { global } from '../common/global'
 import { getProfile, setCurrentCharacter } from '../common/api'
 const avatarList = [1, 2, 3, 4]
-var characterClickFlag=false
+var characterClickFlag = false
 export default class RoomWidget extends Phaser.GameObjects.Container {
   scene: Phaser.Scene
   chapter: Phaser.Structs.List<RoomItemWidget>
@@ -75,7 +75,6 @@ export default class RoomWidget extends Phaser.GameObjects.Container {
             }
             this.emit('cancel')
           }
-
           if (this.gMode === 2) {
             this.gameMode(1)
           }
@@ -123,8 +122,8 @@ export default class RoomWidget extends Phaser.GameObjects.Container {
         characterList.filter((character) => character.characterNo === i)
           .length > 0
           ? characterList
-              .filter((character) => character.characterNo === i)[0]
-              .rarity.toString()
+            .filter((character) => character.characterNo === i)[0]
+            .rarity.toString()
           : ''
       if (rarity === '0') {
         rarity = 'common'
@@ -137,13 +136,13 @@ export default class RoomWidget extends Phaser.GameObjects.Container {
         characterList.filter((character) => character.characterNo === i)
           .length > 0
           ? 'LVL:' +
-            Math.floor(
-              characterList
-                .filter((character) => character.characterNo === i)[0]
-                .exp.valueOf() /
-                100 +
-                1,
-            ).toString()
+          Math.floor(
+            characterList
+              .filter((character) => character.characterNo === i)[0]
+              .exp.valueOf() /
+            100 +
+            1,
+          ).toString()
           : ''
       const lvtext: any = this.scene.add
         .text(row * 300 - 120, col * 300 - 60, level, {
@@ -164,10 +163,10 @@ export default class RoomWidget extends Phaser.GameObjects.Container {
             rarity === 'common'
               ? 'gray'
               : rarity === 'rare'
-              ? 'violet'
-              : rarity === 'legendary'
-              ? '#efda4e'
-              : '',
+                ? 'violet'
+                : rarity === 'legendary'
+                  ? '#efda4e'
+                  : '',
         },
       )
 
@@ -182,8 +181,8 @@ export default class RoomWidget extends Phaser.GameObjects.Container {
           .setDisplaySize(220, 220)
           .setInteractive())
           .on('pointerdown', () => {
-            if(characterClickFlag===false){
-              characterClickFlag=true
+            if (characterClickFlag === false) {
+              characterClickFlag = true
               if (
                 characterList.filter((character) => character.characterNo === i)
                   .length > 0
@@ -191,18 +190,18 @@ export default class RoomWidget extends Phaser.GameObjects.Container {
                 setCurrentCharacter('siren-' + (i + 1)).then(() => {
                   getProfile(global.walletAddress, 'siren-' + (i + 1)).then(() => {
                     this.gameMode(3)
-                    characterClickFlag=false
+                    characterClickFlag = false
                   })
                 })
               }
               else {
                 alert("you have to buy")
-                characterClickFlag=false
+                characterClickFlag = false
               }
 
             }
-            
-        }),
+
+          }),
       )
     }
     this.add(this.lvTexts)
@@ -231,6 +230,8 @@ export default class RoomWidget extends Phaser.GameObjects.Container {
   gameMode(mode: number) {
     this.gMode = mode
     if (mode === 1) {
+      
+      this.backBtn.setVisible(true)
       //chapter
       const gChapter = global.room.chapter
 
@@ -247,6 +248,8 @@ export default class RoomWidget extends Phaser.GameObjects.Container {
       this.setModelList(false)
     }
     if (mode === 2) {
+      this.backBtn.setVisible(false)
+
       for (let i = 0; i < this.chapter.length; i++) {
         this.chapter.getAt(i).setVisible(false)
       }
@@ -258,6 +261,8 @@ export default class RoomWidget extends Phaser.GameObjects.Container {
       this.setModelList(true)
     }
     if (mode === 3) {
+      this.backBtn.setVisible(true)
+
       //section
       this.background.setVisible(false)
       this.closeBtn.setVisible(false)

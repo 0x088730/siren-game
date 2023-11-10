@@ -74,8 +74,8 @@ export default class Game extends Phaser.Scene {
         this.inventoryWidget.setVisible(true)
         this.characterWidget.showStatus(true)
         this.scene.start('game')
-        // const video = document.getElementById('backgroundVideo') as HTMLElement
-        // video.style.display = "block"
+        const video = document.getElementById('backgroundVideo') as HTMLElement
+        video.style.display = "block"
       },
     )
     this.roomWidget = new RoomWidget(this, 880, 530)
@@ -98,9 +98,6 @@ export default class Game extends Phaser.Scene {
     this.inventoryWidget.build()
     store.dispatch(setInventoryStatus(true))
     this.inventoryWidget.setVisible(true)
-    this.changeBackground("url(assets/background/main.gif)")
-    const video = document.getElementById('backgroundVideo') as HTMLElement
-    video.style.display = "none"
   }
 
   character() {
@@ -108,9 +105,6 @@ export default class Game extends Phaser.Scene {
     this.characterWidget.gemBuild()
     store.dispatch(setCharacterStatus(true))
     this.characterWidget.showStatus(true)
-    this.changeBackground("url(assets/background/main.gif)")
-    const video = document.getElementById('backgroundVideo') as HTMLElement
-    video.style.display = "none"
   }
 
   room() {
@@ -125,7 +119,6 @@ export default class Game extends Phaser.Scene {
     this.roomWidget
       .on('cancel', () => {
         store.dispatch(setGameStatus(0))
-        // this.changeBackground('url(assets/background/main.gif')
         const video = document.getElementById('backgroundVideo') as HTMLElement
         video.style.display = "block"
         this.roomWidget.destroy()

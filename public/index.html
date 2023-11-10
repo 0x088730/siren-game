@@ -37,9 +37,28 @@
       .
     </div>
     <div id="phaser-container" class="min-w-[1024px]">
-      <video id="backgroundVideo" preload="true" autoplay loop muted style="display: block; z-index: -10;">
+      <video id="backgroundVideo" preload="true" autoplay loop muted style="display: block; z-index: -100; position: fixed;">
         <source src="./assets/background/main.mp4">
       </video>
+      <input id="swapAmountInput" style=
+        "font-size: 32px; 
+        background-color: rgb(255, 255, 255); 
+        color: rgb(0, 0, 0); 
+        padding: 8px; 
+        border-radius: 8px; 
+        width: 100px; 
+        font-family: Anime Ace; 
+        text-align: center; 
+        z-index: 100; 
+        display: none; 
+        position: absolute; 
+        opacity: 1; 
+        pointer-events: auto; 
+        mix-blend-mode: normal; 
+        transform: matrix(1, 0, 0, 1, 1258, 394.5) skew(0rad, 0rad) rotate3d(0, 0, 0, 0deg); 
+        transform-origin: 0% 0%;"
+        autocomplete="off"
+      />
     </div>
   </body>
 </html>

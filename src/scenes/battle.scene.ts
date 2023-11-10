@@ -90,7 +90,7 @@ export default class Battle extends Phaser.Scene {
     super('battle')
   }
 
-  init() {}
+  init() { }
 
   preload() {
     this.loadSirenSpine()
@@ -251,14 +251,14 @@ export default class Battle extends Phaser.Scene {
       this.lvlPos = posX2
       this.labelPos = posX3
     }
-    if(global.section === 1 || global.section === 4) {
+    if (global.section === 1 || global.section === 4) {
       this.add
         .sprite(this.avatarPos, 120, 'heart-mark-enemy')
         .setScale(1)
         .setOrigin(0, 0.5)
 
     }
-    if(global.section === 2 || global.section === 3) {
+    if (global.section === 2 || global.section === 3) {
       this.add
         .sprite(this.avatarPos, 120, 'heart-mark-enemy1')
         .setScale(1)
@@ -278,13 +278,13 @@ export default class Battle extends Phaser.Scene {
       .setVisible(false)
 
     if (global.section === 3 || global.section === 4) {
-      if(global.section === 3) {
+      if (global.section === 3) {
         this.add
           .sprite(1500, 120, 'heart-mark-enemy1')
           .setScale(1)
           .setOrigin(0, 0.5)
       }
-      if(global.section === 4) {
+      if (global.section === 4) {
         this.add
           .sprite(1500, 120, 'heart-mark-enemy1')
           .setScale(1)
@@ -351,20 +351,20 @@ export default class Battle extends Phaser.Scene {
     )
   }
   createEnemy() {
-    switch(global.section) {
+    switch (global.section) {
       case 1: this.enemyModel_1()
         this.enemySpine = this.enemySpineTmp_1
         this.enemyAttack1 = this.enemyAttackTmp_1
         this.enemyDamage = this.enemyDamageTmp_1
         this.enemyDead = this.enemyDeadTmp_1
         break
-      case 2:  this.enemyModel_2()
+      case 2: this.enemyModel_2()
         this.enemySpine = this.enemySpineTmp_2
         this.enemyAttack1 = this.enemyAttackTmp_2
         this.enemyDamage = this.enemyDamageTmp_2
         this.enemyDead = this.enemyDeadTmp_2
         break
-      case 3:  this.enemyModel_2()
+      case 3: this.enemyModel_2()
         this.enemySpine = this.enemySpineTmp_2
         this.enemyAttack1 = this.enemyAttackTmp_2
         this.enemyDamage = this.enemyDamageTmp_2
@@ -393,7 +393,7 @@ export default class Battle extends Phaser.Scene {
         this.enemyAttack1 = this.enemyAttackTmp_1
         this.enemyDamage = this.enemyDamageTmp_1
         this.enemyDead = this.enemyDeadTmp_1
-        
+
         this.enemySpine_1 = this.add
           .spine(1450, 920, ENEMY_1_SPINE, 'idle', true)
           .setScale(-0.3, 0.3)
@@ -446,7 +446,7 @@ export default class Battle extends Phaser.Scene {
     // attackAnim2.duration = 0.9
 
 
-    if(global.section === 1 || global.section === 4) {
+    if (global.section === 1 || global.section === 4) {
       const attackAnim = this.enemyAttackTmp_1.findAnimation('attack1')
       attackAnim.duration = 1.45
     }
@@ -517,12 +517,20 @@ export default class Battle extends Phaser.Scene {
   }
 
   enemyGetDamaged() {
-    if(this.enemy.hp < global.damage) {
-      const damageAnim = this.enemyDamage.findAnimation('damage')
-      damageAnim.duration = 0.05
+    if (global.section === 1 || global.section === 4) {
+      if (this.enemy.hp < global.damage) {
+        const damageAnim = this.enemyDamage.findAnimation('damage')
+        damageAnim.duration = 0.05
+      }
+    }
+    if (global.section === 2 || global.section === 3) {
+      if (this.enemy.hp < global.damage) {
+        const damageAnim = this.enemyDamage.findAnimation('damage')
+        damageAnim.duration = 0.03
+      }
     }
     if (global.section === 3 || global.section === 4) {
-      if(this.enemy_1.hp < global.damage) {
+      if (this.enemy_1.hp < global.damage) {
         const damageAnim1 = this.enemyDamage_1.findAnimation('damage')
         damageAnim1.duration = 0.03
       }
@@ -534,7 +542,7 @@ export default class Battle extends Phaser.Scene {
         let animFlag = true
         this.enemyDamage.play('damage')
           .on('complete', () => {
-            if(animFlag === true) {
+            if (animFlag === true) {
               this.damageControl(2, 1)
               this.enemyAttackingSiren()
               this.enemyDamage.setVisible(false)
@@ -548,7 +556,7 @@ export default class Battle extends Phaser.Scene {
         let animFlag = true;
         this.enemyDamage_1.play('damage')
           .on('complete', () => {
-            if(animFlag === true) {
+            if (animFlag === true) {
               this.damageControl(3, 1)
               if (this.enemy_1_die === true) {
                 this.enemySpine.setVisible(false)
@@ -560,21 +568,21 @@ export default class Battle extends Phaser.Scene {
                 let animFlag1 = true
                 this.enemyAttack1_1.play('attack1')
                   .on('complete', () => {
-                    if(animFlag1 === true) {
+                    if (animFlag1 === true) {
                       this.sirenGetDamaged(3)
                       this.enemyAttack1_1.setVisible(false)
-                      this.enemySpine_1.setVisible(true)   
+                      this.enemySpine_1.setVisible(true)
                       this.time.addEvent({
                         delay: 1,
                         callback: () => {
                           this.enemyAttack1.setVisible(true)
                           this.enemySpine.setVisible(false)
                         },
-                      })                   
+                      })
                       let animFlag2 = true
                       this.enemyAttack1.play('attack1')
                         .on('complete', () => {
-                          if(animFlag2 === true) {
+                          if (animFlag2 === true) {
                             this.sirenGetDamaged(2)
                             this.enemyAttack1.setVisible(false)
                             if (this.enemy_die === false) {
@@ -622,7 +630,7 @@ export default class Battle extends Phaser.Scene {
           if (animFlag === true) {
             this.sirenGetDamaged(2)
             this.enemyAttack1.setVisible(false)
-            if(this.enemy_die === false) {
+            if (this.enemy_die === false) {
               this.enemySpine.setVisible(true)
             }
             animFlag = false
@@ -632,8 +640,8 @@ export default class Battle extends Phaser.Scene {
   }
   sirenGetDamaged(type: number) {
     let animFlag = true;
-    if(this.attacking === true) {
-      if(this.siren.hp < global.damage) {
+    if (this.attacking === true) {
+      if (this.siren.hp < global.damage) {
         const damageAnim = this.sirenDamage.findAnimation('damage')
         damageAnim.duration = 0.05
       }
@@ -644,11 +652,11 @@ export default class Battle extends Phaser.Scene {
           if (animFlag === true) {
             this.damageControl(1, type)
             this.sirenDamage.setVisible(false)
-            if(this.siren.hp > 0) {
+            if (this.siren.hp > 0) {
               this.sirenSpine.setVisible(true)
             }
-            if(global.section === 3 || global.section === 4) {
-              if(this.enemy_1_die === true) {
+            if (global.section === 3 || global.section === 4) {
+              if (this.enemy_1_die === true) {
                 this.attacking = false
               }
             } else {
@@ -671,16 +679,16 @@ export default class Battle extends Phaser.Scene {
   }
   damagePlay(critical: boolean, owner: number, damage: any) {
     this.damageLabel.setText(`${damage}`)
-    switch(owner) {
+    switch (owner) {
       case 1: this.damageLabel.x = 420;
-      this.critiLabel.x = 420
-      break;
+        this.critiLabel.x = 420
+        break;
       case 2: this.damageLabel.x = 1300;
-      this.critiLabel.x = 1300
-      break;
+        this.critiLabel.x = 1300
+        break;
       case 3: this.damageLabel.x = 1430;
-      this.critiLabel.x = 1430
-      break;
+        this.critiLabel.x = 1430
+        break;
     }
 
     this.fadeinTween = this.tweens
@@ -720,21 +728,21 @@ export default class Battle extends Phaser.Scene {
       })
     }
   }
-  
+
   damageControl(owner: number, attacker: number) {
     this.sirenDamage.setVisible(false)
     this.sirenSpine.setVisible(true)
     const unit = global.rooms.filter(obj => obj.chapter === global.chapter && obj.section === global.section).at(0)
     const unit1 = global.rooms.filter(obj => obj.chapter === global.chapter && obj.section === global.section).at(1)
-    
+
     let damage = 190
-    if(this.attackType === 1) damage = global.damage + 40
-    else if(this.attackType === 2) damage = global.damage + 190
-    else if(this.attackType === 3) damage = global.damage + 70
+    if (this.attackType === 1) damage = global.damage + 40
+    else if (this.attackType === 2) damage = global.damage + 190
+    else if (this.attackType === 3) damage = global.damage + 70
     // let damage = (this.attackType === 2 || this.attackType === 3) ? (global.damage + 40) :global.damage
     let enemy_damage = unit?.damage
     let enemy_damage1 = unit1?.damage
-    
+
     let critical = false
     const r = Math.random()
     if (global.critical > r * 100 && this.attackType === 1) {
@@ -744,12 +752,12 @@ export default class Battle extends Phaser.Scene {
     }
 
     if (owner === this.siren.owner) {
-      if(attacker === 2) {
+      if (attacker === 2) {
         this.damagePlay(critical, owner, enemy_damage)
         this.siren.getDamaged(enemy_damage)
         store.dispatch(setAtkBtnState(true))
       }
-      if(attacker === 3) {
+      if (attacker === 3) {
         this.damagePlay(critical, owner, enemy_damage1)
         this.siren.getDamaged(enemy_damage1)
       }
@@ -778,40 +786,33 @@ export default class Battle extends Phaser.Scene {
           .play('dead')
         this.attacking = false
         this.enemy_die = true
-        if(global.section === 3 || global.section === 4) {
+        if (global.section === 3 || global.section === 4) {
           this.redArrow1.setVisible(false)
           this.redArrow2.setVisible(false)
-        }        
+        }
         this.onEnemyDead()
       }
     }
     if (owner === this.enemy_1.owner) {
       this.damagePlay(critical, owner, damage)
-        this.enemy_1.getDamaged(damage)
-        if (this.enemy_1.hp <= 0) {
-          this.enemySpine_1.setVisible(false)
-          this.enemyAttack1_1.setVisible(false)
-          this.enemyDamage_1.setVisible(false)
-          this.enemyDead_1
-            .setVisible(true)
-            .play('dead')
-          // this.attacking = false
-          this.enemy_1_die = true
-          this.redArrow1.setVisible(true)
-          this.redArrow2.setVisible(false)
-        }
+      this.enemy_1.getDamaged(damage)
+      if (this.enemy_1.hp <= 0) {
+        this.enemySpine_1.setVisible(false)
+        this.enemyAttack1_1.setVisible(false)
+        this.enemyDamage_1.setVisible(false)
+        this.enemyDead_1
+          .setVisible(true)
+          .play('dead')
+        // this.attacking = false
+        this.enemy_1_die = true
+        this.redArrow1.setVisible(true)
+        this.redArrow2.setVisible(false)
+      }
     }
   }
 
   onEnemyDead() {
     this.resultWidget.show(1)
-    if ((global.section === 2 || global.section === 4)) {
-      itemModify(global.walletAddress, global.currentCharacterName, 'loot', 1, global.room.chapter, global.room.section, global.chapter, global.section, (resp: any) => {
-        if (resp.purchase !== undefined) {
-          changeItem(resp)
-        }
-      })
-    }
   }
 
   onSirenDead(type: any) {
@@ -819,14 +820,22 @@ export default class Battle extends Phaser.Scene {
   }
 
   createHud() {
+    if ((global.section === 2 || global.section === 4)) {
+      itemModify(global.walletAddress, global.currentCharacterName, 'loot', 1, global.room.chapter, global.room.section, global.chapter, global.section, (resp: any) => {
+        if (resp.purchase !== undefined) {
+          changeItem(resp)
+        }
+      })
+    }
+    itemModify(global.walletAddress, global.currentCharacterName, 'loot', 1, global.room.chapter, global.room.section, global.chapter, global.section, (resp: any) => {
+    })
     this.resultWidget = new ResultWidget(this, 950, 500).setVisible(false)
     this.resultWidget.on('claim', () => {
       store.dispatch(setGameStatus(0))
       // getProfile(global.walletAddress, 'siren-1')
-      // document.body.style.backgroundImage = 'url(assets/background/main.gif)'
+      this.scene.start('game')
       const video = document.getElementById('backgroundVideo') as HTMLElement
       video.style.display = "block"
-      this.scene.start('game')
       this.registry.destroy()
     })
   }

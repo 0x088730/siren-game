@@ -51,12 +51,7 @@ export default class CharacterWidgetOnBattle extends Phaser.GameObjects.Containe
       )
       
     }
-
-    
   }
-
- 
- 
   setModelList(visible: boolean) {
     this.background.setVisible(visible)
     for (let i = 0; i < avatarList.length; i++) {

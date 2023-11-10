@@ -155,6 +155,8 @@ export default class CharacterWidget extends Phaser.GameObjects.Container {
           this.lvTexts = []
           this.rarityTexts = []
           this.emit('closed')
+          const inputElement = document.getElementById("swapAmountInput") as HTMLElement
+          inputElement.style.display = "none"
         })),
     )
     for (let i = 0; i < avatarList.length; i++) {
@@ -167,23 +169,6 @@ export default class CharacterWidget extends Phaser.GameObjects.Container {
           .setDisplaySize(220, 220)
           .setInteractive()),
       )
-      // this.add(
-      //   (this.model[i] = scene.add
-
-      //     .setDisplaySize(180, 180)
-      //     .setInteractive()),
-      // )
-      // this.avatarTween[i] = scene.tweens.add({
-      //   duration: 1000,
-      //   repeat: -1,
-      //   ease: 'Power1',
-      //   paused: true,
-      //   scaleX: 0.3,
-      //   scaleY: 0.3,
-      //   targets: this.model[i],
-      //   yoyo: true,
-      // })
-      // this.avatarTween[i].play()
     }
 
     for (let i = 0; i < weaponList.length; i++) {
@@ -209,28 +194,6 @@ export default class CharacterWidget extends Phaser.GameObjects.Container {
       })
       this.weaponTween[i].play()
     }
-
-    this.add(
-      (this.energySwapEdit = this.scene.add.dom(465, -50, 'input', {
-        type: 'number',
-        value: '0',
-        pattern: '[0-9]*',
-        fontSize: '32px',
-        backgroundColor: '#fff',
-        color: '#000',
-        padding: '8px',
-        borderRadius: '8px',
-        width: '100px',
-        fontFamily: 'Anime Ace',
-        textAlign: 'center',
-      })),
-    )
-
-    const inputElement = this.energySwapEdit.node as HTMLInputElement
-
-    inputElement.addEventListener('input', () => {
-      this.swapAmount = parseInt(inputElement.value, 10)
-    })
 
     this.add(
       (this.waterText = this.scene.add
@@ -291,6 +254,8 @@ export default class CharacterWidget extends Phaser.GameObjects.Container {
         .setDisplaySize(118, 46))
         .setInteractive()
         .on('pointerdown', () => {
+          var inputValue = (<HTMLInputElement>document.getElementById("swapAmountInput")).value;
+          this.swapAmount = parseInt(inputValue, 10)
           if (this.swapAmount === undefined) {
             return
           }
@@ -575,6 +540,7 @@ export default class CharacterWidget extends Phaser.GameObjects.Container {
   }
 
   sceneMode(mode: number) {
+    console.log(mode)
     switch (mode) {
       case 1: {
         //modelList
@@ -600,13 +566,14 @@ export default class CharacterWidget extends Phaser.GameObjects.Container {
         this.levelLabel.setVisible(false)
         this.energySwapText.setVisible(false)
         this.energySwapText1.setVisible(false)
-        this.energySwapEdit.setVisible(false)
+        // this.energySwapEdit.setVisible(false)
         this.siren3.setVisible(false)
         this.waterText.setVisible(false)
         this.waterText1.setVisible(false)
         this.waterText2.setVisible(false)
         this.swapBtn.setVisible(false)
-
+        const inputElement = document.getElementById("swapAmountInput") as HTMLElement
+        inputElement.style.display = "none"
         break
       }
       case 2: {
@@ -640,12 +607,14 @@ export default class CharacterWidget extends Phaser.GameObjects.Container {
         this.levelLabel.setVisible(true)
 
         this.energySwapText.setVisible(false)
-        this.energySwapEdit.setVisible(false)
+        // this.energySwapEdit.setVisible(false)
         this.energySwapText1.setVisible(false)
         this.waterText.setVisible(false)
         this.waterText1.setVisible(false)
         this.waterText2.setVisible(false)
         this.swapBtn.setVisible(false)
+        const inputElement = document.getElementById("swapAmountInput") as HTMLElement
+        inputElement.style.display = "none"
         break
       }
       case 3: {
@@ -656,13 +625,15 @@ export default class CharacterWidget extends Phaser.GameObjects.Container {
         this.energy.setVisible(true)
         this.critical.setVisible(true)
         this.background.setVisible(true)
-        this.energySwapEdit.setVisible(false)
+        // this.energySwapEdit.setVisible(false)
         this.energySwapText.setVisible(false)
         this.energySwapText1.setVisible(false)
         this.waterText.setVisible(false)
         this.waterText1.setVisible(false)
         this.waterText2.setVisible(false)
         this.swapBtn.setVisible(false)
+        const inputElement = document.getElementById("swapAmountInput") as HTMLElement
+        inputElement.style.display = "none"
         break
       }
       case 4: {
@@ -672,20 +643,22 @@ export default class CharacterWidget extends Phaser.GameObjects.Container {
         this.health.setVisible(true)
         this.critical.setVisible(true)
         this.background.setVisible(true)
-        this.energySwapEdit.setVisible(false)
+        // this.energySwapEdit.setVisible(false)
         this.energySwapText.setVisible(false)
         this.energySwapText1.setVisible(false)
         this.waterText.setVisible(false)
         this.waterText1.setVisible(false)
         this.waterText2.setVisible(false)
         this.swapBtn.setVisible(false)
+        const inputElement = document.getElementById("swapAmountInput") as HTMLElement
+        inputElement.style.display = "none"
         break
       }
       case 5: {
         //waterSwap
         this.setGemList(false)
         this.setWeaponList(false)
-        this.energySwapEdit.setVisible(true)
+        // this.energySwapEdit.setVisible(true)
         this.energySwapText.setVisible(true)
         this.energySwapText1.setVisible(true)
         this.waterText.setVisible(true)
@@ -693,6 +666,8 @@ export default class CharacterWidget extends Phaser.GameObjects.Container {
         this.waterText2.setVisible(true)
         this.background.setVisible(true)
         this.swapBtn.setVisible(true)
+        const inputElement = document.getElementById("swapAmountInput") as HTMLElement
+        inputElement.style.display = "block"
         break
       }
     }
