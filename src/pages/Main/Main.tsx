@@ -54,7 +54,11 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
     width: window.innerWidth,
     height: window.innerHeight,
   })
-
+  useEffect(() => {
+    const video = document.getElementById('backgroundVideo') as HTMLElement
+    video.style.display = "none"
+    document.body.style.backgroundImage = "url(assets/background/background.jpg)";
+  }, [])
   useEffect(() => {
     if (global.wall === 0) {
       history.back();
@@ -755,7 +759,7 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
         >
           <img
             alt=""
-            style={{position: 'absolute', left: '2%', top: '55%'}}
+            style={{ position: 'absolute', left: '2%', top: '55%' }}
             src={`/images/greentree1.png`}
           />
         </Box>
@@ -768,7 +772,7 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
         >
           <img
             alt=""
-            style={{position: 'absolute', left: '15%', top: '65%', width: '280px', height: '300px' }}
+            style={{ position: 'absolute', left: '15%', top: '65%', width: '280px', height: '300px' }}
             src={`/images/pinktree.png`}
           />
         </Box>
@@ -781,7 +785,7 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
         >
           <img
             alt=""
-            style={{position: 'absolute', right: '5%', top: '55%',}}
+            style={{ position: 'absolute', right: '5%', top: '55%', }}
             src={`/images/greentree2.png`}
           />
         </Box>
@@ -794,7 +798,7 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
         >
           <img
             alt=""
-            style={{position: 'absolute', left: '50%', bottom: '-5%',}}
+            style={{ position: 'absolute', left: '50%', bottom: '-5%', }}
             src={`/images/rock.png`}
           />
         </Box>

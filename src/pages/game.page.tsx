@@ -46,7 +46,10 @@ export const GamePage = ({
   const location = useLocation()
   const ref = new URLSearchParams(location.search).get('ref')
   global.ref = `${ref?.toString()}`
-
+  useEffect(() => {
+    const video = document.getElementById('backgroundVideo') as HTMLElement
+    video.style.display = "block"
+  }, [])
   const start = () => {
     if (global.wall === 0) {
       return
@@ -122,23 +125,23 @@ export const GamePage = ({
 
           {gameState === 0 && (
             <div className="flex flex-col justify-center flex-1 h-full d-flex">
-              
+
               {!inventoryOpened && !characterOpened && (
                 <div>
                   <div className="btn-group">
                     <div className="btn-wrapper">
                       <ButtonComponent onClick={start}>
-                        <img src="assets/images/play pve.png"/>
+                        <img src="assets/images/play pve.png" />
                       </ButtonComponent>
                     </div>
                     <div className="btn-wrapper">
                       <ButtonComponent>
-                        <img src="assets/images/play pvp.png"/>
+                        <img src="assets/images/play pvp.png" />
                       </ButtonComponent>
                     </div>
                     <div className="btn-wrapper">
                       <ButtonComponent onClick={inventory}>
-                        <img src="assets/images/inventory.png"/>
+                        <img src="assets/images/inventory.png" />
                       </ButtonComponent>
                     </div>
                   </div>
@@ -160,10 +163,10 @@ export const GamePage = ({
               )}
             </div>
           )}
-          {gameState === 1 && global.currentCharacterName === 'siren-1' &&(
+          {gameState === 1 && global.currentCharacterName === 'siren-1' && (
             <>
               <GameHeaderComponent />
-              {!turn&&atkBtnState && (
+              {!turn && atkBtnState && (
                 <div className="absolute bottom-0 right-0 gap-2 p-4">
                   {/* <AttackButton /> */}
                   <button
@@ -178,7 +181,7 @@ export const GamePage = ({
                       bottom: '50px',
                     }}
                   >
-                    
+
                     <div className="w-[160px]">
                       {thirdTurn === 0 && (
                         <img src="assets/images/btn_attack_2.png" />
@@ -245,18 +248,18 @@ export const GamePage = ({
                       <img src="assets/images/btn_attack.png" />
                     </div>
                   </button>
-                  
+
                 </div>
               )}
             </>
           )}
-          {gameState === 1 && global.currentCharacterName === 'siren-4' &&(
+          {gameState === 1 && global.currentCharacterName === 'siren-4' && (
             <>
               <GameHeaderComponent />
-              {!turn&&atkBtnState && (
+              {!turn && atkBtnState && (
                 <div className="absolute bottom-0 right-0 gap-2 p-4">
                   {/* <AttackButton /> */}
-                  
+
                   <button
                     onClick={normalAttack}
                     style={{
@@ -269,7 +272,7 @@ export const GamePage = ({
                       <img src="assets/images/btn_attack.png" />
                     </div>
                   </button>
-                  
+
                 </div>
               )}
             </>
