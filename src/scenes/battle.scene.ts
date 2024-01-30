@@ -825,8 +825,8 @@ export default class Battle extends Phaser.Scene {
         }
       })
     }
-    itemModify(global.walletAddress, global.currentCharacterName, 'loot', 1, global.room.chapter, global.room.section, global.chapter, global.section, (resp: any) => {
-    })
+    // itemModify(global.walletAddress, global.currentCharacterName, 'loot', 1, global.room.chapter, global.room.section, global.chapter, global.section, (resp: any) => {
+    // })
     this.resultWidget = new ResultWidget(this, 950, 500).setVisible(false)
     this.resultWidget.on('claim', () => {
       store.dispatch(setGameStatus(0))

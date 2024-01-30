@@ -2,7 +2,8 @@ import axios from "axios";
 import { global } from './global'
 import config from '../utils/config'
 
-axios.defaults.baseURL = `${config.server}:${config.port}${config.baseURL}`
+// axios.defaults.baseURL = `${config.server}:${config.port}${config.baseURL}`
+axios.defaults.baseURL = `${config.server}${config.baseURL}`
 export const getProfile = async (walletAddress: string, character: string) => {
     const data = (await axios.post('/user/profile', {
         walletAddress,
