@@ -140,7 +140,7 @@ export default class CharacterWidget extends Phaser.GameObjects.Container {
       (this.closeBtn = scene.add
         .image(405, -335, 'close-btn')
         .setInteractive()
-        .setScale(0.5)
+        // .setScale(0.5)
         .on('pointerdown', () => {
           this.sirenSpine.setVisible(false)
           this.siren3.stop()

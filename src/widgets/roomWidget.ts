@@ -93,7 +93,7 @@ export default class RoomWidget extends Phaser.GameObjects.Container {
       (this.closeBtn = scene.add
         .image(405, -335, 'close-btn')
         .setInteractive()
-        .setScale(0.5)
+        // .setScale(0.5)
         .on('pointerdown', () => {
           // this.setVisible(false)
           // for(let i=0; i < this.rarityTexts.length; i++){

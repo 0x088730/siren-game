@@ -17,6 +17,11 @@
 #root{
   overflow-y: hidden;
 }
+@media screen and (max-height: 915px) {
+  #root{
+    overflow-y: auto;
+  }
+}
 .App-logo {
   height: 40vmin;
   pointer-events: none;

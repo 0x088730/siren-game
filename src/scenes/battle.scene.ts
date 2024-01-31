@@ -280,22 +280,22 @@ export default class Battle extends Phaser.Scene {
     if (global.section === 3 || global.section === 4) {
       if (global.section === 3) {
         this.add
-          .sprite(1500, 120, 'heart-mark-enemy1')
+          .sprite(1440, 120, 'heart-mark-enemy1')
           .setScale(1)
           .setOrigin(0, 0.5)
       }
       if (global.section === 4) {
         this.add
-          .sprite(1500, 120, 'heart-mark-enemy1')
+          .sprite(1440, 120, 'heart-mark-enemy1')
           .setScale(1)
           .setOrigin(0, 0.5)
       }
       const unit1 = global.rooms.filter(obj => obj.chapter === global.chapter && obj.section === global.section).at(1)
       this.enemyLevel_1 = this.add
-        .text(1765, 110, `Level ${unit1?.level}`, { font: '40px Anime Ace', color: '#ffffff' })
+        .text(1705, 110, `Level ${unit1?.level}`, { font: '40px Anime Ace', color: '#ffffff' })
       this.enemyLevel_1.setOrigin(0.5, 0.5);
       this.enemyHPLabel_1 = this.add
-        .text(1755, 168, `${unit1?.hp}/${unit1?.hp}`, { fontFamily: 'Anime Ace', fontSize: '20px', color: '#e7ad21' })
+        .text(1695, 168, `${unit1?.hp}/${unit1?.hp}`, { fontFamily: 'Anime Ace', fontSize: '20px', color: '#e7ad21' })
       this.enemyHPLabel_1.setOrigin(0.5, 0.5);
     }
   }
@@ -825,8 +825,10 @@ export default class Battle extends Phaser.Scene {
         }
       })
     }
-    // itemModify(global.walletAddress, global.currentCharacterName, 'loot', 1, global.room.chapter, global.room.section, global.chapter, global.section, (resp: any) => {
-    // })
+    else {
+      itemModify(global.walletAddress, global.currentCharacterName, 'loot', 1, global.room.chapter, global.room.section, global.chapter, global.section, (resp: any) => {
+      })
+    }
     this.resultWidget = new ResultWidget(this, 950, 500).setVisible(false)
     this.resultWidget.on('claim', () => {
       store.dispatch(setGameStatus(0))

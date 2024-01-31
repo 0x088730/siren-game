@@ -4,7 +4,8 @@ import {
   increment,
   decrement,
   setCharacterStatus,
-  setTurnFormat
+  setTurnFormat,
+  setLoadingStatus
 } from '../common/state/game/reducer'
 import store from '../store'
 import ClaimWidget from '../widgets/claimWidget'
@@ -35,9 +36,19 @@ export default class Game extends Phaser.Scene {
   init() {}
 
   preload() {
+    store.dispatch(setLoadingStatus(true));
     this.load.setPath('assets/character/spine')
     this.load.spine(SIREN_SPINE, 'siren1/idle/sakura.json', 'siren1/idle/sakura.atlas')
     this.load.setPath('/')
+    this.load.on('complete', () => {
+      this.time.addEvent({
+        delay: 1000,
+        callback: () => {
+          store.dispatch(setLoadingStatus(false));
+        },
+      })
+
+    });
   }
 
   create() {

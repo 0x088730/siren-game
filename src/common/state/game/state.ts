@@ -26,6 +26,7 @@ export interface GameStateProps {
   address: String
   exp: number
   attackBtnState:boolean
+  isLoading: boolean
 }
 
 const gameInitialState: GameStateProps = {
@@ -53,7 +54,8 @@ const gameInitialState: GameStateProps = {
   },
   address: '',
   exp: 0,
-  attackBtnState:true
+  attackBtnState:true,
+  isLoading: true
 }
 
 export default gameInitialState

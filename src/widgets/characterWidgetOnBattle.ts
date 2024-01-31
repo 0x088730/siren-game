@@ -24,7 +24,7 @@ export default class CharacterWidgetOnBattle extends Phaser.GameObjects.Containe
       (this.closeBtn = scene.add
         .image(605, -335, 'close-btn')
         .setInteractive()
-        .setScale(0.5)
+        // .setScale(0.5)
         .on('pointerdown', () => {
           
           this.setVisible(false)

@@ -13,7 +13,7 @@ export default class InventoryWidget extends Phaser.GameObjects.Container {
     this.add(
       (this.closeBtn = scene.add
         .image(735, -200, 'close-btn')
-        .setScale(0.5)
+        // .setScale(0.5)
         .setInteractive()
         .on('pointerdown', () => {
           this.setVisible(false)
