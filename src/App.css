@@ -5,23 +5,27 @@
 
 .Main {
   /* background-color: #001512; */
-  background: url('./images/background.jpg');
-  background-size: cover;
-  width: 100%;
+  background: url('./images/background.jpg') !important;
+  background-repeat: no-repeat !important;
+  background-size: cover !important;
+  width: 100vw;
   min-height: 760px;
   height: 100vh;
-  min-width: 1200px;
+  min-width: 1600px;
   position: relative;
   overflow: hidden;
 }
-#root{
+
+#root {
   overflow-y: hidden;
 }
+
 @media screen and (max-height: 915px) {
-  #root{
+  #root {
     overflow-y: auto;
   }
 }
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;
@@ -48,7 +52,7 @@
   color: #61dafb;
 }
 
-p{
+p {
   margin: 0;
 }
 
@@ -57,7 +61,19 @@ p{
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
+}
+
+body {
+  position: relative;
+  background-repeat: no-repeat;
+  background-size: cover;
+  margin-top: 0px;
+  height: 100vh;
+  width: 100vw;
+  min-width: 1600px;
+  overflow: auto;
 }

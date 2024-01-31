@@ -628,7 +628,7 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
             <Box
               sx={{
                 pointerEvents: `${TEST_MODE || connected ? '' : 'none'}`,
-                height: '90%',
+                // height: '90%',
               }}
             >
               <div
