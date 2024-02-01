@@ -4,7 +4,6 @@
 
 .wall-wallet {
     position: relative;
-    background-image: url('../images/background.jpg');
     background-size: cover; /* Optional: Adjust the size of the background image */
     background-repeat: no-repeat;
     margin-top: 0px;

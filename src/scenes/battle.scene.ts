@@ -1,5 +1,5 @@
 import { createCharacterAnims } from '../anims/CharacterAnims'
-import { setGameStatus, increment, addExp, setSecondTurn, setThirdTurn, addTurn, setTurnFormat, setAtkBtnState, setGameTurn } from '../common/state/game/reducer'
+import { setGameStatus, increment, addExp, setSecondTurn, setThirdTurn, addTurn, setTurnFormat, setAtkBtnState, setGameTurn, getCharacterStatus } from '../common/state/game/reducer'
 import {
   SIREN_SPINE, SIREN_ATTACK1, SIREN_ATTACK2, SIREN_ATTACK3, SIREN_DAMAGE, SIREN_DEAD,
   ENEMY_SPINE, ENEMY_ATTACK1, ENEMY_ATTACK2, ENEMY_ATTACK3, ENEMY_DAMAGE, ENEMY_DEAD,
@@ -106,6 +106,13 @@ export default class Battle extends Phaser.Scene {
     this.createCharacter()
     this.createEnemy()
     this.createHud()
+    this.time.addEvent({
+      delay: 800,
+      callback: () => {
+        store.dispatch(getCharacterStatus(true))
+      },
+    })
+    
   }
 
   loadEnemySpine() {
@@ -832,6 +839,7 @@ export default class Battle extends Phaser.Scene {
     this.resultWidget = new ResultWidget(this, 950, 500).setVisible(false)
     this.resultWidget.on('claim', () => {
       store.dispatch(setGameStatus(0))
+      store.dispatch(getCharacterStatus(false))
       // getProfile(global.walletAddress, 'siren-1')
       this.scene.start('game')
       const video = document.getElementById('backgroundVideo') as HTMLElement

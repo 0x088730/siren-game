@@ -26,12 +26,12 @@ export default class RoomWidget extends Phaser.GameObjects.Container {
     this.nChapter = 1
     this.nSection = 1
     const chapterPos = [
-      { x: -600, y: 50 },
-      { x: -300, y: -100 },
-      { x: 0, y: 80 },
-      { x: 300, y: -140 },
-      { x: 600, y: -190 },
-      { x: 900, y: 20 },
+      { x: -630, y: 220 },
+      { x: 130, y: 250 },
+      { x: -50, y: -230 },
+      { x: 380, y: -380 },
+      // { x: 600, y: -190 },
+      // { x: 900, y: 20 },
     ]
     const gChapter = global.room.chapter
     const gSection = global.room.section

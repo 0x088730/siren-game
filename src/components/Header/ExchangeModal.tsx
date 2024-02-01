@@ -578,19 +578,14 @@ const ExchangeModal = ({
                 >
                   <img src="/assets/images/roomBtn.png" alt="" />
                   <p
-                    style={{
-                      position: 'absolute',
-                      fontFamily: 'Anime Ace',
-                      fontSize: '14px',
-                      textAlign: 'center',
-                      color: '#e7e1e1',
-                    }}
+                    className='flex justify-center absolute text-center text-[#e7e1e1] text-[14px]'
+                    style={{ fontFamily: 'Anime Ace',}}
                   >
                     {claimBar[2] === true ? (
                       <img
                         src="assets/item/box-closed.png"
                         alt=""
-                        style={{ marginLeft: '13px', marginTop: '-10px', width: '70%', height: '80%', padding: '8%' }}
+                        style={{ width: '55%', marginTop: "-20px" }}
                       />
                     ) : (
                       ''

@@ -38,6 +38,7 @@ export const GamePage = ({
   const secondTurn = useSelector((state: any) => state.app.game.secondTurn)
   const thirdTurn = useSelector((state: any) => state.app.game.thirdTurn)
   const isLoading = useSelector((state: any) => state.app.game.isLoading)
+  const getCharacter = useSelector((state: any) => state.app.game.getCharacter)
 
   const inventoryOpened = useSelector(
     (state: any) => state.app.game.inventoryOpened,
@@ -185,7 +186,7 @@ export const GamePage = ({
               {gameState === 1 && global.currentCharacterName === 'siren-1' && (
                 <>
                   <GameHeaderComponent />
-                  {!turn && atkBtnState && (
+                  {!turn && atkBtnState && getCharacter && (
                     <div className="absolute bottom-0 right-0 gap-2 p-4">
                       {/* <AttackButton /> */}
                       <button
@@ -267,7 +268,6 @@ export const GamePage = ({
                           <img src="assets/images/btn_attack.png" />
                         </div>
                       </button>
-
                     </div>
                   )}
                 </>
