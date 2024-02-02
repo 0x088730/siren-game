@@ -32,31 +32,31 @@ export const ChapterPage = ({
     }
     return (
         <>
-            <div className={`${styles.chapter} relative w-full bg-no-repeat bg-cover relative`}>
+            <div className={`${styles.chapter} relative w-full bg-no-repeat bg-[length:100%_100%] relative`}>
                 <img
                     src='assets/background/chapter/chapter1.png'
                     draggable="false"
                     // className={`${styles.item} fixed top-[428px] w-[38%] cursor-pointer`}
-                    className={`${styles.item} absolute top-[45%] w-[38%] cursor-pointer`}
+                    className={`${styles.item} absolute top-[40%] w-[38%] cursor-pointer`}
                     onClick={() => setOpenCharacter(true)}
                 />
                 <img
                     src='assets/background/chapter/chapter2.png'
                     draggable="false"
                     // className={`${styles.item} fixed top-[570px] right-0 w-[59%] cursor-pointe`}
-                    className={`${styles.item} absolute top-[62%] right-0 w-[59%] cursor-pointe`}
+                    className={`${styles.item} absolute top-[58%] right-0 w-[58%] cursor-pointe`}
                 />
                 <img
                     src='assets/background/chapter/chapter3.png'
                     draggable="false"
                     // className={`${styles.item} fixed top-[226px] left-[489px] w-[32%] cursor-pointer`}
-                    className={`${styles.item} absolute top-[24%] left-[29%] w-[32%] cursor-pointer`}
+                    className={`${styles.item} absolute top-[22%] left-[29.5%] w-[32%] cursor-pointer`}
                 />
                 <img
                     src='assets/background/chapter/chapter4.png'
                     draggable="false"
                     // className={`${styles.item} fixed left-[717px] w-[34%] cursor-pointer`}
-                    className={`${styles.item} absolute left-[42%] w-[34%] cursor-pointer`}
+                    className={`${styles.item} absolute top-[-2%] left-[43%] w-[32%] cursor-pointer`}
                 />
                 <img src='assets/images/come-back.png' draggable="false" className='absolute top-[15%] right-[7%] cursor-pointer w-[5%]' onClick={() => onMain()} />
             </div>
