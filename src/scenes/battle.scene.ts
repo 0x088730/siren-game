@@ -1,5 +1,5 @@
 import { createCharacterAnims } from '../anims/CharacterAnims'
-import { setGameStatus, increment, addExp, setSecondTurn, setThirdTurn, addTurn, setTurnFormat, setAtkBtnState, setGameTurn, getCharacterStatus } from '../common/state/game/reducer'
+import { setGameStatus, increment, addExp, setSecondTurn, setThirdTurn, addTurn, setTurnFormat, setAtkBtnState, setGameTurn, getCharacterStatus, setLoadingStatus } from '../common/state/game/reducer'
 import {
   SIREN_SPINE, SIREN_ATTACK1, SIREN_ATTACK2, SIREN_ATTACK3, SIREN_DAMAGE, SIREN_DEAD,
   ENEMY_SPINE, ENEMY_ATTACK1, ENEMY_ATTACK2, ENEMY_ATTACK3, ENEMY_DAMAGE, ENEMY_DEAD,
@@ -107,9 +107,10 @@ export default class Battle extends Phaser.Scene {
     this.createEnemy()
     this.createHud()
     this.time.addEvent({
-      delay: 300,
+      delay: 500,
       callback: () => {
         store.dispatch(getCharacterStatus(true))
+        // store.dispatch(setLoadingStatus(false))
       },
     })
   }

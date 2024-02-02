@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import React, { useState, useEffect } from 'react'
 import { global } from '../common/global'
 import store from '../store'
-import { openChapterPage, setGameStatus } from '../common/state/game/reducer'
+import { openChapterPage, setGameStatus, setLoadingStatus } from '../common/state/game/reducer'
 import styles from './Main/Main.module.scss'
 // import Battle from '../scenes/battle.scene'
 import Phaser from 'phaser'
@@ -34,6 +34,7 @@ export const SectionPage = ({
         store.dispatch(setGameStatus(1))
         const game = phaserGame.scene.keys.game as Game
         game.startGame(index)
+        // store.dispatch(setLoadingStatus(true));
         setPageStatus("main")
     }
     const changeBackground = (src: string) => {
