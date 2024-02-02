@@ -175,10 +175,10 @@ export const MainPage = ({
 
                                                     <div className="w-[160px]">
                                                         {thirdTurn === 0 && (
-                                                            <img src="assets/images/btn_attack_2.png" />
+                                                            <img src="assets/images/btn_attack_2.png" draggable="false" />
                                                         )}
                                                         {thirdTurn !== 0 && (
-                                                            <img src="assets/images/btn_attack_2_d.png" />
+                                                            <img src="assets/images/btn_attack_2_d.png" draggable="false" />
                                                         )}
                                                         {thirdTurn !== 0 && (
                                                             <h1
@@ -208,10 +208,10 @@ export const MainPage = ({
                                                 >
                                                     <div className="w-[160px]">
                                                         {secondTurn === 0 && (
-                                                            <img src="assets/images/btn_attack_3.png" />
+                                                            <img src="assets/images/btn_attack_3.png" draggable="false" />
                                                         )}
                                                         {secondTurn !== 0 && (
-                                                            <img src="assets/images/btn_attack_3_d.png" />
+                                                            <img src="assets/images/btn_attack_3_d.png" draggable="false" />
                                                         )}
                                                         {secondTurn !== 0 && (
                                                             <h1
@@ -236,7 +236,7 @@ export const MainPage = ({
                                                     }}
                                                 >
                                                     <div className="w-[129px]">
-                                                        <img src="assets/images/btn_attack.png" />
+                                                        <img src="assets/images/btn_attack.png" draggable="false" />
                                                     </div>
                                                 </button>
                                             </div>
