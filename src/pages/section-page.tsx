@@ -34,7 +34,7 @@ export const SectionPage = ({
         store.dispatch(setGameStatus(1))
         const game = phaserGame.scene.keys.game as Game
         game.startGame(index)
-        // store.dispatch(setLoadingStatus(true));
+        store.dispatch(setLoadingStatus(true));
         setPageStatus("main")
     }
     const changeBackground = (src: string) => {

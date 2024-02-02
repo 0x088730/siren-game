@@ -110,7 +110,9 @@ export default class Battle extends Phaser.Scene {
       delay: 500,
       callback: () => {
         store.dispatch(getCharacterStatus(true))
-        // store.dispatch(setLoadingStatus(false))
+        store.dispatch(setLoadingStatus(false))
+        const video = document.getElementById('backgroundVideo') as HTMLElement
+        video.style.visibility = "hidden"
       },
     })
   }
@@ -844,6 +846,7 @@ export default class Battle extends Phaser.Scene {
       this.scene.start('game')
       const video = document.getElementById('backgroundVideo') as HTMLElement
       video.style.display = "block"
+      video.style.visibility = "visible"
       this.registry.destroy()
     })
   }
