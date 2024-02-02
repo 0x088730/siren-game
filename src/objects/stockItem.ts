@@ -6,6 +6,7 @@ enum ItemType {
     Right = "RIGHT",
 }
  */
+import Phaser from "phaser"
 export default class StockItem extends Phaser.GameObjects.Container {
   image: Phaser.GameObjects.Image
   itemType: string

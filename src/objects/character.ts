@@ -1,5 +1,6 @@
 import { setAtkBtnState, setGameTurn, setTurnFormat } from '../common/state/game/reducer'
 import store from '../store'
+import Phaser from "phaser"
 
 export default class Character extends Phaser.Events.EventEmitter {
   scene: Phaser.Scene

@@ -107,12 +107,11 @@ export default class Battle extends Phaser.Scene {
     this.createEnemy()
     this.createHud()
     this.time.addEvent({
-      delay: 800,
+      delay: 300,
       callback: () => {
         store.dispatch(getCharacterStatus(true))
       },
     })
-    
   }
 
   loadEnemySpine() {

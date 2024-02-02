@@ -33,7 +33,7 @@ export default class Game extends Phaser.Scene {
     document.body.style.backgroundImage = src
   }
 
-  init() {}
+  init() { }
 
   preload() {
     store.dispatch(setLoadingStatus(true));
@@ -75,7 +75,7 @@ export default class Game extends Phaser.Scene {
         const video = document.getElementById('backgroundVideo') as HTMLElement
         video.style.display = "block"
       })
-    
+
     this.claimWidget = new ClaimWidget(this, 960, 540).on(
       'randomly-selected',
       (itemType: string, crystals: number) => {
@@ -93,13 +93,15 @@ export default class Game extends Phaser.Scene {
     this.createNewGame()
   }
 
-  update() {}
+  update() { }
 
   private createNewGame() {
     this.scene.launch('game')
   }
 
-  startGame() {
+  startGame(section: any) {
+    global.section = Number(section);
+    store.dispatch(setTurnFormat())
     this.changeBackground('url(assets/background/bg.jpg)')
     store.dispatch(setGameStatus(1))
     this.scene.start('battle')
@@ -122,10 +124,10 @@ export default class Game extends Phaser.Scene {
     store.dispatch(setTurnFormat())
 
     store.dispatch(setGameStatus(2))
-    
+
     this.changeBackground('url(assets/background/chapter.jpg')
     //this.roomWidget.destroy()
-    
+
     this.roomWidget = new RoomWidget(this, 880, 530)
     this.roomWidget
       .on('cancel', () => {
@@ -137,9 +139,9 @@ export default class Game extends Phaser.Scene {
       .on('start', (chapter: number, section: number) => {
         global.chapter = chapter
         global.section = section
-        this.startGame()
+        // this.startGame()
       })
-    
+
     this.roomWidget.setVisible(true)
 
   }

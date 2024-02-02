@@ -124,6 +124,12 @@ export default class Bootstrap extends Phaser.Scene {
     }
 
     for(let i = 1; i <= 4; i ++) {
+      this.load.image(`chapter${i}`, `assets/background/chapter/chapter${i}.png`)
+    }
+    for(let i = 1; i <= 4; i ++) {
+      this.load.image(`chapter${i}_hover`, `assets/background/chapter/chapter${i}_hover.png`)
+    }
+    for(let i = 1; i <= 4; i ++) {
       this.load.image(`model-${i}`, `assets/character/avatars/${i}.png`)
     }
     for(let i = 1; i <= 4; i ++) {

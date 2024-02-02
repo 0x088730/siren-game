@@ -1,38 +1,56 @@
-.item:hover{
-    -webkit-filter: drop-shadow(1px 1px 0 white)
-                    drop-shadow(-1px -1px 0 white);
-    filter: drop-shadow(1px 1px 0 white) 
-            drop-shadow(-1px -1px 0 white);
+.item:hover {
+    -webkit-filter: drop-shadow(1px 1px 0 white) drop-shadow(-1px -1px 0 white);
+    filter: drop-shadow(1px 1px 0 white) drop-shadow(-1px -1px 0 white);
 }
 
-.active{
-    -webkit-filter: drop-shadow(1px 1px 0.75rem white)
-                    drop-shadow(-1px -1px 0.75rem white);
-    filter: drop-shadow(1px 1px 0.75rem white) 
-            drop-shadow(-1px -1px 0.75rem white);
+.active {
+    -webkit-filter: drop-shadow(1px 1px 0.75rem white) drop-shadow(-1px -1px 0.75rem white);
+    filter: drop-shadow(1px 1px 0.75rem white) drop-shadow(-1px -1px 0.75rem white);
 
 }
 
 
-.loginbg{
+.loginbg {
     background: url("../../images/login_mask.png");
 
     min-height: 100vh;
     height: 100%;
 }
 
-.link{
+.link {
     text-decoration: none;
     width: 100%;
     text-align: left;
 }
 
-.icon_buttons{
+.icon_buttons {
     display: flex;
     align-items: center;
-    img{
+
+    img {
         width: 30px;
         height: max-content;
         margin-right: 10px;
     }
+}
+
+.chapter {
+    background-image: url("../../images/chapter.jpg") !important;
+    background-size: cover;
+    background-repeat: no-repeat;
+    min-width: 1600px;
+    min-height: 900px;
+    overflow: auto;
+}
+.section {
+    background-image: url("../../images/section.jpg") !important;
+    background-size: cover;
+    background-repeat: no-repeat;
+    min-width: 1600px;
+    overflow: auto;
+}
+.sectionBtn {
+    background-image: url("../../images/roomBtn.png") !important;
+    background-size: cover;
+    background-repeat: no-repeat;
 }

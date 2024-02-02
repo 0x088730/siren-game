@@ -1,6 +1,6 @@
 import { global } from "../common/global"
 
-export default class RoomItemWidget extends Phaser.GameObjects.Container {
+export default class ChapterRoomItemWidget extends Phaser.GameObjects.Container {
   scene: Phaser.Scene
   background: Phaser.GameObjects.Image | undefined
   id: number
@@ -22,16 +22,18 @@ export default class RoomItemWidget extends Phaser.GameObjects.Container {
     this.form = form
     this.add(
       (this.background = scene.add
-        .image(0, 0, 'room-btn')),
-    )
-    this.add(
-      (scene.add
-        .text(0, 0, `${id}`, { font: '75px Arial', color: this.form === 1 ? '#efb21f' : 'white' })
-        .setOrigin(0.5, 0.5)
-      ),
+        .image(0, 0, `chapter${this.id}`))
+        .setScale(0.95)
+        .setInteractive()
+        .on('gameobjectover', () => {
+          this.background?.setTint(0xff0000);
+        })
+        .on('gameobjectout', () => {
+          this.background?.clearTint();
+        })
     )
     if (enable === false) {
-      if (id === global.room.chapter+1 && this.form === 1) {        
+      if (id === global.room.chapter + 1 && this.form === 1) {
         this.add(
           (this.background = scene.add
             .image(0, 0, 'room-soon-btn')),

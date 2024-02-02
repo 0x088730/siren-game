@@ -28,6 +28,7 @@ export interface GameStateProps {
   attackBtnState:boolean
   isLoading: boolean
   getCharacter: boolean
+  openChapter: boolean
 }
 
 const gameInitialState: GameStateProps = {
@@ -57,7 +58,8 @@ const gameInitialState: GameStateProps = {
   exp: 0,
   attackBtnState:true,
   isLoading: true,
-  getCharacter: false
+  getCharacter: false,
+  openChapter: false
 }
 
 export default gameInitialState

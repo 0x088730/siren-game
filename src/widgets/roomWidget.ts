@@ -1,6 +1,7 @@
 import RoomItemWidget from './roomItemWidget'
 import { global } from '../common/global'
 import { getProfile, setCurrentCharacter } from '../common/api'
+import ChapterRoomItemWidget from './chapterRoomItemWidget'
 const avatarList = [1, 2, 3, 4]
 var characterClickFlag = false
 export default class RoomWidget extends Phaser.GameObjects.Container {
@@ -26,10 +27,10 @@ export default class RoomWidget extends Phaser.GameObjects.Container {
     this.nChapter = 1
     this.nSection = 1
     const chapterPos = [
-      { x: -630, y: 220 },
-      { x: 130, y: 250 },
-      { x: -50, y: -230 },
-      { x: 380, y: -380 },
+      { x: -465, y: 205 },
+      { x: 487, y: 300 },
+      { x: 0, y: -147 },
+      { x: 240, y: -370 },
       // { x: 600, y: -190 },
       // { x: 900, y: 20 },
     ]
@@ -41,22 +42,22 @@ export default class RoomWidget extends Phaser.GameObjects.Container {
     for (let i = 0; i < chapterPos.length; i++) {
       // let enable = gChapter > i ? true : false
       let enable = i < gChapter ? true : false
-      const chapterItem = new RoomItemWidget(
+      const chapterItem = new ChapterRoomItemWidget(
         this.scene,
         chapterPos[i].x,
         chapterPos[i].y,
         i + 1,
         enable,
         1,
-      )
-        .setSize(107, 112)
-        .setInteractive()
-        .on('pointerdown', () => {
-          if (enable) {
-            this.nChapter = i + 1
-            this.gameMode(2)
-          }
-        })
+      );
+      // .setSize(107, 112)
+      chapterItem.background?.setInteractive();
+      chapterItem.background?.on('pointerdown', () => {
+        if (enable) {
+          this.nChapter = i + 1
+          this.gameMode(2)
+        }
+      })
       this.chapter.add(chapterItem)
       this.add(chapterItem)
     }
@@ -230,7 +231,7 @@ export default class RoomWidget extends Phaser.GameObjects.Container {
   gameMode(mode: number) {
     this.gMode = mode
     if (mode === 1) {
-      
+
       this.backBtn.setVisible(true)
       //chapter
       const gChapter = global.room.chapter
@@ -250,9 +251,9 @@ export default class RoomWidget extends Phaser.GameObjects.Container {
     if (mode === 2) {
       this.backBtn.setVisible(false)
 
-      for (let i = 0; i < this.chapter.length; i++) {
-        this.chapter.getAt(i).setVisible(false)
-      }
+      // for (let i = 0; i < this.chapter.length; i++) {
+      //   this.chapter.getAt(i).setVisible(false)
+      // }
       for (let i = 0; i < this.section.length; i++) {
         this.section.getAt(i).destroy()
       }
