@@ -50,6 +50,7 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
   const [eggs, setEggs] = useState(userModule.user.eggs)
   const [resource, setResource] = useState(userModule.user.resource)
   const [wallLevelState, setWallLevelState] = useState(userModule.user.wall)
+  const [csc, setCsc] = useState(userModule.user.tokenAmount.csc)
 
   // const resource = userModule.user.resource
 
@@ -351,7 +352,7 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
             <Header
               showAccount={showAccount}
               setShowAccount={setShowAccount}
-              Siren={Siren}
+              csc={csc}
               eggs={eggs}
               resource={resource}
             />

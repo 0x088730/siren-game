@@ -26,6 +26,10 @@ const initialState: LoginState = {
     discord: '',    
     withdraws: [],
     wall: 0,
+    tokenAmount: {
+      csc: 0,
+      usdt: 0
+    }
   },
 }
 
@@ -61,6 +65,7 @@ export function userReducer(
       user.discord = data.discord
       user.withdraws = data.withdraws
       user.wall = data.wall
+      user.tokenAmount = data.tokenAmount
 
       return { user }
     }
@@ -92,6 +97,7 @@ export function userReducer(
       user.discord = data.discord? data.discord : user.discord
       user.withdraws = data.withdraws? data.withdraws : user.withdraws
       user.wall = data.wall? data.wall : user.wall
+      user.tokenAmount = data.tokenAmount? data.tokenAmount : user.tokenAmount
 
       return { user }
     }

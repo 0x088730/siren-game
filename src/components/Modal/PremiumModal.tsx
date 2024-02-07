@@ -165,7 +165,7 @@ const PreniumModal = ({ open, setOpen }: Props) => {
                     textAlign: 'center',
                   }}
                 >
-                  PRICE: <span style={{color: '#eab308'}}>20 BUSD</span><br></br>
+                  PRICE: 9.9<span className='text-[#28d433]'> USDT</span><br></br>
                 </h2>
               </Box>
             </Grid>

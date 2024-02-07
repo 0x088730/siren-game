@@ -30,12 +30,12 @@ import InforModal from './InforModal'
 interface HeaderProps {
   showAccount: any
   setShowAccount: any
-  Siren: any
+  csc: any
   eggs: any
   resource: any
 }
 
-const Header = ({ showAccount, setShowAccount, Siren, eggs, resource }: HeaderProps) => {
+const Header = ({ showAccount, setShowAccount, csc, eggs, resource }: HeaderProps) => {
   const navigate = useNavigate()
   const [searchParams] = useSearchParams()
   const ref = searchParams.get('ref')
@@ -154,10 +154,10 @@ const Header = ({ showAccount, setShowAccount, Siren, eggs, resource }: HeaderPr
       >
         <img
           alt=""
-          style={{ width: '25px', marginRight: '10px' }}
-          src="/images/res_Siren.png"
+          className='w-[25px] me-[10px]'
+          src="/images/cryptoIcon.png"
         />
-        {`Siren: ${Siren}`}
+        {`CSC: ${csc}`}
       </p>
       <p
         className={styles.resource}

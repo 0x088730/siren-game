@@ -31,6 +31,7 @@ export interface LoginInfo {
   discord: string
   withdraws: Withdraw[]
   wall: Number
+  tokenAmount: any
 }
 
 export interface LoginState {
