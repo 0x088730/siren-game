@@ -41,7 +41,7 @@ export const getRoom = async () => {
 export const setCurrentCharacter = async (character : string) => {
     await (await axios.post('/user/current-character', {walletAddress:global.walletAddress, character: character})).data.room
 }
-export const itemModify = async (walletAddress: string, character: string = 'siren-1', item: string, amount: number, currentChaper: number, currentSection: number, selectChapter: number, selectSection: number, cb: Function) => {
+export const itemModify = async (walletAddress: string, character: string = 'siren-1', item: string, amount: number, currentChaper: number, currentSection: number, selectChapter: number, selectSection: number, win: string, cb: Function) => {
    
     const data = (await axios.post('/user/item', {
         walletAddress,
@@ -52,6 +52,7 @@ export const itemModify = async (walletAddress: string, character: string = 'sir
         currentSection,
         selectChapter,
         selectSection,
+        win,
     })).data;
     const user = data.user
     let currentCharacter = user.characters.filter((character : any)=>character.characterName===user.currentCharacterName)[0]

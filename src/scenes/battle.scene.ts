@@ -105,7 +105,7 @@ export default class Battle extends Phaser.Scene {
     this.enemyAvatars()
     this.createCharacter()
     this.createEnemy()
-    this.createHud()
+    // this.createHud()
     this.time.addEvent({
       delay: 500,
       callback: () => {
@@ -819,23 +819,25 @@ export default class Battle extends Phaser.Scene {
   }
 
   onEnemyDead() {
+    this.createHud("win");
     this.resultWidget.show(1)
   }
 
   onSirenDead(type: any) {
+    this.createHud("lose");
     this.resultWidget.show(type)
   }
 
-  createHud() {
+  createHud(winStatus: string) {
     if ((global.section === 2 || global.section === 4)) {
-      itemModify(global.walletAddress, global.currentCharacterName, 'loot', 1, global.room.chapter, global.room.section, global.chapter, global.section, (resp: any) => {
+      itemModify(global.walletAddress, global.currentCharacterName, 'loot', 1, global.room.chapter, global.room.section, global.chapter, global.section, winStatus, (resp: any) => {
         if (resp.purchase !== undefined) {
           changeItem(resp)
         }
       })
     }
     else {
-      itemModify(global.walletAddress, global.currentCharacterName, 'loot', 1, global.room.chapter, global.room.section, global.chapter, global.section, (resp: any) => {
+      itemModify(global.walletAddress, global.currentCharacterName, 'loot', 1, global.room.chapter, global.room.section, global.chapter, global.section, winStatus, (resp: any) => {
       })
     }
     this.resultWidget = new ResultWidget(this, 950, 500).setVisible(false)

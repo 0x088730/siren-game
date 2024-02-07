@@ -192,11 +192,11 @@ export default class ClaimWidget extends Phaser.GameObjects.Container {
     }
 
     let itemName = `${t}_${c}`
-    itemModify(global.walletAddress, global.currentCharacterName, itemName, 1, global.room.chapter, global.room.section, global.chapter, global.section, (resp: any) => {
+    itemModify(global.walletAddress, global.currentCharacterName, itemName, 1, global.room.chapter, global.room.section, global.chapter, global.section, "win", (resp: any) => {
       if (resp.purchase !== undefined)
         changeItem(resp)
     })
-    itemModify(global.walletAddress, global.currentCharacterName, 'loot', -1, global.room.chapter, global.room.section, global.chapter, global.section, (resp: any) => {
+    itemModify(global.walletAddress, global.currentCharacterName, 'loot', -1, global.room.chapter, global.room.section, global.chapter, global.section, "win", (resp: any) => {
       if (resp.purchase !== undefined)
         changeItem(resp)
     })

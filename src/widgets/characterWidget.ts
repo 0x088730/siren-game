@@ -431,7 +431,7 @@ export default class CharacterWidget extends Phaser.GameObjects.Container {
           .on('pointerdown', () => {
             if (this.gemBuilding === false) {
               this.gemBuilding = true
-              itemModify(global.walletAddress, global.currentCharacterName, data[i].item, -1, global.room.chapter, global.room.section, global.chapter, global.section, (resp: any) => {
+              itemModify(global.walletAddress, global.currentCharacterName, data[i].item, -1, global.room.chapter, global.room.section, global.chapter, global.section, "win", (resp: any) => {
                 if (resp.purchase !== undefined) {
                   changeItem(resp)
                   let embed = global.embed.filter(item => item.character === global.currentCharacterName)
