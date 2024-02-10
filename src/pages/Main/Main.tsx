@@ -122,7 +122,7 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
   const [selectedIndex, setSelectedIndex] = useState(0)
 
   const showModal = (index: any) => {
-    if (Siren < 20) {
+    if (csc < 20) {
       return
     }
     setSelectedIndex(index)
@@ -138,7 +138,7 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
     dispatch(
       stakeDiamond(address, selectedIndex, cooldown, (res: any) => {
         if (res.success === false) return
-        setSiren(res.data)
+        setCsc(res.data)
         handleClose()
         coolDownStatus(cooldown)
       }),
@@ -171,7 +171,7 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
   }
 
   const setBirdItem = (index: any, item: any) => {
-    if (Siren < 20) return
+    if (csc < 20) return
     dispatch(
       stakeBird(address, index, (res: any) => {
         if (res.success === false) return
@@ -233,7 +233,7 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
       upgradeWall(address, (res: any) => {
         setWallLevelState(res.wall)
         global.wall = res.wall
-        setSiren(res.Siren)
+        setCsc(res.tokenAmount.csc)
       }),
     )
     setOpenUpgradeWall(false)
