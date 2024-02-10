@@ -184,7 +184,7 @@ const GoldMineModal = ({ open, setOpen }: Props) => {
               }}
             >
               {' '}
-              <AllInclusiveIcon /> Earn: 300Siren
+              <AllInclusiveIcon /> Earn: 300CSC
             </p>
             <p
               style={{
@@ -241,7 +241,7 @@ const GoldMineModal = ({ open, setOpen }: Props) => {
                           color="primary"
                           onClick={(e) => onRequestMining()}
                         >
-                          {GOLD_MINE.REQUEST} Siren
+                          {GOLD_MINE.REQUEST} CSC
                         </Button>
                       </>
                     )}

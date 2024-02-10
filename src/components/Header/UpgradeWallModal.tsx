@@ -25,11 +25,12 @@ const UpgradeWallModal = ({
     const wall = userModule.user.wall
     let amount = 0
     switch (wall) {
-      case 1: {amount = 500; break; }
-      case 2: {amount = 1500; break; }
+      case 1: { amount = 500; break; }
+      case 2: { amount = 1500; break; }
     }
-    if(userModule.user.Siren >= amount)
+    if (userModule.user.tokenAmount.csc >= amount)
       setWall()
+    else alert("you don't have eough csc")
   }
 
   const style = {
@@ -40,7 +41,7 @@ const UpgradeWallModal = ({
     width: '550px',
     height: '500px',
     background: "url(/assets/images/set.png)",
-    backgroundSize: '100% 100%',    
+    backgroundSize: '100% 100%',
     bgcolor: 'transparent',
     boxShadow: 24,
     p: 4,
@@ -56,7 +57,7 @@ const UpgradeWallModal = ({
         aria-describedby="modal-modal-description"
       >
         <Box sx={style} className="w-[450px] relative">
-        <img
+          <img
             alt=""
             src="/images/support/support_md_close_btn.png"
             style={{
@@ -71,16 +72,16 @@ const UpgradeWallModal = ({
             onClick={handleClose}
           />
           <div className='wall'
-          style={{
-            backgroundColor: 'transparent',
-            width: '85%',
-            height: '400px',
-            position: 'absolute',
-            marginTop: '20px'
-          }}
+            style={{
+              backgroundColor: 'transparent',
+              width: '85%',
+              height: '400px',
+              position: 'absolute',
+              marginTop: '20px'
+            }}
           >
-            
-            <img src={"assets/images/border"+(userModule.user.wall===3?3:(userModule.user.wall+1))+".png"} alt="" className='h-5/6 object-cover object-center' />
+
+            <img src={"assets/images/border" + (userModule.user.wall === 3 ? 3 : (userModule.user.wall + 1)) + ".png"} alt="" className='h-5/6 object-cover object-center' />
           </div>
           {/* <div className='wall' 
             style={{
@@ -142,7 +143,7 @@ const UpgradeWallModal = ({
                     marginBottom: '0px'
                   }}
                 >
-                  {userModule.user.wall === 1 ? 'UPGRADE LVL 2: 500 SIREN' : userModule.user.wall === 2 ? 'UPGRADE LVL 3: 1500 SIREN' : 'UPGRADE FINISHED'}
+                  {userModule.user.wall === 1 ? 'UPGRADE LVL 2: 500 CSC' : userModule.user.wall === 2 ? 'UPGRADE LVL 3: 1500 CSC' : 'UPGRADE FINISHED'}
                 </h2>
                 {(userModule.user.wall !== 3) && (
                   <Button
@@ -150,11 +151,11 @@ const UpgradeWallModal = ({
                     // color="primary"
                     style={{
                       background: "url(/assets/images/big-button.png)",
-                      backgroundSize: '200px',   
+                      backgroundSize: '200px',
                       backgroundRepeat: 'no-repeat',
-                      fontFamily: 'Anime Ace',  
+                      fontFamily: 'Anime Ace',
                       color: 'white',
-                      border: 'none',                 
+                      border: 'none',
                       width: '200px',
                       height: '50px',
                     }}

@@ -396,7 +396,7 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
                             color="success"
                             onClick={(e) => onRockStart(item)}
                           >
-                            20 Siren
+                            20 CSC
                           </Button>
                         </Box>
                       </Box>
@@ -510,7 +510,7 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
                             </p>
                           </Box>
                           <Box>
-                            <p>Price per day: 100 siren,</p>
+                            <p>Price per day: 100 CSC,</p>
                             <p>Chance; LVL 1 = 40% LVL 2 = 65%</p>
                             <p>Amount: 150 resources</p>
                           </Box>
@@ -568,7 +568,7 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
                           <Box>
                             <p>
                               If you haven't hired a support and your buildings are
-                              broken you will need to pay 120 siren to fix the
+                              broken you will need to pay 120 CSC to fix the
                               buildings.
                             </p>
                           </Box>
@@ -583,9 +583,9 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
             <ExchangeModal
               open={openSwap}
               setOpen={setOpenSwap}
-              Siren={Siren}
+              csc={csc}
               egg={eggs}
-              setSiren={setSiren}
+              setCsc={setCsc}
               setEgg={setEggs}
             />
             <UpgradeWallModal
@@ -613,8 +613,8 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
             <MiningModal
               open={openMining}
               setOpen={setOpenMining}
-              sirenAmount={Siren}
-              setSirenAmount={setSiren}
+              csc={csc}
+              setCsc={setCsc}
               resource={resource}
               egg={eggs}
               setEggs={setEggs}

@@ -17,18 +17,18 @@ import { global } from '../../common/global'
 interface Props {
   open: any
   setOpen: any
-  Siren: any
+  csc: any
   egg: any
-  setSiren: any
+  setCsc: any
   setEgg: any
 }
 
 const ExchangeModal = ({
   open,
   setOpen,
-  Siren,
+  csc,
   egg,
-  setSiren,
+  setCsc,
   setEgg,
 }: Props) => {
   const { connected, chainID, address, connect } = useWeb3Context()
@@ -80,7 +80,7 @@ const ExchangeModal = ({
         claimHunter(address, (resp: any) => {
           setBtnType('Start')
           if(claimBar[0]!==-1&&claimBar[0]!==-2)
-            setSiren(Siren+claimBar[0])
+            setCsc(csc+claimBar[0])
           if(claimBar[1]!==-1&&claimBar[1]!==-2)
             setEgg(egg+claimBar[1])
 
@@ -171,8 +171,8 @@ const ExchangeModal = ({
       alert("please get claim first")
       return
     }
-    if(Siren<3000+upgradeLevel*2000){
-      alert("you need more siren")
+    if(csc<3000+upgradeLevel*2000){
+      alert("you need more csc")
       return
 
     }
@@ -189,10 +189,10 @@ const ExchangeModal = ({
     dispatch(levelupHunter(address,(resp:any)=>{
       if(resp.data===true) 
         if(upgradeLevel===0){
-          setSiren(Siren-3000)
+          setCsc(csc-3000)
         }
         else if(upgradeLevel===1){
-          setSiren(Siren-5000)
+          setCsc(csc-5000)
         }
         setUpgradeLevel(upgradeLevel + 1)
     }))
@@ -410,7 +410,7 @@ const ExchangeModal = ({
                   >Upgrade </p>
                   
                     </Button>
-                  <p>3000 SIREN</p>
+                  <p>3000 CSC</p>
                   <p>NEED 2 LVL WALL</p>
                 </div>
                 )}
@@ -492,7 +492,7 @@ const ExchangeModal = ({
                   >Upgrade </p>
                   
                     </Button>
-                  <p>3000 SIREN</p>
+                  <p>3000 CSC</p>
                   <p>NEED 3 LVL WALL</p>
                 </div>
                 )}
@@ -545,7 +545,7 @@ const ExchangeModal = ({
                     }}
                   >
                     {claimBar[0]===-1?'100-550':claimBar[0]!==-2?claimBar[0] : ''}<br/>
-                    {claimBar[0]!==-2&& 'SIREN'}
+                    {claimBar[0]!==-2&& 'CSC'}
                   </p>
                 </Button>
                 <Button

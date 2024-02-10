@@ -141,7 +141,7 @@ const DepositModal = ({
 
   const onWithdraw = async () => {
     if (SirenAmount < 10) {
-      alert("minimal withdraw amount is 300Siren");
+      alert("minimal withdraw amount is 300CSC");
       return
     }
 
@@ -287,7 +287,7 @@ const DepositModal = ({
                       onChange={onChangeAmount}
                     />
                   </div>
-                  <p style={{textAlign: 'center'}}>You will receive <br/> {Number(bcsAmount)} Siren</p>
+                  <p style={{textAlign: 'center'}}>You will receive <br/> {Number(bcsAmount)} CSC</p>
                   <p
                     style={{
                       color: '#770909',
@@ -342,7 +342,7 @@ const DepositModal = ({
                   }}
                 >
                   <div style={{marginTop: '0px', textAlign:"left"}}>
-                    <div style={{fontFamily: 'Anime Ace', color: '#ffe86b', fontSize: '16px', margin: '2px 20px'}}>SIREN</div>
+                    <div style={{fontFamily: 'Anime Ace', color: '#ffe86b', fontSize: '16px', margin: '2px 20px'}}>CSC</div>
                     <TextField
                       sx={{ mr: 1, textAlign: 'right', borderColor: 'white', width: '100%', borderRadius: '5px', backgroundColor: 'white'}}
                       name="Siren"

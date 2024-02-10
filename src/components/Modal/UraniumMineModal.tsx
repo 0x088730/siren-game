@@ -187,7 +187,7 @@ const UraniumMineModal = ({ open, setOpen }: Props) => {
               }}
             >
               {' '}
-              <AllInclusiveIcon /> Earn: 400Siren
+              <AllInclusiveIcon /> Earn: 400CSC
             </p>
             <p
               style={{
@@ -243,7 +243,7 @@ const UraniumMineModal = ({ open, setOpen }: Props) => {
                           color="primary"
                           onClick={(e) => onRequestMining()}
                         >
-                          {URANIUM_MINE.REQUEST} Siren
+                          {URANIUM_MINE.REQUEST} CSC
                         </Button>
                       </>
                     )}

@@ -34,9 +34,9 @@ import { setDefaultResultOrder } from 'dns'
 interface Props {
   open: boolean
   setOpen: any
-  sirenAmount: number
+  csc: number
   resource: any
-  setSirenAmount: any
+  setCsc: any
   setEggs: any
   egg: any
   onExchange: any
@@ -48,9 +48,9 @@ interface Props {
 const MiningModal = ({
   open,
   setOpen,
-  sirenAmount,
+  csc,
   resource,
-  setSirenAmount,
+  setCsc,
   setEggs,
   egg,
   onExchange,
@@ -134,8 +134,8 @@ const MiningModal = ({
       return
     }
     if (btnType === 'Upgrade') {
-      if (sirenAmount < ((displayLevel - 1) * 1200 + 2000)) {
-        alert("you don't have eough siren")
+      if (csc < ((displayLevel - 1) * 1200 + 2000)) {
+        alert("you don't have eough csc")
       }
       else {
         dispatch(buyLevel(address, (res: any) => {
@@ -160,36 +160,39 @@ const MiningModal = ({
               setUpgradeErrorFlag(false)
               setLevelState(displayLevel)
               global.level = displayLevel
-              setSirenAmount(sirenAmount - ((displayLevel - 1) * 1200 + 2000))
+              setCsc(csc - ((displayLevel - 1) * 1200 + 2000))
               setBtnType('Start')
             }
           }
         }))
       }
     } else if (btnType === 'Buy') {
-      if (sirenAmount < ((displayLevel - 1) * 1200 + 2000)) {
-        alert("you don't have eough siren")
+      if (csc < ((displayLevel - 1) * 1200 + 2000)) {
+        alert("you don't have eough csc")
       }
       else {
         dispatch(buyLevel(address, (res: any) => {
           setLevelState(displayLevel)
           global.level = displayLevel
-          setSirenAmount(sirenAmount - ((displayLevel - 1) * 1200 + 2000))
+          setCsc(csc - ((displayLevel - 1) * 1200 + 2000))
           setBtnType('Start')
         }))
       }
     } else if (btnType === 'Start') {
-      dispatch(
-        setCooldown(address, 'level-up', true, (res: any) => {
-          if (res.data > 0)
+      if (csc < ((displayLevel - 1) * 1200 + 2000)) {
+        alert("you don't have eough csc")
+      }
+      else {
+        dispatch(
+          setCooldown(address, 'level-up', true, (res: any) => {
             if (!isCooldownStarted) {
-              setRemainedTime(res.data)
+              setRemainedTime(res.data.time)
+              setCsc(res.data.cscAmount)
               setIsCooldownStarted(true)
             }
-        }),
-      )
-
-
+          }),
+        )
+      }
     } else if (btnType === 'Claim') {
       dispatch(
         checkCooldown(address, 'level-up', (res: any) => {
@@ -201,7 +204,7 @@ const MiningModal = ({
           }
           else if (cooldownSec <= 0) {
             dispatch(claimSiren(address, (res: any) => {
-              setSirenAmount(res.data.siren)
+              setCsc(res.data.csc)
               setEggs(res.data.eggs)
               setBtnType('Start')
             }))
@@ -367,9 +370,9 @@ const MiningModal = ({
                     }}
                   >
                     <p>LEVEL 1:</p>
-                    <div className='flex justify-center'><img src='assets/images/cryptoIcon.png' width={upgradeTab ? 20 : 30}></img><p>200 SIREN PER 5H</p></div>
+                    <div className='flex justify-center'><img src='assets/images/cryptoIcon.png' width={upgradeTab ? 20 : 30}></img><p>200 CSC PER 5H</p></div>
 
-                    {upgradeTab && <p>PRICE: 2000 SIREN</p>}
+                    {upgradeTab && <p>PRICE: 2000 CSC</p>}
                   </Stack>
                 </Grid> :
                 <Grid item xs={4} sx={{ padding: '0 !important' }}>
@@ -385,9 +388,9 @@ const MiningModal = ({
                     }}
                   >
                     <p>LEVEL 1:</p>
-                    <div className='flex justify-center'><img src='assets/images/cryptoIcon.png' width={upgradeTab ? 20 : 30}></img><p>200 SIREN PER 5H</p></div>
+                    <div className='flex justify-center'><img src='assets/images/cryptoIcon.png' width={upgradeTab ? 20 : 30}></img><p>200 CSC PER 5H</p></div>
 
-                    {upgradeTab && <p>PRICE: 2000 SIREN</p>}
+                    {upgradeTab && <p>PRICE: 2000 CSC</p>}
                   </Stack>
                 </Grid>
               }
@@ -405,9 +408,9 @@ const MiningModal = ({
                     }}
                   >
                     <p>LEVEL 2:</p>
-                    <div className='flex justify-center'><img src='assets/images/cryptoIcon.png' width={upgradeTab ? 20 : 30}></img><p>300 SIREN PER 5H</p></div>
+                    <div className='flex justify-center'><img src='assets/images/cryptoIcon.png' width={upgradeTab ? 20 : 30}></img><p>300 CSC PER 5H</p></div>
                     <p>10 RES PER 5H</p>
-                    {upgradeTab && <p>PRICE: 3200 SIREN</p>}
+                    {upgradeTab && <p>PRICE: 3200 CSC</p>}
                   </Stack>
                 </Grid> : null
               }
@@ -425,10 +428,10 @@ const MiningModal = ({
                     }}
                   >
                     <p>LEVEL 3:</p>
-                    <div className='flex justify-center'><img src='assets/images/cryptoIcon.png' width={upgradeTab ? 20 : 30}></img><p>400 SIREN PER 5H</p></div>
+                    <div className='flex justify-center'><img src='assets/images/cryptoIcon.png' width={upgradeTab ? 20 : 30}></img><p>400 CSC PER 5H</p></div>
 
                     <p>20 RES PER 5H</p>
-                    {upgradeTab && <p>PRICE: 4400 SIREN</p>}
+                    {upgradeTab && <p>PRICE: 4400 CSC</p>}
                   </Stack>
                 </Grid> : null
               }
@@ -462,7 +465,7 @@ const MiningModal = ({
 
             {!upgradeTab ?
               <div className='text-[14px] font-bold text-[#e7e1e1] text-center' style={{ fontFamily: 'Anime Ace' }}>
-                <p>PRICE: 2000 SIREN</p>
+                <p>PRICE: 2000 CSC</p>
               </div> : null
             }
 
@@ -479,7 +482,7 @@ const MiningModal = ({
                 ) : (
                   <img alt="" src="/assets/images/tabbutton2.png" />
                 )}
-                <p className="absolute font-bold ml-[30px] text-[14px] text-center text-[#752d01]" style={{ fontFamily: 'Anime Ace' }}>
+                <p className="absolute font-bold text-[14px] text-center text-[#ffffff]" style={{ fontFamily: 'Anime Ace' }}>
                   FARM
                 </p>
               </Button>
@@ -495,7 +498,7 @@ const MiningModal = ({
                 ) : (
                   <img alt="" src="/assets/images/tabbutton2.png" />
                 )}
-                <p className="absolute font-bold ml-[30px] text-[14px] text-center text-[#752d01]" style={{ fontFamily: 'Anime Ace' }}>
+                <p className="absolute font-bold text-[14px] text-center text-[#ffffff]" style={{ fontFamily: 'Anime Ace' }}>
                   UPGRADE
                 </p>
               </Button>
