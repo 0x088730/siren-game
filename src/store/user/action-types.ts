@@ -32,6 +32,7 @@ export interface LoginInfo {
   withdraws: Withdraw[]
   wall: Number
   tokenAmount: any
+  cscTokenAmount: Number
 }
 
 export interface LoginState {

@@ -50,7 +50,7 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
   const [eggs, setEggs] = useState(userModule.user.eggs)
   const [resource, setResource] = useState(userModule.user.resource)
   const [wallLevelState, setWallLevelState] = useState(userModule.user.wall)
-  const [csc, setCsc] = useState(userModule.user.tokenAmount.csc)
+  const [csc, setCsc] = useState(userModule.user.cscTokenAmount)
 
   // const resource = userModule.user.resource
 
@@ -233,7 +233,7 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
       upgradeWall(address, (res: any) => {
         setWallLevelState(res.wall)
         global.wall = res.wall
-        setCsc(res.tokenAmount.csc)
+        setCsc(res.cscTokenAmount)
       }),
     )
     setOpenUpgradeWall(false)
