@@ -68,17 +68,18 @@ export const HeaderComponent = ({onModalShow}: HeaderProps) => {
   return (
     <div>
       {!inventoryOpened && !characterOpened && (
-        <div className="flex justify-between bg-black/30 p-4 backdrop-blur min-w-[1600px]">
+        <div className="flex justify-between bg-black/30 p-2 backdrop-blur min-w-[1600px]">
           <div className="flex">
-            <div className="flex gap-4 p-3">
-              {NavItems.map((item: any, index: number) => (
+            <div className="flex gap-4">
+              <img src='assets/images/logo.png' alt='' className='w-[330px]' />
+              {/* {NavItems.map((item: any, index: number) => (
                 <p key={index} className={`font-Anime Ace	text-2xl text-white`}>
                   {item.label}
                 </p>
-              ))}
+              ))} */}
             </div>
           </div>
-          <div className="flex p-4">
+          <div className="flex p-4 items-center">
             <div className="mr-2">
               {/* <button
                     className="rounded-full border border-white px-6 py-1 font-semibold text-white shadow-sm"
