@@ -103,7 +103,7 @@ const RockModal = ({
                     textAlign: 'center',
                   }}
                 >
-                  AMOUNT: 30<br></br>
+                  AMOUNT: 5<br></br>
                   TIME: 3 HOURS<br></br>
                 </h2>
                 <Button

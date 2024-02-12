@@ -50,7 +50,7 @@ const DepositModal = ({
   const handleClose = () => setOpen(false)
 
   const [bcsAmount, setBCSAmount] = useState(320)
-  const [SirenAmount, setSirenAmount] = useState(0)
+  const [cscTokenAmount, setCscTokenAmount] = useState(0)
   const [withdrawableBcsAmount, setWithdrawableBcsAmount] = useState<number>(0)
 
   useEffect(() => {
@@ -60,12 +60,12 @@ const DepositModal = ({
       // const bcsPrice = await getBcsPrice();
       const bcsPrice = 1
       const maxAmount =
-        (checkPremium(user.premium).isPremium ? 10 : 5) / bcsPrice
+        (checkPremium(user.premium).isPremium ? 20 : 10) / bcsPrice
       console.log(
-        `bcs price is ${bcsPrice}`,
+        `csc price is ${bcsPrice}`,
         'withdrew Siren amount: ',
         withdrewSirenAmount,
-        ' and withdrawable bcs amount is ',
+        ' and withdrawable csc amount is ',
         maxAmount,
       )
       setWithdrawableBcsAmount(maxAmount - Math.floor(withdrewSirenAmount / 10))
@@ -94,7 +94,7 @@ const DepositModal = ({
 
     if (e.target.value < 0) return
 
-    setSirenAmount(e.target.value)
+    setCscTokenAmount(e.target.value)
   }
 
   const onResource = async () => {
@@ -112,7 +112,7 @@ const DepositModal = ({
 
   const onDeposit = async () => {
     if (bcsAmount < 5) {
-      alert("minimal withdraw amount is 320BCS");
+      alert("minimal withdraw amount is 320CSC");
       return
     }
     dispatch(onShowAlert('Pease wait while confirming', 'info'))
@@ -140,18 +140,17 @@ const DepositModal = ({
   }
 
   const onWithdraw = async () => {
-    if (SirenAmount < 10) {
+    if (cscTokenAmount < 10) {
       alert("minimal withdraw amount is 300CSC");
       return
     }
 
     // const res = await checkWithdrawableReqeust(address, SirenAmount)
     // console.log(res)
-    if (withdrawableBcsAmount * 10 <= SirenAmount) {
+    if (withdrawableBcsAmount * 10 <= cscTokenAmount) {
       dispatch(
         onShowAlert(
-          `you can withdraw only ${checkPremium(user.premium) ? 10 : 5
-          } per day`,
+          `you can withdraw only ${checkPremium(user.premium) ? 20 : 10} per day`,
           'warning',
         ),
       )
@@ -165,7 +164,7 @@ const DepositModal = ({
     dispatch(
       withdrawRequest(
         address,
-        SirenAmount,
+        cscTokenAmount,
         // transaction.transactionHash,
         (res: any) => {
           // console.log('callback')
@@ -249,7 +248,7 @@ const DepositModal = ({
                   fontWeight: 'bold'
                 }}
               >
-                <ErrorOutlineIcon /> You can withdraw BCS: 5 a day and 10
+                <ErrorOutlineIcon /> You can withdraw CSC: 10 a day and 20
                 <br /> if you have premium
               </p>
               <p></p>
@@ -278,7 +277,7 @@ const DepositModal = ({
                   }}
                 >
                   <div style={{marginTop: '0px', textAlign:"left"}}>
-                    <div style={{fontFamily: 'Anime Ace', color: '#ffe86b', fontSize: '16px', margin: '2px 20px'}}>BCS</div>
+                    <div style={{fontFamily: 'Anime Ace', color: '#ffe86b', fontSize: '16px', margin: '2px 20px'}}>CSC</div>
                     <TextField
                       sx={{ mr: 1, textAlign: 'right', borderColor: 'white', width: '100%', borderRadius: '5px', backgroundColor: 'white'}}
                       name="bcs"
@@ -298,7 +297,7 @@ const DepositModal = ({
                       fontWeight: 'bold'
                     }}
                   >
-                    <ErrorOutlineIcon /> Min deposit: 320px
+                    <ErrorOutlineIcon /> Min deposit: 320csc
                   </p>
                   {/* <ErrorOutlineIcon />
                     <Typography></Typography> */}
@@ -346,12 +345,12 @@ const DepositModal = ({
                     <TextField
                       sx={{ mr: 1, textAlign: 'right', borderColor: 'white', width: '100%', borderRadius: '5px', backgroundColor: 'white'}}
                       name="Siren"
-                      value={SirenAmount}
+                      value={cscTokenAmount}
                       size='small'
                       onChange={onChangeEggAmount}
                     />
                   </div>                  
-                  <p style={{textAlign: 'center'}}>You will receive <br/> {Math.floor(SirenAmount / 10)} BCS</p>
+                  <p style={{textAlign: 'center'}}>You will receive <br/> {Math.floor(cscTokenAmount / 10)} CSC</p>
                   <p
                     style={{
                       color: '#770909',
@@ -363,12 +362,12 @@ const DepositModal = ({
                     }}
                   >
                     <ErrorOutlineIcon /> Availabe : {Math.floor(withdrawableBcsAmount).toString()}{' '}
-                    BCS
+                    CSC
                   </p>
                   {/* <ErrorOutlineIcon />
                     <Typography component="p">
                       Availabe : {Math.floor(withdrawableBcsAmount).toString()}{' '}
-                      BCS
+                      CSC
                     </Typography> */}
                   {/* </Box> */}
                   <Box

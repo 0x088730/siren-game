@@ -36,7 +36,7 @@ const onCharacter = () => {
 }
 
 const App: React.FC = () => {
-  const [showAccount, setShowAccount] = useState(true)
+  const [showAccount, setShowAccount] = useState(false)
   const openModal = (flag: boolean) => {
     setShowAccount(flag)
   }  
