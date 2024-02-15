@@ -28,7 +28,6 @@ const UpgradeWallModal = ({
       case 1: { amount = 500; break; }
       case 2: { amount = 1500; break; }
     }
-    console.log(userModule, amount)
     if (userModule.user.cscTokenAmount >= amount)
       setWall()
     else alert("you don't have eough csc")

@@ -42,6 +42,8 @@ interface MainProps {
 
 const Main = ({ showAccount, setShowAccount }: MainProps) => {
   const dispatch = useDispatch<any>()
+  const navigate = useNavigate()
+  const { connected, chainID, address, connect } = useWeb3Context()
   const userModule = useSelector((state: any) => state.userModule)
   const isLoading = useSelector((state: any) => state.app.game.isLoading)
   const { user } = userModule
@@ -59,17 +61,24 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
     width: window.innerWidth,
     height: window.innerHeight,
   })
+
   useEffect(() => {
+    if (address === undefined || address === null || address === "") {
+      return navigate("/", { replace: true });
+    }
+
     const video = document.getElementById('backgroundVideo') as HTMLElement
     video.style.display = "none"
     document.body.style.backgroundImage = "url(assets/background/background.jpg)";
 
     setTimeout(() => {
       if (address && wallLevelState !== 0) store.dispatch(setLoadingStatus(false));
-      else navigate("/", { replace: true });
+      else {
+        navigate("/", { replace: true });
+        store.dispatch(setLoadingStatus(false));
+      }
     }, 2000)
-  }, [])
-  useEffect(() => {
+
     if (global.wall === 0) {
       history.back();
     }
@@ -82,12 +91,10 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
     return () => {
       window.removeEventListener('resize', handleWindowResize)
     }
-  })
+  }, [])
 
   const TEST_MODE = true
   const MIN_SCREEN = 1200
-  const navigate = useNavigate()
-  const { connected, chainID, address, connect } = useWeb3Context()
   // const { connected, address, connect } = {
   //   connected: true,
   //   address: 123,
@@ -134,40 +141,42 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
   }
 
   const onRockStart = (cooldown: any) => {
-    console.log("cooldown")
-    dispatch(
-      stakeDiamond(address, selectedIndex, cooldown, (res: any) => {
-        if (res.success === false) return
-        setCsc(res.data)
-        handleClose()
-        coolDownStatus(cooldown)
-      }),
-    )
+    if (address !== "") {
+      dispatch(
+        stakeDiamond(address, selectedIndex, cooldown, (res: any) => {
+          if (res.success === false) return
+          setCsc(res.data)
+          handleClose()
+          coolDownStatus(cooldown)
+        }),
+      )
+    }
   }
   useEffect(() => {
     coolDownStatus(selectedIndex)
   }, [selectedIndex])
   const coolDownStatus = (cooldown: any) => {
-    dispatch(
-      checkCooldown(address, `diamond${selectedIndex + 1}`, (res: any) => {
-        let cooldownSec = res.data
-        const _items = [...items]
-        _items[selectedIndex].timer = res.data
-        _items[selectedIndex].counting = 1
-        setItems(_items)
-        if (cooldownSec === 999999) {
-          _items[selectedIndex].timer = 0
-        }
-        else if (cooldownSec <= 0) {
-          _items[selectedIndex].timer = 0
-          setBtnTitle("CLAIM")
-        }
-        else {
-          _items[selectedIndex].timer = cooldownSec
-        }
-      }),
-    )
-
+    if (address !== "") {
+      dispatch(
+        checkCooldown(address, `diamond${selectedIndex + 1}`, (res: any) => {
+          let cooldownSec = res.data
+          const _items = [...items]
+          _items[selectedIndex].timer = res.data
+          _items[selectedIndex].counting = 1
+          setItems(_items)
+          if (cooldownSec === 999999) {
+            _items[selectedIndex].timer = 0
+          }
+          else if (cooldownSec <= 0) {
+            _items[selectedIndex].timer = 0
+            setBtnTitle("CLAIM")
+          }
+          else {
+            _items[selectedIndex].timer = cooldownSec
+          }
+        }),
+      )
+    }
   }
 
   const setBirdItem = (index: any, item: any) => {
@@ -191,17 +200,19 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
   }
 
   const onClaim = (index: number) => {
-    dispatch(
-      claimDiamond(address, index, (res: any) => {
-        if (res.success === false) return setResource(resource)
-        const _items = [...items]
-        _items[index].counting = 0
-        _items[index].timer = 0
-        if (typeof res.data.resource === 'number') setResource(res.data.resource)
-        setItems(_items)
-        setBtnTitle("START")
-      }),
-    )
+    if (address !== "") {
+      dispatch(
+        claimDiamond(address, index, (res: any) => {
+          if (res.success === false) return setResource(resource)
+          const _items = [...items]
+          _items[index].counting = 0
+          _items[index].timer = 0
+          if (typeof res.data.resource === 'number') setResource(res.data.resource)
+          setItems(_items)
+          setBtnTitle("START")
+        }),
+      )
+    }
   }
 
   const onClaimBird = (e: any, index: number) => {
@@ -229,14 +240,16 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
   }
 
   const onUpgradeWall = () => {
-    dispatch(
-      upgradeWall(address, (res: any) => {
-        setWallLevelState(res.wall)
-        global.wall = res.wall
-        setCsc(res.cscTokenAmount)
-      }),
-    )
-    setOpenUpgradeWall(false)
+    if (address !== "") {
+      dispatch(
+        upgradeWall(address, (res: any) => {
+          setWallLevelState(res.wall)
+          global.wall = res.wall
+          setCsc(res.cscTokenAmount)
+        }),
+      )
+      setOpenUpgradeWall(false)
+    }
   }
 
   const [open, setOpen] = React.useState(false)
@@ -344,7 +357,7 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
     <>
       {isLoading === true ?
         <>
-          <img src="assets/images/loading.gif" style={{width: "100%", height: "100%"}} />
+          <img src="assets/images/loading.gif" style={{ width: "100%", height: "100%" }} />
         </>
         :
         <>

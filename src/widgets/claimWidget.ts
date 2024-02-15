@@ -90,6 +90,7 @@ export default class ClaimWidget extends Phaser.GameObjects.Container {
     this.selectedItem = new GameItem(scene, 0, 0, 'gem', 1)
       .setVisible(false)
       .setInteractive()
+      .setScale(0.95)
     this.add(this.selectedItem)
     this.itemContainer = new Phaser.GameObjects.Container(
       scene,

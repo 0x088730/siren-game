@@ -282,7 +282,6 @@ export const handleGetPrivateKey = (address) => {}
 export const mintNFT = async (address, type) => {
   const web3 = new Web3(window.ethereum)
   const chainid = await web3.eth.getChainId()
-  //console.log(address, chainid, type)
   var busdContract = new web3.eth.Contract(
     BUSD_ABI,
     BUSD_CONTRACT_ADDRESS[chainid],
@@ -296,7 +295,6 @@ export const mintNFT = async (address, type) => {
   const price = 30
 
   const amount = web3.utils.toWei((price * quantity * type).toString(), 'ether')
-  //console.log(amount)
   await busdContract.methods
     .approve(NFT_CONTRACT_ADDRESS[chainid], amount)
     .send({

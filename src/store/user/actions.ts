@@ -107,7 +107,6 @@ export function swapResources(address: any, level: Number, cb: any) {
       walletAddress: address,
       level: level,
     })
-    console.log("change", res)
     cb(res)
     dispatch({
       type: RESOURCE_CHANGE_SUCCESS,
@@ -193,8 +192,6 @@ export function claimHunter(address: any, cb: any) {
   }
 }
 export function setCooldown(address: any, type: string, value: boolean, cb: any) {
-  console.log("request>>>>>>")
-
   return async (dispatch: any) => {
     const res = await api(`user/set/cooldown`, 'post', {
       walletAddress: address,
@@ -228,7 +225,6 @@ export function upgradeWall(address: any, cb: any) {
     const res = await api(`user/upgrade/wall`, 'post', {
       walletAddress: address,
     })
-    console.log(res)
     cb(res)
     dispatch({
       type: RESOURCE_CHANGE_SUCCESS,
@@ -291,7 +287,6 @@ export function depositRequest(
       amount: amount,
       txID: txID,
     })
-    // console.log(res)
     cb(res)
     dispatch({
       type: RESOURCE_CHANGE_SUCCESS,
@@ -308,7 +303,6 @@ export function resourceRequest(
     const res = await api(`user/resource`, 'post', {
       walletAddress: address,
     })
-    //console.log('get Resource', res)
     cb(res)
     dispatch({
       type: RESOURCE_CHANGE_SUCCESS,
@@ -337,7 +331,6 @@ export function withdrawRequest(
 
     cb(res)
     if (res.success) {
-      //console.log(res)
       dispatch({
         type: RESOURCE_CHANGE_SUCCESS,
         payload: { data: res },
@@ -404,9 +397,6 @@ export function buyMining(
       txID: txID,
       type: type,
     })
-
-    //console.log(res)
-
     cb(res)
     dispatch({
       type: RESOURCE_CHANGE_SUCCESS,
@@ -479,7 +469,6 @@ export function getAllResource(address: any, cb?: any) {
     const res = await api(`user/plant/get`, 'post', {
       walletAddress: address,
     })
-    //console.log('get all resource', res)
     cb(res)
     if (res.success) {
       dispatch({

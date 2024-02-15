@@ -49,7 +49,6 @@ export default class Character extends Phaser.Events.EventEmitter {
     store.dispatch(setAtkBtnState(true))
 
     this.characterDown.on('animationcomplete', (animation: any, frame: any) => {
-      // console.log(animation)
       if (animation.key === 'robot-stabb') {
         if (!this.dead) {
           this.characterDown.anims.play('robot-run')

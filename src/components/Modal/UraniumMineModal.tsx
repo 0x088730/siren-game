@@ -111,7 +111,6 @@ const UraniumMineModal = ({ open, setOpen }: Props) => {
 
   useEffect(() => {
     if (user.uraniumMine) {
-      console.log(user.uraniumMine)
       const check = new Date('2022-12-30T00:00:00').getTime()
       const miningModule = new Date(user.uraniumMine).getTime()
 

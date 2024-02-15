@@ -19,7 +19,6 @@ export const SectionPage = ({
     setPageStatus,
 }: HeaderProps) => {
     const section = ["1", "2", "3", "4"];
-    console.log(global)
     useEffect(() => {
         const video = document.getElementById('backgroundVideo') as HTMLElement
         video.style.display = "none"

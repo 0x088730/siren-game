@@ -117,7 +117,6 @@ const ExchangeModal = ({
 
                   setBtnType('Start')
                 } else if (cooldownSec <= 0) {
-                  console.log(res.claim)
                   setClaimBar([res.claim.siren, res.claim.egg, res.claim.claim])
                   setRemainedTime(-1)
                   setIsCooldownStarted(false)

@@ -98,6 +98,15 @@ export default class Battle extends Phaser.Scene {
     this.enemy_die = false
     this.enemy_1_die = false
     this.attacking = false
+    this.time.addEvent({
+      delay: 1000,
+      callback: () => {
+        // store.dispatch(getCharacterStatus(true))
+        store.dispatch(setLoadingStatus(false))
+        const video = document.getElementById('backgroundVideo') as HTMLElement
+        video.style.visibility = "hidden"
+      },
+    })
   }
   create() {
     // createCharacterAnims(this.anims)
@@ -105,14 +114,11 @@ export default class Battle extends Phaser.Scene {
     this.enemyAvatars()
     this.createCharacter()
     this.createEnemy()
-    // this.createHud()
+    // this.createHud()    
     this.time.addEvent({
       delay: 500,
       callback: () => {
         store.dispatch(getCharacterStatus(true))
-        store.dispatch(setLoadingStatus(false))
-        const video = document.getElementById('backgroundVideo') as HTMLElement
-        video.style.visibility = "hidden"
       },
     })
   }

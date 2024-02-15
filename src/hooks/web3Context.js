@@ -79,9 +79,6 @@ export const Web3ContextProvider = ({ children }) => {
       })
       provider.on('chainChanged', async (chainId) => {
         const isValid = _checkNetwork(chainId)
-
-        //console.log('ChangeChange', chainId)
-
         if (!isValid) {
           setChainID(Number(chainId))
           changeNetwork()
@@ -99,7 +96,6 @@ export const Web3ContextProvider = ({ children }) => {
       console.warn('You are switching networks', chainId, otherChainID)
 
       if (chainList.includes(Number(otherChainID))) {
-        //console.log('Asdf')
         setChainID(Number(otherChainID))
         return true
       }
@@ -161,7 +157,6 @@ export const Web3ContextProvider = ({ children }) => {
   }, [provider, web3Modal, connected])
 
   const disconnect = useCallback(async () => {
-    //console.log('disconnecting')
     await web3Modal.clearCachedProvider()
     setConnected(false)
     setAddress('')
