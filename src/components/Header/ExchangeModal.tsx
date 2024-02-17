@@ -36,7 +36,7 @@ const ExchangeModal = ({
   const userModule = useSelector((state: any) => state.userModule)
   const [openCharacterChoose, setOpenChraracterChoose] = useState(false)
   const [selectedCharacterIndex, setSelectedCharacterIndex] = useState(-1)
-  const [selectedCharacterList, setSelectedCharacterList] = useState([-1,-1,-1])
+  const [selectedCharacterList, setSelectedCharacterList] = useState([-1, -1, -1])
   const [claimBar, setClaimBar] = useState([-1, -1, true])
   const [selectedCharacter, setSelectedCharacter] = useState(-1)
 
@@ -46,6 +46,8 @@ const ExchangeModal = ({
   const [isCooldownStarted, setIsCooldownStarted] = useState(false)
   const dispatch = useDispatch<any>()
   const [btnType, setBtnType] = useState('Start')
+  const [avatar, setAvatar] = useState("");
+
   var convertSecToHMS = (number: number) => {
     const hours = Math.floor(number / 3600)
       .toString()
@@ -59,16 +61,16 @@ const ExchangeModal = ({
   }
 
   const onBtnClick = () => {
-    if(remainedTime>0)
-    return
+    if (remainedTime > 0)
+      return
     if (btnType === 'Start') {
-      let userCount=selectedCharacterList.filter(characterNo=>characterNo!==-1).length
-      if(userCount===0){
+      let userCount = selectedCharacterList.filter(characterNo => characterNo !== -1).length
+      if (userCount === 0) {
         alert("Select Character")
         return
       }
       dispatch(
-        startHunterUpgradeCooldown(address,userCount, (resp: any) => {
+        startHunterUpgradeCooldown(address, userCount, avatar, (resp: any) => {
           if (resp.data === true) {
             setRemainedTime(30)
             setIsCooldownStarted(true)
@@ -79,13 +81,15 @@ const ExchangeModal = ({
       dispatch(
         claimHunter(address, (resp: any) => {
           setBtnType('Start')
-          if(claimBar[0]!==-1&&claimBar[0]!==-2)
-            setCsc(csc+claimBar[0])
-          if(claimBar[1]!==-1&&claimBar[1]!==-2)
-            setEgg(egg+claimBar[1])
+          setAvatar("")
+          setSelectedCharacterList([-1, -1, -1])
+          if (claimBar[0] !== -1 && claimBar[0] !== -2)
+            setCsc(csc + claimBar[0])
+          if (claimBar[1] !== -1 && claimBar[1] !== -2)
+            setEgg(egg + claimBar[1])
 
           setClaimBar([-1, -1, true])
-          
+
         }),
       )
     }
@@ -120,18 +124,21 @@ const ExchangeModal = ({
                   setClaimBar([res.claim.siren, res.claim.egg, res.claim.claim])
                   setRemainedTime(-1)
                   setIsCooldownStarted(false)
-
+                  setAvatar(res.avatar)
+                  setSelectedCharacterList([0, -1, -1])
                   setBtnType('Claim')
                 } else {
                   setRemainedTime(cooldownSec)
                   setIsCooldownStarted(true)
+                  setAvatar(res.avatar)
+                  setSelectedCharacterList([0, -1, -1])
                 }
               }),
             )
           }
           if (prevTime === 0) {
 
-           
+
             return 0
           }
           return prevTime - 1
@@ -156,46 +163,49 @@ const ExchangeModal = ({
             setClaimBar([res.claim.siren, res.claim.egg, res.claim.claim])
             setRemainedTime(-1)
             setIsCooldownStarted(false)
-
+            setAvatar(res.avatar)
+            setSelectedCharacterList([0, -1, -1])
           } else {
             setRemainedTime(cooldownSec)
             setIsCooldownStarted(true)
+            setAvatar(res.avatar)
+            setSelectedCharacterList([0, -1, -1])
           }
         }),
       )
   }, [open, dispatch])
 
-  const onUpgradeLevel = ()=>{
-    if(btnType!=="Start"||remainedTime>=0){
+  const onUpgradeLevel = () => {
+    if (btnType !== "Start" || remainedTime >= 0) {
       alert("please get claim first")
       return
     }
-    if(csc<3000+upgradeLevel*2000){
+    if (csc < 3000 + upgradeLevel * 2000) {
       alert("you need more csc")
       return
 
     }
-    if(upgradeLevel===0&&global.wall<2){
+    if (upgradeLevel === 0 && global.wall < 2) {
       alert("you have to reach level 2 of wall")
       return
 
     }
-    else if(upgradeLevel===1&&global.wall<3){
+    else if (upgradeLevel === 1 && global.wall < 3) {
       alert("you have to reach level 3 of wall")
       return
 
     }
-    dispatch(levelupHunter(address,(resp:any)=>{
-      if(resp.data===true) 
-        if(upgradeLevel===0){
-          setCsc(csc-3000)
+    dispatch(levelupHunter(address, (resp: any) => {
+      if (resp.data === true)
+        if (upgradeLevel === 0) {
+          setCsc(csc - 3000)
         }
-        else if(upgradeLevel===1){
-          setCsc(csc-5000)
+        else if (upgradeLevel === 1) {
+          setCsc(csc - 5000)
         }
-        setUpgradeLevel(upgradeLevel + 1)
+      setUpgradeLevel(upgradeLevel + 1)
     }))
-    
+
   }
   // const [ispremium, setIsPremium] = useState(false)
   // useEffect(() => {
@@ -245,15 +255,8 @@ const ExchangeModal = ({
           <img
             alt=""
             src="/images/support/support_md_close_btn.png"
-            style={{
-              position: 'absolute',
-              top: 0,
-              right: 0,
-              width: '7%',
-              transform: 'translate(26%, -27%)',
-              cursor: 'pointer',
-              zIndex: 5,
-            }}
+            className='absolute top-0 right-0 w-[7%] cursor-pointer z-[5]'
+            style={{ transform: 'translate(26%, -27%)' }}
             onClick={handleClose}
           />
           <Box
@@ -266,14 +269,10 @@ const ExchangeModal = ({
             }}
           >
             <Box>
-              <p
+              <p className='text-[35px] text-center mt-[8%] text-[#e7e1e1]'
                 style={{
                   fontFamily: 'Marko One, serif',
-                  fontSize: '35px',
                   textTransform: 'uppercase',
-                  textAlign: 'center',
-                  marginTop: '8%',
-                  color: '#e7e1e1',
                   lineHeight: '100%',
                 }}
               >
@@ -308,28 +307,14 @@ const ExchangeModal = ({
                 <img
                   src="/assets/images/character_bar.png"
                   alt=""
-                  style={{
-                    position: 'relative',
-                    padding: '10px',
-                    height: '100%',
-                    marginLeft: 'auto',
-                    marginRight: 'auto',
-                  }}
+                  className='relative h-full mx-auto p-[10px]'
                 />
-                
-                {selectedCharacterList[0]!==-1&&<img
-                  src={`/assets/images/characters/avatar/${selectedCharacterList[0]}.png`}
+
+                {selectedCharacterList[0] !== -1 && <img
+                  // src={`/assets/images/characters/avatar/${selectedCharacterList[0]}.png`}
+                  src={avatar}
                   alt=""
-                  style={{
-                    position: 'absolute',
-                    top: -15,
-                    marginLeft: 'auto',
-                    marginRight: 'auto',
-                    padding: '30%',
-                    zIndex: '20',
-                    height: '115%',
-                    width: '120%',
-                  }}
+                  className='absolute top-[-15px] mx-auto p-[30%] z-20 w-[120%] h-[115%]'
                 />}
               </Grid>
               <Grid
@@ -350,68 +335,35 @@ const ExchangeModal = ({
                 }}
               >
                 <img
-                  src={`/assets/images/${
-                    upgradeLevel >= 1 ? 'character_bar' : 'character_bar1'
-                  }.png`}
+                  src={`/assets/images/${upgradeLevel >= 1 ? 'character_bar' : 'character_bar1'
+                    }.png`}
                   alt=""
-                  style={{
-                    position: 'relative',
-                    padding: '10px',
-                    height: '100%',
-                    marginLeft: 'auto',
-                    marginRight: 'auto',
-                  }}
+                  className='relative p-[10px] h-full mx-auto'
                 />
-                {upgradeLevel >= 1 && selectedCharacterList[1]!==-1&&(
+                {upgradeLevel >= 1 && selectedCharacterList[1] !== -1 && (
                   <img
                     src={`/assets/images/characters/avatar/${selectedCharacterList[1]}.png`}
                     alt=""
-                    style={{
-                      position: 'absolute',
-                    top: -15,
-                    marginLeft: 'auto',
-                    marginRight: 'auto',
-                    padding: '30%',
-                    zIndex: '20',
-                    height: '115%',
-                    width: '120%',
-                    }}
+                    className='absolute top-[-15px] mx-auto p-[30%] z-20 w-[120%] h-[115%]'
                   />
                 )}
                 {upgradeLevel === 0 && (
-                  <div
-                  style={{
-                    textAlign: 'center',
-                    fontSize: 11,
-                    top: '50%',
-                    color: 'white',
-                    position: 'absolute'
-                  }}
-                >
-                  <Button
-                  sx={{
-                    position: 'relative',
-                    padding: '10px',
-                    height: '100%',
-                    marginLeft: 'auto',
-                    marginRight: 'auto',
-                  }}
-                >
-                  <img src="/assets/images/upgrade btn.png" alt="" />
-                  <p
-                    style={{
-                      position: 'absolute',
-                      fontFamily: 'Anime Ace',
-                      fontSize: '15px',
-                      textAlign: 'center',
-                      color: '#e7e1e1',
-                    }}onClick={onUpgradeLevel}
-                  >Upgrade </p>
-                  
+                  <div className='absolute text-center text-[11px] top-[50%] text-white'>
+                    <Button
+                      sx={{
+                        position: 'relative',
+                        padding: '10px',
+                        height: '100%',
+                        marginLeft: 'auto',
+                        marginRight: 'auto',
+                      }}
+                    >
+                      <img src="/assets/images/upgrade btn.png" alt="" />
+                      <p className='absolute text-[15px] text-center text-[#e7e1e1]' style={{ fontFamily: 'Anime Ace' }} onClick={onUpgradeLevel}>Upgrade </p>
                     </Button>
-                  <p>3000 CSC</p>
-                  <p>NEED 2 LVL WALL</p>
-                </div>
+                    <p>3000 CSC</p>
+                    <p>NEED 2 LVL WALL</p>
+                  </div>
                 )}
               </Grid>
               <Grid
@@ -432,68 +384,35 @@ const ExchangeModal = ({
                 }}
               >
                 <img
-                  src={`/assets/images/${
-                    upgradeLevel >= 2 ? 'character_bar' : 'character_bar1'
-                  }.png`}
+                  src={`/assets/images/${upgradeLevel >= 2 ? 'character_bar' : 'character_bar1'
+                    }.png`}
                   alt=""
-                  style={{
-                    position: 'relative',
-                    padding: '10px',
-                    height: '100%',
-                    marginLeft: 'auto',
-                    marginRight: 'auto',
-                  }}
+                  className='relative p-[10px] h-full mx-auto'
                 />
-                {upgradeLevel >= 2 && selectedCharacterList[2]!==-1&&(
+                {upgradeLevel >= 2 && selectedCharacterList[2] !== -1 && (
                   <img
                     src={`/assets/images/characters/avatar/${selectedCharacterList[2]}.png`}
                     alt=""
-                    style={{
-                      position: 'absolute',
-                    top: -15,
-                    marginLeft: 'auto',
-                    marginRight: 'auto',
-                    padding: '30%',
-                    zIndex: '20',
-                    height: '115%',
-                    width: '120%',
-                    }}
+                    className='absolute top-[-15px] mx-auto p-[30%] z-20 w-[120%] h-[115%]'
                   />
                 )}
                 {upgradeLevel === 1 && (
-                  <div
-                  style={{
-                    textAlign: 'center',
-                    fontSize: 11,
-                    top: '50%',
-                    color: 'white',
-                    position: 'absolute'
-                  }}
-                >
-                  <Button
-                  sx={{
-                    position: 'relative',
-                    padding: '10px',
-                    height: '100%',
-                    marginLeft: 'auto',
-                    marginRight: 'auto',
-                  }}
-                >
-                  <img src="/assets/images/upgrade btn.png" alt="" />
-                  <p
-                    style={{
-                      position: 'absolute',
-                      fontFamily: 'Anime Ace',
-                      fontSize: '15px',
-                      textAlign: 'center',
-                      color: '#e7e1e1',
-                    }}onClick={onUpgradeLevel}
-                  >Upgrade </p>
-                  
+                  <div className='text-center text-[11px] top-[50%] text-white absolute'>
+                    <Button
+                      sx={{
+                        position: 'relative',
+                        padding: '10px',
+                        height: '100%',
+                        marginLeft: 'auto',
+                        marginRight: 'auto',
+                      }}
+                    >
+                      <img src="/assets/images/upgrade btn.png" alt="" />
+                      <p className='absolute text-[15px] text-center text-[#e7e1e1]' style={{ fontFamily: 'Anime Ace' }} onClick={onUpgradeLevel}>Upgrade </p>
                     </Button>
-                  <p>3000 CSC</p>
-                  <p>NEED 3 LVL WALL</p>
-                </div>
+                    <p>3000 CSC</p>
+                    <p>NEED 3 LVL WALL</p>
+                  </div>
                 )}
               </Grid>
             </Grid>
@@ -534,17 +453,9 @@ const ExchangeModal = ({
                   }}
                 >
                   <img src="/assets/images/roomBtn.png" alt="" />
-                  <p
-                    style={{
-                      position: 'absolute',
-                      fontFamily: 'Anime Ace',
-                      fontSize: '8px',
-                      textAlign: 'center',
-                      color: '#e7e1e1',
-                    }}
-                  >
-                    {claimBar[0]===-1?'100-550':claimBar[0]!==-2?claimBar[0] : ''}<br/>
-                    {claimBar[0]!==-2&& 'CSC'}
+                  <p className='absolute text-[8px] text-center text-[#e7e1e1]' style={{ fontFamily: 'Anime Ace', }}>
+                    {claimBar[0] === -1 ? '100-550' : claimBar[0] !== -2 ? claimBar[0] : ''}<br />
+                    {claimBar[0] !== -2 && 'CSC'}
                   </p>
                 </Button>
                 <Button
@@ -555,17 +466,9 @@ const ExchangeModal = ({
                   }}
                 >
                   <img src="/assets/images/roomBtn.png" alt="" />
-                  <p
-                    style={{
-                      position: 'absolute',
-                      fontFamily: 'Anime Ace',
-                      fontSize: '8px',
-                      textAlign: 'center',
-                      color: '#e7e1e1',
-                    }}
-                  >
-                    {claimBar[1]===-1?'20-40':claimBar[1]!==-2?claimBar[1] : ''}<br/>
-                    {claimBar[1]!==-2&& 'RES'}
+                  <p className='absolute text-[8px] text-center text-[#e7e1e1]' style={{ fontFamily: 'Anime Ace', }}>
+                    {claimBar[1] === -1 ? '20-40' : claimBar[1] !== -2 ? claimBar[1] : ''}<br />
+                    {claimBar[1] !== -2 && 'RES'}
                   </p>
                 </Button>
                 <Button
@@ -578,13 +481,13 @@ const ExchangeModal = ({
                   <img src="/assets/images/roomBtn.png" alt="" />
                   <p
                     className='flex justify-center absolute text-center text-[#e7e1e1] text-[14px]'
-                    style={{ fontFamily: 'Anime Ace',}}
+                    style={{ fontFamily: 'Anime Ace', }}
                   >
                     {claimBar[2] === true ? (
                       <img
                         src="assets/item/box-closed.png"
                         alt=""
-                        style={{ width: '55%', marginTop: "-20px" }}
+                        className='w-[55%] mt-[-20px]'
                       />
                     ) : (
                       ''
@@ -599,15 +502,7 @@ const ExchangeModal = ({
                   }}
                 >
                   <img src="/assets/images/roomBtn.png" alt="" />
-                  <p
-                    style={{
-                      position: 'absolute',
-                      fontFamily: 'Anime Ace',
-                      fontSize: '14px',
-                      textAlign: 'center',
-                      color: '#e7e1e1',
-                    }}
-                  >
+                  <p className='absolute text-[14px] text-center text-[#e7e1e1]' style={{ fontFamily: 'Anime Ace' }}>
                     {/* {claimBar[2]===true?
                     <img src="assets/item/box-closed.png" alt="" style={{width:"100%",height:"100%",padding:"8%"}}/>
                     :""} */}
@@ -624,23 +519,16 @@ const ExchangeModal = ({
                 alignItems: 'center',
               }}
             >
-              <Button
+              <Button className='w-[40%]'
                 onClick={() => onBtnClick()}
                 sx={{
-                  width: '40%',
                   marginLeft: 'auto',
                   marginRight: 'auto',
                 }}
               >
                 <img alt="" src="/assets/images/big-button.png" />
-                <p
-                  style={{
-                    position: 'absolute',
-                    fontFamily: 'Anime Ace',
-                    fontSize: '14px',
-                    textAlign: 'center',
-                    color: '#e7e1e1',
-                  }}
+                <p className='absolute text-[14px] text-center text-[#e7e1e1]'
+                  style={{ fontFamily: 'Anime Ace' }}
                 >
                   {remainedTime <= 0 ? btnType : convertSecToHMS(remainedTime)}
                 </p>
@@ -655,6 +543,7 @@ const ExchangeModal = ({
         selectedCharacterList={selectedCharacterList}
         selectedCharacterIndex={selectedCharacterIndex}
         setSelectedCharacter={setSelectedCharacter}
+        setAvatar={setAvatar}
       />
     </>
   )

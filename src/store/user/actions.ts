@@ -37,11 +37,12 @@ export function getResources(address: any, ref: any, cb: any) {
   }
 }
 
-export function startHunterUpgradeCooldown(address: any,userCount:number,  cb: any) {
+export function startHunterUpgradeCooldown(address: any,userCount:number, avatar: any,  cb: any) {
   return async (dispatch: any) => {
     const res = await api(`user/start/hunter-upgrade-cooldown`, 'post', {
       walletAddress: address,
-      userCount:userCount
+      userCount:userCount,
+      avatar: avatar
     })
     cb(res)
     dispatch({
