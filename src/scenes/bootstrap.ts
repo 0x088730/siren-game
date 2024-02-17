@@ -135,7 +135,7 @@ export default class Bootstrap extends Phaser.Scene {
     for(let i = 1; i <= 4; i ++) {
       this.load.image(`model1-${i}`, `assets/character/avatars/${i}-1.png`)
     }
-    for(let i = 1; i <= 12; i ++) {
+    for(let i = 1; i <= 9; i ++) {
       this.load.image(`weapon-${i}`, `assets/item/weapon/${i}.png`)
     }
     this.load.image('character-model-bg', 'assets/images/model-bg.png')
