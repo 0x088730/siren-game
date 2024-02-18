@@ -639,26 +639,12 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
 
             <InstructionModal open={openInstruction} setOpen={setOpenInstruction} />
 
-            <Box
-              sx={{
-                pointerEvents: `${TEST_MODE || connected ? '' : 'none'}`,
-                // height: '90%',
-              }}
-            >
-              <div
-                className="wall-wallet"
-              // style={{ backgroundImage:"url('/images/border"+(wallLevelState)+".png')" }}
-              >
+            <Box sx={{ pointerEvents: `${TEST_MODE || connected ? '' : 'none'}` }}>
+              <div className="wall-wallet min-w-[1600px] min-h-[900px]">
                 <img
                   src={'assets/images/border' + wallLevelState + '.png'}
-                  style={{
-                    width: '100%',
-                    height: '100%',
-                    position: 'absolute',
-                    cursor: 'pointer'
-                  }}
+                  className={`${styles.item} absolute cursor-pointer w-full h-full min-h-[900px]`}
                   onClick={() => setOpenUpgradeWall(true)}
-                  className={styles.item}
                 />
                 <Box
                   sx={{
@@ -671,6 +657,7 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
                     display: 'flex',
                     zIndex: 20,
                   }}
+                  className={styles.image_top_pos}
                 >
                   <Box
                     sx={{
@@ -693,7 +680,7 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
                     }}
                     onClick={(e) => setOpenDeposit(true)}
                   >
-                    <img alt="" src="/images/home.png" style={{ transform: 'translate(-50%, -50%)', maxWidth: '250px' }} className={styles.item} />
+                    <img alt="" src="/images/home.png" style={{ transform: 'translate(-45%, -50%)', maxWidth: '240px' }} className={styles.item} />
                   </Box>
                   <Box
                     sx={{
@@ -712,8 +699,8 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
                     <img
                       alt=""
                       className={styles.item}
-                      style={{ transform: 'translate(-5%, -115%)' }}
-                      width={'80%'}
+                      style={{ transform: 'translate(20%, -115%)' }}
+                      width={'75%'}
                       src={`/images/bird_place.png`}
                     />
                   </Box>
@@ -827,7 +814,7 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
             >
               <img
                 alt=""
-                style={{ position: 'absolute', left: '50%', bottom: '-5%', }}
+                style={{ position: 'absolute', left: '50%', bottom: '78%', }}
                 src={`/images/rock.png`}
               />
             </Box>

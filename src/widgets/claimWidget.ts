@@ -52,7 +52,7 @@ export default class ClaimWidget extends Phaser.GameObjects.Container {
         .setVisible(true)),
     )
     this.hpPlus = this.scene.add
-      .text(950, 190, `HP + ${0}`, { font: '80px Arial', color: 'red' })
+      .text(950, 190, `HP + ${0}`, { font: '80px Anime Ace', color: 'red' })
       .setScale(0.5, 0.5)
       .setOrigin(0.5, 0.5)
       .setVisible(false)
