@@ -178,21 +178,21 @@ export default class CharacterWidget extends Phaser.GameObjects.Container {
       this.add(
         (this.weapon[i] = scene.add
           .image(row * 200 + 260, col * 200 - 200, `weapon-${weaponList[i]}`)
-          .setDisplaySize(200, 200)
+          .setDisplaySize(180, 180)
           .setInteractive()
           .on('pointerdown', () => { })),
       )
-      this.weaponTween[i] = scene.tweens.add({
-        duration: 800,
-        repeat: -1,
-        ease: 'Power1',
-        paused: true,
-        scaleX: 0.5,
-        scaleY: 0.5,
-        targets: this.weapon[i],
-        yoyo: true,
-      })
-      this.weaponTween[i].play()
+      // this.weaponTween[i] = scene.tweens.add({
+      //   duration: 800,
+      //   repeat: -1,
+      //   ease: 'Power1',
+      //   paused: true,
+      //   scaleX: 0.5,
+      //   scaleY: 0.5,
+      //   targets: this.weapon[i],
+      //   yoyo: true,
+      // })
+      // this.weaponTween[i].play()
     }
 
     this.add(
