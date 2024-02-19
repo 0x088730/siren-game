@@ -179,10 +179,11 @@ const MiningModal = ({
         }))
       }
     } else if (btnType === 'Start') {
-      if (csc < ((displayLevel - 1) * 1200 + 2000)) {
-        alert("you don't have eough csc")
-      }
-      else {
+      // if (csc < ((displayLevel - 1) * 1200 + 2000)) {
+      //   alert("you don't have eough csc")
+      // }
+      // else {
+      if (displayLevel >= 1) {
         dispatch(
           setCooldown(address, 'level-up', true, (res: any) => {
             if (!isCooldownStarted) {
@@ -193,6 +194,7 @@ const MiningModal = ({
           }),
         )
       }
+      // }
     } else if (btnType === 'Claim') {
       dispatch(
         checkCooldown(address, 'level-up', (res: any) => {

@@ -40,7 +40,7 @@ export default class ItemWidget extends Phaser.GameObjects.Container {
     this.add(
       (this.background = scene.add
         .image(0, 0, 'character2-frame')
-        .setDisplaySize(700, 500)),
+        .setDisplaySize(850, 650)),
     )
     this.itemList = new Phaser.Structs.List<StockItem>(null)
     scene.add.existing(this)
@@ -51,8 +51,8 @@ export default class ItemWidget extends Phaser.GameObjects.Container {
     this.scene.tweens.add({
       targets: item,
       duration: 500,
-      scaleX: 1.2,
-      scaleY: 1.2,
+      scaleX: 1.35,
+      scaleY: 1.35,
       ease: 'Power1',
       yoyo: true,
       repeat: -1,
@@ -63,9 +63,9 @@ export default class ItemWidget extends Phaser.GameObjects.Container {
     for (let j = 0; j < this.itemList.length; j++) {
       const pX = Math.floor(j / this.row)
       const pY = Math.floor(j % this.row)
-      const cell = this.itemList.getAt(j)
+      const cell = this.itemList.getAt(j).setScale(1.2)
       
-      cell.move(pY * this.cellWidth - 240, pX * this.cellHeight - 140)
+      cell.move(pY * this.cellWidth - 260, pX * this.cellHeight - 160)
     }
   }
 

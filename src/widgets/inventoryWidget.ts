@@ -9,10 +9,10 @@ export default class InventoryWidget extends Phaser.GameObjects.Container {
     super(scene, x, y)
     this.scene = scene
 
-    this.add((this.itemWidget = new ItemWidget(scene, 400, 40, 4, 160, 130)))
+    this.add((this.itemWidget = new ItemWidget(scene, 400, 40, 4, 180, 150)))
     this.add(
       (this.closeBtn = scene.add
-        .image(735, -200, 'close-btn')
+        .image(810, -275, 'close-btn')
         // .setScale(0.5)
         .setInteractive()
         .on('pointerdown', () => {
