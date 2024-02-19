@@ -18,6 +18,8 @@ export default class InventoryWidget extends Phaser.GameObjects.Container {
         .on('pointerdown', () => {
           this.setVisible(false)
           this.emit('closed')
+          const htmlEles = document.getElementById("html") as HTMLElement
+          htmlEles.style.overflow = "hidden";
         })),
     )
     this.itemWidget.on('loot', () => {
@@ -30,5 +32,5 @@ export default class InventoryWidget extends Phaser.GameObjects.Container {
   build() {
     this.itemWidget.build()
   }
-  addCharacter() {}
+  addCharacter() { }
 }

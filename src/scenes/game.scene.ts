@@ -31,6 +31,9 @@ export default class Game extends Phaser.Scene {
     const video = document.getElementById('backgroundVideo') as HTMLElement
     video.style.display = "none"
     document.body.style.backgroundImage = src
+    document.body.style.backgroundSize = "cover"
+    const htmlEles = document.getElementById("html") as HTMLElement
+    htmlEles.style.overflow = "unset";
   }
 
   init() { }
@@ -111,6 +114,8 @@ export default class Game extends Phaser.Scene {
     this.inventoryWidget.build()
     store.dispatch(setInventoryStatus(true))
     this.inventoryWidget.setVisible(true)
+    const htmlEles = document.getElementById("html") as HTMLElement
+    htmlEles.style.overflow = "unset";
   }
 
   character() {
@@ -118,6 +123,8 @@ export default class Game extends Phaser.Scene {
     this.characterWidget.gemBuild()
     store.dispatch(setCharacterStatus(true))
     this.characterWidget.showStatus(true)
+    const htmlEles = document.getElementById("html") as HTMLElement
+    htmlEles.style.overflow = "unset";
   }
 
   room() {

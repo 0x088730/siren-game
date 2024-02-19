@@ -157,6 +157,8 @@ export default class CharacterWidget extends Phaser.GameObjects.Container {
           this.emit('closed')
           const inputElement = document.getElementById("swapAmountInput") as HTMLElement
           inputElement.style.display = "none"
+          const htmlEles = document.getElementById("html") as HTMLElement
+          htmlEles.style.overflow = "hidden";
         })),
     )
     for (let i = 0; i < avatarList.length; i++) {

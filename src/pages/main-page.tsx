@@ -101,7 +101,7 @@ export const MainPage = ({
     
     return (
         <>
-            <div className="relative w-full">
+            <div className="relative w-full overflow-hidden">
                 {isLoading === true ?
                     <>
                         <img src="assets/images/loading.gif" style={{ width: "100%", height: "100%" }} />

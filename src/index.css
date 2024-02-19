@@ -7,7 +7,7 @@ html,
 body {
   background-repeat: no-repeat;
   width: 100%;
-  min-height: 768px;
+  min-height: 900px;
   height: 100vh;
   position: relative;
   overflow: hidden;

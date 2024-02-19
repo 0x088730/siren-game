@@ -855,6 +855,8 @@ export default class Battle extends Phaser.Scene {
       const video = document.getElementById('backgroundVideo') as HTMLElement
       video.style.display = "block"
       video.style.visibility = "visible"
+      const htmlEles = document.getElementById("html") as HTMLElement
+      htmlEles.style.overflow = "hidden";
       this.registry.destroy()
     })
   }
