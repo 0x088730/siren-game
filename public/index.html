@@ -1,47 +1,50 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#000000" />
-    <meta
-      name="description"
-      content="Web site created using create-react-app"
-    />
-    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@1,100;1,200&family=Marko+One&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Chela+One&display=swap" rel="stylesheet">
 
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&family=Marko+One&family=Nosifer&display=swap" rel="stylesheet">
-    <!--
+<head>
+  <meta charset="utf-8" />
+  <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#000000" />
+  <meta name="description" content="Web site created using create-react-app" />
+  <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@1,100;1,200&family=Marko+One&display=swap"
+    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Chela+One&display=swap" rel="stylesheet">
+
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&family=Marko+One&family=Nosifer&display=swap"
+    rel="stylesheet">
+  <!--
       manifest.json provides metadata used when your web app is installed on a
       user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
     -->
-    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-    <title>cryptoshowdown</title>
-  </head>
-  <body>
-    <div id="root" style="z-index: 1;"></div>
-    
-    <div
-      style="
+  <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+  <title>cryptoshowdown</title>
+</head>
+
+<body>
+  <div id="root" style="z-index: 1;"></div>
+
+  <div style="
         font-family: Anime Ace;
         position: absolute;
         left: -1000px;
         visibility: hidden;
-      "
-    >
-      .
-    </div>
-    <div id="phaser-container" class="min-w-[1600px]">
-      <video id="backgroundVideo" preload="true" autoplay loop muted style="display: block; z-index: -100; position: fixed;; min-width: 1600px; width: 100vw;">
-        <source src="./assets/background/main.mp4">
-      </video>
-      <input id="swapAmountInput" style=
-        "font-size: 32px; 
+      ">
+    .
+  </div>
+  <div id="phaser-container" class="min-w-[1600px]">
+    <video id="backgroundVideo" preload="true" autoplay loop muted
+      style="display: block; z-index: -100; position: fixed;; min-width: 1600px; width: 100vw;">
+      <source src="./assets/background/main.mp4">
+    </video>
+    <div class="w-full h-full absolute flex justify-center items-center">
+      <input id="swapAmountInput" style="font-size: 32px; 
+      margin-left: 730px;
+      margin-bottom: 115px;
         background-color: rgb(255, 255, 255); 
         color: rgb(0, 0, 0); 
         padding: 8px; 
@@ -51,15 +54,11 @@
         text-align: center; 
         z-index: 100; 
         display: none; 
-        position: absolute; 
-        left: 0.9%;
         opacity: 1; 
         pointer-events: auto; 
-        mix-blend-mode: normal; 
-        transform: matrix(1, 0, 0, 1, 1258, 394.5) skew(0rad, 0rad) rotate3d(0, 0, 0, 0deg); 
-        transform-origin: 0% 0%;"
-        autocomplete="off"
-      />
+        mix-blend-mode: normal;" autocomplete="off" />
     </div>
-  </body>
+  </div>
+</body>
+
 </html>
