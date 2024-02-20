@@ -75,5 +75,16 @@ body {
   height: 100vh;
   width: 100vw;
   min-width: 1600px;
-  overflow: auto;
+  overflow: hidden;
+}
+
+@media screen and (max-width: 1600px) {
+  body {
+    overflow-x: auto;
+  }
+}
+@media screen and (max-height: 850px) {
+  body {
+    overflow-y: auto;
+  }
 }
