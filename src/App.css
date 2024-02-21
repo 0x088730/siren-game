@@ -7,7 +7,7 @@
   /* background-color: #001512; */
   background: url('./images/background.jpg') !important;
   background-repeat: no-repeat !important;
-  background-size: cover !important;
+  background-size: 100% 100% !important;
   width: 100vw;
   min-height: 760px;
   height: 100vh;
@@ -70,7 +70,7 @@ p {
 body {
   position: relative;
   background-repeat: no-repeat;
-  background-size: cover;
+  background-size: 100% 100%;
   margin-top: 0px;
   height: 100vh;
   width: 100vw;
