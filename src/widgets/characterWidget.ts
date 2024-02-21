@@ -69,13 +69,11 @@ export default class CharacterWidget extends Phaser.GameObjects.Container {
       (this.background = scene.add
         .image(70, 0, 'character1-frame')
         .setDisplaySize(700, 700))
-        .setOrigin(0.5, 0.5)
     )
     this.add(
       (this.modelBackground = scene.add
         .image(-280, 0, 'character-model-bg')
         .setDisplaySize(800, 700))
-        .setOrigin(0.5, 0.5)
     )
     this.add(
       (this.addGem = scene.add

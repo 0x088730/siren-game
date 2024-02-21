@@ -35,6 +35,8 @@ code {
 }
 
 #phaser-container canvas {
+  width: 1600px;
+  height: 900px;
   display: block;
   min-width: 1800px;
 }
