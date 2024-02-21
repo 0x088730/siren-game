@@ -53,8 +53,8 @@ code {
   right: 70px;
   top: 480px;
   margin-top: 30px
-  
 }
+
 @media screen and (max-width: 1400px) {
   .btn-ligroup {
     display: grid;
@@ -62,18 +62,36 @@ code {
     right: 10px;
     top: 80px;
     justify-items: center;
-  } 
+  }
 }
 
 .btn-wrapper {
-  
+
   margin: auto;
 }
 
 .btn-pink {
-  margin-bottom: 30px;  
+  margin-bottom: 30px;
   padding-top: 5px;
   width: 150px;
   height: 40px;
   font-size: 17px;
+}
+
+#swapAmountInput {
+  font-family: Anime Ace;
+  font-size: 32px;
+  margin-left: 730px;
+  margin-bottom: 115px;
+  background-color: rgb(255, 255, 255);
+  color: rgb(0, 0, 0);
+  padding: 8px;
+  border-radius: 8px;
+  width: 100px;
+  text-align: center;
+  z-index: 100;
+  display: none;
+  opacity: 1;
+  pointer-events: auto;
+  mix-blend-mode: normal;
 }

@@ -347,7 +347,7 @@ const ExchangeModal = ({
                     className='absolute top-[-15px] mx-auto p-[30%] z-20 w-[120%] h-[115%]'
                   />
                 )}
-                {upgradeLevel === 0 && (
+                {(upgradeLevel === 0 || upgradeLevel === undefined) && (
                   <div className='absolute text-center text-[11px] top-[50%] text-white'>
                     <Button
                       sx={{

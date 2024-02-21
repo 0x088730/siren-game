@@ -50,7 +50,7 @@ export const MainPage = ({
 
     const handleOpenAccount = (flag: boolean) => {
         setShowAccount(false)
-      }
+    }
     const start = () => {
         if (global.wall === 0) {
             return
@@ -98,7 +98,7 @@ export const MainPage = ({
         }
         onAttack(3)
     }
-    
+
     return (
         <>
             <div className="relative w-full overflow-hidden">
