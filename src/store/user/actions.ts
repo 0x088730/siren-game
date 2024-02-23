@@ -37,11 +37,11 @@ export function getResources(address: any, ref: any, cb: any) {
   }
 }
 
-export function startHunterUpgradeCooldown(address: any,userCount:number, avatar: any,  cb: any) {
+export function startHunterUpgradeCooldown(address: any, userCount: number, avatar: any, cb: any) {
   return async (dispatch: any) => {
     const res = await api(`user/start/hunter-upgrade-cooldown`, 'post', {
       walletAddress: address,
-      userCount:userCount,
+      userCount: userCount,
       avatar: avatar
     })
     cb(res)
@@ -67,7 +67,7 @@ export function stakeDiamond(
         position: index,
         diamond: item,
       })
-      
+
       cb(res)
       dispatch({
         type: RESOURCE_CHANGE_SUCCESS,
@@ -115,7 +115,7 @@ export function swapResources(address: any, level: Number, cb: any) {
     })
   }
 }
-export function buyLevel(address: any,  cb: any) {
+export function buyLevel(address: any, cb: any) {
   return async (dispatch: any) => {
     const res = await api(`user/buy/level`, 'post', {
       walletAddress: address,
@@ -129,7 +129,7 @@ export function buyLevel(address: any,  cb: any) {
 }
 export function checkCooldown(address: any, type: string, cb: any) {
   return async (dispatch: any) => {
-    
+
 
     const res = await api(`user/check/cooldown`, 'post', {
       walletAddress: address,
@@ -142,9 +142,9 @@ export function checkCooldown(address: any, type: string, cb: any) {
     })
   }
 }
-export function levelupHunter(address: any,  cb: any) {
+export function levelupHunter(address: any, cb: any) {
   return async (dispatch: any) => {
-    
+
 
     const res = await api(`user/levelup/hunter`, 'post', {
       walletAddress: address,
@@ -502,6 +502,14 @@ export async function getWithdrawAmount(address: string) {
       })
     }
   }
+}
+
+export async function sectionManage(walletAddress: string, sectionNum: number) {
+  const res = await api(`user/sectionManage`, `post`, {
+    walletAddress,
+    sectionNum
+  })
+  return res;
 }
 
 // export function addExp(address: any, amount: Number, cb: any) {

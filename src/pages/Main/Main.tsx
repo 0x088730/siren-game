@@ -107,7 +107,7 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
   const [openMining, setOpenMining] = useState(false)
   const [levelState, setLevelState] = React.useState(global.level)
 
-  const [btnTitle, setBtnTitle] = useState("START")
+  const [btnTitle, setBtnTitle] = useState("")
   const [items, setItems] = useState([
     { counting: 0, timer: 0, },
     { counting: 0, timer: 0, },
@@ -166,6 +166,7 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
           setItems(_items)
           if (cooldownSec === 999999) {
             _items[selectedIndex].timer = 0
+            setBtnTitle("START")
           }
           else if (cooldownSec <= 0) {
             _items[selectedIndex].timer = 0
@@ -614,6 +615,7 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
               onRock={() => onRockStart(1)}
               setRockClaim={onRockClaim}
               btnTitle={btnTitle}
+              setBtnTitle={setBtnTitle}
             />
             <DepositModal
               open={openDeposit}

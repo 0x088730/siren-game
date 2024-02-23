@@ -61,12 +61,12 @@ const CharacterModal = ({ openCharacter, setOpenCharacter, setPageStatus }: Prop
                                             <img src={`/assets/character/avatars/${index}.png`} draggable="false" className='fit-content cursor-pointer' onClick={onSection} />
                                             <div className="absolute top-[15px] left-[-35px] font-['Anime Ace'] text-[#808080] text-[20px] font-['Anime Ace'] font-[800] -rotate-45" style={{ textShadow: "3px 0px black" }}>common</div>
                                         </div>
-                                        <div className="text-[#ffffff] mt-[-10px] font-['Anime Ace']">LVL: 1</div>
+                                        <div className="text-[#ffffff] mt-[-10px] font-['Anime Ace']">LVL: {Math.floor(global.exp / 100) + 1}</div>
                                     </div>
                                     :
                                     <div className='flex-col' key={index}>
                                         <div className='relative'>
-                                            <img src={`/assets/character/avatars/${index}-1.png`} draggable="false" style={{ height: 'fit-content' }} />                                            
+                                            <img src={`/assets/character/avatars/${index}-1.png`} draggable="false" style={{ height: 'fit-content' }} />
                                         </div>
                                     </div>
                             ))}

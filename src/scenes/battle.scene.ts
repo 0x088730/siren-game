@@ -160,41 +160,41 @@ export default class Battle extends Phaser.Scene {
 
   enemyModel_1() {
     this.enemySpineTmp_1 = this.add
-      .spine(1330, 900, ENEMY_SPINE, 'idle', true)
+      .spine(1330, 950, ENEMY_SPINE, 'idle', true)
       .setScale(-0.3, 0.3)
       .setVisible(true)
     this.enemyAttackTmp_1 = this.add
-      .spine(1330, 900, ENEMY_ATTACK1, 'idle')
+      .spine(1330, 950, ENEMY_ATTACK1, 'idle')
       .setScale(-0.3, 0.3)
       .setVisible(false)
 
     this.enemyDamageTmp_1 = this.add
-      .spine(1330, 900, ENEMY_DAMAGE, 'idle')
+      .spine(1330, 950, ENEMY_DAMAGE, 'idle')
       .setScale(-0.3, 0.3)
       .setVisible(false)
 
     this.enemyDeadTmp_1 = this.add
-      .spine(1330, 900, ENEMY_DEAD, 'idle')
+      .spine(1330, 950, ENEMY_DEAD, 'idle')
       .setScale(-0.3, 0.3)
       .setVisible(false)
   }
   enemyModel_2() {
     this.enemySpineTmp_2 = this.add
-      .spine(1330, 900, ENEMY_1_SPINE, 'idle', true)
+      .spine(1330, 950, ENEMY_1_SPINE, 'idle', true)
       .setScale(-0.3, 0.3)
       .setVisible(true)
     this.enemyAttackTmp_2 = this.add
-      .spine(1330, 900, ENEMY_1_ATTACK1, 'idle')
+      .spine(1330, 950, ENEMY_1_ATTACK1, 'idle')
       .setScale(-0.3, 0.3)
       .setVisible(false)
 
     this.enemyDamageTmp_2 = this.add
-      .spine(1330, 900, ENEMY_1_DAMAGE, 'idle')
+      .spine(1330, 950, ENEMY_1_DAMAGE, 'idle')
       .setScale(-0.3, 0.3)
       .setVisible(false)
 
     this.enemyDeadTmp_2 = this.add
-      .spine(1330, 900, ENEMY_1_DEAD, 'idle')
+      .spine(1330, 950, ENEMY_1_DEAD, 'idle')
       .setScale(-0.3, 0.3)
       .setVisible(false)
   }
@@ -237,11 +237,11 @@ export default class Battle extends Phaser.Scene {
       } else if (type === 'chimera_3') {
         global.hp += 150
       } else if (type === 'gem_1') {
-        global.damage += 10
-      } else if (type === 'gem_2') {
-        global.damage += 20
-      } else if (type === 'gem_3') {
         global.damage += 30
+      } else if (type === 'gem_2') {
+        global.damage += 60
+      } else if (type === 'gem_3') {
+        global.damage += 90
       }
     })
 
@@ -317,27 +317,27 @@ export default class Battle extends Phaser.Scene {
 
   createCharacter() {
     this.sirenSpine = this.add
-      .spine(400, 900, SIREN_SPINE, 'idle', true)
+      .spine(400, 950, SIREN_SPINE, 'idle', true)
       .setScale(0.3)
       .setVisible(true)
     this.sirenAttack1 = this.add
-      .spine(400, 900, SIREN_ATTACK1, 'idle')
+      .spine(400, 950, SIREN_ATTACK1, 'idle')
       .setScale(0.3)
       .setVisible(false)
     this.sirenAttack2 = this.add
-      .spine(400, 900, SIREN_ATTACK2, 'idle')
+      .spine(400, 950, SIREN_ATTACK2, 'idle')
       .setScale(0.3)
       .setVisible(false)
     this.sirenAttack3 = this.add
-      .spine(400, 900, SIREN_ATTACK3, 'idle')
+      .spine(400, 950, SIREN_ATTACK3, 'idle')
       .setScale(0.3)
       .setVisible(false)
     this.sirenDamage = this.add
-      .spine(400, 900, SIREN_DAMAGE, 'idle')
+      .spine(400, 950, SIREN_DAMAGE, 'idle')
       .setScale(0.3)
       .setVisible(false)
     this.sirenDead = this.add
-      .spine(400, 900, SIREN_DEAD, 'idle')
+      .spine(400, 950, SIREN_DEAD, 'idle')
       .setScale(0.3)
       .setVisible(false)
 
@@ -385,21 +385,21 @@ export default class Battle extends Phaser.Scene {
         this.enemyDamage = this.enemyDamageTmp_2
         this.enemyDead = this.enemyDeadTmp_2
         this.enemySpine_1 = this.add
-          .spine(1450, 920, ENEMY_1_SPINE, 'idle', true)
+          .spine(1450, 970, ENEMY_1_SPINE, 'idle', true)
           .setScale(-0.3, 0.3)
           .setVisible(true)
         this.enemyAttack1_1 = this.add
-          .spine(1450, 920, ENEMY_1_ATTACK1, 'idle')
+          .spine(1450, 970, ENEMY_1_ATTACK1, 'idle')
           .setScale(-0.3, 0.3)
           .setVisible(false)
 
         this.enemyDamage_1 = this.add
-          .spine(1450, 920, ENEMY_1_DAMAGE, 'idle')
+          .spine(1450, 970, ENEMY_1_DAMAGE, 'idle')
           .setScale(-0.3, 0.3)
           .setVisible(false)
 
         this.enemyDead_1 = this.add
-          .spine(1450, 920, ENEMY_1_DEAD, 'idle')
+          .spine(1450, 970, ENEMY_1_DEAD, 'idle')
           .setScale(-0.3, 0.3)
           .setVisible(false)
         break
@@ -410,21 +410,21 @@ export default class Battle extends Phaser.Scene {
         this.enemyDead = this.enemyDeadTmp_1
 
         this.enemySpine_1 = this.add
-          .spine(1450, 920, ENEMY_1_SPINE, 'idle', true)
+          .spine(1450, 970, ENEMY_1_SPINE, 'idle', true)
           .setScale(-0.3, 0.3)
           .setVisible(true)
         this.enemyAttack1_1 = this.add
-          .spine(1450, 920, ENEMY_1_ATTACK1, 'idle')
+          .spine(1450, 970, ENEMY_1_ATTACK1, 'idle')
           .setScale(-0.3, 0.3)
           .setVisible(false)
 
         this.enemyDamage_1 = this.add
-          .spine(1450, 920, ENEMY_1_DAMAGE, 'idle')
+          .spine(1450, 970, ENEMY_1_DAMAGE, 'idle')
           .setScale(-0.3, 0.3)
           .setVisible(false)
 
         this.enemyDead_1 = this.add
-          .spine(1450, 920, ENEMY_1_DEAD, 'idle')
+          .spine(1450, 970, ENEMY_1_DEAD, 'idle')
           .setScale(-0.3, 0.3)
           .setVisible(false)
         break
@@ -748,9 +748,9 @@ export default class Battle extends Phaser.Scene {
     const unit = global.rooms.filter(obj => obj.chapter === global.chapter && obj.section === global.section).at(0)
     const unit1 = global.rooms.filter(obj => obj.chapter === global.chapter && obj.section === global.section).at(1)
 
-    let damage = 190
-    if (this.attackType === 1) damage = global.damage + 40
-    else if (this.attackType === 2) damage = global.damage + 190
+    let damage = 150
+    if (this.attackType === 1) damage = global.damage
+    else if (this.attackType === 2) damage = global.damage + 120
     else if (this.attackType === 3) damage = global.damage + 70
     // let damage = (this.attackType === 2 || this.attackType === 3) ? (global.damage + 40) :global.damage
     let enemy_damage = unit?.damage

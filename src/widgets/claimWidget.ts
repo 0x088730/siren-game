@@ -71,7 +71,11 @@ export default class ClaimWidget extends Phaser.GameObjects.Container {
         } else if (this.selectedItem.itemType === 'infernal') {
           this.itemLabel = "CRITICAL"
         }
-        this.hpPlus.setText(`${this.itemLabel} + ${this.selectedItem.crystals * 50}`)
+        if (this.itemLabel === "DAMAGE") {
+          this.hpPlus.setText(`${this.itemLabel} + ${this.selectedItem.crystals * 30}`);
+        } else {
+          this.hpPlus.setText(`${this.itemLabel} + ${this.selectedItem.crystals * 50}`);
+        }
         this.hpPlus.setVisible(true)
         this.hpTween.play()
           .on('complete', () => {
@@ -110,7 +114,8 @@ export default class ClaimWidget extends Phaser.GameObjects.Container {
       this.itemContainer.add(item)
     }
 
-    this.itemContainerTween = scene.tweens.add({duration: 3000, ease: 'Power2',
+    this.itemContainerTween = scene.tweens.add({
+      duration: 3000, ease: 'Power2',
       onComplete: () => {
         this.scene.time.delayedCall(500, () => {
           this.itemContainer.setVisible(false)

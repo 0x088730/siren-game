@@ -14,6 +14,7 @@ interface Props {
   onRock: any,
   setRockClaim: any,
   btnTitle: any,
+  setBtnTitle: any,
 }
 
 const RockModal = ({
@@ -24,6 +25,7 @@ const RockModal = ({
   onRock,
   setRockClaim,
   btnTitle,
+  setBtnTitle,
 }: Props) => {
   const userModule = useSelector((state: any) => state.userModule)
 
@@ -47,8 +49,9 @@ const RockModal = ({
 
   useEffect(() => {
     setRemainedTime(timer)
+    if (timer <= 0) setBtnTitle("CLAIM")
   }, [timer])
-  
+
 
   return (
     <>

@@ -689,11 +689,11 @@ export default class CharacterWidget extends Phaser.GameObjects.Container {
       } else if (type === 'chimera_3') {
         hp += 150
       } else if (type === 'gem_1') {
-        damage += 10
-      } else if (type === 'gem_2') {
-        damage += 20
-      } else if (type === 'gem_3') {
         damage += 30
+      } else if (type === 'gem_2') {
+        damage += 60
+      } else if (type === 'gem_3') {
+        damage += 90
       }
     })
 

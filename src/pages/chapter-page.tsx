@@ -36,26 +36,22 @@ export const ChapterPage = ({
                 <img
                     src='assets/background/chapter/chapter1.png'
                     draggable="false"
-                    // className={`${styles.item} fixed top-[428px] w-[38%] cursor-pointer`}
                     className={`${styles.item} absolute top-[40%] w-[38%] cursor-pointer`}
                     onClick={() => setOpenCharacter(true)}
                 />
                 <img
                     src='assets/background/chapter/chapter2.png'
                     draggable="false"
-                    // className={`${styles.item} fixed top-[570px] right-0 w-[59%] cursor-pointe`}
                     className={`${styles.itemNon} absolute top-[58%] right-0 w-[58%] cursor-pointe`}
                 />
                 <img
                     src='assets/background/chapter/chapter3.png'
                     draggable="false"
-                    // className={`${styles.item} fixed top-[226px] left-[489px] w-[32%] cursor-pointer`}
                     className={`${styles.itemNon} absolute top-[22%] left-[29.5%] w-[32%] cursor-pointer`}
                 />
                 <img
                     src='assets/background/chapter/chapter4.png'
                     draggable="false"
-                    // className={`${styles.item} fixed left-[717px] w-[34%] cursor-pointer`}
                     className={`${styles.itemNon} absolute top-[-2%] left-[43%] w-[32%] cursor-pointer`}
                 />
                 <img src='assets/images/come-back.png' draggable="false" className='absolute top-[15%] right-[7%] cursor-pointer w-[5%]' onClick={() => onMain()} />

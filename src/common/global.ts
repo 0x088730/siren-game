@@ -41,21 +41,22 @@ export interface UserProfile {
   energy: number
   resource: Number
   characters:
-    | Array<{
-        characterName: string
-        characterNo: number
-        hp: Number
-        critical: Number
-        wall: Number
-        energy: Number
-        exp: Number
-        rarity: Number
-        damage: Number
-      }>
-    | []
+  | Array<{
+    characterName: string
+    characterNo: number
+    hp: Number
+    critical: Number
+    wall: Number
+    energy: Number
+    exp: Number
+    rarity: Number
+    damage: Number
+  }>
+  | []
   currentCharacterName: string | ''
-  hunterLevel:number
+  hunterLevel: number
   attacking: boolean
+  sectionStatus: { section_2: boolean, section_4: boolean }
 }
 
 export let global: UserProfile = {
@@ -105,8 +106,9 @@ export let global: UserProfile = {
   resource: 0,
   characters: [],
   currentCharacterName: '',
-  hunterLevel:0,
-  attacking: false
+  hunterLevel: 0,
+  attacking: false,
+  sectionStatus: { section_2: true, section_4: true },
 }
 
 export const changeItem = (resp: any) => {
