@@ -56,7 +56,7 @@ export interface UserProfile {
   currentCharacterName: string | ''
   hunterLevel: number
   attacking: boolean
-  sectionStatus: { section_2: boolean, section_4: boolean }
+  sectionStatus: { section_2: boolean, section_4: boolean, time_2: number, time_4: number }
 }
 
 export let global: UserProfile = {
@@ -108,7 +108,7 @@ export let global: UserProfile = {
   currentCharacterName: '',
   hunterLevel: 0,
   attacking: false,
-  sectionStatus: { section_2: true, section_4: true },
+  sectionStatus: { section_2: true, section_4: true, time_2: 0, time_4: 0 },
 }
 
 export const changeItem = (resp: any) => {

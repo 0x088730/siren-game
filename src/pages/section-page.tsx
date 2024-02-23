@@ -21,19 +21,43 @@ export const SectionPage = ({
     setPageStatus,
 }: HeaderProps) => {
     const section = ["1", "2", "3", "4"];
+    const [timer, setTimer] = useState({
+        second: 0,
+        fourth: 0
+    })
     useEffect(() => {
         const video = document.getElementById('backgroundVideo') as HTMLElement
         video.style.display = "none"
         if (global.walletAddress !== "") {
             getProfile(global.walletAddress, "siren-1");
+            setTimer({ second: Math.floor(global.sectionStatus.time_2 / 60000), fourth: Math.floor(global.sectionStatus.time_4 / 60000) })
         }
     }, [])
+    useEffect(() => {
+        if (timer.second !== 0 || timer.fourth !== 0) {
+            const cooldownInterval = setInterval(() => {
+                if (timer.second === 0) {
+                    global.sectionStatus.section_2 = true;
+                    setTimer({ second: 0, fourth: timer.fourth - 1 })
+                    return;
+                }
+                if (timer.fourth === 0) {
+                    global.sectionStatus.section_4 = true;
+                    setTimer({ second: timer.second - 1, fourth: 0 })
+                    return;
+                }
+                setTimer({ second: timer.second - 1, fourth: timer.fourth - 1 })
+
+            }, 60000)
+            return () => clearInterval(cooldownInterval)
+        }
+    }, [timer.second]);
+
     const onChapter = () => {
         setPageStatus("chapter");
     }
     const onBattle = (index: any) => {
         if (index === "2" || index === "4") {
-            console.log(index, global.sectionStatus)
             if ((index === "2" && global.sectionStatus.section_2 === false) || (index === "4" && global.sectionStatus.section_4 === false)) {
                 alert("User can only play once per 24 hours!")
                 return;
@@ -68,7 +92,26 @@ export const SectionPage = ({
                         Number(global?.room.section) >= Number(index) ?
                             <div key={index} className={`${styles.sectionBtn} w-[14%] h-[12%] flex items-center justify-center cursor-pointer relative`} onClick={() => onBattle(index)}>
                                 <span className="text-[#ffffff] text-[75px] font-['Arial']">{index}</span>
-                                {index === "2" && global.sectionStatus.section_2 === false || index === "4" && global.sectionStatus.section_4 === false ? <img src='assets/images/cooldown.png' draggable="false" className='absolute w-fit' /> : null}
+                                {index === "2" && global.sectionStatus.section_2 === false || index === "4" && global.sectionStatus.section_4 === false ?
+                                    <>
+                                        <img src='assets/images/cooldown.png' draggable="false" className='absolute w-fit' />
+                                        <div className='absolute top-[-3.5rem] text-[#ffffff] text-[20px] text-center'>
+                                            COOLDOWN <br />
+                                            {
+                                                index === "2" ?
+                                                    Math.floor(timer.second / 60)
+                                                    :
+                                                    Math.floor(timer.fourth / 60)
+                                            }:
+                                            {
+                                                index === "2" ?
+                                                    timer.second % 60
+                                                    :
+                                                    timer.fourth % 60
+                                            }
+                                        </div>
+                                    </>
+                                    : null}
                             </div>
                             :
                             <div key={index} className={`${styles.sectionBtn} w-[107px] h-[112px] flex items-center justify-center cursor-pointer relative`}>
