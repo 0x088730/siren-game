@@ -39,6 +39,9 @@ export const GamePage = ({
   useEffect(() => {
     const video = document.getElementById('backgroundVideo') as HTMLElement
     video.style.display = "block"
+    setTimeout(() => {
+      store.dispatch(setLoadingStatus(false));
+    }, 2000)
   }, [])
 
   const dispatch = useDispatch<any>()
@@ -58,12 +61,6 @@ export const GamePage = ({
     } else {
     }
   }, [chainID, connected, address])
-
-  useEffect(() => {
-    setTimeout(() => {
-      store.dispatch(setLoadingStatus(false));
-    }, 2000)
-  }, [location.key])
 
   return (
     <>
