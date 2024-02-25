@@ -83,8 +83,14 @@ body {
     overflow-x: auto;
   }
 }
+
 @media screen and (max-height: 850px) {
   body {
     overflow-y: auto;
   }
+}
+
+.battlePass {
+  background-image: url("/public/assets/background/battlepass.jpg") !important;
+  background-size: 100% 100%;
 }

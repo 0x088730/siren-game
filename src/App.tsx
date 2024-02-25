@@ -13,6 +13,7 @@ import type Game from './scenes/game.scene'
 import store from './store'
 import { global } from './common/global'
 import { getProfile } from './common/api'
+import { BattlePass } from './pages/battlePass'
 
 const onAttack = (type: number) => {
   const battle = phaserGame.scene.keys.battle as Battle
@@ -20,7 +21,7 @@ const onAttack = (type: number) => {
 }
 
 const onStart = () => {
-  
+
   const game = phaserGame.scene.keys.game as Game
   game.room()
 }
@@ -39,8 +40,8 @@ const App: React.FC = () => {
   const [showAccount, setShowAccount] = useState(false)
   const openModal = (flag: boolean) => {
     setShowAccount(flag)
-  }  
-  
+  }
+
   return (
     <Web3ContextProvider>
       <Provider store={store}>
@@ -64,6 +65,7 @@ const App: React.FC = () => {
                 />
               }
             />
+            <Route path="/battlepass" element={<BattlePass />} />
             <Route
               path="/land"
               element={

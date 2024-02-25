@@ -80,6 +80,9 @@ export const MainPage = ({
         store.dispatch(setLoadingStatus(true));
         navigate("/land", { replace: true });
     }
+    const onBattlePass =() => {
+        navigate("/battlepass", { replace: true });
+    }
     const normalAttack = () => {
         if (!connected) {
             return
@@ -271,6 +274,7 @@ export const MainPage = ({
                         </div>
                     </>}
             </div>
+            {/* <div draggable="false" className='absolute top-[15%] right-[7%] cursor-pointer w-[5%]' onClick={() => onBattlePass()}>battle pass</div> */}
         </>
     )
 }

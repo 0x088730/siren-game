@@ -63,8 +63,8 @@ export const SectionPage = ({
                 return;
             }
         }
-        sectionManage(global.walletAddress, index).then(res => {
-            if (res.message === "PVE Start") {
+        // sectionManage(global.walletAddress, index).then(res => {
+        //     if (res.message === "PVE Start") {
                 const page = document.getElementById("sectionPage") as HTMLElement
                 page.style.display = "none"
                 changeBackground('url(assets/background/bg.jpg)')
@@ -73,12 +73,12 @@ export const SectionPage = ({
                 game.startGame(index)
                 store.dispatch(setLoadingStatus(true));
                 setPageStatus("main")
-            }
-            else {
-                alert(res.message);
-                return;
-            }
-        })
+        //     }
+        //     else {
+        //         alert(res.message);
+        //         return;
+        //     }
+        // })
     }
     const changeBackground = (src: string) => {
         document.body.style.backgroundImage = src
@@ -94,7 +94,7 @@ export const SectionPage = ({
                                 <span className="text-[#ffffff] text-[75px] font-['Arial']">{index}</span>
                                 {index === "2" && global.sectionStatus.section_2 === false || index === "4" && global.sectionStatus.section_4 === false ?
                                     <>
-                                        <img src='assets/images/cooldown.png' draggable="false" className='absolute w-fit' />
+                                        <img src='assets/images/cooldown.png' draggable="false" className='absolute w-[75px]' />
                                         <div className='absolute top-[-3.5rem] text-[#ffffff] text-[20px] text-center'>
                                             COOLDOWN <br />
                                             {

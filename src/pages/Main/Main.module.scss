@@ -8,10 +8,24 @@
     filter: drop-shadow(1px 1px 0 rgb(255, 171, 171)) drop-shadow(-1px -1px 0 rgb(255, 171, 171));
 }
 
+.arrow {
+    -webkit-filter: drop-shadow(0 0 3px rgb(50, 50, 50)) drop-shadow(0 0 3px rgb(50, 50, 50));
+    filter: drop-shadow(0 0 3px rgb(50, 50, 50)) drop-shadow(0 0 3px rgb(50, 50, 50));
+}
+
+.arrow:hover {
+    -webkit-filter: drop-shadow(0 0 5px rgb(255, 255, 255)) drop-shadow(0 0 5px rgb(255, 255, 255));
+    filter: drop-shadow(0 0 5px rgb(255, 255, 255)) drop-shadow(0 0 5px rgb(255, 255, 255));
+}
+
+.numBtn {
+    background-image: url("../../../public/assets/images/num_btn.png") !important;
+    background-size: cover;
+}
+
 .active {
     -webkit-filter: drop-shadow(1px 1px 0.75rem white) drop-shadow(-1px -1px 0.75rem white);
     filter: drop-shadow(1px 1px 0.75rem white) drop-shadow(-1px -1px 0.75rem white);
-
 }
 
 @media screen and (max-height: 900px) {
