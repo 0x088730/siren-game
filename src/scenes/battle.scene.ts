@@ -85,9 +85,6 @@ export default class Battle extends Phaser.Scene {
   enemyDeadTmp_2!: SpineGameObject
   enemy_damage: number = 150
   enemy_damage1: number = 150
-  cursors: any
-  zoomLevel: number = 1
-  zoomFactor: number = 0.1
 
   constructor() {
     super('battle')
@@ -113,14 +110,6 @@ export default class Battle extends Phaser.Scene {
   }
   create() {
     // createCharacterAnims(this.anims)
-    if (this.input) {
-      // Check if this.input.keyboard exists and is not null
-      if (this.input.keyboard) {
-        this.cursors = this.input.keyboard.createCursorKeys();
-      } else {
-        console.error("this.input.keyboard is null or undefined");
-      }
-    }
     this.characterAvatar()
     this.enemyAvatars()
     this.createCharacter()
@@ -375,26 +364,7 @@ export default class Battle extends Phaser.Scene {
       this.sirenAnimation,
       1,
     )
-
-    this.cameras.main.setScroll(
-      this.sirenSpine.x - this.cameras.main.width / 2,
-      this.sirenSpine.y - this.cameras.main.height / 2
-    );
   }
-  update() {
-    if (this.cursors.up.isDown) {
-      this.zoomLevel += this.zoomFactor;
-    } else if (this.cursors.down.isDown) {
-      this.zoomLevel -= this.zoomFactor;
-    }
-    this.zoomLevel = Phaser.Math.Clamp(this.zoomLevel, 0.1, 2);
-    this.cameras.main.setZoom(this.zoomLevel);
-    this.cameras.main.setScroll(
-      this.sirenSpine.x - this.cameras.main.width / 2,
-      this.sirenSpine.y - this.cameras.main.height / 2
-    );
-  }
-
   createEnemy() {
     switch (global.section) {
       case 1: this.enemyModel_1()
