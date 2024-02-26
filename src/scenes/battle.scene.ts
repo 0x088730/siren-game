@@ -364,6 +364,25 @@ export default class Battle extends Phaser.Scene {
       this.sirenAnimation,
       1,
     )
+    this.cameras.main.setZoom(1);
+  }
+  updateCameraPosition() {
+    const cameraCenterX = this.cameras.main.width / 2;
+    const cameraCenterY = this.cameras.main.height / 2;
+
+    // Calculate the position of the character in screen coordinates
+    const characterScreenX = this.sirenSpine.x - this.cameras.main.scrollX;
+    const characterScreenY = this.sirenSpine.y - this.cameras.main.scrollY;
+
+    // Calculate the difference between the current zoom level and the default zoom level
+    const zoomDifference = this.cameras.main.zoom / 1; // Assuming 1 is the default zoom level
+
+    // Calculate the new camera position based on the character's position and the zoom difference
+    const newCameraX = characterScreenX - cameraCenterX * zoomDifference;
+    const newCameraY = characterScreenY - cameraCenterY * zoomDifference;
+
+    // Update camera position
+    this.cameras.main.setPosition(newCameraX, newCameraY);
   }
   createEnemy() {
     switch (global.section) {

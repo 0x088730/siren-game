@@ -512,6 +512,22 @@ export async function sectionManage(walletAddress: string, sectionNum: number) {
   return res;
 }
 
+export async function getRewardWithLevel(walletAddress: string) {
+  const res = await api(`user/getRewardWithLevel`, `post`, {
+    walletAddress,
+  })
+  return res.data;
+}
+
+export async function claimReward(walletAddress: string, claimData: any, random: any) {
+  const res = await api(`user/claimReward`, `post`, {
+    walletAddress,
+    claimData,
+    random,
+  })
+  return res.data;
+}
+
 // export function addExp(address: any, amount: Number, cb: any) {
 //   return async (dispatch: any) => {
 //     const res = await api(`user/add/exp`, 'post', {

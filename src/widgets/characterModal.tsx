@@ -55,13 +55,14 @@ const CharacterModal = ({ openCharacter, setOpenCharacter, setPageStatus }: Prop
                     <Grid container className='w-full h-full'>
                         <Grid item xs={12} sm={12} md={12} style={{ display: "flex", flexWrap: 'wrap', justifyContent: 'space-around', alignItems: 'center' }}>
                             {characterImage.map((index) => (
-                                global?.characters.length >= parseInt(index, 10) ?
+                                (global.characters as { characterName: string }[]).some(character => character.characterName === `siren-${index}`) ?
+                                    // global?.characters.length >= parseInt(index, 10) ?
                                     <div className='flex-col' key={index}>
                                         <div className='relative'>
                                             <img src={`/assets/character/avatars/${index}.png`} draggable="false" className='fit-content cursor-pointer' onClick={onSection} />
-                                            <div className="absolute top-[15px] left-[-35px] font-['Anime Ace'] text-[#808080] text-[20px] font-['Anime Ace'] font-[800] -rotate-45" style={{ textShadow: "3px 0px black" }}>common</div>
+                                            {index === "1" && <div className="absolute top-[15px] left-[-35px] font-['Anime Ace'] text-[#808080] text-[20px] font-['Anime Ace'] font-[800] -rotate-45" style={{ textShadow: "3px 0px black" }}>common</div>}
                                         </div>
-                                        <div className="text-[#ffffff] mt-[-10px] font-['Anime Ace']">LVL: {Math.floor(global.exp / 100) + 1}</div>
+                                        <div className="text-[#ffffff] mt-[-10px] font-['Anime Ace']">LVL: {Math.floor(global.characters.filter((character) => character.characterName === `siren-${index}`)[0].exp.valueOf() / 100 + 1)}</div>
                                     </div>
                                     :
                                     <div className='flex-col' key={index}>
