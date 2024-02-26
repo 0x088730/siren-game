@@ -9,7 +9,7 @@ export default class ResultWidget extends Phaser.GameObjects.Container {
 
   constructor(scene: Phaser.Scene, x: number, y: number) {
     super(scene, x, y)
-    this.scene = scene    
+    this.scene = scene
     this.add(
       (this.background = scene.add.image(0, 0, 'result-bg'))
       // .setDisplaySize(800, 600)
@@ -60,7 +60,7 @@ export default class ResultWidget extends Phaser.GameObjects.Container {
     this.setVisible(false)
   }
   show(owner: number) {
-    if ((global.section === 2 || global.section === 4)) {// && global.chapter * 4 + global.section + 1 > global.room.chapter * 4 + global.room.section) {
+    if ((global.section === 2 || global.section === 4) && owner === 1) {// && global.chapter * 4 + global.section + 1 > global.room.chapter * 4 + global.room.section) {
       this.caption.setText('Claim')
       this.claimBox.setVisible(true)
     }

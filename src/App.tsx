@@ -33,7 +33,7 @@ const onInventory = () => {
 
 const onCharacter = () => {
   const game = phaserGame.scene.keys.game as Game
-  game.character()
+  // game.character()
 }
 
 const App: React.FC = () => {
@@ -65,7 +65,7 @@ const App: React.FC = () => {
                 />
               }
             />
-            <Route path="/battlepass" element={<BattlePass />} />
+            <Route path="/battlepass" element={<BattlePass onModalShow={openModal} />} />
             <Route
               path="/land"
               element={

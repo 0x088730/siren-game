@@ -36,18 +36,9 @@ const CharacterDetailModal = ({ openCharacter, setOpenCharacter, address }: Prop
         }
     }, [])
 
-    const onCharacter = () => {
+    const onCharacter = (index: any) => {
         const game = phaserGame.scene.keys.game as Game;
-        game.character();
-        energySwap(
-            global.walletAddress,
-            global.currentCharacterName,
-            0,
-            (resp: any) => {
-              global.energy = resp.energy
-              global.resource = resp.resource
-            },
-          )
+        game.character(index);
         setOpenCharacter(false);
     }
 
@@ -80,7 +71,7 @@ const CharacterDetailModal = ({ openCharacter, setOpenCharacter, address }: Prop
                                     // global?.characters.length >= parseInt(index, 10) ?
                                     <div className='flex-col' key={index}>
                                         <div className='relative'>
-                                            <img src={`/assets/character/avatars/${index}.png`} draggable="false" className='fit-content cursor-pointer' onClick={onCharacter} />
+                                            <img src={`/assets/character/avatars/${index}.png`} draggable="false" className='fit-content cursor-pointer' onClick={() => onCharacter(index)} />
                                             {index === "1" && <div className="absolute top-[15px] left-[-35px] font-['Anime Ace'] text-[#808080] text-[20px] font-['Anime Ace'] font-[800] -rotate-45" style={{ textShadow: "3px 0px black" }}>common</div>}
                                         </div>
                                         <div className="text-[#ffffff] mt-[-10px] font-['Anime Ace']">LVL: {Math.floor(global.characters.filter((character) => character.characterName === `siren-${index}`)[0].exp.valueOf() / 100 + 1)}</div>

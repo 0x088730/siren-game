@@ -413,6 +413,33 @@ export default class CharacterWidget extends Phaser.GameObjects.Container {
       this.lvTexts[i].setVisible(true)
     }
   }
+  openDetail(model: any) {
+    setCurrentCharacter('siren-' + (model)).then(() => {
+      getProfile(global.walletAddress, 'siren-' + (model)).then(
+        () => {
+          let embed = global.embed.filter(item => item.character === global.currentCharacterName)
+          this.updateHpCritical(
+            global.hp,
+            global.critical,
+            global.damage,
+            embed,
+          )
+          this.openModel(model)
+          this.embedBuild()
+          for (let i = 0; i < this.rarityTexts.length; i++) {
+            this.rarityTexts[i].setVisible(false)
+            this.remove(this.rarityTexts[i])
+          }
+          this.rarityTexts = []
+          for (let i = 0; i < this.lvTexts.length; i++) {
+            this.lvTexts[i].setVisible(false)
+            this.remove(this.lvTexts[i])
+          }
+          this.lvTexts = []
+        },
+      )
+    })
+  }
   gemBuild() {
     let data = global.purchase
     let embed = global.embed.filter(item => item.character === global.currentCharacterName)

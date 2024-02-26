@@ -118,9 +118,10 @@ export default class Game extends Phaser.Scene {
     htmlEles.style.overflow = "unset";
   }
 
-  character() {
+  character(index: any) {
     this.characterWidget.gemChange()
     this.characterWidget.gemBuild()
+    this.characterWidget.openDetail(index)
     store.dispatch(setCharacterStatus(true))
     this.characterWidget.showStatus(true)
     const htmlEles = document.getElementById("html") as HTMLElement
