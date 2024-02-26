@@ -111,7 +111,7 @@ export const BattlePass = (props) => {
                                 <img src="assets/images/yellow_clock.png" className="w-[40px] h-full" alt="" draggable="false" />
                             </div>
                             <div className="text-start">
-                                <div className="text-md font-[500]">ENDS IN</div>
+                                <div className="text-md font-[500] text-gray-300">ENDS IN</div>
                                 <div className="text-3xl">50 DAYS</div>
                             </div>
                         </div>
@@ -121,7 +121,7 @@ export const BattlePass = (props) => {
                         </div>
                     </div>
                     <div className="w-[55%] p-20">
-                        <div className="h-full opacity-95 w-[75%] max-w-[700px] bg-[#e4e2e2] rounded-[1.5rem] flex" style={{ boxShadow: "0 0 8px #333333" }}>
+                        <div className="h-full w-[75%] max-w-[700px] rounded-[1.5rem] flex" style={{backgroundColor: "rgba(228, 226, 226, 0.5", boxShadow: "0 0 8px #8A8A8A" }}>
                             <div style={{ boxShadow: "0 0 10px 7px #FFA723" }} className="w-1/2 bg-gradient-to-b from-[#56c256] from-10% via-[#3d97a3] via-30% to-[#922866] to-90% rounded-[1.5rem] opacity-100">
                                 <div className="w-full h-full flex flex-col justify-center items-center rounded-[1.5rem]" style={{ backgroundImage: "radial-gradient(transparent, #0E1B27)" }}>
                                     {presentData.value === "" ?
