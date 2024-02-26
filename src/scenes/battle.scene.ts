@@ -109,13 +109,6 @@ export default class Battle extends Phaser.Scene {
     })
   }
   create() {
-    const canvas = this.sys.canvas;
-
-    // Add event listener for the mouse wheel event
-    canvas.addEventListener('wheel', function (e) {
-      // Prevent the default behavior of the mouse wheel event
-      e.preventDefault();
-    }, { passive: false });
     this.characterAvatar()
     this.enemyAvatars()
     this.createCharacter()
