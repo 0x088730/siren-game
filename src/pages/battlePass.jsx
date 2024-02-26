@@ -4,6 +4,7 @@ import styles from './Main/Main.module.scss'
 import { useWeb3Context } from "../hooks/web3Context";
 import { claimReward, getRewardWithLevel } from "../store/user/actions";
 import { HeaderComponent } from "../components";
+import { TextWithNumberColor } from "../components/textWithNumberColor";
 
 // const levelData = [
 //     { level: 1, image: "assets/images/rock.png", value: "X30", getStatus: false, available: true, title1: "WIN 1 FIGHT IN PVE", title2: "30X RESOURCES" },
@@ -56,9 +57,9 @@ export const BattlePass = (props) => {
                 if (rand2 >= 10) rand2 = 7
                 let rand = Math.floor(Math.random() * 100);
                 let rand3, rand4;
-                if(rand <= 33) {rand3 = 2; rand4 = 4}
-                if(rand >= 33 && rand < 67) {rand3 = 2; rand4 = 3}
-                if(rand >= 67) {rand3 = 3; rand4 = 4}
+                if (rand <= 33) { rand3 = 2; rand4 = 4 }
+                if (rand >= 33 && rand < 67) { rand3 = 2; rand4 = 3 }
+                if (rand >= 67) { rand3 = 3; rand4 = 4 }
                 // let rand3 = Math.floor(Math.random() * 4);
                 // if (rand3 === 0) rand3 = 1
                 // let rand4 = Math.floor(Math.random() * 4);
@@ -107,41 +108,46 @@ export const BattlePass = (props) => {
                             <div className="me-4">
                                 <img src="assets/images/yellow_clock.png" className="w-[40px] h-full" alt="" draggable="false" />
                             </div>
-                            <div className="text-3xl">50 DAYS</div>
+                            <div className="text-start">
+                                <div className="text-md font-[500]">ENDS IN</div>
+                                <div className="text-3xl">50 DAYS</div>
+                            </div>
                         </div>
                         <div className="flex items-center mt-4">
                             <div className="me-3 text-[#ffff19] text-5xl text-bold">!</div>
-                            <div className="tracking-[-1px] text-[15px]">ALL REWARDS RECEIVED REMAIN WITH YOU FOREVER.<br />ITEMS FROM BATTLE PASS WILL NOT BE REMOVED AT RELEASE</div>
+                            <div className="tracking-[-1px] text-[15px] font-[600]">ALL REWARDS RECEIVED REMAIN WITH YOU FOREVER.<br />ITEMS FROM BATTLE PASS WILL NOT BE REMOVED AT RELEASE</div>
                         </div>
                     </div>
                     <div className="w-[55%] p-20">
                         <div className="h-full opacity-95 w-[75%] max-w-[700px] bg-[#e4e2e2] rounded-[1.5rem] flex" style={{ boxShadow: "0 0 8px #333333" }}>
-                            <div style={{ boxShadow: "0 0 15px #FFA723" }} className="w-1/2 bg-[#091520] rounded-[1.5rem] opacity-100 flex flex-col justify-center items-center">
-                                {presentData.value === "" ?
-                                    <img src={presentData.getStatus === true ? presentData.image : `assets/images/weapon/${presentData.level === 4 ? randomVal[0] : randomVal[1]}.png`} draggable="false" className="w-[150px] m-4 rounded-xl border-1 border-black" style={{ boxShadow: "0 0 5px #FFA723" }} alt="" />
-                                    :
-                                    <>
-                                        {
-                                            presentData.level === 14 || presentData.level === 15 ?
-                                                <img src={presentData.getStatus === true ? presentData.image : `assets/images/characters/avatar/${presentData.level === 14 ? randomVal[2] : randomVal[3]}.png`} className="w-[150px]" alt="" draggable="false" />
-                                                :
-                                                <img src={presentData.image} className="w-[150px]" alt="" draggable="false" />
-                                        }
-                                        <div className="tracking-[-1px] my-3">{presentData.value}</div>
-                                    </>
-                                }
-                                {
-                                    presentData.getStatus === false && presentData.available === true ?
-                                        <img src="assets/images/claim-btn.png" className="w-[95px] cursor-pointer" alt="" draggable="false" onClick={() => onClaim(presentData)} />
-                                        : null
-                                }
-
+                            <div style={{ boxShadow: "0 0 10px 7px #FFA723" }} className="w-1/2 bg-gradient-to-b from-[#56c256] from-10% via-[#3d97a3] via-30% to-[#922866] to-90% rounded-[1.5rem] opacity-100">
+                                <div className="w-full h-full flex flex-col justify-center items-center rounded-[1.5rem]" style={{ backgroundImage: "radial-gradient(transparent, #0E1B27)" }}>
+                                    {presentData.value === "" ?
+                                        <img src={presentData.getStatus === true ? presentData.image : `assets/images/weapon/${presentData.level === 4 ? randomVal[0] : randomVal[1]}.png`} draggable="false" className="w-[150px] m-4 rounded-xl border-1 border-black" style={{ boxShadow: "0 0 5px #FFA723" }} alt="" />
+                                        :
+                                        <>
+                                            {
+                                                presentData.level === 14 || presentData.level === 15 ?
+                                                    <img src={presentData.getStatus === true ? presentData.image : `assets/images/characters/avatar/${presentData.level === 14 ? randomVal[2] : randomVal[3]}.png`} className="w-[150px]" alt="" draggable="false" />
+                                                    :
+                                                    <img src={presentData.image} className="w-[150px]" alt="" draggable="false" />
+                                            }
+                                            <div className="tracking-[-1px] my-3">{presentData.value}</div>
+                                        </>
+                                    }
+                                    {
+                                        presentData.getStatus === false && presentData.available === true ?
+                                            <img src="assets/images/claim-btn.png" className="w-[95px] cursor-pointer" alt="" draggable="false" onClick={() => onClaim(presentData)} />
+                                            :
+                                            <img src="assets/images/inclaim-btn.png" className="w-[95px] cursor-pointer" alt="" draggable="false" />
+                                    }
+                                </div>
                             </div>
                             <div className="w-1/2 flex flex-col justify-center items-center">
                                 <div className="text-[20px] tracking-[2px] text-center" style={{ textShadow: "2px 2px 5px black" }}>QUEST</div>
-                                <div className="tracking-[-1px] my-3 text-center py-1 px-3">{presentData.title1}</div>
+                                <div className="tracking-[-1px] my-3 text-center py-1 px-3"><TextWithNumberColor text={presentData.title1} /></div>
                                 <div className="text-[20px] tracking-[2px] text-center" style={{ textShadow: "2px 2px 5px black" }}>REWARD</div>
-                                <div className="tracking-[-1px] my-3 text-center py-1 px-3">{presentData.title2}</div>
+                                <div className="tracking-[-1px] my-3 text-center py-1 px-3"><TextWithNumberColor text={presentData.title2} /></div>
                             </div>
                         </div>
                     </div>
@@ -156,7 +162,7 @@ export const BattlePass = (props) => {
                                 <div
                                     key={index}
                                     className={`w-[180px] h-[200px] rounded-2xl flex flex-col justify-center items-center border-2 border-black cursor-pointer`}
-                                    style={{ boxShadow: "0 0 15px #FFA723" }}
+                                    style={{ boxShadow: "0 0 10px 7px #FFA723" }}
                                     onClick={() => setPresentData(item)}
                                 >
                                     <img src={item.getStatus === true ? item.image : `assets/images/weapon/${item.level === 4 ? randomVal[0] : randomVal[1]}.png`} className={item.available === true ? `w-full h-full rounded-2xl` : `brightness-75 w-full h-full rounded-2xl`} alt="" draggable="false" />
@@ -166,19 +172,21 @@ export const BattlePass = (props) => {
                                 :
                                 <div
                                     key={index}
-                                    className="bg-[#091520] w-[180px] h-[200px] rounded-2xl flex flex-col justify-center items-center border-2 border-black cursor-pointer"
-                                    style={{ boxShadow: "0 0 15px #FFA723" }}
+                                    className="bg-gradient-to-b from-[#56c256] from-10% via-[#3d97a3] via-30% to-[#922866] to-90% w-[180px] h-[200px] rounded-2xl border-2 border-black cursor-pointer"
+                                    style={{ boxShadow: "0 0 10px 7px #FFA723" }}
                                     onClick={() => setPresentData(item)}
                                 >
-                                    {
-                                        item.level === 14 || item.level === 15 ?
-                                            <img src={item.getStatus === true ? item.image : `assets/images/characters/avatar/${item.level === 14 ? randomVal[2] : randomVal[3]}.png`} className={item.available === true ? `w-[130px]` : `brightness-75 w-[130px]`} alt="" draggable="false" />
-                                            :
-                                            <img src={item.image} className={item.available === true ? `w-[130px]` : `brightness-75 w-[130px]`} alt="" draggable="false" />
-                                    }
-                                    <div className="mt-2">{item.value}</div>
-                                    <div className={`${styles.numBtn} absolute top-[290px] z-10 w-[40px] h-[40px] flex justify-center items-center`}>{item.level}</div>
-                                    {item.getStatus === true ? <div className="absolute text-[20px]">CLAIMED</div> : null}
+                                    <div className="w-full h-full flex flex-col justify-center items-center rounded-[10px]" style={{ backgroundImage: "radial-gradient(transparent, #0E1B27)" }}>
+                                        {
+                                            item.level === 14 || item.level === 15 ?
+                                                <img src={item.getStatus === true ? item.image : `assets/images/characters/avatar/${item.level === 14 ? randomVal[2] : randomVal[3]}.png`} className={item.available === true ? `w-[130px]` : `brightness-75 w-[130px]`} alt="" draggable="false" />
+                                                :
+                                                <img src={item.image} className={item.available === true ? `w-[130px]` : `brightness-75 w-[130px]`} alt="" draggable="false" />
+                                        }
+                                        <div className="mt-2">{item.value}</div>
+                                        <div className={`${styles.numBtn} absolute top-[290px] z-10 w-[40px] h-[40px] flex justify-center items-center`}>{item.level}</div>
+                                        {item.getStatus === true ? <div className="absolute text-[20px]">CLAIMED</div> : null}
+                                    </div>
                                 </div>
                         ))}
                     </div>

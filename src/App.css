@@ -91,6 +91,6 @@ body {
 }
 
 .battlePass {
-  background-image: url("/public/assets/background/battlepass.jpg") !important;
+  background-image: url("/public/assets/background/battlepass.png") !important;
   background-size: 100% 100%;
 }
