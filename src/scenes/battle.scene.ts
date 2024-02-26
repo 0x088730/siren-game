@@ -109,7 +109,13 @@ export default class Battle extends Phaser.Scene {
     })
   }
   create() {
-    // createCharacterAnims(this.anims)
+    const canvas = this.sys.canvas;
+
+    // Add event listener for the mouse wheel event
+    canvas.addEventListener('wheel', function (e) {
+      // Prevent the default behavior of the mouse wheel event
+      e.preventDefault();
+    }, { passive: false });
     this.characterAvatar()
     this.enemyAvatars()
     this.createCharacter()
@@ -364,19 +370,8 @@ export default class Battle extends Phaser.Scene {
       this.sirenAnimation,
       1,
     )
-    this.input.on('wheel', (pointer: Phaser.Input.Pointer, gameObjects: Phaser.GameObjects.GameObject[], deltaX: number, deltaY: number, deltaZ: number) => {
-      // Update character position based on deltaY (vertical scroll)
-      const deltaYPosition = deltaY * 0.1; // Adjust the scaling factor as needed
-      this.sirenSpine.y += deltaYPosition;
-    });
-    this.events.on('resize', this.adjustCharacterPosition, this);
   }
-  adjustCharacterPosition() {
-    const cameraScale = this.cameras.main.zoom;
-    const newX = this.cameras.main.width / 2;
-    const newY = this.cameras.main.height * 0.74 / cameraScale;
-    this.sirenSpine.setPosition(newX, newY);
-  }
+
   createEnemy() {
     switch (global.section) {
       case 1: this.enemyModel_1()
