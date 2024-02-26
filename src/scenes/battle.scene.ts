@@ -364,6 +364,11 @@ export default class Battle extends Phaser.Scene {
       this.sirenAnimation,
       1,
     )
+    this.input.on('wheel', (pointer: Phaser.Input.Pointer, gameObjects: Phaser.GameObjects.GameObject[], deltaX: number, deltaY: number, deltaZ: number) => {
+      // Update character position based on deltaY (vertical scroll)
+      const deltaYPosition = deltaY * 0.1; // Adjust the scaling factor as needed
+      this.sirenSpine.y += deltaYPosition;
+    });
     this.events.on('resize', this.adjustCharacterPosition, this);
   }
   adjustCharacterPosition() {
