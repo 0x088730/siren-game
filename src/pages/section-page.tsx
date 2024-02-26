@@ -114,7 +114,7 @@ export const SectionPage = ({
                                     : null}
                             </div>
                             :
-                            <div key={index} className={`${styles.sectionBtn} w-[107px] h-[112px] flex items-center justify-center cursor-pointer relative`}>
+                            <div key={index} className={`${styles.sectionBtn} w-[14%] h-[12%] flex items-center justify-center cursor-pointer relative`}>
                                 <span className="text-[#ffffff] text-[75px] font-['Arial']">{index}</span>
                                 <img src='assets/images/roomLockBtn.png' draggable="false" className='absolute w-fit' />
                             </div>

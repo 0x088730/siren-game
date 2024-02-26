@@ -85,6 +85,9 @@ export default class Battle extends Phaser.Scene {
   enemyDeadTmp_2!: SpineGameObject
   enemy_damage: number = 150
   enemy_damage1: number = 150
+  cursors: any
+  zoomLevel: number = 1
+  zoomFactor: number = 0.1
 
   constructor() {
     super('battle')
@@ -110,6 +113,14 @@ export default class Battle extends Phaser.Scene {
   }
   create() {
     // createCharacterAnims(this.anims)
+    if (this.input) {
+      // Check if this.input.keyboard exists and is not null
+      if (this.input.keyboard) {
+        this.cursors = this.input.keyboard.createCursorKeys();
+      } else {
+        console.error("this.input.keyboard is null or undefined");
+      }
+    }
     this.characterAvatar()
     this.enemyAvatars()
     this.createCharacter()
@@ -364,26 +375,26 @@ export default class Battle extends Phaser.Scene {
       this.sirenAnimation,
       1,
     )
-    this.cameras.main.setZoom(1);
+
+    this.cameras.main.setScroll(
+      this.sirenSpine.x - this.cameras.main.width / 2,
+      this.sirenSpine.y - this.cameras.main.height / 2
+    );
   }
-  updateCameraPosition() {
-    const cameraCenterX = this.cameras.main.width / 2;
-    const cameraCenterY = this.cameras.main.height / 2;
-
-    // Calculate the position of the character in screen coordinates
-    const characterScreenX = this.sirenSpine.x - this.cameras.main.scrollX;
-    const characterScreenY = this.sirenSpine.y - this.cameras.main.scrollY;
-
-    // Calculate the difference between the current zoom level and the default zoom level
-    const zoomDifference = this.cameras.main.zoom / 1; // Assuming 1 is the default zoom level
-
-    // Calculate the new camera position based on the character's position and the zoom difference
-    const newCameraX = characterScreenX - cameraCenterX * zoomDifference;
-    const newCameraY = characterScreenY - cameraCenterY * zoomDifference;
-
-    // Update camera position
-    this.cameras.main.setPosition(newCameraX, newCameraY);
+  update() {
+    if (this.cursors.up.isDown) {
+      this.zoomLevel += this.zoomFactor;
+    } else if (this.cursors.down.isDown) {
+      this.zoomLevel -= this.zoomFactor;
+    }
+    this.zoomLevel = Phaser.Math.Clamp(this.zoomLevel, 0.1, 2);
+    this.cameras.main.setZoom(this.zoomLevel);
+    this.cameras.main.setScroll(
+      this.sirenSpine.x - this.cameras.main.width / 2,
+      this.sirenSpine.y - this.cameras.main.height / 2
+    );
   }
+
   createEnemy() {
     switch (global.section) {
       case 1: this.enemyModel_1()
