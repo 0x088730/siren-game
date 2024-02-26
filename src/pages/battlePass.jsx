@@ -29,7 +29,9 @@ export const BattlePass = (props) => {
     const navigate = useNavigate();
     const [rewardList, setRewardList] = useState([]);
     const [index, setIndex] = useState({ first: 0, last: 5 });
-    const [presentData, setPresentData] = useState([]);
+    const [presentData, setPresentData] = useState({
+        level: ""
+    });
     const [levelData, setLevelData] = useState([]);
     const [randomVal, setRandomVal] = useState([0, 0, 0, 0]);
 
@@ -135,19 +137,19 @@ export const BattlePass = (props) => {
                                             <div className="tracking-[-1px] my-3">{presentData.value}</div>
                                         </>
                                     }
-                                    {
-                                        presentData.getStatus === false && presentData.available === true ?
+                                    {presentData && presentData.level !== "" ?
+                                        (presentData.getStatus === false && presentData.available === true ?
                                             <img src="assets/images/claim-btn.png" className="w-[95px] cursor-pointer" alt="" draggable="false" onClick={() => onClaim(presentData)} />
                                             :
-                                            <img src="assets/images/inclaim-btn.png" className="w-[95px] cursor-pointer" alt="" draggable="false" />
+                                            <img src="assets/images/inclaim-btn.png" className="w-[95px] cursor-pointer" alt="" draggable="false" />) : null
                                     }
                                 </div>
                             </div>
                             <div className="w-1/2 flex flex-col justify-center items-center">
                                 <div className="text-[20px] tracking-[2px] text-center" style={{ textShadow: "2px 2px 5px black" }}>QUEST</div>
-                                <div className="tracking-[-1px] my-3 text-center py-1 px-3"><TextWithNumberColor text={presentData.title1} /></div>
+                                <div className="tracking-[-1px] my-3 text-center py-1 px-3">{presentData && presentData.level !== "" ? <TextWithNumberColor text={presentData.title1} /> : null}</div>
                                 <div className="text-[20px] tracking-[2px] text-center" style={{ textShadow: "2px 2px 5px black" }}>REWARD</div>
-                                <div className="tracking-[-1px] my-3 text-center py-1 px-3"><TextWithNumberColor text={presentData.title2} /></div>
+                                <div className="tracking-[-1px] my-3 text-center py-1 px-3">{presentData && presentData.level !== "" ? <TextWithNumberColor text={presentData.title2} /> : null}</div>
                             </div>
                         </div>
                     </div>
