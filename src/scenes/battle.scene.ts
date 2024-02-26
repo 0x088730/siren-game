@@ -320,6 +320,8 @@ export default class Battle extends Phaser.Scene {
       .spine(400, 950, SIREN_SPINE, 'idle', true)
       .setScale(0.3)
       .setVisible(true)
+    this.sirenSpine.displayOriginX = 600;
+    this.sirenSpine.displayOriginY = 600;
     this.sirenAttack1 = this.add
       .spine(400, 950, SIREN_ATTACK1, 'idle')
       .setScale(0.3)
