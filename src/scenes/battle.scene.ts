@@ -320,8 +320,6 @@ export default class Battle extends Phaser.Scene {
       .spine(400, 950, SIREN_SPINE, 'idle', true)
       .setScale(0.3)
       .setVisible(true)
-    this.sirenSpine.displayOriginX = 600;
-    this.sirenSpine.displayOriginY = 600;
     this.sirenAttack1 = this.add
       .spine(400, 950, SIREN_ATTACK1, 'idle')
       .setScale(0.3)
@@ -366,6 +364,13 @@ export default class Battle extends Phaser.Scene {
       this.sirenAnimation,
       1,
     )
+    this.events.on('resize', this.adjustCharacterPosition, this);
+  }
+  adjustCharacterPosition() {
+    const cameraScale = this.cameras.main.zoom;
+    const newX = this.cameras.main.width / 2;
+    const newY = this.cameras.main.height * 0.74 / cameraScale;
+    this.sirenSpine.setPosition(newX, newY);
   }
   createEnemy() {
     switch (global.section) {
