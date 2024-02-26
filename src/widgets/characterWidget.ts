@@ -65,6 +65,7 @@ export default class CharacterWidget extends Phaser.GameObjects.Container {
   constructor(scene: Phaser.Scene, x: number, y: number) {
     super(scene, x, y)
     this.scene = scene
+    console.log(global)
     this.add(
       (this.background = scene.add
         .image(70, 0, 'character1-frame')
@@ -103,7 +104,7 @@ export default class CharacterWidget extends Phaser.GameObjects.Container {
         }),
     )
     this.add(
-      (this.health = this.scene.add.text(-32, -173, `${1000}`, {
+      (this.health = this.scene.add.text(-32, -173, `${500}`, {
         font: '17px Anime Ace',
         color: '#ffffff',
       })),
@@ -307,62 +308,62 @@ export default class CharacterWidget extends Phaser.GameObjects.Container {
             .length > 0
             ? `model-${avatarList[i]}`
             : `model1-${avatarList[i]}`
-        let level =
-          characterList.filter((character) => character.characterNo === i)
-            .length > 0
-            ? 'LVL:' +
-            Math.floor(
-              characterList
-                .filter((character) => character.characterNo === i)[0]
-                .exp.valueOf() /
-              100 +
-              1,
-            ).toString()
-            : ''
-        let rarity =
-          characterList.filter((character) => character.characterNo === i)
-            .length > 0
-            ? characterList
-              .filter((character) => character.characterNo === i)[0]
-              .rarity.toString()
-            : ''
-        const lvtext: any = this.scene.add.text(
-          row * 300 - 120,
-          col * 300 - 60,
-          level,
-          { fontSize: '20px', fontFamily: 'Anime Ace', color: 'white' },
-        ).setVisible(false)
-        this.lvTexts.push(lvtext)
+        // let level =
+        //   characterList.filter((character) => character.characterNo === i)
+        //     .length > 0
+        //     ? 'LVL:' +
+        //     Math.floor(
+        //       characterList
+        //         .filter((character) => character.characterNo === i)[0]
+        //         .exp.valueOf() /
+        //       100 +
+        //       1,
+        //     ).toString()
+        //     : ''
+        // let rarity =
+        //   characterList.filter((character) => character.characterNo === i)
+        //     .length > 0
+        //     ? characterList
+        //       .filter((character) => character.characterNo === i)[0]
+        //       .rarity.toString()
+        //     : ''
+        // const lvtext: any = this.scene.add.text(
+        //   row * 300 - 120,
+        //   col * 300 - 60,
+        //   level,
+        //   { fontSize: '20px', fontFamily: 'Anime Ace', color: 'white' },
+        // ).setVisible(false)
+        // this.lvTexts.push(lvtext)
 
-        if (rarity === '0') {
-          rarity = 'common'
-        } else if (rarity === '1') {
-          rarity = 'rare'
-        } else if (rarity === '2') {
-          rarity = 'legendary'
-        }
-        const raritytext = this.scene.add.text(
-          row * 300 - 180,
-          col * 305 - 240,
-          rarity,
-          {
-            fontSize: '20px',
-            fontFamily: 'Anime Ace',
-            color:
-              rarity === 'common'
-                ? 'gray'
-                : rarity === 'rare'
-                  ? 'violet'
-                  : rarity === 'legendary'
-                    ? '#efda4e'
-                    : '',
-          },
-        )
-        raritytext.setStroke('black', 5)
-        raritytext.setAngle(-45)
-        raritytext.setOrigin(0.5)
-        raritytext.setVisible(false)
-        this.rarityTexts.push(raritytext) // Add the raritytext to the array
+        // if (rarity === '0') {
+        //   rarity = 'common'
+        // } else if (rarity === '1') {
+        //   rarity = 'rare'
+        // } else if (rarity === '2') {
+        //   rarity = 'legendary'
+        // }
+        // const raritytext = this.scene.add.text(
+        //   row * 300 - 180,
+        //   col * 305 - 240,
+        //   rarity,
+        //   {
+        //     fontSize: '20px',
+        //     fontFamily: 'Anime Ace',
+        //     color:
+        //       rarity === 'common'
+        //         ? 'gray'
+        //         : rarity === 'rare'
+        //           ? 'violet'
+        //           : rarity === 'legendary'
+        //             ? '#efda4e'
+        //             : '',
+        //   },
+        // )
+        // raritytext.setStroke('black', 5)
+        // raritytext.setAngle(-45)
+        // raritytext.setOrigin(0.5)
+        // raritytext.setVisible(false)
+        // this.rarityTexts.push(raritytext) // Add the raritytext to the array
         this.model[i]
           .setPosition(row * 300 - 90, col * 300 - 160)
           .setTexture(modelName)
@@ -538,7 +539,7 @@ export default class CharacterWidget extends Phaser.GameObjects.Container {
     this.setVisible(visible)
     this.sirenSpine.setVisible(false)
     this.siren3.setVisible(false)
-    if (visible) this.sceneMode(1)
+    if (visible) this.sceneMode(2)
   }
 
   sceneMode(mode: number) {

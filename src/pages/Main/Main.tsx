@@ -653,7 +653,7 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
                 <Box
                   sx={{
                     width: '50%',
-                    paddingTop: '50vh',
+                    paddingTop: '27%',
                     // transform: 'translateY(-20vh)',                
 
                     justifyContent: 'space-between',

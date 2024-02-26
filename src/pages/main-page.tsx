@@ -13,6 +13,7 @@ import { ButtonComponent } from '../components/button.component'
 import { useWeb3Context } from '../hooks/web3Context'
 import { useNavigate } from 'react-router-dom'
 import { GameHeaderComponent } from '../components/game-header.component'
+import CharacterDetailModal from '../widgets/characterDetailModal'
 
 interface HeaderProps {
     showAccount: any
@@ -46,6 +47,8 @@ export const MainPage = ({
     const thirdTurn = useSelector((state: any) => state.app.game.thirdTurn)
     const getCharacter = useSelector((state: any) => state.app.game.getCharacter)
 
+    const [openCharacter, setOpenCharacter] = useState(false);
+
     const { connected, chainID, address, connect } = useWeb3Context()
 
     const handleOpenAccount = (flag: boolean) => {
@@ -74,13 +77,14 @@ export const MainPage = ({
         if (global.wall === 0) {
             return
         }
-        onCharacter()
+        // onCharacter()
+        setOpenCharacter(true);
     }
     const onLand = () => {
         store.dispatch(setLoadingStatus(true));
         navigate("/land", { replace: true });
     }
-    const onBattlePass =() => {
+    const onBattlePass = () => {
         navigate("/battlepass", { replace: true });
     }
     const normalAttack = () => {
@@ -121,40 +125,42 @@ export const MainPage = ({
                                 {gameState === 0 && (
                                     <div className="flex flex-col justify-center flex-1 h-full d-flex">
                                         {!inventoryOpened && !characterOpened && (
-                                            <div>
-                                                <div className="btn-group">
-                                                    <div className="btn-wrapper">
-                                                        <ButtonComponent onClick={start}>
-                                                            <img src="assets/images/play pve.png" draggable="false" />
-                                                        </ButtonComponent>
+                                            openCharacter === false ?
+                                                <div>
+                                                    <div className="btn-group">
+                                                        <div className="btn-wrapper">
+                                                            <ButtonComponent onClick={start}>
+                                                                <img src="assets/images/play pve.png" draggable="false" />
+                                                            </ButtonComponent>
+                                                        </div>
+                                                        <div className="btn-wrapper">
+                                                            <ButtonComponent>
+                                                                <img src="assets/images/play pvp.png" draggable="false" />
+                                                            </ButtonComponent>
+                                                        </div>
+                                                        <div className="btn-wrapper">
+                                                            <ButtonComponent onClick={inventory}>
+                                                                <img src="assets/images/inventory.png" draggable="false" />
+                                                            </ButtonComponent>
+                                                        </div>
                                                     </div>
-                                                    <div className="btn-wrapper">
-                                                        <ButtonComponent>
-                                                            <img src="assets/images/play pvp.png" draggable="false" />
+                                                    <div className="btn-ligroup">
+                                                        <ButtonComponent onClick={character}>
+                                                            <img
+                                                                src="assets/images/characters.png" draggable="false"
+                                                            />
                                                         </ButtonComponent>
-                                                    </div>
-                                                    <div className="btn-wrapper">
-                                                        <ButtonComponent onClick={inventory}>
-                                                            <img src="assets/images/inventory.png" draggable="false" />
+                                                        {/* <Link to="/land" className="button muted-button"> */}
+                                                        <ButtonComponent onClick={() => !address ? null : onLand()}>
+                                                            <img
+                                                                src="assets/images/land.png" draggable="false"
+                                                            />
                                                         </ButtonComponent>
+                                                        {/* </Link> */}
                                                     </div>
-                                                </div>
-                                                <div className="btn-ligroup">
-                                                    <ButtonComponent onClick={character}>
-                                                        <img
-                                                            src="assets/images/characters.png" draggable="false"
-                                                        />
-                                                    </ButtonComponent>
-                                                    {/* <Link to="/land" className="button muted-button"> */}
-                                                    <ButtonComponent onClick={() => !address ? null : onLand()}>
-                                                        <img
-                                                            src="assets/images/land.png" draggable="false"
-                                                        />
-                                                    </ButtonComponent>
-                                                    {/* </Link> */}
-                                                </div>
-                                            </div>
+                                                </div> : null
                                         )}
+                                        <CharacterDetailModal openCharacter={openCharacter} setOpenCharacter={setOpenCharacter} address={global.walletAddress} />
                                     </div>
                                 )}
                                 {gameState === 1 && global.currentCharacterName === 'siren-1' && (
