@@ -162,9 +162,9 @@ export const BattlePass = (props) => {
                         <div className="w-[50%] pe-8 my-4 md:my-0">
                             <div className="h-[95%] md:h-full w-full max-w-[700px] min-h-[265px] rounded-[1.5rem] flex" style={{ backgroundColor: "rgba(228, 226, 226, 0.5", boxShadow: "0 0 8px #8A8A8A" }}>
                                 <div style={{ boxShadow: "0 0 10px 7px #FFA723" }} className={`w-1/2 ${presentData.level === 14 || presentData.level === 15 ? "bg-gradient-to-b from-[#231631] to-[#a67c00]" : "bg-gradient-to-b from-[#56c256] from-10% via-[#3d97a3] via-30% to-[#922866] to-90%"} rounded-[1.5rem] opacity-100`}>
-                                    <div className="w-full h-full flex flex-col justify-center items-center rounded-[1.5rem] p-3" style={{ backgroundImage: "radial-gradient(transparent, #0E1B27)" }}>
+                                    <div className={`w-full h-full flex flex-col justify-center items-center rounded-[1.5rem] ${presentData.value === "" ? "p-o" : "p-3"}`} style={{ backgroundImage: "radial-gradient(transparent, #0E1B27)" }}>
                                         {presentData.value === "" ?
-                                            <img src={presentData.getStatus === true ? presentData.image : `assets/images/weapon/${presentData.level === 4 ? randomVal[0] : randomVal[1]}.png`} draggable="false" className="w-[150px] m-4 rounded-xl border-1 border-black" style={{ boxShadow: "0 0 5px #FFA723" }} alt="" />
+                                            <img src={presentData.getStatus === true ? presentData.image : `assets/images/weapon/${presentData.level === 4 ? randomVal[0] : randomVal[1]}.png`} draggable="false" className="rounded-xl border-1 border-black w-full h-full" style={{ boxShadow: "0 0 5px #FFA723" }} alt="" />
                                             :
                                             <>
                                                 {
@@ -178,9 +178,9 @@ export const BattlePass = (props) => {
                                         }
                                         {presentData && presentData.level !== "" ?
                                             (presentData.getStatus === false && presentData.available === true ?
-                                                <img src="assets/images/claim-btn.png" className="w-[95px] cursor-pointer" alt="" draggable="false" onClick={() => onClaim(presentData)} />
+                                                <img src="assets/images/claim-btn.png" className={`w-[95px] cursor-pointer ${presentData.value === "" ? "absolute" : ""}`} alt="" draggable="false" onClick={() => onClaim(presentData)} />
                                                 :
-                                                <img src="assets/images/inclaim-btn.png" className="w-[95px] cursor-pointer" alt="" draggable="false" />) : null
+                                                <img src="assets/images/inclaim-btn.png" className={`w-[95px] cursor-pointer ${presentData.value === "" ? "absolute" : ""}`} alt="" draggable="false" />) : null
                                         }
                                     </div>
                                 </div>
