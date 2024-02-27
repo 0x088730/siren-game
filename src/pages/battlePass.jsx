@@ -104,8 +104,8 @@ export const BattlePass = (props) => {
             {!address && <div className="absolute w-full"><HeaderComponent onModalShow={props.onModalShow} /></div>}
             <div className="battlePass w-full h-full min-w-[1600px] min-h-[900px] overflow-auto p-10 text-white font-semibold flex justify-center items-center">
                 <div className="battlePassCenter relative w-[95%] md:w-[80%] h-[90%] min-w-[884px] min-h-[497px] p-20">
-                    <img src="assets/images/book.png" className=" absolute -top-[4.5rem] -left-[4.5rem] rotate-[-15deg] w-[20%]" alt="" draggable="false" />
-                    <img src='assets/images/come-back.png' draggable="false" className='absolute top-[-0.5rem] right-[-0.5rem] cursor-pointer w-[6.5rem] z-10' onClick={() => onMain()} />
+                    <img src="assets/images/book.png" className=" absolute -top-[3rem] -left-[4.5rem] rotate-[-15deg] w-[15%]" alt="" draggable="false" />
+                    <img src='assets/images/come-back.png' draggable="false" className='absolute top-0 right-[-1rem] cursor-pointer w-[5.5rem] z-10' onClick={() => onMain()} />
                     <div className="h-[60%] p-8 md:h-[50%] flex flex-col justify-center items-center md:flex-row md:justify-normal md:items-start">
                         <div className="w-[50%] pl-8 mt-16 md:my-0">
                             <div className="flex items-center">
