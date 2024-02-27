@@ -4,7 +4,6 @@ export class TextWithNumberColor extends React.Component {
     render() {
         const text = this.props.text;
         const words = text.split(/\s+/); // Split text into words
-        console.log(text)
         return (
             <div>
                 {words.map((word, index) => {

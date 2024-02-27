@@ -2,9 +2,10 @@ import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom";
 import styles from './Main/Main.module.scss'
 import { useWeb3Context } from "../hooks/web3Context";
-import { claimReward, getRewardWithLevel } from "../store/user/actions";
+import { buyRewardAvailable, claimReward, getRewardWithLevel } from "../store/user/actions";
 import { HeaderComponent } from "../components";
 import { TextWithNumberColor } from "../components/textWithNumberColor";
+import { Transaction } from "../utils/transaction";
 
 // const levelData = [
 //     { level: 1, image: "assets/images/rock.png", value: "X30", getStatus: false, available: true, title1: "WIN 1 FIGHT IN PVE", title2: "30X RESOURCES" },
@@ -34,6 +35,8 @@ export const BattlePass = (props) => {
     });
     const [levelData, setLevelData] = useState([]);
     const [randomVal, setRandomVal] = useState([0, 0, 0, 0]);
+    const [usdtVal, setUsdtVal] = useState(12);
+    const [available, setAvailable] = useState(false);
 
     useEffect(() => {
         // if (address === undefined || address === null || address === "") {
@@ -41,6 +44,7 @@ export const BattlePass = (props) => {
         // }
         if (address !== undefined && address !== null && address !== "") {
             getRewardWithLevel(address).then(res => {
+                setAvailable(res.available);
                 let array = Object.values(res)
                 let currentArray = [];
                 for (let i = 0; i < array.length; i++) {
@@ -62,11 +66,6 @@ export const BattlePass = (props) => {
                 if (rand <= 33) { rand3 = 2; rand4 = 4 }
                 if (rand >= 33 && rand < 67) { rand3 = 2; rand4 = 3 }
                 if (rand >= 67) { rand3 = 3; rand4 = 4 }
-                // let rand3 = Math.floor(Math.random() * 4);
-                // if (rand3 === 0) rand3 = 1
-                // let rand4 = Math.floor(Math.random() * 4);
-                // if (rand3 === rand4) rand4 = rand4 + 1
-                // if (rand4 >= 4) rand4 = 3
                 setRandomVal([rand1, rand2, rand3, rand4]);
             })
         }
@@ -91,11 +90,31 @@ export const BattlePass = (props) => {
 
     const onClaim = (presentData) => {
         claimReward(address, presentData, randomVal).then(res => {
-            setPresentData(res.reward);
+            if (res.data === false) return alert(res.message);
+            setPresentData(res.data.reward);
             let currentArray = levelData;
-            currentArray[res.reward.level - 1] = res.reward;
+            currentArray[res.data.reward.level - 1] = res.data.reward;
             setLevelData(currentArray);
             setRewardList(currentArray.slice(index.first, index.last))
+        })
+    }
+
+    const onBuy = async () => {
+        if (address === "" || address === null || address === undefined) {
+            alert("Please connect wallet!")
+            return;
+        }
+        if (usdtVal < 12) {
+            alert("Incorrect USDT value!")
+            return;
+        }
+        let transaction = await Transaction(usdtVal);
+        if (transaction === false) {
+            return;
+        }
+        buyRewardAvailable(address, usdtVal, transaction).then(res => {
+            if (res.data === false) return alert(res.message);
+            setAvailable(res.data);
         })
     }
 
@@ -106,21 +125,39 @@ export const BattlePass = (props) => {
                 <div className="battlePassCenter relative w-[95%] md:w-[80%] h-[90%] min-w-[884px] min-h-[497px] p-20">
                     <img src="assets/images/book.png" className=" absolute -top-[3rem] -left-[4.5rem] rotate-[-15deg] w-[15%]" alt="" draggable="false" />
                     <img src='assets/images/come-back.png' draggable="false" className='absolute top-0 right-[-1rem] cursor-pointer w-[5.5rem] z-10' onClick={() => onMain()} />
-                    <div className="h-[60%] p-8 md:h-[50%] flex flex-col justify-center items-center md:flex-row md:justify-normal md:items-start">
-                        <div className="w-[50%] pl-8 mt-16 md:my-0">
-                            <div className="flex items-center">
-                                <div className="me-4">
-                                    <img src="assets/images/yellow_clock.png" className="w-[40px] h-full" alt="" draggable="false" />
+                    <div className="h-[60%] p-8 pb-1 md:h-[50%] flex flex-col justify-center items-center md:flex-row md:justify-normal md:items-start">
+                        <div className="w-[50%] pl-8 mt-16 md:my-0 flex flex-col justify-between h-full">
+                            <div className="text-start">
+                                <div className="flex items-center">
+                                    <div className="me-4">
+                                        <img src="assets/images/yellow_clock.png" className="w-[40px] h-full" alt="" draggable="false" />
+                                    </div>
+                                    <div className="text-start">
+                                        <div className="text-md font-[500] text-gray-300">ENDS IN</div>
+                                        <div className="text-3xl">50 DAYS</div>
+                                    </div>
                                 </div>
-                                <div className="text-start">
-                                    <div className="text-md font-[500] text-gray-300">ENDS IN</div>
-                                    <div className="text-3xl">50 DAYS</div>
+                                <div className="flex items-center mt-4">
+                                    <div className="me-3 text-[#ffff19] text-5xl text-bold">!</div>
+                                    <div className="tracking-[-1px] text-[15px] font-[600]">ALL REWARDS RECEIVED REMAIN WITH YOU FOREVER.<br />ITEMS FROM BATTLE PASS WILL NOT BE REMOVED AT RELEASE</div>
                                 </div>
                             </div>
-                            <div className="flex items-center mt-4">
-                                <div className="me-3 text-[#ffff19] text-5xl text-bold">!</div>
-                                <div className="tracking-[-1px] text-[15px] font-[600]">ALL REWARDS RECEIVED REMAIN WITH YOU FOREVER.<br />ITEMS FROM BATTLE PASS WILL NOT BE REMOVED AT RELEASE</div>
-                            </div>
+                            {!available &&
+                                <div className="flex flex-col justify-center items-center">
+                                    <div
+                                        className={`${styles.arrow} bg-no-repeat h-[35px] w-[170px] flex justify-center items-center cursor-pointer`}
+                                        style={{ backgroundImage: "url(/assets/images/big-button.png)", backgroundSize: "100% 100%" }}
+                                        onClick={onBuy}
+                                    >
+                                        BUY
+                                    </div>
+                                    <div className="flex">
+                                        <img src="assets/images/usdt.png" className="w-[20px]" alt="" draggable="false" />
+                                        <span className="mx-[5px]">{usdtVal}</span>
+                                        <span className="text-[#00ce2d]">USDT</span>
+                                    </div>
+                                </div>
+                            }
                         </div>
                         <div className="w-[50%] pe-8 my-4 md:my-0">
                             <div className="h-[95%] md:h-full w-full max-w-[700px] min-h-[265px] rounded-[1.5rem] flex" style={{ backgroundColor: "rgba(228, 226, 226, 0.5", boxShadow: "0 0 8px #8A8A8A" }}>

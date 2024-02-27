@@ -525,7 +525,16 @@ export async function claimReward(walletAddress: string, claimData: any, random:
     claimData,
     random,
   })
-  return res.data;
+  return res;
+}
+
+export async function buyRewardAvailable(walletAddress: string, usdt: any, txID: any) {
+  const res = await api(`user/buyRewardAvailable`, `post`, {
+    walletAddress,
+    usdt,
+    txID,
+  })
+  return res;
 }
 
 // export function addExp(address: any, amount: Number, cb: any) {
