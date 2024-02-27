@@ -110,88 +110,43 @@ const Header = ({ showAccount, setShowAccount, csc, realCSC, eggs, resource }: H
       {!ispremium && (
         <button
           onClick={getPremium}
-          style={{
-            background: 'url(/images/but_style1.png)',
-            backgroundSize: 'cover',
-            backgroundRepeat: 'no-repeat',
-            width: 170,
-            height: 35,
-            marginRight: 10,
-          }}
+          className='bg-cover bg-no-repeat w-[170px] h-[35px] me-[10px] text-[14px] font-bold tracking-[2px]'
+          style={{ background: 'url(/images/but_style1.png)' }}
         >
           Premium
         </button>
       )}
       {ispremium && (
-        <p
-          style={{
-            whiteSpace: 'nowrap',
-            marginRight: '8px',
-            fontWeight: 700,
-            fontSize: '18px',
-          }}
-        >{`${leftDay} Days`}</p>
+        <p className='whitespace-nowrap me-[8px] font-[700] text-[18px]'>{`${leftDay} Days`}</p>
       )}
 
       {show && (
         <button
           onClick={setOpenedAccount}
-          style={{
-            background: 'url(/images/but_style1.png)',
-            width: 170,
-            height: 35,
-          }}
-          className={`px-6 py-1 font-semibold text-white shadow-sm`}
+          style={{ background: 'url(/images/but_style1.png)', backgroundSize: "100% 100%" }}
+          className={`px-6 py-1 font-semibold text-white shadow-sm w-[170px] h-[35px] bg-no-repeat`}
         >
-          <span style={{ display: 'flex', alignItems: 'center' }}>
+          <span className='flex justify-center items-center text-[14px] font-bold'>
             <span>{shortAddress(address)}</span>
-            <AccountIcon address={address} size={18} />
+            {/* <AccountIcon address={address} size={18} /> */}
           </span>
         </button>
       )}
-      <p
-        className={styles.resource}
-        style={{ background: 'url(/images/but_style1.png)', width: 170, height: 35, marginLeft: '8px' }}
-      >
-        <img
-          alt=""
-          className='w-[25px] me-[10px]'
-          src="/images/cryptoIcon.png"
-        />
-        {`CSC: ${csc}`}
+      <p className={styles.resource}>
+        <img alt="" className='w-[25px] mx-[3px]' src="/images/cryptoIcon.png" />
+        CSC: {csc}
       </p>
-      <p
-        className={styles.resource}
-        style={{ background: 'url(/images/but_style1.png)', width: 170, height: 35, marginLeft: '8px' }}
-      >
-        <img
-          alt=""
-          className='w-[25px] me-[10px]'
-          src="/images/cryptoIcon.png"
-        />
-        {`REAL CSC: ${realCSC}`}
+      <p className={styles.resource}>
+        <img alt="" className='w-[25px] mx-[3px]' src="/images/cryptoIcon.png" />
+        REAL CSC: {realCSC}
       </p>
-      <p
-        className={styles.resource}
-        style={{ background: 'url(/images/but_style1.png)', width: 170, height: 35, marginLeft: '8px' }}
-      >
-        <img
-          alt=""
-          style={{ width: '25px', marginRight: '10px' }}
-          src="/images/res_res.png"
-        />
-        {`Water: ${resource}`}
+      <p className={styles.resource}>
+        <img alt="" className='w-[25px] mx-[3px]' src="/images/res_res.png" />
+        Water: {resource}
       </p>
-      <p
-        className={styles.resource}
-        style={{ background: 'url(/images/but_style1.png)', width: 170, height: 35, marginLeft: '8px' }}
-      >
-        <img
-          alt=""
-          style={{ width: '20px', marginRight: '10px' }}
-          src="/images/res_egg.png"
-        />
-        {`Res: ${eggs}`}
+      <p className={styles.resource}>
+        <img alt="" className='w-[20px] mx-[3px]' src="/images/res_egg.png" />
+        Res: {eggs}
       </p>
     </Box>
   }
@@ -215,14 +170,8 @@ const Header = ({ showAccount, setShowAccount, csc, realCSC, eggs, resource }: H
           sx={{ display: 'flex', alignItems: 'center' }}
         >
           <Link to="/" className="button muted-button">
-            <button
-              style={{
-                background: 'url(/images/but_style2.png)',
-                backgroundSize: 'cover',
-                backgroundRepeat: 'no-repeat',
-                width: 116,
-                height: 35,
-              }}
+            <button className='w-[115px] h-[35px] bg-no-repeat bg-cover'
+              style={{ background: 'url(/images/but_style2.png)' }}
             >
               Back
             </button>
