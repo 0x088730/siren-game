@@ -145,7 +145,7 @@ export const BattlePass = (props) => {
                             {!available &&
                                 <div className="flex flex-col justify-center items-center">
                                     <div
-                                        className={`${styles.arrow} bg-no-repeat h-[35px] w-[170px] flex justify-center items-center cursor-pointer`}
+                                        className={`${styles.playBtn} bg-no-repeat h-[35px] w-[170px] flex justify-center items-center cursor-pointer`}
                                         style={{ backgroundImage: "url(/assets/images/big-button.png)", backgroundSize: "100% 100%" }}
                                         onClick={onBuy}
                                     >
