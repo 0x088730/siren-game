@@ -103,9 +103,9 @@ export const BattlePass = (props) => {
         <>
             {!address && <div className="absolute w-full"><HeaderComponent onModalShow={props.onModalShow} /></div>}
             <div className="battlePass w-full h-full min-w-[1600px] min-h-[900px] overflow-auto p-10 text-white font-semibold flex justify-center items-center">
-                <img src='assets/images/come-back.png' draggable="false" className='fixed top-[10%] right-[7%] cursor-pointer w-[5%] z-10' onClick={() => onMain()} />
                 <div className="battlePassCenter relative w-[95%] md:w-[80%] h-[90%] min-w-[884px] min-h-[497px] p-20">
-                    <img src="assets/images/book.png" className=" absolute -top-[4.5rem] -left-[4.5rem] -rotate-45 w-[20%]" alt="" draggable="false" />
+                    <img src="assets/images/book.png" className=" absolute -top-[4.5rem] -left-[4.5rem] rotate-[-15deg] w-[20%]" alt="" draggable="false" />
+                    <img src='assets/images/come-back.png' draggable="false" className='absolute top-[-0.5rem] right-[-0.5rem] cursor-pointer w-[6.5rem] z-10' onClick={() => onMain()} />
                     <div className="h-[60%] p-8 md:h-[50%] flex flex-col justify-center items-center md:flex-row md:justify-normal md:items-start">
                         <div className="w-[50%] pl-8 mt-16 md:my-0">
                             <div className="flex items-center">
@@ -185,7 +185,7 @@ export const BattlePass = (props) => {
                                                 item.level === 14 || item.level === 15 ?
                                                     <img src={item.getStatus === true ? item.image : `assets/images/characters/avatar/${item.level === 14 ? randomVal[2] : randomVal[3]}.png`} className={item.available === true ? `w-[100px]` : `brightness-75 w-[100px]`} alt="" draggable="false" />
                                                     :
-                                                    <img src={item.image} className={item.available === true ? `w-[130px]` : `brightness-75 w-[100px]`} alt="" draggable="false" />
+                                                    <img src={item.image} className={item.available === true ? `w-[100px]` : `brightness-75 w-[100px]`} alt="" draggable="false" />
                                             }
                                             <div className="mt-2">{item.value}</div>
                                             <div className={`${styles.numBtn} absolute top-[85%] z-10 w-[40px] h-[40px] flex justify-center items-center`}>{item.level}</div>

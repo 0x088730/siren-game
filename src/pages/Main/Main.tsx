@@ -359,7 +359,7 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
     <>
       {isLoading === true ?
         <>
-          <img src="assets/images/loading.gif" style={{ width: "100%", height: "100%" }} />
+          <img src="assets/images/loading.gif" className="w-full h-full" />
         </>
         :
         <>
@@ -653,7 +653,7 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
                 <Box
                   sx={{
                     width: '50%',
-                    paddingTop: '27%',
+                    paddingTop: '25.2%',
                     // transform: 'translateY(-20vh)',                
 
                     justifyContent: 'space-between',
@@ -673,7 +673,7 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
                     }}
                     onClick={(e) => setOpenSwap(true)}
                   >
-                    <img alt="" src="/images/storage.png" style={{ transform: 'translate(-50%, -50%)' }} className={styles.item} />
+                    <img alt="" src="/images/storage.png" className={`${styles.item} transform -translate-x-1/2 -translate-y-1/2`} />
                   </Box>
                   <Box
                     sx={{
