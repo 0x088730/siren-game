@@ -280,7 +280,7 @@ export const MainPage = ({
                         </div>
                     </>}
             </div>
-            <div draggable="false" className='absolute top-[15%] right-[7%] cursor-pointer w-[5%]' onClick={() => onBattlePass()}>battle pass</div>
+            {/* <div draggable="false" className='absolute top-[15%] right-[7%] cursor-pointer w-[5%]' onClick={() => onBattlePass()}>battle pass</div> */}
         </>
     )
 }
