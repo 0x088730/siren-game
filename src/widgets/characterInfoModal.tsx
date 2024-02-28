@@ -204,7 +204,7 @@ const CharacterInfoModal = ({ openCharacterInfo, setOpenCharacterInfo }: Props) 
                             </div>
                             :
                             nav === "gem" ?
-                                <div className="flex flex-wrap p-[40px]">
+                                <div className="flex flex-wrap p-[40px] w-full">
                                     {gemList.map((item, index) => (
                                         <div
                                             key={index}
