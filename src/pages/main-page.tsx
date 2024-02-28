@@ -48,6 +48,7 @@ export const MainPage = ({
     const getCharacter = useSelector((state: any) => state.app.game.getCharacter)
 
     const [openCharacter, setOpenCharacter] = useState(false);
+    const [openCharacterInfo, setOpenCharacterInfo] = useState(false);
 
     const { connected, chainID, address, connect } = useWeb3Context()
 
@@ -125,7 +126,7 @@ export const MainPage = ({
                                 {gameState === 0 && (
                                     <div className="flex flex-col justify-center flex-1 h-full d-flex">
                                         {!inventoryOpened && !characterOpened && (
-                                            openCharacter === false ?
+                                            (openCharacter === false && openCharacterInfo === false) ?
                                                 <div>
                                                     <div className="btn-group">
                                                         <div className="btn-wrapper">
@@ -160,7 +161,13 @@ export const MainPage = ({
                                                     </div>
                                                 </div> : null
                                         )}
-                                        <CharacterDetailModal openCharacter={openCharacter} setOpenCharacter={setOpenCharacter} address={global.walletAddress} />
+                                        <CharacterDetailModal
+                                            openCharacter={openCharacter}
+                                            setOpenCharacter={setOpenCharacter}
+                                            openCharacterInfo={openCharacterInfo}
+                                            setOpenCharacterInfo={setOpenCharacterInfo}
+                                            address={global.walletAddress}
+                                        />
                                     </div>
                                 )}
                                 {gameState === 1 && global.currentCharacterName === 'siren-1' && (

@@ -65,7 +65,6 @@ export default class CharacterWidget extends Phaser.GameObjects.Container {
   constructor(scene: Phaser.Scene, x: number, y: number) {
     super(scene, x, y)
     this.scene = scene
-    console.log(global)
     this.add(
       (this.background = scene.add
         .image(70, 0, 'character1-frame')

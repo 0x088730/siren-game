@@ -5,17 +5,20 @@ import { useDispatch, useSelector } from 'react-redux'
 import { global } from '../common/global'
 import phaserGame from '../PhaserGame'
 import Game from '../scenes/game.scene'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { energySwap, getProfile } from '../common/api'
 import { useWeb3Context } from '../hooks/web3Context'
+import CharacterInfoModal from './characterInfoModal'
 
 interface Props {
     openCharacter: boolean
     setOpenCharacter: any
+    openCharacterInfo: any
+    setOpenCharacterInfo: any
     address: any
 }
 
-const CharacterDetailModal = ({ openCharacter, setOpenCharacter, address }: Props) => {
+const CharacterDetailModal = ({ openCharacter, setOpenCharacter, openCharacterInfo, setOpenCharacterInfo, address }: Props) => {
     const characterImage = ["1", "2", "3", "4"];
     const characterImage1 = ["1_1", "2_1", "3_1", "4_1"];
     const style = {
@@ -37,8 +40,9 @@ const CharacterDetailModal = ({ openCharacter, setOpenCharacter, address }: Prop
     }, [])
 
     const onCharacter = (index: any) => {
-        const game = phaserGame.scene.keys.game as Game;
-        game.character(index);
+        // const game = phaserGame.scene.keys.game as Game;
+        // game.character(index);
+        setOpenCharacterInfo(true);
         setOpenCharacter(false);
     }
 
@@ -87,6 +91,7 @@ const CharacterDetailModal = ({ openCharacter, setOpenCharacter, address }: Prop
                     </Grid>
                 </Box>
             </Modal>
+            <CharacterInfoModal openCharacterInfo={openCharacterInfo} setOpenCharacterInfo={setOpenCharacterInfo} />
         </>
     )
 }

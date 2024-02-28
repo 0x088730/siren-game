@@ -7,23 +7,23 @@ import { HeaderComponent } from "../components";
 import { TextWithNumberColor } from "../components/textWithNumberColor";
 import { Transaction } from "../utils/transaction";
 
-// const levelData = [
-//     { level: 1, image: "assets/images/rock.png", value: "X30", getStatus: false, available: true, title1: "WIN 1 FIGHT IN PVE", title2: "30X RESOURCES" },
-//     { level: 2, image: "assets/images/cryptoIcon.png", value: "X15", getStatus: false, available: false, title1: "OPEN CHEST", title2: "15X CSC" },
-//     { level: 3, image: "assets/images/cryptoIcon.png", value: "X20", getStatus: true, available: false, title1: "BUY A TAVERN", title2: "20X CSC" },
-//     { level: 4, image: "assets/images/weapon/3.png", value: "", getStatus: true, available: true, title1: "GET 200 WATER", title2: "RANDOM WEAPON" },
-//     { level: 5, image: "assets/images/claim-box.png", value: "X2", getStatus: false, available: true, title1: "WIN IN 4 ROOMS IN THE FIRST LOCATION", title2: "2X CHESTS" },
-//     { level: 6, image: "assets/images/cryptoIcon.png", value: "X20", getStatus: false, available: true, title1: "WIN 20 BATTLES", title2: "20X CSC" },
-//     { level: 7, image: "images/res_res.png", value: "X65", getStatus: false, available: true, title1: "EARN 1500 TEST CSC", title2: "65X RESOURCES" },
-//     { level: 8, image: "assets/images/claim-box.png", value: "X2", getStatus: false, available: true, title1: "BUY 110 CSC TOKEN", title2: "50X RESOURCES, 50X WATER, 50X CSC" },
-//     { level: 9, image: "assets/images/cryptoIcon.png", value: "X20", getStatus: false, available: true, title1: "OPEN 7 CHESTS", title2: "2X CHESTS" },
-//     { level: 10, image: "assets/images/cryptoIcon.png", value: "X65", getStatus: false, available: true, title1: "EARN 3500 TEST CSC", title2: "20X CSC, 75X RESOURCES" },
-//     { level: 11, image: "assets/images/weapon/6.png", value: "", getStatus: false, available: true, title1: "GET 500 WATER", title2: "RANDOM WEAPON" },
-//     { level: 12, image: "assets/images/cryptoIcon.png", value: "X65", getStatus: false, available: true, title1: "BUY 220 CSC TOKEN", title2: "100X RESOURCES, 100X WATER, 100X CSC" },
-//     { level: 13, image: "assets/images/claim-box.png", value: "X2", getStatus: false, available: true, title1: "GET 5000 TEST CSC", title2: "3X CHESTS, 50X WATER" },
-//     { level: 14, image: "assets/images/characters/avatar/2.png", value: "X20", getStatus: false, available: true, title1: "BUY 1110 CSC TOKEN", title2: "RANDOM CHARACTER" },
-//     { level: 15, image: "assets/images/characters/avatar/4.png", value: "X65", getStatus: false, available: true, title1: "GET 12000 TEST CSC, 5000 WATER, BUY 200+ CSC", title2: "RANDOM CHARACTER" },
-// ]
+const initialLevelData = [
+    { level: 1, image: "assets/images/rock.png", value: "X30", getStatus: false, available: false, title1: "WIN 1 FIGHT IN PVE", title2: "30X RESOURCES" },
+    { level: 2, image: "assets/images/cryptoIcon.png", value: "X15", getStatus: false, available: false, title1: "OPEN CHEST", title2: "15X CSC" },
+    { level: 3, image: "assets/images/cryptoIcon.png", value: "X20", getStatus: false, available: false, title1: "BUY A TAVERN", title2: "20X CSC" },
+    { level: 4, image: "assets/images/weapon/3.png", value: "", getStatus: false, available: false, title1: "GET 200 WATER", title2: "RANDOM WEAPON" },
+    { level: 5, image: "assets/images/claim-box.png", value: "X2", getStatus: false, available: false, title1: "WIN IN 4 ROOMS IN THE FIRST LOCATION", title2: "2X CHESTS" },
+    { level: 6, image: "assets/images/cryptoIcon.png", value: "X20", getStatus: false, available: false, title1: "WIN 20 BATTLES", title2: "20X CSC" },
+    { level: 7, image: "images/res_res.png", value: "X65", getStatus: false, available: false, title1: "EARN 1500 TEST CSC", title2: "65X RESOURCES" },
+    { level: 8, image: "assets/images/cryptoIcon.png", value: "X50", getStatus: false, available: false, title1: "BUY 110 CSC TOKEN", title2: "50X RESOURCES, 50X WATER, 50X CSC" },
+    { level: 9, image: "assets/images/claim-box.png", value: "X2", getStatus: false, available: false, title1: "OPEN 7 CHESTS", title2: "2X CHESTS" },
+    { level: 10, image: "assets/images/cryptoIcon.png", value: "X20", getStatus: false, available: false, title1: "EARN 3500 TEST CSC", title2: "20X CSC, 75X RESOURCES" },
+    { level: 11, image: "assets/images/weapon/6.png", value: "", getStatus: false, available: false, title1: "GET 500 WATER", title2: "RANDOM WEAPON" },
+    { level: 12, image: "assets/images/cryptoIcon.png", value: "X100", getStatus: false, available: false, title1: "BUY 220 CSC TOKEN", title2: "100X RESOURCES, 100X WATER, 100X CSC" },
+    { level: 13, image: "assets/images/claim-box.png", value: "X3, X50", getStatus: false, available: false, title1: "GET 5000 TEST CSC", title2: "3X CHESTS, 50X WATER" },
+    { level: 14, image: "assets/images/characters/avatar/2.png", value: "X1", getStatus: false, available: false, title1: "BUY 1110 CSC TOKEN", title2: "RANDOM CHARACTER" },
+    { level: 15, image: "assets/images/characters/avatar/4.png", value: "X1", getStatus: false, available: false, title1: "GET 12000 TEST CSC, 5000 WATER, BUY 200+ CSC", title2: "RANDOM CHARACTER" },
+]
 
 export const BattlePass = (props) => {
     const { address, connect } = useWeb3Context()
@@ -38,6 +38,14 @@ export const BattlePass = (props) => {
     const [usdtVal, setUsdtVal] = useState(12);
     const [available, setAvailable] = useState(false);
 
+    useEffect(() => {
+        if (address === undefined || address === null || address === "") {
+            setLevelData(initialLevelData);
+            setPresentData(initialLevelData[0]);
+            setRewardList(initialLevelData.slice(0, 5))
+            getRandomValue();
+        }
+    }, [])
     useEffect(() => {
         // if (address === undefined || address === null || address === "") {
         //     return navigate("/", { replace: true });
@@ -55,35 +63,46 @@ export const BattlePass = (props) => {
                 setLevelData(currentArray);
                 setPresentData(currentArray[0]);
                 setRewardList(currentArray.slice(0, 5))
-
-                let rand1 = Math.floor((Math.random() * 10) + 1);
-                if (rand1 === 10) rand1 = 4
-                let rand2 = Math.floor((Math.random() * 10) + 1);
-                if (rand1 === rand2) rand2 = rand2 + 3
-                if (rand2 >= 10) rand2 = 7
-                let rand = Math.floor(Math.random() * 100);
-                let rand3, rand4;
-                if (rand <= 33) { rand3 = 2; rand4 = 4 }
-                if (rand >= 33 && rand < 67) { rand3 = 2; rand4 = 3 }
-                if (rand >= 67) { rand3 = 3; rand4 = 4 }
-                setRandomVal([rand1, rand2, rand3, rand4]);
+                getRandomValue();
             })
         }
         const video = document.getElementById('backgroundVideo')
         video.style.display = "none"
     }, [address])
-
+    const getRandomValue = () => {
+        let rand1 = Math.floor((Math.random() * 10) + 1);
+        if (rand1 === 10) rand1 = 4
+        let rand2 = Math.floor((Math.random() * 10) + 1);
+        if (rand1 === rand2) rand2 = rand2 + 3
+        if (rand2 >= 10) rand2 = 7
+        let rand = Math.floor(Math.random() * 100);
+        let rand3, rand4;
+        if (rand <= 33) { rand3 = 2; rand4 = 4 }
+        if (rand >= 33 && rand < 67) { rand3 = 2; rand4 = 3 }
+        if (rand >= 67) { rand3 = 3; rand4 = 4 }
+        setRandomVal([rand1, rand2, rand3, rand4]);
+    }
     const onMain = () => {
         navigate("/", { replace: true });
     }
 
     const onPrevious = () => {
         if (index.first <= 0) return;
+        if (address === undefined || address === null || address === "") {
+            setIndex({ first: index.first - 1, last: index.last - 1 })
+            setRewardList(initialLevelData.slice(index.first - 1, index.last - 1))
+            return
+        }
         setIndex({ first: index.first - 1, last: index.last - 1 })
         setRewardList(levelData.slice(index.first - 1, index.last - 1))
     }
     const onNext = () => {
         if (index.last >= 15) return;
+        if (address === undefined || address === null || address === "") {
+            setIndex({ first: index.first + 1, last: index.last + 1 })
+            setRewardList(initialLevelData.slice(index.first + 1, index.last + 1))
+            return
+        }
         setIndex({ first: index.first + 1, last: index.last + 1 })
         setRewardList(levelData.slice(index.first + 1, index.last + 1))
     }
@@ -127,6 +146,23 @@ export const BattlePass = (props) => {
                     <img src='assets/images/come-back.png' draggable="false" className='absolute top-0 right-[-1rem] cursor-pointer w-[5.5rem] z-10' onClick={() => onMain()} />
                     <div className="h-[60%] p-8 pb-1 md:h-[50%] flex flex-col justify-center items-center md:flex-row md:justify-normal md:items-start">
                         <div className="w-[50%] pl-8 mt-16 md:my-0 flex flex-col justify-between h-full">
+                            {/* {!available && */}
+                            <div className="flex flex-col justify-center items-start">
+                                <div className="text-[30px]">SECTION 0</div>
+                                <div className="flex">
+                                    <img src="assets/images/usdt.png" className="w-[20px]" alt="" draggable="false" />
+                                    <span className="mx-[5px]">{usdtVal}</span>
+                                    <span className="text-[#00ce2d]">USDT</span>
+                                </div>
+                                <div
+                                    className={`${available === false ? styles.playBtn : null} bg-no-repeat h-[35px] w-[250px] flex justify-center items-center cursor-pointer`}
+                                    style={{ backgroundImage: "url(/assets/images/buy-btn.png)", backgroundSize: "100% 100%" }}
+                                    onClick={available === false ? onBuy : null}
+                                >
+                                    {available === false ? "BUY BATTLE PASS" : "BOUGHT"}
+                                </div>
+                            </div>
+                            {/* } */}
                             <div className="text-start">
                                 <div className="flex items-center">
                                     <div className="me-4">
@@ -142,27 +178,11 @@ export const BattlePass = (props) => {
                                     <div className="tracking-[-1px] text-[15px] font-[600]">ALL REWARDS RECEIVED REMAIN WITH YOU FOREVER.<br />ITEMS FROM BATTLE PASS WILL NOT BE REMOVED AT RELEASE</div>
                                 </div>
                             </div>
-                            {!available &&
-                                <div className="flex flex-col justify-center items-center">
-                                    <div
-                                        className={`${styles.playBtn} bg-no-repeat h-[35px] w-[170px] flex justify-center items-center cursor-pointer`}
-                                        style={{ backgroundImage: "url(/assets/images/big-button.png)", backgroundSize: "100% 100%" }}
-                                        onClick={onBuy}
-                                    >
-                                        BUY
-                                    </div>
-                                    <div className="flex">
-                                        <img src="assets/images/usdt.png" className="w-[20px]" alt="" draggable="false" />
-                                        <span className="mx-[5px]">{usdtVal}</span>
-                                        <span className="text-[#00ce2d]">USDT</span>
-                                    </div>
-                                </div>
-                            }
                         </div>
                         <div className="w-[50%] pe-8 my-4 md:my-0">
                             <div className="h-[95%] md:h-full w-full max-w-[700px] min-h-[265px] rounded-[1.5rem] flex" style={{ backgroundColor: "rgba(228, 226, 226, 0.5", boxShadow: "0 0 8px #8A8A8A" }}>
                                 <div style={{ boxShadow: "0 0 10px 7px #FFA723" }} className={`w-1/2 ${presentData.level === 14 || presentData.level === 15 ? "bg-gradient-to-b from-[#231631] to-[#a67c00]" : "bg-gradient-to-b from-[#56c256] from-10% via-[#3d97a3] via-30% to-[#922866] to-90%"} rounded-[1.5rem] opacity-100`}>
-                                    <div className={`w-full h-full flex flex-col justify-center items-center rounded-[1.5rem] ${presentData.value === "" ? "p-o" : "p-3"}`} style={{ backgroundImage: "radial-gradient(transparent, #0E1B27)" }}>
+                                    <div className={`relative w-full h-full flex flex-col justify-center items-center rounded-[1.5rem] ${presentData.value === "" ? "p-o" : "p-3"}`} style={{ backgroundImage: "radial-gradient(transparent, #0E1B27)" }}>
                                         {presentData.value === "" ?
                                             <img src={presentData.getStatus === true ? presentData.image : `assets/images/weapon/${presentData.level === 4 ? randomVal[0] : randomVal[1]}.png`} draggable="false" className="rounded-xl border-1 border-black w-full h-full" style={{ boxShadow: "0 0 5px #FFA723" }} alt="" />
                                             :
@@ -178,9 +198,9 @@ export const BattlePass = (props) => {
                                         }
                                         {presentData && presentData.level !== "" ?
                                             (presentData.getStatus === false && presentData.available === true ?
-                                                <img src="assets/images/claim-btn.png" className={`w-[95px] cursor-pointer ${presentData.value === "" ? "absolute" : ""}`} alt="" draggable="false" onClick={() => onClaim(presentData)} />
+                                                <img src="assets/images/claim-btn.png" className={`w-[95px] cursor-pointer ${presentData.value === "" ? "absolute bottom-10" : ""}`} alt="" draggable="false" onClick={() => onClaim(presentData)} />
                                                 :
-                                                <img src="assets/images/inclaim-btn.png" className={`w-[95px] cursor-pointer ${presentData.value === "" ? "absolute" : ""}`} alt="" draggable="false" />) : null
+                                                <img src="assets/images/inclaim-btn.png" className={`w-[95px] cursor-pointer ${presentData.value === "" ? "absolute bottom-10" : ""}`} alt="" draggable="false" />) : null
                                         }
                                     </div>
                                 </div>
