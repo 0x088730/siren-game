@@ -76,9 +76,12 @@ const CharacterInfoModal = ({ openCharacterInfo, setOpenCharacterInfo }: Props) 
             setUserData({ ...userData, energy: res.energy, resource: res.resource })
         })
     }
-
+    let embedStatus = false;
+    let modifyStatus = false;
     const gemListChange = (type: any, from: any) => {
         if (from === "embed") {
+            if (embedStatus === true) return;
+            embedStatus = true;
             itemRevive(global.walletAddress, global.currentCharacterName, type.replace("-", "_"), (res: any) => {
                 let embed = [];
                 for (let i = 0; i < res.embed.length; i++) {
@@ -93,9 +96,12 @@ const CharacterInfoModal = ({ openCharacterInfo, setOpenCharacterInfo }: Props) 
                     gem.push({ item: res.purchase[i].item.replace('_', '-'), stock: res.purchase[i].stock })
                 }
                 setGemList(gem);
+                embedStatus = false;
             })
         }
         if (from === "list") {
+            if (modifyStatus === true) return;
+            modifyStatus = true;
             itemModify(global.walletAddress, global.currentCharacterName, type.replace("-", "_"), -1, global.room.chapter, global.room.section, global.chapter, global.section, "win", (res: any) => {
                 let embed = [];
                 for (let i = 0; i < res.embed.length; i++) {
@@ -110,6 +116,7 @@ const CharacterInfoModal = ({ openCharacterInfo, setOpenCharacterInfo }: Props) 
                     gem.push({ item: res.purchase[i].item.replace('_', '-'), stock: res.purchase[i].stock })
                 }
                 setGemList(gem);
+                modifyStatus = false;
             })
         }
     }
