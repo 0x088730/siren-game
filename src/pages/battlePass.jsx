@@ -148,7 +148,7 @@ export const BattlePass = (props) => {
                         <div className="w-[50%] pl-8 mt-16 md:my-0 flex flex-col justify-between h-full">
                             {/* {!available && */}
                             <div className="flex flex-col justify-center items-start">
-                                <div className="text-[30px]">SECTION 0</div>
+                                <div className="text-[30px]">SEASON 0</div>
                                 <div className="flex">
                                     <img src="assets/images/usdt.png" className="w-[20px]" alt="" draggable="false" />
                                     <span className="mx-[5px]">{usdtVal}</span>
