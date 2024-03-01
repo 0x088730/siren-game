@@ -32,6 +32,11 @@
     filter: drop-shadow(1px 1px 0.75rem white) drop-shadow(-1px -1px 0.75rem white);
 }
 
+.icons {
+    -webkit-filter: drop-shadow(1px 1px 0.25rem rgb(255, 19, 149)) drop-shadow(-1px -1px 0.25rem rgb(255, 19, 149));
+    filter: drop-shadow(1px 1px 0.25rem rgb(255, 19, 149)) drop-shadow(-1px -1px 0.25rem rgb(255, 19, 149));
+}
+
 @media screen and (max-height: 900px) {
     .image_top_pos {
         padding-top: 445px;
