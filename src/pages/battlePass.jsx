@@ -182,7 +182,11 @@ export const BattlePass = (props) => {
                             </div>
                             <div className="flex items-center mt-4">
                                 <div className="me-3 text-[#ffff19] text-5xl text-bold">!</div>
-                                <div className="tracking-[-1px] text-[15px] font-[600]">ALL REWARDS RECEIVED REMAIN WITH YOU FOREVER.<br />ITEMS FROM BATTLE PASS WILL NOT BE REMOVED AT RELEASE</div>
+                                <div className="tracking-[-1px] text-[15px] font-[600]">
+                                    ALL REWARDS RECEIVED REMAIN WITH YOU FOREVER.<br />
+                                    ITEMS FROM BATTLE PASS WILL NOT BE REMOVED AT RELEASE.<br />
+                                    <span className="text-[#ff0000]">YOU WILL RECEIVE REWARDS FROM BP AT THE BETA VERSION START.</span>
+                                </div>
                             </div>
                         </div>
                         <div className={`${styles.present} w-[45%] h-full p-4 pe-0`}>
