@@ -22,6 +22,10 @@
     background-image: url("../../../public/assets/images/num_btn.png") !important;
     background-size: cover;
 }
+.numBtnIn {
+    background-image: url("../../../public/assets/images/num_btn_inclaim.png") !important;
+    background-size: cover;
+}
 
 .active {
     -webkit-filter: drop-shadow(1px 1px 0.75rem white) drop-shadow(-1px -1px 0.75rem white);
@@ -79,6 +83,43 @@
     background-image: url("../../images/roomBtn.png") !important;
     background-size: 100% 100%;
     background-repeat: no-repeat;
+}
+
+.present {
+    background-image: url("../../../public/assets/images/present_bg.png") !important;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+}
+
+.rewardBg1 {
+    background-image: url("../../../public/assets/images/reward_bg_1.png") !important;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+}
+
+.rewardBg2 {
+    background-image: url("../../../public/assets/images/reward_bg_2.png") !important;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+}
+
+.rewardBg3 {
+    background-image: url("../../../public/assets/images/reward_bg_3.png") !important;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+}
+
+.usdtBg {
+    background-image: url("../../../public/assets/images/usdt_bg.png") !important;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+}
+
+.shine {
+    background-image: url("../../../public/assets/images/claimed.png") !important;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    translate: 0 -0.5rem;
 }
 
 .playBtn {

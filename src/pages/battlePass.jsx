@@ -29,7 +29,7 @@ export const BattlePass = (props) => {
     const { address, connect } = useWeb3Context()
     const navigate = useNavigate();
     const [rewardList, setRewardList] = useState([]);
-    const [index, setIndex] = useState({ first: 0, last: 5 });
+    const [index, setIndex] = useState({ first: 0, last: 6 });
     const [presentData, setPresentData] = useState({
         level: ""
     });
@@ -37,12 +37,13 @@ export const BattlePass = (props) => {
     const [randomVal, setRandomVal] = useState([0, 0, 0, 0]);
     const [usdtVal, setUsdtVal] = useState(12);
     const [available, setAvailable] = useState(false);
+    const [percent, setPercent] = useState(0);
 
     useEffect(() => {
         if (address === undefined || address === null || address === "") {
             setLevelData(initialLevelData);
             setPresentData(initialLevelData[0]);
-            setRewardList(initialLevelData.slice(0, 5))
+            setRewardList(initialLevelData.slice(0, 6))
             getRandomValue();
         }
     }, [])
@@ -62,13 +63,18 @@ export const BattlePass = (props) => {
                 };
                 setLevelData(currentArray);
                 setPresentData(currentArray[0]);
-                setRewardList(currentArray.slice(0, 5))
+                setRewardList(currentArray.slice(0, 6))
                 getRandomValue();
             })
         }
         const video = document.getElementById('backgroundVideo')
         video.style.display = "none"
     }, [address])
+
+    useEffect(() => {
+
+    }, [rewardList])
+
     const getRandomValue = () => {
         let rand1 = Math.floor((Math.random() * 10) + 1);
         if (rand1 === 10) rand1 = 4
@@ -108,6 +114,11 @@ export const BattlePass = (props) => {
     }
 
     const onClaim = (presentData) => {
+        console.log(presentData)
+        if (presentData.level !== 1 && levelData[presentData.level - 2].getStatus === false) {
+            alert("");
+            return;
+        }
         claimReward(address, presentData, randomVal).then(res => {
             if (res.data === false) return alert(res.message);
             setPresentData(res.data.reward);
@@ -140,121 +151,144 @@ export const BattlePass = (props) => {
     return (
         <>
             {!address && <div className="absolute w-full"><HeaderComponent onModalShow={props.onModalShow} /></div>}
-            <div className="battlePass w-full h-full min-w-[1600px] min-h-[900px] overflow-auto p-10 text-white font-semibold flex justify-center items-center">
-                <div className="battlePassCenter relative w-[95%] md:w-[80%] h-[90%] min-w-[884px] min-h-[497px] p-20">
-                    <img src="assets/images/book.png" className=" absolute -top-[3rem] -left-[4.5rem] rotate-[-15deg] w-[15%]" alt="" draggable="false" />
+            <div className="battlePass w-full h-full min-w-[1600px] min-h-[900px] overflow-auto text-white font-semibold flex justify-center items-center">
+                {/* <div className="battlePassCenter relative w-[95%] md:w-[80%] h-[90%] min-w-[884px] min-h-[497px] p-20"> */}
+                <div className="battlePassCenter relative w-[1200px] h-[700px] px-[3.1rem] py-[3.7rem]">
+                    <img src="assets/images/book.png" className="absolute -top-[3.5rem] translate-x-[250%] w-[15%]" alt="" draggable="false" />
                     <img src='assets/images/come-back.png' draggable="false" className='absolute top-0 right-[-1rem] cursor-pointer w-[5.5rem] z-10' onClick={() => onMain()} />
-                    <div className="h-[60%] p-8 pb-1 md:h-[50%] flex flex-col justify-center items-center md:flex-row md:justify-normal md:items-start">
-                        <div className="w-[50%] pl-8 mt-16 md:my-0 flex flex-col justify-between h-full">
-                            {/* {!available && */}
-                            <div className="flex flex-col justify-center items-start">
-                                <div className="text-[30px]">SEASON 0</div>
-                                <div className="flex">
-                                    <img src="assets/images/usdt.png" className="w-[20px]" alt="" draggable="false" />
-                                    <span className="mx-[5px]">{usdtVal}</span>
-                                    <span className="text-[#00ce2d]">USDT</span>
+                    <div className="h-[45%] flex justify-center items-center pt-6 pl-12">
+                        <div className="w-[55%] flex flex-col justify-around h-full">
+                            <div className="text-[30px] italic">SEASON 0</div>
+                            <div className="flex items-center">
+                                <div className="me-4">
+                                    <img src="assets/images/yellow_clock.png" className="w-[40px] h-full" alt="" draggable="false" />
                                 </div>
-                                <div
-                                    className={`${available === false ? styles.playBtn : null} bg-no-repeat h-[35px] w-[250px] flex justify-center items-center cursor-pointer`}
-                                    style={{ backgroundImage: "url(/assets/images/buy-btn.png)", backgroundSize: "100% 100%" }}
-                                    onClick={available === false ? onBuy : null}
-                                >
-                                    {available === false ? "BUY BATTLE PASS" : "BOUGHT"}
+                                <div className="text-start">
+                                    <div className="text-md font-[500] text-gray-300">ENDS IN</div>
+                                    <div className="text-2xl text-[#ffff19]">50 DAYS</div>
                                 </div>
                             </div>
-                            {/* } */}
-                            <div className="text-start">
-                                <div className="flex items-center">
-                                    <div className="me-4">
-                                        <img src="assets/images/yellow_clock.png" className="w-[40px] h-full" alt="" draggable="false" />
-                                    </div>
-                                    <div className="text-start">
-                                        <div className="text-md font-[500] text-gray-300">ENDS IN</div>
-                                        <div className="text-3xl">50 DAYS</div>
-                                    </div>
-                                </div>
-                                <div className="flex items-center mt-4">
-                                    <div className="me-3 text-[#ffff19] text-5xl text-bold">!</div>
-                                    <div className="tracking-[-1px] text-[15px] font-[600]">ALL REWARDS RECEIVED REMAIN WITH YOU FOREVER.<br />ITEMS FROM BATTLE PASS WILL NOT BE REMOVED AT RELEASE</div>
-                                </div>
+                            <div className="flex items-center mt-4">
+                                <div className="me-3 text-[#ffff19] text-5xl text-bold">!</div>
+                                <div className="tracking-[-1px] text-[15px] font-[600]">ALL REWARDS RECEIVED REMAIN WITH YOU FOREVER.<br />ITEMS FROM BATTLE PASS WILL NOT BE REMOVED AT RELEASE</div>
                             </div>
                         </div>
-                        <div className="w-[50%] pe-8 my-4 md:my-0">
-                            <div className="h-[95%] md:h-full w-full max-w-[700px] min-h-[265px] rounded-[1.5rem] flex" style={{ backgroundColor: "rgba(228, 226, 226, 0.5", boxShadow: "0 0 8px #8A8A8A" }}>
-                                <div style={{ boxShadow: "0 0 10px 7px #FFA723" }} className={`w-1/2 ${presentData.level === 14 || presentData.level === 15 ? "bg-gradient-to-b from-[#231631] to-[#a67c00]" : "bg-gradient-to-b from-[#56c256] from-10% via-[#3d97a3] via-30% to-[#922866] to-90%"} rounded-[1.5rem] opacity-100`}>
-                                    <div className={`relative w-full h-full flex flex-col justify-center items-center rounded-[1.5rem] ${presentData.value === "" ? "p-o" : "p-3"}`} style={{ backgroundImage: "radial-gradient(transparent, #0E1B27)" }}>
-                                        {presentData.value === "" ?
-                                            <img src={presentData.getStatus === true ? presentData.image : `assets/images/weapon/${presentData.level === 4 ? randomVal[0] : randomVal[1]}.png`} draggable="false" className="rounded-xl border-1 border-black w-full h-full" style={{ boxShadow: "0 0 5px #FFA723" }} alt="" />
-                                            :
-                                            <>
-                                                {
-                                                    presentData.level === 14 || presentData.level === 15 ?
-                                                        <img src={presentData.getStatus === true ? presentData.image : `assets/images/characters/avatar/${presentData.level === 14 ? randomVal[2] : randomVal[3]}.png`} className="w-[150px]" alt="" draggable="false" />
+                        <div className={`${styles.present} w-[45%] h-full p-4 pe-0`}>
+                            <div className={`h-full w-full flex`}>
+                                <div className={`w-[40%]`}>
+                                    <div className={`relative w-full h-full flex flex-col justify-center items-center`}>
+                                        <div className="w-36 h-40 p-2">
+                                            <div
+                                                className={
+                                                    `${(presentData.level === 14 || presentData.level === 15) ?
+                                                        styles.rewardBg2
                                                         :
-                                                        <img src={presentData.image} className="w-[150px]" alt="" draggable="false" />
+                                                        (presentData.level === 5 || presentData.level === 9 || presentData.level === 13) ?
+                                                            styles.rewardBg3
+                                                            :
+                                                            (presentData.level === 4 || presentData.level === 11) ?
+                                                                "" : styles.rewardBg1
+                                                    } 
+                                                 w-full h-full flex flex-col justify-center items-center ${(presentData.level === 4 || presentData.level === 11) ? "p-0" : "p-4"}`
                                                 }
-                                                <div className="tracking-[-1px] my-3">{presentData.value}</div>
-                                            </>
-                                        }
+                                            >
+                                                {presentData.value === "" ?
+                                                    <img src={presentData.getStatus === true ? presentData.image : `assets/images/weapon/${presentData.level === 4 ? randomVal[0] : randomVal[1]}.png`} draggable="false" className="rounded-xl border-1 border-black w-full h-full" style={{ boxShadow: "0 0 5px #FFA723" }} alt="" />
+                                                    :
+                                                    <>
+                                                        {
+                                                            presentData.level === 14 || presentData.level === 15 ?
+                                                                <img src={presentData.getStatus === true ? presentData.image : `assets/images/characters/avatar/${presentData.level === 14 ? randomVal[2] : randomVal[3]}.png`} className="w-24" alt="" draggable="false" />
+                                                                :
+                                                                <img src={presentData.image} className="w-24" alt="" draggable="false" />
+                                                        }
+                                                        <div className="tracking-[-1px] my-1">{presentData.value}</div>
+                                                    </>
+                                                }
+                                            </div>
+                                        </div>
                                         {presentData && presentData.level !== "" ?
                                             (presentData.getStatus === false && presentData.available === true ?
-                                                <img src="assets/images/claim-btn.png" className={`w-[95px] cursor-pointer ${presentData.value === "" ? "absolute bottom-10" : ""}`} alt="" draggable="false" onClick={() => onClaim(presentData)} />
+                                                <img src="assets/images/claim-btn.png" className={`w-20 my-1 cursor-pointer`} alt="" draggable="false" onClick={() => onClaim(presentData)} />
                                                 :
-                                                <img src="assets/images/inclaim-btn.png" className={`w-[95px] cursor-pointer ${presentData.value === "" ? "absolute bottom-10" : ""}`} alt="" draggable="false" />) : null
+                                                <img src="assets/images/inclaim-btn.png" className={`w-20 my-1 cursor-pointer`} alt="" draggable="false" />) : null
                                         }
                                     </div>
                                 </div>
-                                <div className="w-1/2 flex flex-col justify-center items-center">
-                                    <div className="text-[20px] tracking-[2px] text-center" style={{ textShadow: "2px 2px 5px black" }}>QUEST</div>
-                                    <div className="tracking-[-1px] my-3 text-center py-1 px-3">{presentData && presentData.level !== "" ? <TextWithNumberColor text={presentData.title1} /> : null}</div>
-                                    <div className="text-[20px] tracking-[2px] text-center" style={{ textShadow: "2px 2px 5px black" }}>REWARD</div>
-                                    <div className="tracking-[-1px] my-3 text-center py-1 px-3">{presentData && presentData.level !== "" ? <TextWithNumberColor text={presentData.title2} /> : null}</div>
+                                <div className="w-[60%] flex flex-col justify-center items-start">
+                                    <div className="text-[20px] tracking-[2px] text-start pe-2" style={{ textShadow: "2px 2px 5px black" }}>QUEST</div>
+                                    <div className="tracking-[-1px] my-3 text-start py-1 pe-2">{presentData && presentData.level !== "" ? <TextWithNumberColor text={presentData.title1} /> : null}</div>
+                                    <div className="text-[20px] tracking-[2px] text-start pe-2" style={{ textShadow: "2px 2px 5px black" }}>REWARD</div>
+                                    <div className="tracking-[-1px] my-3 text-start py-1 pe-2">{presentData && presentData.level !== "" ? <TextWithNumberColor text={presentData.title2} /> : null}</div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div className="h-[40%] md:h-[50%] flex justify-center items-center relative mt-4 md:mt-0">
-                        <div className="w-[15%] flex justify-center items-center cursor-pointer}" onClick={onPrevious}>
+                    <div className="h-[50%] flex justify-center items-center relative">
+                        <div className="w-[10%] flex justify-center items-center cursor-pointer}" onClick={onPrevious}>
                             <img src="assets/images/left_arrow.png" className={`${styles.arrow} w-[70px]`} alt="" draggable="false" />
                         </div>
-                        <div className="w-[70%] flex justify-between">
+                        <div className="w-[80%] flex justify-between">
                             {rewardList.map((item, index) => (
-                                item.value === "" ?
-                                    <div
-                                        key={index}
-                                        className={`w-[130px] h-[150px] rounded-2xl flex flex-col justify-center items-center border-2 border-black cursor-pointer`}
-                                        style={{ boxShadow: "0 0 10px 7px #FFA723" }}
-                                        onClick={() => setPresentData(item)}
-                                    >
-                                        <img src={item.getStatus === true ? item.image : `assets/images/weapon/${item.level === 4 ? randomVal[0] : randomVal[1]}.png`} className={item.available === true ? `w-full h-full rounded-2xl` : `brightness-75 w-full h-full rounded-2xl`} alt="" draggable="false" />
-                                        <div className={`${styles.numBtn} absolute top-[85%] z-10 w-[40px] h-[40px] flex justify-center items-center`}>{item.level}</div>
-                                        {item.getStatus === true ? <div className="absolute text-[20px]">CLAIMED</div> : null}
-                                    </div>
-                                    :
-                                    <div
-                                        key={index}
-                                        className={`${item.level === 14 || item.level === 15 ? "bg-gradient-to-b from-[#231631] to-[#a67c00]" : "bg-gradient-to-b from-[#56c256] from-10% via-[#3d97a3] via-30% to-[#922866] to-90%"} w-[130px] h-[150px] rounded-2xl border-2 border-black cursor-pointer`}
-                                        style={{ boxShadow: "0 0 10px 7px #FFA723" }}
-                                        onClick={() => setPresentData(item)}
-                                    >
-                                        <div className="w-full h-full flex flex-col justify-center items-center rounded-[10px]" style={{ backgroundImage: "radial-gradient(transparent, #0E1B27)" }}>
-                                            {
-                                                item.level === 14 || item.level === 15 ?
-                                                    <img src={item.getStatus === true ? item.image : `assets/images/characters/avatar/${item.level === 14 ? randomVal[2] : randomVal[3]}.png`} className={item.available === true ? `w-[100px]` : `brightness-75 w-[100px]`} alt="" draggable="false" />
-                                                    :
-                                                    <img src={item.image} className={item.available === true ? `w-[100px]` : `brightness-75 w-[100px]`} alt="" draggable="false" />
-                                            }
-                                            <div className="mt-2">{item.value}</div>
-                                            <div className={`${styles.numBtn} absolute top-[85%] z-10 w-[40px] h-[40px] flex justify-center items-center`}>{item.level}</div>
-                                            {item.getStatus === true ? <div className="absolute text-[20px]">CLAIMED</div> : null}
+                                <div className="flex flex-col items-center">
+                                    {item.value === "" ?
+                                        <div
+                                            key={index}
+                                            className={`w-36 h-40 p-3 flex flex-col justify-center items-center cursor-pointer ${item.available === true ? styles.shine : null}`}
+                                            onClick={() => setPresentData(item)}
+                                        >
+                                            <img src={item.getStatus === true ? item.image : `assets/images/weapon/${item.level === 4 ? randomVal[0] : randomVal[1]}.png`} className={item.available === true ? `w-full h-full rounded-2xl` : `brightness-75 w-full h-full rounded-2xl`} alt="" draggable="false" />
                                         </div>
-                                    </div>
+                                        :
+                                        <div
+                                            key={index}
+                                            className={`w-36 h-40 p-3 cursor-pointer ${item.available === true ? styles.shine : null}`}
+                                            onClick={() => setPresentData(item)}
+                                        >
+                                            <div className={`${(item.level === 14 || item.level === 15) ?
+                                                styles.rewardBg2
+                                                :
+                                                (item.level === 5 || item.level === 9 || item.level === 13) ?
+                                                    styles.rewardBg3
+                                                    :
+                                                    (item.level === 4 || item.level === 11) ?
+                                                        "" : styles.rewardBg1
+                                                } w-full h-full flex flex-col justify-center items-center rounded-xl p-2`}>
+                                                {
+                                                    item.level === 14 || item.level === 15 ?
+                                                        <img src={item.getStatus === true ? item.image : `assets/images/characters/avatar/${item.level === 14 ? randomVal[2] : randomVal[3]}.png`} className={item.available === true ? `w-24` : `brightness-75 w-24`} alt="" draggable="false" />
+                                                        :
+                                                        <img src={item.image} className={item.available === true ? `w-24` : `brightness-75 w-24`} alt="" draggable="false" />
+                                                }
+                                                <div className="mt-2">{item.value}</div>
+                                            </div>
+                                        </div>
+                                    }
+                                    <div className={`${item.getStatus === true ? styles.numBtn : styles.numBtnIn} absolute top-56 z-10 w-[40px] h-[40px] flex justify-center items-center`}>{item.level}</div>
+                                </div>
                             ))}
                         </div>
-                        <div className="w-[15%] flex justify-center items-center cursor-pointer" onClick={onNext}>
+                        <div className="w-[10%] flex justify-center items-center cursor-pointer" onClick={onNext}>
                             <img src="assets/images/right_arrow.png" className={`${styles.arrow} w-[70px]`} alt="" draggable="false" />
                         </div>
-                        <div className="absolute top-[90%] h-[10px] w-full bg-[#959595] z-0"></div>
+                        <div className="absolute top-60 h-[10px] w-full bg-[#959595] rounded-full z-0"></div>
+                        <div className="absolute top-60 h-[10px] w-full rounded-full z-[1] flex justify-start">
+                            <div className={`h-full bg-[#00ce2d] rounded-full`} style={{ width: `${percent * 9.25 + 2.25}rem` }}></div>
+                        </div>
+                    </div>
+                    <div className="h-[5%] flex items-end justify-center">
+                        <div className={`${styles.usdtBg} w-36 h-8 flex justify-center items-center`}>
+                            <img src="assets/images/usdt.png" className="w-[20px]" alt="" draggable="false" />
+                            <span className="mx-[5px]">{usdtVal}</span>
+                            <span className="text-[#00ce2d]">USDT</span>
+                        </div>
+                    </div>
+                    <div
+                        className={`${available === false ? styles.playBtn : null} absolute translate-x-[170%] bg-no-repeat h-[35px] w-[250px] flex justify-center items-center cursor-pointer`}
+                        style={{ backgroundImage: "url(/assets/images/buy-btn.png)", backgroundSize: "100% 100%" }}
+                        onClick={available === false ? onBuy : null}
+                    >
+                        {available === false ? "BUY BATTLE PASS" : "BOUGHT"}
                     </div>
                 </div>
             </div>
