@@ -169,8 +169,8 @@ const Header = ({ showAccount, setShowAccount, csc, realCSC, eggs, resource }: H
           sx={{ display: 'flex', alignItems: 'center' }}
         >
           <Link to="/" className="button muted-button">
-            <button className='w-[115px] h-10 bg-no-repeat bg-cover'
-              style={{ backgroundImage: 'url(/images/back_btn.png)' }}
+            <button className='w-[115px] h-10 bg-no-repeat'
+              style={{ backgroundImage: 'url(/images/back_btn.png)', backgroundSize: "100% 100%" }}
             >
             </button>
           </Link>
