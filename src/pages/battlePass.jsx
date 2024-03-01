@@ -72,7 +72,19 @@ export const BattlePass = (props) => {
     }, [address])
 
     useEffect(() => {
-
+        if (address !== undefined && address !== null && address !== "") {
+            for (let i = rewardList.length - 1; i >= 0; i--) {
+                if (rewardList[i].getStatus === true) {
+                    if (i === 5 && levelData[rewardList[5].level].getStatus === true) {
+                        setPercent(7);
+                    } else {
+                        setPercent(i + 1);
+                    }
+                    return;
+                }
+            }
+            setPercent(0);
+        }
     }, [rewardList])
 
     const getRandomValue = () => {
@@ -116,7 +128,7 @@ export const BattlePass = (props) => {
     const onClaim = (presentData) => {
         console.log(presentData)
         if (presentData.level !== 1 && levelData[presentData.level - 2].getStatus === false) {
-            alert("");
+            alert("Can't claim reward of the level!");
             return;
         }
         claimReward(address, presentData, randomVal).then(res => {
@@ -238,6 +250,7 @@ export const BattlePass = (props) => {
                                             onClick={() => setPresentData(item)}
                                         >
                                             <img src={item.getStatus === true ? item.image : `assets/images/weapon/${item.level === 4 ? randomVal[0] : randomVal[1]}.png`} className={item.available === true ? `w-full h-full rounded-2xl` : `brightness-75 w-full h-full rounded-2xl`} alt="" draggable="false" />
+                                            {item.getStatus === true ? <div className="absolute text-[20px]">CLAIMED</div> : null}
                                         </div>
                                         :
                                         <div
@@ -261,6 +274,7 @@ export const BattlePass = (props) => {
                                                         <img src={item.image} className={item.available === true ? `w-24` : `brightness-75 w-24`} alt="" draggable="false" />
                                                 }
                                                 <div className="mt-2">{item.value}</div>
+                                                {item.getStatus === true ? <div className="absolute text-[20px]">CLAIMED</div> : null}
                                             </div>
                                         </div>
                                     }
