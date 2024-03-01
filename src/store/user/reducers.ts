@@ -30,7 +30,8 @@ const initialState: LoginState = {
       csc: 0,
       usdt: 0
     },
-    cscTokenAmount: 0
+    cscTokenAmount: 0,
+    claimedCSC: 0,
   },
 }
 
@@ -68,6 +69,7 @@ export function userReducer(
       user.wall = data.wall
       user.tokenAmount = data.tokenAmount
       user.cscTokenAmount = data.cscTokenAmount
+      user.claimedCSC = data.claimedCSC
 
       return { user }
     }
@@ -101,6 +103,7 @@ export function userReducer(
       user.wall = data.wall? data.wall : user.wall
       user.tokenAmount = data.tokenAmount? data.tokenAmount : user.tokenAmount
       user.cscTokenAmount = data.cscTokenAmount? data.cscTokenAmount : user.cscTokenAmount
+      user.claimedCSC = data.claimedCSC? data.claimedCSC : user.claimedCSC
 
       return { user }
     }

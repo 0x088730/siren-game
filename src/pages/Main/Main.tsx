@@ -53,7 +53,7 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
   const [resource, setResource] = useState(userModule.user.resource)
   const [wallLevelState, setWallLevelState] = useState(userModule.user.wall)
   const [csc, setCsc] = useState(userModule.user.cscTokenAmount)
-  const [realCSC, setRealCSC] = useState(userModule.user.tokenAmount.csc);
+  const [realCSC, setRealCSC] = useState(userModule.user.claimedCSC);
 
   // const resource = userModule.user.resource
 
