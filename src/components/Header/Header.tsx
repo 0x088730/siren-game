@@ -110,10 +110,10 @@ const Header = ({ showAccount, setShowAccount, csc, realCSC, eggs, resource }: H
       {!ispremium && (
         <button
           onClick={getPremium}
-          className='bg-cover bg-no-repeat w-[170px] h-[35px] me-[10px] text-[14px] font-bold tracking-[2px]'
-          style={{ background: 'url(/images/but_style1.png)' }}
+          className='bg-cover bg-no-repeat w-[170px] h-10 me-[10px] text-[14px] font-bold tracking-[2px]'
+          style={{ backgroundImage: 'url(/images/premium_btn.png)' }}
         >
-          Premium
+          {/* Premium */}
         </button>
       )}
       {ispremium && (
@@ -123,10 +123,9 @@ const Header = ({ showAccount, setShowAccount, csc, realCSC, eggs, resource }: H
       {show && (
         <button
           onClick={setOpenedAccount}
-          style={{ background: 'url(/images/but_style1.png)', backgroundSize: "100% 100%" }}
-          className={`px-6 py-1 font-semibold text-white shadow-sm w-[170px] h-[35px] bg-no-repeat`}
+          className={`${styles.resource} text-center`}
         >
-          <span className='flex justify-center items-center text-[14px] font-bold'>
+          <span className='flex justify-center items-center text-[14px] font-bold w-full'>
             <span>{shortAddress(address)}</span>
             {/* <AccountIcon address={address} size={18} /> */}
           </span>
@@ -170,10 +169,9 @@ const Header = ({ showAccount, setShowAccount, csc, realCSC, eggs, resource }: H
           sx={{ display: 'flex', alignItems: 'center' }}
         >
           <Link to="/" className="button muted-button">
-            <button className='w-[115px] h-[35px] bg-no-repeat bg-cover'
-              style={{ background: 'url(/images/but_style2.png)' }}
+            <button className='w-[115px] h-10 bg-no-repeat bg-cover'
+              style={{ backgroundImage: 'url(/images/back_btn.png)' }}
             >
-              Back
             </button>
           </Link>
         </Box>

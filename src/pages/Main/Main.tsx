@@ -779,7 +779,7 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
             >
               <img
                 alt=""
-                style={{ position: 'absolute', left: '2%', top: '55%' }}
+                style={{ position: 'absolute', left: '2%', top: '50%' }}
                 src={`/images/greentree1.png`}
               />
             </Box>
