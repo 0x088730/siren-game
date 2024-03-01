@@ -133,7 +133,7 @@ const Header = ({ showAccount, setShowAccount, csc, realCSC, eggs, resource }: H
       )}
       <p className={styles.resource}>
         <img alt="" className='w-[25px] mx-[3px]' src="/images/cryptoIcon.png" />
-        CSC: {csc}
+        TEST CSC: {csc}
       </p>
       <p className={styles.resource}>
         <img alt="" className='w-[25px] mx-[3px]' src="/images/cryptoIcon.png" />

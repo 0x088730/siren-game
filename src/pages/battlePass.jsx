@@ -75,7 +75,7 @@ export const BattlePass = (props) => {
         if (address !== undefined && address !== null && address !== "") {
             for (let i = rewardList.length - 1; i >= 0; i--) {
                 if (rewardList[i].getStatus === true) {
-                    if (i === 5 && levelData[rewardList[5].level].getStatus === true) {
+                    if (rewardList[5].level !== 15 && i === 5 && levelData[rewardList[5].level].getStatus === true) {
                         setPercent(7);
                     } else {
                         setPercent(i + 1);
@@ -185,7 +185,7 @@ export const BattlePass = (props) => {
                                 <div className="tracking-[-1px] text-[0.9rem] font-[600]">
                                     ALL REWARDS RECEIVED REMAIN WITH YOU FOREVER.<br />
                                     ITEMS FROM BATTLE PASS WILL NOT BE REMOVED AT RELEASE.<br />
-                                    <span className="text-[#ff0000]">YOU WILL RECEIVE REWARDS FROM BP AT THE BETA VERSION START.</span>
+                                    <span className="text-[#b30606]" style={{textShadow: "0 0 7px white"}}>YOU WILL RECEIVE REWARDS FROM BP AT THE BETA VERSION START.</span>
                                 </div>
                             </div>
                         </div>
