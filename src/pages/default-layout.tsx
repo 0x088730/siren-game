@@ -20,13 +20,12 @@ export const DefaultLayout: React.FC<AppProps> = (props) => {
       {isLoading === true ?
         <img src="assets/images/loading.gif" style={{ width: "100%", height: "100%" }} />
         :
-        connected === true && address !== "" ?
+        connected === false && address === "" ?
+          <ConnectPage /> :
           <>
             <div>{gameState === 0 && <HeaderComponent onModalShow={props.onModalShow} />}</div>
             <div className="grid h-full">{props.component}</div>
           </>
-          :
-          <ConnectPage />
       }
     </div>
   )

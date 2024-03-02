@@ -14,7 +14,7 @@ const initialLevelData = [
     { level: 4, image: "assets/images/weapon/3.png", value: "", getStatus: false, available: false, title1: "GET 200 WATER", title2: "RANDOM WEAPON" },
     { level: 5, image: "assets/images/claim-box.png", value: "X2", getStatus: false, available: false, title1: "WIN IN 4 ROOMS IN THE FIRST LOCATION", title2: "2X CHESTS" },
     { level: 6, image: "assets/images/cryptoIcon.png", value: "X20", getStatus: false, available: false, title1: "WIN 20 BATTLES", title2: "20X CSC" },
-    { level: 7, image: "images/res_res.png", value: "X65", getStatus: false, available: false, title1: "EARN 1500 TEST CSC", title2: "65X RESOURCES" },
+    { level: 7, image: "assets/images/rock.png", value: "X65", getStatus: false, available: false, title1: "EARN 1500 TEST CSC", title2: "65X RESOURCES" },
     { level: 8, image: "assets/images/cryptoIcon.png", value: "X50", getStatus: false, available: false, title1: "BUY 110 CSC TOKEN", title2: "50X RESOURCES, 50X WATER, 50X CSC" },
     { level: 9, image: "assets/images/claim-box.png", value: "X2", getStatus: false, available: false, title1: "OPEN 7 CHESTS", title2: "2X CHESTS" },
     { level: 10, image: "assets/images/cryptoIcon.png", value: "X20", getStatus: false, available: false, title1: "EARN 3500 TEST CSC", title2: "20X CSC, 75X RESOURCES" },
