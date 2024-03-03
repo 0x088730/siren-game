@@ -85,7 +85,7 @@ const InventoryModal = ({ openInventory, setOpenInventory }: Props) => {
                             {gemList.map((item, index) => (
                                 <div
                                     key={index}
-                                    className={`w-[120px] h-[120px] m-[0.74rem] relative cursor-pointer mx-4 ${item.item === "loot" ? "zoomIn" : ""}`}
+                                    className={`w-[120px] h-[120px] m-[0.74rem] relative cursor-pointer mx-[17px] ${item.item === "loot" ? "zoomIn" : ""}`}
                                     style={{ backgroundImage: `url(assets/item/${item.item === "loot" ? "box-closed" : "item-" + item.item}.png)`, backgroundSize: '100% 100%' }}
                                     onClick={item.item === "loot" ? goClaim : undefined}
                                 >

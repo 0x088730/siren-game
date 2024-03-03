@@ -5,13 +5,13 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { Web3ContextProvider } from './hooks/web3Context'
 import './App.css'
 
-import { DefaultLayout } from './pages/default-layout'
 import phaserGame from './PhaserGame'
 import type Battle from './scenes/battle.scene'
 import type Game from './scenes/game.scene'
 import store from './store'
 import { global } from './common/global'
 import { getProfile } from './common/api'
+const DefaultLayout = React.lazy(() => import('./pages/default-layout').then(module => ({ default: module.DefaultLayout })));
 const BattlePass = React.lazy(() => import('./pages/battlePass').then(module => ({ default: module.BattlePass })));
 const Main = React.lazy(() => import('./pages').then(module => ({ default: module.Main })));
 const GamePage = React.lazy(() => import('./pages').then(module => ({ default: module.GamePage })));
@@ -51,26 +51,28 @@ const App: React.FC = () => {
             <Route
               path="/"
               element={
-                <DefaultLayout
-                  onModalShow={openModal}
-                  component={
-                    <Suspense fallback={<div></div>}>
-                      <GamePage
-                        showAccount={showAccount}
-                        setShowAccount={openModal}
-                        onAttack={onAttack}
-                        onStart={onStart}
-                        onInventory={onInventory}
-                        onCharacter={onCharacter}
-                      />
-                    </Suspense>
-                  }
-                />
+                <Suspense fallback={<img src="assets/images/loading.gif" style={{width: "100%", height: "100%"}} />}>
+                  <DefaultLayout
+                    onModalShow={openModal}
+                    component={
+                      <Suspense fallback={<div></div>}>
+                        <GamePage
+                          showAccount={showAccount}
+                          setShowAccount={openModal}
+                          onAttack={onAttack}
+                          onStart={onStart}
+                          onInventory={onInventory}
+                          onCharacter={onCharacter}
+                        />
+                      </Suspense>
+                    }
+                  />
+                </Suspense>
               }
             />
             <Route path="/battlepass"
               element={
-                <Suspense fallback={<img src="assets/images/loading.gif" className='w-full h-full' />}>
+                <Suspense fallback={<img src="assets/images/loading.gif" style={{width: "100%", height: "100%"}} />}>
                   <BattlePass onModalShow={openModal} />
                 </Suspense>
               }
