@@ -20,15 +20,15 @@ export const ChapterPage = ({
     const [openCharacter, setOpenCharacter] = useState(false);
 
     useEffect(() => {
-        const video = document.getElementById('backgroundVideo') as HTMLElement
-        video.style.display = "none"
+        // const video = document.getElementById('backgroundVideo') as HTMLElement
+        // video.style.display = "none"
     }, [])
     const onMain = () => {
         store.dispatch(setGameStatus(0));
         setPageStatus("main");
         // store.dispatch(openChapterPage(false));
-        const video = document.getElementById('backgroundVideo') as HTMLElement
-        video.style.display = "block"
+        // const video = document.getElementById('backgroundVideo') as HTMLElement
+        // video.style.display = "block"
     }
     return (
         <>

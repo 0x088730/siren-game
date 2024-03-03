@@ -5,7 +5,8 @@ import {
   decrement,
   setCharacterStatus,
   setTurnFormat,
-  setLoadingStatus
+  setLoadingStatus,
+  setDisplay
 } from '../common/state/game/reducer'
 import store from '../store'
 import ClaimWidget from '../widgets/claimWidget'
@@ -28,8 +29,8 @@ export default class Game extends Phaser.Scene {
   }
 
   changeBackground(src: string) {
-    const video = document.getElementById('backgroundVideo') as HTMLElement
-    video.style.display = "none"
+    // const video = document.getElementById('backgroundVideo') as HTMLElement
+    // video.style.display = "none"
     document.body.style.backgroundImage = src
     document.body.style.backgroundSize = "cover"
     const htmlEles = document.getElementById("html") as HTMLElement
@@ -61,10 +62,11 @@ export default class Game extends Phaser.Scene {
         // this.btnContainer.setVisible(true)
         store.dispatch(setInventoryStatus(false))
         this.changeBackground("")
-        const video = document.getElementById('backgroundVideo') as HTMLElement
-        video.style.display = "block"
+        // const video = document.getElementById('backgroundVideo') as HTMLElement
+        // video.style.display = "block"
       })
       .on('loot', () => {
+        store.dispatch(setDisplay("none"));
         this.changeBackground('url(assets/images/claim-bg.jpg)')
         this.inventoryWidget.setVisible(false)
         this.claimWidget.appear()
@@ -75,8 +77,8 @@ export default class Game extends Phaser.Scene {
       .on('closed', () => {
         store.dispatch(setCharacterStatus(false))
         this.changeBackground("")
-        const video = document.getElementById('backgroundVideo') as HTMLElement
-        video.style.display = "block"
+        // const video = document.getElementById('backgroundVideo') as HTMLElement
+        // video.style.display = "block"
       })
 
     this.claimWidget = new ClaimWidget(this, 960, 540).on(
@@ -88,8 +90,8 @@ export default class Game extends Phaser.Scene {
         this.inventoryWidget.setVisible(true)
         this.characterWidget.showStatus(true)
         this.scene.start('game')
-        const video = document.getElementById('backgroundVideo') as HTMLElement
-        video.style.display = "block"
+        // const video = document.getElementById('backgroundVideo') as HTMLElement
+        // video.style.display = "block"
       },
     )
     this.roomWidget = new RoomWidget(this, 880, 530)
@@ -140,8 +142,8 @@ export default class Game extends Phaser.Scene {
     this.roomWidget
       .on('cancel', () => {
         store.dispatch(setGameStatus(0))
-        const video = document.getElementById('backgroundVideo') as HTMLElement
-        video.style.display = "block"
+        // const video = document.getElementById('backgroundVideo') as HTMLElement
+        // video.style.display = "block"
         this.roomWidget.destroy()
       })
       .on('start', (chapter: number, section: number) => {

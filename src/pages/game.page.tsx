@@ -37,8 +37,8 @@ export const GamePage = ({
   const ref = new URLSearchParams(location.search).get('ref')
   global.ref = `${ref?.toString()}`
   useEffect(() => {
-    const video = document.getElementById('backgroundVideo') as HTMLElement
-    video.style.display = "block"
+    // const video = document.getElementById('backgroundVideo') as HTMLElement
+    // video.style.display = "block"
     setTimeout(() => {
       store.dispatch(setLoadingStatus(false));
     }, 2000)

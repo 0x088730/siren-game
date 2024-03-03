@@ -155,8 +155,6 @@ export default class CharacterWidget extends Phaser.GameObjects.Container {
           this.lvTexts = []
           this.rarityTexts = []
           this.emit('closed')
-          const inputElement = document.getElementById("swapAmountInput") as HTMLElement
-          inputElement.style.display = "none"
           const htmlEles = document.getElementById("html") as HTMLElement
           htmlEles.style.overflow = "hidden";
         })),
@@ -256,8 +254,7 @@ export default class CharacterWidget extends Phaser.GameObjects.Container {
         .setDisplaySize(118, 46))
         .setInteractive()
         .on('pointerdown', () => {
-          var inputValue = (<HTMLInputElement>document.getElementById("swapAmountInput")).value;
-          this.swapAmount = parseInt(inputValue, 10)
+          this.swapAmount = parseInt("100", 10)
           if (this.swapAmount === undefined) {
             return
           }
@@ -600,8 +597,6 @@ export default class CharacterWidget extends Phaser.GameObjects.Container {
         this.waterText1.setVisible(false)
         this.waterText2.setVisible(false)
         this.swapBtn.setVisible(false)
-        const inputElement = document.getElementById("swapAmountInput") as HTMLElement
-        inputElement.style.display = "none"
         break
       }
       case 2: {
@@ -641,8 +636,6 @@ export default class CharacterWidget extends Phaser.GameObjects.Container {
         this.waterText1.setVisible(false)
         this.waterText2.setVisible(false)
         this.swapBtn.setVisible(false)
-        const inputElement = document.getElementById("swapAmountInput") as HTMLElement
-        inputElement.style.display = "none"
         break
       }
       case 3: {
@@ -660,8 +653,6 @@ export default class CharacterWidget extends Phaser.GameObjects.Container {
         this.waterText1.setVisible(false)
         this.waterText2.setVisible(false)
         this.swapBtn.setVisible(false)
-        const inputElement = document.getElementById("swapAmountInput") as HTMLElement
-        inputElement.style.display = "none"
         break
       }
       case 4: {
@@ -678,8 +669,6 @@ export default class CharacterWidget extends Phaser.GameObjects.Container {
         this.waterText1.setVisible(false)
         this.waterText2.setVisible(false)
         this.swapBtn.setVisible(false)
-        const inputElement = document.getElementById("swapAmountInput") as HTMLElement
-        inputElement.style.display = "none"
         break
       }
       case 5: {
@@ -694,8 +683,6 @@ export default class CharacterWidget extends Phaser.GameObjects.Container {
         this.waterText2.setVisible(true)
         this.background.setVisible(true)
         this.swapBtn.setVisible(true)
-        const inputElement = document.getElementById("swapAmountInput") as HTMLElement
-        inputElement.style.display = "block"
         break
       }
     }

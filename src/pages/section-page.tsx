@@ -26,8 +26,8 @@ export const SectionPage = ({
         fourth: 0
     })
     useEffect(() => {
-        const video = document.getElementById('backgroundVideo') as HTMLElement
-        video.style.display = "none"
+        // const video = document.getElementById('backgroundVideo') as HTMLElement
+        // video.style.display = "none"
         if (global.walletAddress !== "") {
             getProfile(global.walletAddress, "siren-1");
             setTimer({ second: Math.floor(global.sectionStatus.time_2 / 60000), fourth: Math.floor(global.sectionStatus.time_4 / 60000) })

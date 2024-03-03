@@ -8,6 +8,8 @@ import Game from '../scenes/game.scene'
 import { useEffect, useState } from 'react'
 import { energySwap, getProfile, itemModify, itemRevive } from '../common/api'
 import { useWeb3Context } from '../hooks/web3Context'
+import store from '../store'
+import { setButtonView } from '../common/state/game/reducer'
 
 interface Props {
     openCharacterInfo: boolean
@@ -161,7 +163,10 @@ const CharacterInfoModal = ({ openCharacterInfo, setOpenCharacterInfo }: Props) 
                             cursor: 'pointer',
                             zIndex: 5,
                         }}
-                        onClick={() => setOpenCharacterInfo(false)}
+                        onClick={() => {
+                            setOpenCharacterInfo(false);
+                            store.dispatch(setButtonView(true));
+                        }}
                     />
                     <div className='relative w-[54%] h-full font-semibold text-white' style={{ backgroundImage: "url(assets/images/model-bg.png)", backgroundSize: '100% 100%' }}>
                         <div className='absolute top-[13.3rem] left-36 w-[200px]'>

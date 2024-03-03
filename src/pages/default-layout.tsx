@@ -3,9 +3,10 @@ import { RingLoader } from 'react-spinners';
 
 import './default-layout.css'
 import { HeaderComponent } from '../components'
-import { useState } from 'react';
-import { ConnectPage } from './connectPage';
+import React, { useState, Suspense } from 'react';
+// import { ConnectPage } from './connectPage';
 import { useWeb3Context } from '../hooks/web3Context';
+const ConnectPage = React.lazy(() => import('./connectPage').then(module => ({ default: module.ConnectPage })));
 interface AppProps {
   onModalShow: Function
   component: any
@@ -21,9 +22,12 @@ export const DefaultLayout: React.FC<AppProps> = (props) => {
         <img src="assets/images/loading.gif" style={{ width: "100%", height: "100%" }} />
         :
         connected === false && address === "" ?
-          <ConnectPage /> :
+          <Suspense fallback={<div></div>}>
+            <ConnectPage />
+          </Suspense>
+          :
           <>
-            <div>{gameState === 0 && <HeaderComponent onModalShow={props.onModalShow} />}</div>
+            {gameState === 0 && <HeaderComponent onModalShow={props.onModalShow} />}
             <div className="grid h-full">{props.component}</div>
           </>
       }

@@ -1,5 +1,5 @@
 import { createCharacterAnims } from '../anims/CharacterAnims'
-import { setGameStatus, increment, addExp, setSecondTurn, setThirdTurn, addTurn, setTurnFormat, setAtkBtnState, setGameTurn, getCharacterStatus, setLoadingStatus } from '../common/state/game/reducer'
+import { setGameStatus, increment, addExp, setSecondTurn, setThirdTurn, addTurn, setTurnFormat, setAtkBtnState, setGameTurn, getCharacterStatus, setLoadingStatus, setDisplay } from '../common/state/game/reducer'
 import {
   SIREN_SPINE, SIREN_ATTACK1, SIREN_ATTACK2, SIREN_ATTACK3, SIREN_DAMAGE, SIREN_DEAD,
   ENEMY_SPINE, ENEMY_ATTACK1, ENEMY_ATTACK2, ENEMY_ATTACK3, ENEMY_DAMAGE, ENEMY_DEAD,
@@ -16,6 +16,7 @@ import { changeItem, global } from '../common/global'
 import { Console } from 'console'
 import { importToken } from '../hooks/hook'
 import { useDispatch, useSelector } from 'react-redux'
+import { clearInterval } from 'timers'
 
 // import Game from './game.scene'
 
@@ -102,9 +103,8 @@ export default class Battle extends Phaser.Scene {
       delay: 1000,
       callback: () => {
         // store.dispatch(getCharacterStatus(true))
-        store.dispatch(setLoadingStatus(false))
-        const video = document.getElementById('backgroundVideo') as HTMLElement
-        video.style.visibility = "hidden"
+        store.dispatch(setLoadingStatus(false));
+        store.dispatch(setDisplay("none"));
       },
     })
   }
@@ -852,9 +852,7 @@ export default class Battle extends Phaser.Scene {
       store.dispatch(getCharacterStatus(false))
       // getProfile(global.walletAddress, 'siren-1')
       this.scene.start('game')
-      const video = document.getElementById('backgroundVideo') as HTMLElement
-      video.style.display = "block"
-      video.style.visibility = "visible"
+      store.dispatch(setDisplay("block"))
       const htmlEles = document.getElementById("html") as HTMLElement
       htmlEles.style.overflow = "hidden";
       this.registry.destroy()

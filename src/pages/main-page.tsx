@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import React, { useState, useEffect } from 'react'
 import { global } from '../common/global'
 import store from '../store'
-import { openChapterPage, setGameStatus, setLoadingStatus } from '../common/state/game/reducer'
+import { openChapterPage, setButtonView, setGameStatus, setLoadingStatus } from '../common/state/game/reducer'
 import styles from './Main/Main.module.scss'
 import { Box } from '@mui/material'
 import CharacterWidget from '../widgets/characterWidget'
@@ -14,6 +14,7 @@ import { useWeb3Context } from '../hooks/web3Context'
 import { useNavigate } from 'react-router-dom'
 import { GameHeaderComponent } from '../components/game-header.component'
 import CharacterDetailModal from '../widgets/characterDetailModal'
+import InventoryModal from '../widgets/inventoryModal'
 
 interface HeaderProps {
     showAccount: any
@@ -46,9 +47,12 @@ export const MainPage = ({
     const secondTurn = useSelector((state: any) => state.app.game.secondTurn)
     const thirdTurn = useSelector((state: any) => state.app.game.thirdTurn)
     const getCharacter = useSelector((state: any) => state.app.game.getCharacter)
+    const display = useSelector((state: any) => state.app.game.display);
+    const buttonView = useSelector((state: any) => state.app.game.buttonView);
 
     const [openCharacter, setOpenCharacter] = useState(false);
     const [openCharacterInfo, setOpenCharacterInfo] = useState(false);
+    const [openInventory, setOpenInventory] = useState(false);
 
     const { connected, chainID, address, connect } = useWeb3Context()
 
@@ -72,13 +76,16 @@ export const MainPage = ({
         if (global.wall === 0) {
             return
         }
-        onInventory()
+        // onInventory()
+        store.dispatch(setButtonView(false));
+        setOpenInventory(true);
     }
     const character = () => {
         if (global.wall === 0) {
             return
         }
         // onCharacter()
+        store.dispatch(setButtonView(false));
         setOpenCharacter(true);
     }
     const onLand = () => {
@@ -109,10 +116,20 @@ export const MainPage = ({
 
     return (
         <>
+            <video
+                id="backgroundVideo"
+                src="assets/background/main.mp4"
+                className="absolute object-cover object-center w-full h-full bgVideo"
+                style={{ display: display }}
+                autoPlay
+                loop
+                muted
+            ></video>
+
             <div className="relative w-full overflow-hidden">
                 {isLoading === true ?
                     <>
-                        <img src="assets/images/loading.gif" style={{ width: "100%", height: "100%" }} />
+                        <img src="assets/images/loading.gif" className='w-full h-full' />
                     </>
                     :
                     <>
@@ -126,7 +143,7 @@ export const MainPage = ({
                                 {gameState === 0 && (
                                     <div className="flex flex-col justify-center flex-1 h-full d-flex">
                                         {!inventoryOpened && !characterOpened && (
-                                            (openCharacter === false && openCharacterInfo === false) ?
+                                            buttonView === true ?
                                                 <div>
                                                     <div className="btn-group">
                                                         <div className="btn-wrapper">
@@ -167,6 +184,10 @@ export const MainPage = ({
                                             openCharacterInfo={openCharacterInfo}
                                             setOpenCharacterInfo={setOpenCharacterInfo}
                                             address={global.walletAddress}
+                                        />
+                                        <InventoryModal
+                                            openInventory={openInventory}
+                                            setOpenInventory={setOpenInventory}
                                         />
                                     </div>
                                 )}

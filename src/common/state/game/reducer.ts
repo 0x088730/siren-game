@@ -59,9 +59,9 @@ export const gameSlice = createSlice({
     },
     addTurn: (state: GameStateProps) => {
       if (state.secondTurn !== 0)
-        state.secondTurn = Math.floor((state.secondTurn+1) % 4)
+        state.secondTurn = Math.floor((state.secondTurn + 1) % 4)
       if (state.thirdTurn !== 0)
-        state.thirdTurn = Math.floor((state.thirdTurn+1) % 5)
+        state.thirdTurn = Math.floor((state.thirdTurn + 1) % 5)
     },
     setThirdTurn: (state: GameStateProps) => {
       state.thirdTurn = 1
@@ -78,6 +78,12 @@ export const gameSlice = createSlice({
     },
     openChapterPage: (state: GameStateProps, action: PayloadAction<boolean>) => {
       state.openChapter = action.payload
+    },
+    setDisplay: (state: GameStateProps, action: PayloadAction<string>) => {
+      state.display = action.payload
+    },
+    setButtonView: (state: GameStateProps, action: PayloadAction<boolean>) => {
+      state.buttonView = action.payload
     }
   },
 })
@@ -98,7 +104,9 @@ export const {
   setThirdTurn,
   setLoadingStatus,
   getCharacterStatus,
-  openChapterPage
+  openChapterPage,
+  setDisplay,
+  setButtonView
 } = gameSlice.actions
 
 export default gameSlice.reducer

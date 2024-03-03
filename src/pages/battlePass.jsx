@@ -67,8 +67,8 @@ export const BattlePass = (props) => {
                 getRandomValue();
             })
         }
-        const video = document.getElementById('backgroundVideo')
-        video.style.display = "none"
+        // const video = document.getElementById('backgroundVideo')
+        // video.style.display = "none"
     }, [address])
 
     useEffect(() => {

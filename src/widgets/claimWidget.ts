@@ -1,6 +1,8 @@
 import { itemModify } from '../common/api'
 import { changeItem, global } from '../common/global'
+import { setButtonView, setDisplay } from '../common/state/game/reducer'
 import GameItem from '../objects/item'
+import store from '../store'
 
 export default class ClaimWidget extends Phaser.GameObjects.Container {
   scene: Phaser.Scene
@@ -82,6 +84,9 @@ export default class ClaimWidget extends Phaser.GameObjects.Container {
             this.setVisible(false)
             this.claimBtn.setVisible(false)
             this.claimLabel.setVisible(false)
+            this.hpPlus.setVisible(false)
+            store.dispatch(setDisplay("block"));
+            store.dispatch(setButtonView(true));
           })
       })
 

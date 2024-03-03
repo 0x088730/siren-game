@@ -9,6 +9,8 @@ import { useEffect, useState } from 'react'
 import { energySwap, getProfile } from '../common/api'
 import { useWeb3Context } from '../hooks/web3Context'
 import CharacterInfoModal from './characterInfoModal'
+import store from '../store'
+import { setButtonView } from '../common/state/game/reducer'
 
 interface Props {
     openCharacter: boolean
@@ -66,7 +68,10 @@ const CharacterDetailModal = ({ openCharacter, setOpenCharacter, openCharacterIn
                             cursor: 'pointer',
                             zIndex: 5,
                         }}
-                        onClick={() => setOpenCharacter(false)}
+                        onClick={() => {
+                            setOpenCharacter(false);
+                            store.dispatch(setButtonView(true));
+                        }}
                     />
                     <Grid container className='w-full h-full'>
                         <Grid item xs={12} sm={12} md={12} style={{ display: "flex", flexWrap: 'wrap', justifyContent: 'space-around', alignItems: 'center' }}>

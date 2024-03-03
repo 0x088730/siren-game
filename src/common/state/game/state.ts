@@ -29,6 +29,8 @@ export interface GameStateProps {
   isLoading: boolean
   getCharacter: boolean
   openChapter: boolean
+  display: string
+  buttonView: boolean
 }
 
 const gameInitialState: GameStateProps = {
@@ -59,7 +61,9 @@ const gameInitialState: GameStateProps = {
   attackBtnState:true,
   isLoading: true,
   getCharacter: false,
-  openChapter: false
+  openChapter: false,
+  display: "block",
+  buttonView: true,
 }
 
 export default gameInitialState

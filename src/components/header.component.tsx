@@ -66,7 +66,7 @@ export const HeaderComponent = ({onModalShow}: HeaderProps) => {
   // dispatch(setAddress(address))
 
   return (
-    <div>
+    <div className='absolute w-full z-10'>
       {!inventoryOpened && !characterOpened && (
         <div className="flex justify-between bg-black/30 p-2 backdrop-blur min-w-[1600px]">
           <div className="flex">

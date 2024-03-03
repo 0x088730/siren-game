@@ -68,8 +68,8 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
       return navigate("/", { replace: true });
     }
 
-    const video = document.getElementById('backgroundVideo') as HTMLElement
-    video.style.display = "none"
+    // const video = document.getElementById('backgroundVideo') as HTMLElement
+    // video.style.display = "none"
     document.body.style.backgroundImage = "url(assets/background/background.jpg)";
 
     setTimeout(() => {
