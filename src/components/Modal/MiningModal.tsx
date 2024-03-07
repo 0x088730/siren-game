@@ -6,30 +6,17 @@ import Modal from '@mui/material/Modal'
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-import {
-  ADMIN_WALLET_ADDRESS,
-  FEE_WALLET_ADDRESS,
-  chainId,
-} from '../../hooks/constants'
-import { deposit, sendToken } from '../../hooks/hook'
 import { useWeb3Context } from '../../hooks/web3Context'
 import {
   buyLevel,
   checkCooldown,
   checkUpgradeAvailable,
   claimSiren,
-  /* checkWithdrawableReqeust,  */ depositRequest,
-  resourceRequest,
   setCooldown,
-  withdrawRequest,
 } from '../../store/user/actions'
-import { onShowAlert } from '../../store/utiles/actions'
 import { checkPremium } from '../../utils/checkPremium'
-// import { Withdraw } from "../../store/user/action-types";
-// import api from '../../utils/callApi';
-import { getBcsPrice, getWithdrewSirenAmount } from '../../utils/user'
+import { getWithdrewSirenAmount } from '../../utils/user'
 import { global } from '../../common/global'
-import { setDefaultResultOrder } from 'dns'
 
 interface Props {
   open: boolean
@@ -58,25 +45,23 @@ const MiningModal = ({
   levelState,
   setLevelState
 }: Props) => {
-
+  const title = [
+    { level: "LEVEL 1:", detail1: "18 CSC PER 24H", detail2: "CLAIM 9 CSC EACH 12H", price: "PRICE: 500 CSC" },
+    { level: "LEVEL 1:", detail1: "18 CSC PER 24H", detail2: "CLAIM 9 CSC EACH 12H", price: "PRICE: 500 CSC" },
+    { level: "LEVEL 2:", detail1: "36 CSC PER 24H", detail2: "CLAIM 18 CSC EACH 12H", price: "PRICE: 950 CSC" },
+    { level: "LEVEL 3:", detail1: "72 CSC PER 24H", detail2: "CLAIM 36 CSC EACH 12H", price: "PRICE: 1850 CSC" },
+  ]
   const { connected, chainID, address, connect } = useWeb3Context()
   const { user } = useSelector((state: any) => state.userModule)
   const dispatch = useDispatch<any>()
 
-  const handleOpen = () => setOpen(true)
   const handleClose = () => setOpen(false)
-
-  const [bcsAmount, setBCSAmount] = useState(0)
-  const [withdrawableBcsAmount, setWithdrawableBcsAmount] = useState<number>(0)
-  const [value, setValue] = React.useState(0)
 
   const [btnType, setBtnType] = React.useState('Upgrade')
   const [upgradeTab, setUpgradeTab] = React.useState(false)
   const [remainedTime, setRemainedTime] = React.useState(0)
   const [isCooldownStarted, setIsCooldownStarted] = useState(false)
-
-  const [displayLevel, setDisplayLevel] = useState(-1)
-
+  const [halfGet, setHalfGet] = useState(false);
   const [upgradeErrorFlag, setUpgradeErrorFlag] = useState(false)
   var convertSecToHMS = (number: number) => {
     const hours = Math.floor(number / 3600)
@@ -90,10 +75,40 @@ const MiningModal = ({
     return formattedTime
   }
   useEffect(() => {
+    if (upgradeTab && levelState === 3) setBtnType("LIMIT");
+    else if (!upgradeTab && levelState === 0) setBtnType("Buy")
+  }, [open])
+  useEffect(() => {
+    if (address !== "") {
+      dispatch(
+        checkCooldown(address, 'level-up', (res: any) => {
+          setHalfGet(res.data.getStatus);
+          let cooldownSec = res.data.time
+          if (cooldownSec === 999999) {
+            setBtnType('Start')
+          }
+          else if (cooldownSec <= 50 && res.data.getStatus === false) {
+            setCsc(res.data.csc)
+            setBtnType('Claim')
+          }
+          else if (cooldownSec <= 0) {
+            setCsc(res.data.csc)
+            setBtnType('Claim')
+          }
+          else {
+            setRemainedTime(cooldownSec)
+            setIsCooldownStarted(true)
+          }
+
+        }),
+      )
+    }
+  }, [])
+  useEffect(() => {
     if (isCooldownStarted) {
       var cooldownInterval = setInterval(() => {
         setRemainedTime((prevTime) => {
-          if (prevTime === 1) {
+          if (prevTime === 1 || prevTime === 51) {
             setBtnType('Claim')
           }
           if (prevTime === 0) {
@@ -108,42 +123,37 @@ const MiningModal = ({
 
     return () => clearInterval(cooldownInterval)
   }, [isCooldownStarted])
-
   useEffect(() => {
     ; (async () => {
-      // console.log('user withdraws changed', user.withdraws.length)
       const withdrewsirenAmount = getWithdrewSirenAmount(user.withdraws) // Siren
-      // const bcsPrice = await getBcsPrice();
       const bcsPrice = 1
       const maxAmount =
         (checkPremium(user.premium).isPremium ? 10 : 5) / bcsPrice
-      // console.log(
-      //   `bcs price is ${bcsPrice}`,
-      //   'withdrew Siren amount: ',
-      //   withdrewsirenAmount,
-      //   ' and withdrawable bcs amount is ',
-      //   maxAmount,
-      // )
-      setWithdrawableBcsAmount(maxAmount - Math.floor(withdrewsirenAmount / 10))
     })()
   }, [user.withdraws])
 
 
   const onButtonClick = async () => {
+    if (remainedTime <= 50 && remainedTime > 0 && btnType === "Claim" && halfGet === false) {
+      dispatch(claimSiren(address, true, (res: any) => {
+        setCsc(res.data.csc)
+        setHalfGet(true);
+      }))
+    }
     if (remainedTime > 0) {
       return
     }
     if (btnType === 'Upgrade') {
-      if (csc < ((displayLevel - 1) * 1200 + 2000)) {
+      if (levelState === 1 && csc < 950) {
         alert("you don't have eough csc")
+        return;
+      }
+      if (levelState === 2 && csc < 1850) {
+        alert("you don't have eough csc");
+        return;
       }
       else {
         dispatch(buyLevel(address, (res: any) => {
-          // if(res.data==='false1'){
-          //   setUpgradeError1Flag(true)
-          //   return
-          // }
-          // else 
           if (res.success === true) {
             if (res.data === false) {
               return
@@ -158,32 +168,29 @@ const MiningModal = ({
                   )
                 )
               setUpgradeErrorFlag(false)
-              setLevelState(displayLevel)
-              global.level = displayLevel
-              setCsc(csc - ((displayLevel - 1) * 1200 + 2000))
+              setLevelState(res.level)
+              global.level = res.level
+              setCsc(res.cscTokenAmount)
               setBtnType('Start')
+              setUpgradeTab(false)
             }
           }
         }))
       }
     } else if (btnType === 'Buy') {
-      if (csc < ((displayLevel - 1) * 1200 + 2000)) {
+      if (csc < 500) {
         alert("you don't have eough csc")
       }
       else {
         dispatch(buyLevel(address, (res: any) => {
-          setLevelState(displayLevel)
-          global.level = displayLevel
-          setCsc(csc - ((displayLevel - 1) * 1200 + 2000))
+          setLevelState(res.level)
+          global.level = res.level
+          setCsc(res.cscTokenAmount)
           setBtnType('Start')
         }))
       }
     } else if (btnType === 'Start') {
-      // if (csc < ((displayLevel - 1) * 1200 + 2000)) {
-      //   alert("you don't have eough csc")
-      // }
-      // else {
-      if (displayLevel >= 1) {
+      if (levelState >= 1) {
         dispatch(
           setCooldown(address, 'level-up', true, (res: any) => {
             if (!isCooldownStarted) {
@@ -198,16 +205,17 @@ const MiningModal = ({
     } else if (btnType === 'Claim') {
       dispatch(
         checkCooldown(address, 'level-up', (res: any) => {
-          let cooldownSec = res.data
+          setHalfGet(res.data.getStatus);
+          let cooldownSec = res.data.time
           if (cooldownSec === 999999) {
             setBtnType('Start')
           }
           else if (cooldownSec <= 0) {
-            dispatch(claimSiren(address, (res: any) => {
+            dispatch(claimSiren(address, false, (res: any) => {
               setCsc(res.data.csc)
+              setHalfGet(false)
               setBtnType('Start')
             }))
-
           }
           else {
             setRemainedTime(cooldownSec)
@@ -219,6 +227,7 @@ const MiningModal = ({
     }
   }
   const onFarmTab = () => {
+    if (btnType === "Buy") return;
     if (remainedTime > 0 || btnType === 'Claim') return
     setBtnType('Start')
 
@@ -239,50 +248,9 @@ const MiningModal = ({
         }
         )
       )
+    if (upgradeTab && levelState === 3) setBtnType("LIMIT");
   }, [upgradeTab])
-  useEffect(() => {
-    setContent(levelState)
-  }, [upgradeTab, levelState])
-  const setContent = (lvl: number) => {
-    switch (lvl) {
-      case 0:
-        if (upgradeTab === true) { setDisplayLevel(0); setBtnType('') }
-        else { setDisplayLevel(1); setBtnType('Buy') }
-        break
-      case 1:
 
-      case 2:
-        if (upgradeTab === true) { setDisplayLevel(lvl + 1); setBtnType('Upgrade'); }
-        else { setDisplayLevel(lvl); checkAndSet(); }
-        break
-      case 3:
-        if (upgradeTab === true) { setDisplayLevel(lvl); setBtnType('Limit') }
-        else { setDisplayLevel(3); checkAndSet() }
-        break
-    }
-  }
-  const checkAndSet = () => {
-    dispatch(
-      checkCooldown(address, 'level-up', (res: any) => {
-        let cooldownSec = res.data
-
-        if (cooldownSec === 999999) {
-          if (levelState === 0) setBtnType('Buy')
-          else setBtnType('Start')
-        }
-        else if (cooldownSec <= 0) {
-
-
-          setBtnType('Claim')
-        }
-        else {
-          setRemainedTime(cooldownSec)
-          setIsCooldownStarted(true)
-        }
-
-      }),
-    )
-  }
   const style = {
     position: 'absolute' as const,
     top: '50%',
@@ -297,26 +265,16 @@ const MiningModal = ({
     <>
       <Modal
         open={open}
-        // open={true}
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
           <img alt="" src="/images/support/support_md_bg.png" />
-
           <img
             alt=""
             src="/images/support/support_md_close_btn.png"
-            style={{
-              position: 'absolute',
-              top: 0,
-              right: 0,
-              width: '6%',
-              transform: 'translate(26%, -27%)',
-              cursor: 'pointer',
-              zIndex: 5,
-            }}
+            className='absolute top-0 right-0 w-[6%] cursor-pointer z-[5] translate-x-[26%] translate-y-[-27%]'
             onClick={handleClose}
           />
           <Box
@@ -329,19 +287,10 @@ const MiningModal = ({
             }}
           >
             <Box>
-              <div
-                style={{
-                  fontFamily: 'Anime Ace',
-                  fontWeight: 'bold',
-                  fontSize: '30px',
-                  textAlign: 'center',
-                  marginTop: '8%',
-                  color: '#e7e1e1',
-                  lineHeight: '100%',
-                  //WebkitTextFillColor: '#e7e1e1',
-                }}
+              <div className='font-bold text-[30px] text-center mt-[8%] text-[#e7e1e1] leading-[100%]'
+                style={{ fontFamily: 'Anime Ace' }}
               >
-                <p>TOWER{upgradeTab && ' UPGRADE'}</p>
+                <p>TAWER{upgradeTab && ' UPGRADE'}</p>
               </div>
             </Box>
             <Grid
@@ -356,83 +305,81 @@ const MiningModal = ({
               }}
             >
               {upgradeTab ?
-                <Grid item xs={4} sx={{ padding: '0 !important' }}>
-                  <Stack
-                    sx={{
-                      fontFamily: 'Anime Ace',
-                      fontSize: upgradeTab ? '14px' : '20px',
-                      width: upgradeTab ? '100%' : '200%',
-                      marginLeft: upgradeTab ? '0px' : "-50%",
-                      fontWeight: 'bold',
-                      color: '#e7e1e1',
-                      textAlign: 'center',
-                    }}
-                  >
-                    <p>LEVEL 1:</p>
-                    <div className='flex justify-center'><img src='assets/images/cryptoIcon.png' width={upgradeTab ? 20 : 30}></img><p>200 CSC PER 5H</p></div>
-
-                    {upgradeTab && <p>PRICE: 2000 CSC</p>}
-                  </Stack>
-                </Grid> :
-                <Grid item xs={4} sx={{ padding: '0 !important' }}>
-                  <Stack
-                    sx={{
-                      fontFamily: 'Anime Ace',
-                      fontSize: '20px',
-                      width: '200%',
-                      marginLeft: "-50%",
-                      fontWeight: 'bold',
-                      color: '#e7e1e1',
-                      textAlign: 'center',
-                    }}
-                  >
-                    <p>LEVEL 1:</p>
-                    <div className='flex justify-center'><img src='assets/images/cryptoIcon.png' width={upgradeTab ? 20 : 30}></img><p>200 CSC PER 5H</p></div>
-
-                    {upgradeTab && <p>PRICE: 2000 CSC</p>}
-                  </Stack>
-                </Grid>
-              }
-              {upgradeTab ?
-                <Grid item xs={4} sx={{ padding: '0 !important' }}>
-                  <Stack
-                    sx={{
-                      fontFamily: 'Anime Ace',
-                      fontSize: upgradeTab ? '14px' : '20px',
-                      width: upgradeTab ? '100%' : '200%',
-                      marginLeft: upgradeTab ? '0px' : "-50%",
-                      fontWeight: 'bold',
-                      color: '#e7e1e1',
-                      textAlign: 'center',
-                    }}
-                  >
-                    <p>LEVEL 2:</p>
-                    <div className='flex justify-center'><img src='assets/images/cryptoIcon.png' width={upgradeTab ? 20 : 30}></img><p>300 CSC PER 5H</p></div>
-                    <p>10 RES PER 5H</p>
-                    {upgradeTab && <p>PRICE: 3200 CSC</p>}
-                  </Stack>
-                </Grid> : null
-              }
-              {upgradeTab ?
-                <Grid item xs={4} sx={{ padding: '0 !important' }}>
-                  <Stack
-                    sx={{
-                      fontFamily: 'Anime Ace',
-                      fontSize: upgradeTab ? '14px' : '20px',
-                      width: upgradeTab ? '100%' : '200%',
-                      marginLeft: upgradeTab ? '0px' : "-50%",
-                      fontWeight: 'bold',
-                      color: '#e7e1e1',
-                      textAlign: 'center',
-                    }}
-                  >
-                    <p>LEVEL 3:</p>
-                    <div className='flex justify-center'><img src='assets/images/cryptoIcon.png' width={upgradeTab ? 20 : 30}></img><p>400 CSC PER 5H</p></div>
-
-                    <p>20 RES PER 5H</p>
-                    {upgradeTab && <p>PRICE: 4400 CSC</p>}
-                  </Stack>
-                </Grid> : null
+                <>
+                  <Grid item xs={4} sx={{ padding: '0 !important' }}>
+                    <Stack
+                      sx={{
+                        fontFamily: 'Anime Ace',
+                        fontSize: upgradeTab ? '14px' : '20px',
+                        width: upgradeTab ? '100%' : '200%',
+                        marginLeft: upgradeTab ? '0px' : "-50%",
+                        fontWeight: 'bold',
+                        color: '#e7e1e1',
+                        textAlign: 'center',
+                      }}
+                    >
+                      <p>{title[1].level}</p>
+                      <div className='flex justify-center'><img src='assets/images/cryptoIcon.png' width={20}></img><p>{title[1].detail1}</p></div>
+                      <p>{title[1].price}</p>
+                    </Stack>
+                  </Grid>
+                  <Grid item xs={4} sx={{ padding: '0 !important' }}>
+                    <Stack
+                      sx={{
+                        fontFamily: 'Anime Ace',
+                        fontSize: upgradeTab ? '14px' : '20px',
+                        width: upgradeTab ? '100%' : '200%',
+                        marginLeft: upgradeTab ? '0px' : "-50%",
+                        fontWeight: 'bold',
+                        color: '#e7e1e1',
+                        textAlign: 'center',
+                      }}
+                    >
+                      <p>{title[2].level}</p>
+                      <div className='flex justify-center'><img src='assets/images/cryptoIcon.png' width={20}></img><p>{title[2].detail1}</p></div>
+                      <p>{title[2].detail2}</p>
+                      <p>{title[2].price}</p>
+                    </Stack>
+                  </Grid>
+                  <Grid item xs={4} sx={{ padding: '0 !important' }}>
+                    <Stack
+                      sx={{
+                        fontFamily: 'Anime Ace',
+                        fontSize: upgradeTab ? '14px' : '20px',
+                        width: upgradeTab ? '100%' : '200%',
+                        marginLeft: upgradeTab ? '0px' : "-50%",
+                        fontWeight: 'bold',
+                        color: '#e7e1e1',
+                        textAlign: 'center',
+                      }}
+                    >
+                      <p>{title[3].level}</p>
+                      <div className='flex justify-center'><img src='assets/images/cryptoIcon.png' width={20}></img><p>{title[3].detail1}</p></div>
+                      <p>{title[3].detail2}</p>
+                      <p>{title[3].price}</p>
+                    </Stack>
+                  </Grid>
+                </>
+                :
+                <>
+                  <Grid item xs={4} sx={{ padding: '0 !important' }}>
+                    <Stack
+                      sx={{
+                        fontFamily: 'Anime Ace',
+                        fontSize: '20px',
+                        width: '200%',
+                        marginLeft: "-50%",
+                        fontWeight: 'bold',
+                        color: '#e7e1e1',
+                        textAlign: 'center',
+                      }}
+                    >
+                      <p>{title[levelState].level}</p>
+                      <div className='flex justify-center'><img src='assets/images/cryptoIcon.png' width={upgradeTab ? 20 : 30}></img><p>{title[levelState].detail1}</p></div>
+                      <p>{title[levelState].detail2}</p>
+                    </Stack>
+                  </Grid>
+                </>
               }
             </Grid>
             <Box
@@ -449,7 +396,7 @@ const MiningModal = ({
               >
                 <img alt="" src="/assets/images/big-button.png" />
                 <p className='absolute text-[14px] text-center text-[#e7e1e1]' style={{ fontFamily: 'Anime Ace' }}>
-                  {(remainedTime === 0 ? btnType : convertSecToHMS(remainedTime))}
+                  {(remainedTime === 0 ? btnType : ((remainedTime <= 50 && halfGet === false) ? btnType : convertSecToHMS(remainedTime)))}
                 </p>
               </Button>
               }
@@ -464,7 +411,7 @@ const MiningModal = ({
 
             {!upgradeTab ?
               <div className='text-[14px] font-bold text-[#e7e1e1] text-center' style={{ fontFamily: 'Anime Ace' }}>
-                <p>PRICE: 2000 CSC</p>
+                <p>{title[levelState].price}</p>
               </div> : null
             }
 
@@ -476,11 +423,7 @@ const MiningModal = ({
                   padding: '0',
                 }}
               >
-                {upgradeTab === true ? (
-                  <img alt="" src="/assets/images/tabbutton1.png" />
-                ) : (
-                  <img alt="" src="/assets/images/tabbutton2.png" />
-                )}
+                <img alt="" src="/assets/images/tabbutton.png" />
                 <p className="absolute font-bold text-[14px] text-center text-[#ffffff]" style={{ fontFamily: 'Anime Ace' }}>
                   FARM
                 </p>
@@ -492,11 +435,7 @@ const MiningModal = ({
                   padding: '0',
                 }}
               >
-                {upgradeTab === false ? (
-                  <img alt="" src="/assets/images/tabbutton1.png" />
-                ) : (
-                  <img alt="" src="/assets/images/tabbutton2.png" />
-                )}
+                <img alt="" src="/assets/images/tabbutton.png" />
                 <p className="absolute font-bold text-[14px] text-center text-[#ffffff]" style={{ fontFamily: 'Anime Ace' }}>
                   UPGRADE
                 </p>

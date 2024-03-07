@@ -54,7 +54,6 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
   const [wallLevelState, setWallLevelState] = useState(userModule.user.wall)
   const [csc, setCsc] = useState(userModule.user.cscTokenAmount)
   const [realCSC, setRealCSC] = useState(userModule.user.claimedCSC);
-
   // const resource = userModule.user.resource
 
   const [openInstruction, setOpenInstruction] = useState(false)
@@ -438,7 +437,7 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
                   }}
                 >
                   <img alt="" src="/images/support/support_md_bg.png" />
-                  <img
+                  {/* <img
                     alt=""
                     src="/images/support/support_md_character.png"
                     style={{
@@ -447,6 +446,17 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
                       left: 0,
                       height: '145%',
                       transform: 'translate(-56%, -15%)',
+                    }}
+                  /> */}
+                  <img
+                    alt=""
+                    src="/images/support/support_md_character.png"
+                    style={{
+                      position: 'absolute',
+                      top: 0,
+                      left: 0,
+                      height: '85%',
+                      transform: 'translate(-20%, 7%)',
                     }}
                   />
                   <img
@@ -459,10 +469,15 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
                       width: '6%',
                       transform: 'translate(26%, -27%)',
                       cursor: 'pointer',
-                      zIndex: 5,
+                      zIndex: 15,
                     }}
                     onClick={handleBirdClose}
                   />
+                  <div className='absolute top-0 left-0 w-full h-full flex justify-center items-center p-6 ml-[1px] z-10'>
+                    <div className='w-full h-full bg-[#000000]/[0.9] rounded-lg flex justify-center items-center text-white'>
+                      BETA SOON
+                    </div>
+                  </div>
                   <Box
                     sx={{
                       position: 'absolute',

@@ -83,19 +83,14 @@ const ExchangeModal = ({
           setBtnType('Start')
           setAvatar("")
           setSelectedCharacterList([-1, -1, -1])
-          if (claimBar[0] !== -1 && claimBar[0] !== -2)
-            setCsc(csc + claimBar[0])
-          if (claimBar[1] !== -1 && claimBar[1] !== -2)
-            setEgg(egg + claimBar[1])
-
+          setCsc(resp.data.csc);
+          setEgg(resp.data.egg);
           setClaimBar([-1, -1, true])
-
         }),
       )
     }
   }
 
-  //  const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false)
   useEffect(() => {
     if (selectedCharacterIndex >= 0) {
@@ -114,6 +109,7 @@ const ExchangeModal = ({
             setBtnType('Claim')
             dispatch(
               checkCooldown(address, 'hunter-level-up', (res: any) => {
+
                 let cooldownSec = res.data
                 if (cooldownSec === false) {
                   setRemainedTime(-1)
@@ -121,7 +117,7 @@ const ExchangeModal = ({
 
                   setBtnType('Start')
                 } else if (cooldownSec <= 0) {
-                  setClaimBar([res.claim.siren, res.claim.egg, res.claim.claim])
+                  setClaimBar([res.claim.csc, res.claim.res, res.claim.claim])
                   setRemainedTime(-1)
                   setIsCooldownStarted(false)
                   setAvatar(res.avatar)
@@ -152,6 +148,7 @@ const ExchangeModal = ({
     if (open === true)
       dispatch(
         checkCooldown(address, 'hunter-level-up', (res: any) => {
+          console.log(res)
           let cooldownSec = res.data
           if (cooldownSec === false) {
             setRemainedTime(-1)
@@ -180,7 +177,7 @@ const ExchangeModal = ({
       alert("please get claim first")
       return
     }
-    if (csc < 3000 + upgradeLevel * 2000) {
+    if (csc < 100) {
       alert("you need more csc")
       return
 
@@ -196,38 +193,13 @@ const ExchangeModal = ({
 
     }
     dispatch(levelupHunter(address, (resp: any) => {
-      if (resp.data === true)
-        if (upgradeLevel === 0) {
-          setCsc(csc - 3000)
-        }
-        else if (upgradeLevel === 1) {
-          setCsc(csc - 5000)
-        }
-      setUpgradeLevel(upgradeLevel + 1)
+      if (resp) {
+        setCsc(resp.data.csc)
+        setUpgradeLevel(resp.data.upgradeLevel)
+        global.hunterLevel = resp.data.upgradeLevel
+      }
     }))
-
   }
-  // const [ispremium, setIsPremium] = useState(false)
-  // useEffect(() => {
-  //   const date = new Date()
-
-  //   const expiredTime = new Date(userModule.user.premium)
-  //   // console.log("--->", userModule.user.premium, expiredTime, "<---");
-  //   // let curTime = new Date();
-  //   expiredTime.setMonth(expiredTime.getMonth() + 1)
-
-  //   // console.log(expiredTime, date);
-
-  //   const curSec = date.getTime() + date.getTimezoneOffset() * 60 * 1000
-  //   const endSec = expiredTime.getTime()
-
-  //   if (endSec > curSec) {
-  //     setIsPremium(true)
-  //     // console.log("is premium...");
-  //   } else {
-  //     setIsPremium(false)
-  //   }
-  // }, [userModule.user.premium])
 
   const style = {
     position: 'absolute' as const,
@@ -244,7 +216,6 @@ const ExchangeModal = ({
     <>
       <Modal
         open={open}
-        // open={true}
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
@@ -255,8 +226,7 @@ const ExchangeModal = ({
           <img
             alt=""
             src="/images/support/support_md_close_btn.png"
-            className='absolute top-0 right-0 w-[7%] cursor-pointer z-[5]'
-            style={{ transform: 'translate(26%, -27%)' }}
+            className='absolute top-0 right-0 w-[7%] cursor-pointer z-[5] translate-x-[26%] translate-y-[-27%]'
             onClick={handleClose}
           />
           <Box
@@ -347,7 +317,7 @@ const ExchangeModal = ({
                     className='absolute top-[-15px] mx-auto p-[30%] z-20 w-[120%] h-[115%]'
                   />
                 )}
-                {(upgradeLevel === 0 || upgradeLevel === undefined) && (
+                {(upgradeLevel === 0 || upgradeLevel === undefined) ? (
                   <div className='absolute text-center text-[11px] top-[50%] text-white'>
                     <Button
                       sx={{
@@ -361,10 +331,10 @@ const ExchangeModal = ({
                       <img src="/assets/images/upgrade btn.png" alt="" />
                       <p className='absolute text-[15px] text-center text-[#e7e1e1]' style={{ fontFamily: 'Anime Ace' }} onClick={onUpgradeLevel}>Upgrade </p>
                     </Button>
-                    <p>3000 CSC</p>
+                    <p>100 CSC</p>
                     <p>NEED 2 LVL WALL</p>
                   </div>
-                )}
+                ) : null}
               </Grid>
               <Grid
                 item
@@ -396,7 +366,7 @@ const ExchangeModal = ({
                     className='absolute top-[-15px] mx-auto p-[30%] z-20 w-[120%] h-[115%]'
                   />
                 )}
-                {upgradeLevel === 1 && (
+                {upgradeLevel === 1 ? (
                   <div className='text-center text-[11px] top-[50%] text-white absolute'>
                     <Button
                       sx={{
@@ -410,10 +380,10 @@ const ExchangeModal = ({
                       <img src="/assets/images/upgrade btn.png" alt="" />
                       <p className='absolute text-[15px] text-center text-[#e7e1e1]' style={{ fontFamily: 'Anime Ace' }} onClick={onUpgradeLevel}>Upgrade </p>
                     </Button>
-                    <p>3000 CSC</p>
+                    <p>100 CSC</p>
                     <p>NEED 3 LVL WALL</p>
                   </div>
-                )}
+                ) : null}
               </Grid>
             </Grid>
             <Grid
@@ -454,8 +424,8 @@ const ExchangeModal = ({
                 >
                   <img src="/assets/images/roomBtn.png" alt="" />
                   <p className='absolute text-[8px] text-center text-[#e7e1e1]' style={{ fontFamily: 'Anime Ace', }}>
-                    {claimBar[0] === -1 ? '100-550' : claimBar[0] !== -2 ? claimBar[0] : ''}<br />
-                    {claimBar[0] !== -2 && 'CSC'}
+                    {claimBar[0] === -1 ? '5-15' : claimBar[0] !== -2 ? claimBar[0] : ''}<br />
+                    {claimBar[0] !== -2 ? 'CSC' : ""}
                   </p>
                 </Button>
                 <Button
@@ -468,7 +438,7 @@ const ExchangeModal = ({
                   <img src="/assets/images/roomBtn.png" alt="" />
                   <p className='absolute text-[8px] text-center text-[#e7e1e1]' style={{ fontFamily: 'Anime Ace', }}>
                     {claimBar[1] === -1 ? '20-40' : claimBar[1] !== -2 ? claimBar[1] : ''}<br />
-                    {claimBar[1] !== -2 && 'RES'}
+                    {claimBar[1] !== -2 ? 'RES' : ""}
                   </p>
                 </Button>
                 <Button

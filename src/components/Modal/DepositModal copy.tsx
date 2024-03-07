@@ -205,14 +205,17 @@ const DepositModal = ({
           <img
             alt=""
             src="/images/support/support_md_close_btn.png"
-            className='absolute top-0 right-0 w-[6%] translate-x-[26%] translate-y-[-27%] cursor-pointer z-[15]'
+            style={{
+              position: 'absolute',
+              top: 0,
+              right: 0,
+              width: '6%',
+              transform: 'translate(26%, -27%)',
+              cursor: 'pointer',
+              zIndex: 5,
+            }}
             onClick={handleClose}
           />
-          <div className='absolute top-0 left-0 w-full h-full flex justify-center items-center p-6 ml-[1px] z-10'>
-            <div className='w-full h-full bg-[#000000]/[0.9] rounded-lg flex justify-center items-center text-white'>
-              BETA SOON
-            </div>
-          </div>
           <Box
             sx={{
               position: 'absolute',
@@ -265,7 +268,7 @@ const DepositModal = ({
                   spacing={2}
                   sx={{
                     display: 'flex',
-                    alignItems: 'center',
+                    alignItems:'center',
                     fontFamily: 'Marko One, serif',
                     fontSize: '18px',
                     textTransform: 'uppercase',
@@ -273,16 +276,17 @@ const DepositModal = ({
                     lineHeight: '120%',
                   }}
                 >
-                  <div style={{ marginTop: '0px', textAlign: "left" }}>
-                    <div style={{ fontFamily: 'Anime Ace', color: '#ffe86b', fontSize: '16px', margin: '2px 20px' }}>CSC</div>
+                  <div style={{marginTop: '0px', textAlign:"left"}}>
+                    <div style={{fontFamily: 'Anime Ace', color: '#ffe86b', fontSize: '16px', margin: '2px 20px'}}>CSC</div>
                     <TextField
-                      sx={{ mr: 1, textAlign: 'right', borderColor: 'white', width: '100%', borderRadius: '5px', backgroundColor: 'white' }}
+                      sx={{ mr: 1, textAlign: 'right', borderColor: 'white', width: '100%', borderRadius: '5px', backgroundColor: 'white'}}
                       name="bcs"
                       value={bcsAmount}
                       size='small'
+                      onChange={onChangeAmount}
                     />
                   </div>
-                  <p style={{ textAlign: 'center' }}>You will receive <br /> {Number(bcsAmount)} CSC</p>
+                  <p style={{textAlign: 'center'}}>You will receive <br/> {Number(bcsAmount)} CSC</p>
                   <p
                     style={{
                       color: '#770909',
@@ -304,8 +308,8 @@ const DepositModal = ({
                       justifyContent: 'space-evenly',
                     }}
                   >
-                    <Button>
-                      <img alt="" src="/assets/images/big-button.png" style={{ width: '80%' }} />
+                    <Button onClick={(/* e */) => onDeposit()}>
+                      <img alt="" src="/assets/images/big-button.png" style={{width: '80%'}}/>
                       <p
                         style={{
                           position: 'absolute',
@@ -327,7 +331,7 @@ const DepositModal = ({
                   spacing={2}
                   sx={{
                     display: 'flex',
-                    alignItems: 'center',
+                    alignItems:'center',
                     fontFamily: 'Marko One, serif',
                     fontSize: '18px',
                     textTransform: 'uppercase',
@@ -336,16 +340,17 @@ const DepositModal = ({
                     lineHeight: '120%',
                   }}
                 >
-                  <div style={{ marginTop: '0px', textAlign: "left" }}>
-                    <div style={{ fontFamily: 'Anime Ace', color: '#ffe86b', fontSize: '16px', margin: '2px 20px' }}>CSC</div>
+                  <div style={{marginTop: '0px', textAlign:"left"}}>
+                    <div style={{fontFamily: 'Anime Ace', color: '#ffe86b', fontSize: '16px', margin: '2px 20px'}}>CSC</div>
                     <TextField
-                      sx={{ mr: 1, textAlign: 'right', borderColor: 'white', width: '100%', borderRadius: '5px', backgroundColor: 'white' }}
+                      sx={{ mr: 1, textAlign: 'right', borderColor: 'white', width: '100%', borderRadius: '5px', backgroundColor: 'white'}}
                       name="Siren"
                       value={cscTokenAmount}
                       size='small'
+                      onChange={onChangeEggAmount}
                     />
-                  </div>
-                  <p style={{ textAlign: 'center' }}>You will receive <br /> {Math.floor(cscTokenAmount / 10)} CSC</p>
+                  </div>                  
+                  <p style={{textAlign: 'center'}}>You will receive <br/> {Math.floor(cscTokenAmount / 10)} CSC</p>
                   <p
                     style={{
                       color: '#770909',
@@ -371,8 +376,8 @@ const DepositModal = ({
                       justifyContent: 'space-evenly',
                     }}
                   >
-                    <Button>
-                      <img alt="" src="/assets/images/big-button.png" style={{ width: '80%' }} />
+                    <Button onClick={(/* e */) => onWithdraw()}>
+                      <img alt="" src="/assets/images/big-button.png" style={{width: '80%'}}/>
                       <p
                         style={{
                           position: 'absolute',

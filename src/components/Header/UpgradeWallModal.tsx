@@ -25,8 +25,8 @@ const UpgradeWallModal = ({
     const wall = userModule.user.wall
     let amount = 0
     switch (wall) {
-      case 1: { amount = 500; break; }
-      case 2: { amount = 1500; break; }
+      case 1: { amount = 50; break; }
+      case 2: { amount = 100; break; }
     }
     if (userModule.user.cscTokenAmount >= amount)
       setWall()
@@ -71,59 +71,9 @@ const UpgradeWallModal = ({
             }}
             onClick={handleClose}
           />
-          <div className='wall'
-            style={{
-              backgroundColor: 'transparent',
-              width: '85%',
-              height: '400px',
-              position: 'absolute',
-              marginTop: '20px'
-            }}
-          >
-
+          <div className='absolute wall w-[85%] h-[400px] bg-transparent mt-[20px]'>
             <img src={"assets/images/border" + (userModule.user.wall === 3 ? 3 : (userModule.user.wall + 1)) + ".png"} alt="" className='h-5/6 object-cover object-center' />
           </div>
-          {/* <div className='wall' 
-            style={{
-              backgroundColor: 'transparent',
-              borderRadius: '50%',
-              borderWidth: '3px',
-              borderColor: userModule.user.wall === 0 ? 'black' : userModule.user.wall === 1 ? 'gray' : userModule.user.wall === 2 ? 'blue' : 'red',
-              width: '85%',
-              height: '300px',
-              position: 'absolute',
-              marginTop: '20px'
-            }}>
-              <div
-                className='before'
-                style={{
-                  position: 'absolute',
-                  display: 'block',
-                  width: '100%',
-                  height: '100%',
-                  borderColor: userModule.user.wall === 0 ? 'black' : userModule.user.wall === 1 ? 'gray' : userModule.user.wall === 2 ? 'blue' : 'red',
-                  backgroundColor: 'transparent',
-                  borderRadius: '50%',
-                  borderWidth: '6px',
-                  pointerEvents: 'none',
-                }}
-              ></div>
-              <div
-                className='after'
-                style={{
-                  position: 'absolute',
-                  display: 'block',
-                  width: '100%',
-                  height: '100%',
-                  borderColor: 'black',
-                  backgroundColor: 'transparent',
-                  borderRadius: '50%',
-                  borderWidth: '3px',
-                  pointerEvents: 'none',
-                }}
-              ></div>
-          </div> */}
-
           <Grid container>
             <Grid item xs={12} sm={12} md={12}>
               <Box
@@ -143,12 +93,10 @@ const UpgradeWallModal = ({
                     marginBottom: '0px'
                   }}
                 >
-                  {userModule.user.wall === 1 ? 'UPGRADE LVL 2: 500 CSC' : userModule.user.wall === 2 ? 'UPGRADE LVL 3: 1500 CSC' : 'UPGRADE FINISHED'}
+                  {userModule.user.wall === 1 ? 'UPGRADE LVL 2: 50 CSC' : userModule.user.wall === 2 ? 'UPGRADE LVL 3: 100 CSC' : 'UPGRADE FINISHED'}
                 </h2>
                 {(userModule.user.wall !== 3) && (
                   <Button
-                    // variant="contained"
-                    // color="primary"
                     style={{
                       background: "url(/assets/images/big-button.png)",
                       backgroundSize: '200px',
@@ -159,9 +107,7 @@ const UpgradeWallModal = ({
                       width: '200px',
                       height: '50px',
                     }}
-                    onClick={(/* e */) => {
-                      onUpgradeWall()
-                    }}
+                    onClick={() => { onUpgradeWall() }}
                   >
                     Upgrade
                   </Button>
