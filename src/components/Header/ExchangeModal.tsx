@@ -37,7 +37,9 @@ const ExchangeModal = ({
   const [openCharacterChoose, setOpenChraracterChoose] = useState(false)
   const [selectedCharacterIndex, setSelectedCharacterIndex] = useState(-1)
   const [selectedCharacterList, setSelectedCharacterList] = useState([-1, -1, -1])
-  const [claimBar, setClaimBar] = useState([-1, -1, true])
+  const [claimBar, setClaimBar] = useState({
+    siren: -1, egg: -1, claim: true
+  })
   const [selectedCharacter, setSelectedCharacter] = useState(-1)
 
   const [upgradeLevel, setUpgradeLevel] = useState(global.hunterLevel)
@@ -85,7 +87,7 @@ const ExchangeModal = ({
           setSelectedCharacterList([-1, -1, -1])
           setCsc(resp.data.csc);
           setEgg(resp.data.egg);
-          setClaimBar([-1, -1, true])
+          setClaimBar({siren: -1, egg: -1, claim: true})
         }),
       )
     }
@@ -109,7 +111,6 @@ const ExchangeModal = ({
             setBtnType('Claim')
             dispatch(
               checkCooldown(address, 'hunter-level-up', (res: any) => {
-
                 let cooldownSec = res.data
                 if (cooldownSec === false) {
                   setRemainedTime(-1)
@@ -117,7 +118,7 @@ const ExchangeModal = ({
 
                   setBtnType('Start')
                 } else if (cooldownSec <= 0) {
-                  setClaimBar([res.claim.csc, res.claim.res, res.claim.claim])
+                  setClaimBar(res.claim)
                   setRemainedTime(-1)
                   setIsCooldownStarted(false)
                   setAvatar(res.avatar)
@@ -148,7 +149,6 @@ const ExchangeModal = ({
     if (open === true)
       dispatch(
         checkCooldown(address, 'hunter-level-up', (res: any) => {
-          console.log(res)
           let cooldownSec = res.data
           if (cooldownSec === false) {
             setRemainedTime(-1)
@@ -157,7 +157,7 @@ const ExchangeModal = ({
             setBtnType('Start')
           } else if (cooldownSec <= 0) {
             setBtnType('Claim')
-            setClaimBar([res.claim.siren, res.claim.egg, res.claim.claim])
+            setClaimBar(res.claim)
             setRemainedTime(-1)
             setIsCooldownStarted(false)
             setAvatar(res.avatar)
@@ -424,8 +424,8 @@ const ExchangeModal = ({
                 >
                   <img src="/assets/images/roomBtn.png" alt="" />
                   <p className='absolute text-[8px] text-center text-[#e7e1e1]' style={{ fontFamily: 'Anime Ace', }}>
-                    {claimBar[0] === -1 ? '5-15' : claimBar[0] !== -2 ? claimBar[0] : ''}<br />
-                    {claimBar[0] !== -2 ? 'CSC' : ""}
+                    {claimBar.siren === -1 ? '5-15' : claimBar.siren !== -2 ? claimBar.siren : ''}<br />
+                    {claimBar.siren !== -2 ? 'CSC' : ""}
                   </p>
                 </Button>
                 <Button
@@ -437,8 +437,8 @@ const ExchangeModal = ({
                 >
                   <img src="/assets/images/roomBtn.png" alt="" />
                   <p className='absolute text-[8px] text-center text-[#e7e1e1]' style={{ fontFamily: 'Anime Ace', }}>
-                    {claimBar[1] === -1 ? '20-40' : claimBar[1] !== -2 ? claimBar[1] : ''}<br />
-                    {claimBar[1] !== -2 ? 'RES' : ""}
+                    {claimBar.egg === -1 ? '20-40' : claimBar.egg !== -2 ? claimBar.egg : ''}<br />
+                    {claimBar.egg !== -2 ? 'RES' : ""}
                   </p>
                 </Button>
                 <Button
@@ -453,7 +453,7 @@ const ExchangeModal = ({
                     className='flex justify-center absolute text-center text-[#e7e1e1] text-[14px]'
                     style={{ fontFamily: 'Anime Ace', }}
                   >
-                    {claimBar[2] === true ? (
+                    {claimBar.claim === true ? (
                       <img
                         src="assets/item/box-closed.png"
                         alt=""
