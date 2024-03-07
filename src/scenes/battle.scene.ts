@@ -205,7 +205,7 @@ export default class Battle extends Phaser.Scene {
       .setOrigin(0, 0.5)
 
     this.add
-      .sprite(267, 235, 'embed-bar')
+      .sprite(260, 234, 'embed-bar')
       .setScale(1)
       .setOrigin(0, 0.5)
     const embed = global.embed.filter(obj => obj.character === global.currentCharacterName)
@@ -215,8 +215,8 @@ export default class Battle extends Phaser.Scene {
       if (count > 0) {
         type = type.replace('_', '-')
         this.add
-          .image(292 + 59 * i, 235, `item-${type}`)
-          .setDisplaySize(43, 43)
+          .image(290 + 60 * i, 235, `small-${type}`)
+          .setDisplaySize(50, 50)
           .setInteractive()
       }
     }

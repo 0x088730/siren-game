@@ -25,7 +25,7 @@ export default class Bootstrap extends Phaser.Scene {
         frameHeight: 486,
         frameWidth: 500,
       }
-      
+
     );
     this.load.spritesheet(
       'robot-down',
@@ -34,10 +34,10 @@ export default class Bootstrap extends Phaser.Scene {
         frameHeight: 460,
         frameWidth: 595,
       }
-      
+
     );
 
-    
+
     this.load.spritesheet(
       'robot-punch',
       'assets/character/robot-punch-r21.png',
@@ -116,26 +116,29 @@ export default class Bootstrap extends Phaser.Scene {
 
     for (let i = 1; i <= 3; ++i) {
       this.load.image(`item-gem-${i}`, `assets/item/item-gem-${i}.png`)
-      this.load.image(
-        `item-infernal-${i}`,
-        `assets/item/item-infernal-${i}.png`,
-      )
+      this.load.image(`item-infernal-${i}`, `assets/item/item-infernal-${i}.png`)
       this.load.image(`item-chimera-${i}`, `assets/item/item-chimera-${i}.png`)
     }
 
-    for(let i = 1; i <= 4; i ++) {
+    for (let i = 1; i <= 3; ++i) {
+      this.load.image(`small-gem-${i}`, `assets/item/small/item-gem-${i}.png`)
+      this.load.image(`small-infernal-${i}`, `assets/item/small/item-infernal-${i}.png`)
+      this.load.image(`small-chimera-${i}`, `assets/item/small/item-chimera-${i}.png`)
+    }
+
+    for (let i = 1; i <= 4; i++) {
       this.load.image(`chapter${i}`, `assets/background/chapter/chapter${i}.png`)
     }
-    for(let i = 1; i <= 4; i ++) {
+    for (let i = 1; i <= 4; i++) {
       this.load.image(`chapter${i}_hover`, `assets/background/chapter/chapter${i}_hover.png`)
     }
-    for(let i = 1; i <= 4; i ++) {
+    for (let i = 1; i <= 4; i++) {
       this.load.image(`model-${i}`, `assets/character/avatars/${i}.png`)
     }
-    for(let i = 1; i <= 4; i ++) {
+    for (let i = 1; i <= 4; i++) {
       this.load.image(`model1-${i}`, `assets/character/avatars/${i}-1.png`)
     }
-    for(let i = 1; i <= 9; i ++) {
+    for (let i = 1; i <= 9; i++) {
       this.load.image(`weapon-${i}`, `assets/item/weapon/${i}.png`)
     }
     this.load.image('character-model-bg', 'assets/images/model-bg.png')
@@ -163,7 +166,7 @@ export default class Bootstrap extends Phaser.Scene {
   create() {
     this.launchGame()
   }
-  init() {}
+  init() { }
 
   launchGame() {
     if (!this.preloadComplete) return
