@@ -46,10 +46,10 @@ const MiningModal = ({
   setLevelState
 }: Props) => {
   const title = [
-    { level: "LEVEL 1:", detail1: "18 CSC PER 24H", detail2: "CLAIM 9 CSC EACH 12H", price: "PRICE: 500 CSC" },
-    { level: "LEVEL 1:", detail1: "18 CSC PER 24H", detail2: "CLAIM 9 CSC EACH 12H", price: "PRICE: 500 CSC" },
-    { level: "LEVEL 2:", detail1: "36 CSC PER 24H", detail2: "CLAIM 18 CSC EACH 12H", price: "PRICE: 950 CSC" },
-    { level: "LEVEL 3:", detail1: "72 CSC PER 24H", detail2: "CLAIM 36 CSC EACH 12H", price: "PRICE: 1850 CSC" },
+    { level: "LEVEL 1:", detail1: "9 CSC PER 12H", detail2: "CLAIM 9 CSC EACH 12H", price: "PRICE: 500 CSC" },
+    { level: "LEVEL 1:", detail1: "9 CSC PER 12H", detail2: "CLAIM 9 CSC EACH 12H", price: "PRICE: 500 CSC" },
+    { level: "LEVEL 2:", detail1: "18 CSC PER 12H", detail2: "CLAIM 18 CSC EACH 12H", price: "PRICE: 950 CSC" },
+    { level: "LEVEL 3:", detail1: "36 CSC PER 12H", detail2: "CLAIM 36 CSC EACH 12H", price: "PRICE: 1850 CSC" },
   ]
   const { connected, chainID, address, connect } = useWeb3Context()
   const { user } = useSelector((state: any) => state.userModule)
@@ -77,7 +77,7 @@ const MiningModal = ({
   useEffect(() => {
     if (upgradeTab && levelState === 3) setBtnType("LIMIT");
     else if (!upgradeTab && levelState === 0) setBtnType("Buy")
-  }, [open])
+  }, [open, upgradeTab])
   useEffect(() => {
     if (address !== "") {
       dispatch(
@@ -337,7 +337,7 @@ const MiningModal = ({
                     >
                       <p>{title[2].level}</p>
                       <div className='flex justify-center'><img src='assets/images/cryptoIcon.png' width={20}></img><p>{title[2].detail1}</p></div>
-                      <p>{title[2].detail2}</p>
+                      {/* <p>{title[2].detail2}</p> */}
                       <p>{title[2].price}</p>
                     </Stack>
                   </Grid>
@@ -355,7 +355,7 @@ const MiningModal = ({
                     >
                       <p>{title[3].level}</p>
                       <div className='flex justify-center'><img src='assets/images/cryptoIcon.png' width={20}></img><p>{title[3].detail1}</p></div>
-                      <p>{title[3].detail2}</p>
+                      {/* <p>{title[3].detail2}</p> */}
                       <p>{title[3].price}</p>
                     </Stack>
                   </Grid>
@@ -376,7 +376,7 @@ const MiningModal = ({
                     >
                       <p>{title[levelState].level}</p>
                       <div className='flex justify-center'><img src='assets/images/cryptoIcon.png' width={upgradeTab ? 20 : 30}></img><p>{title[levelState].detail1}</p></div>
-                      <p>{title[levelState].detail2}</p>
+                      {/* <p>{title[levelState].detail2}</p> */}
                     </Stack>
                   </Grid>
                 </>
@@ -409,7 +409,7 @@ const MiningModal = ({
               </div> : null
             }
 
-            {!upgradeTab ?
+            {!upgradeTab && btnType === "Buy" ?
               <div className='text-[14px] font-bold text-[#e7e1e1] text-center' style={{ fontFamily: 'Anime Ace' }}>
                 <p>{title[levelState].price}</p>
               </div> : null
