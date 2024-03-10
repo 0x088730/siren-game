@@ -4,7 +4,7 @@ import Button from '@mui/material/Button'
 import Modal from '@mui/material/Modal'
 import React, { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
-import { showHourMinutes } from '../../utils/timer'
+import { convertSecToHMS, showHourMinutes } from '../../utils/timer'
 
 interface Props {
   openRock: any,
@@ -107,7 +107,7 @@ const RockModal = ({
                   }}
                 >
                   AMOUNT: 5<br></br>
-                  TIME: 3 HOURS<br></br>
+                  TIME: 12 HOURS<br></br>
                 </h2>
                 <Button
                   style={{
@@ -128,7 +128,7 @@ const RockModal = ({
                     }
                   }}
                 >
-                  {(remainedTime === 0 ? btnTitle : showHourMinutes(remainedTime))}
+                  {(remainedTime === 0 ? btnTitle : convertSecToHMS(remainedTime))}
                   {/* {counting === 0 ? 'START' : timer === 0 ? 'CLAIM' : `${showHourMinutes(timer)}`} */}
                 </Button>
                 <h2 className="font-bold text-2xl mb-4 text-white upgrade-label"

@@ -17,6 +17,7 @@ import {
 import { checkPremium } from '../../utils/checkPremium'
 import { getWithdrewSirenAmount } from '../../utils/user'
 import { global } from '../../common/global'
+import { convertSecToHMS } from '../../utils/timer'
 
 interface Props {
   open: boolean
@@ -46,10 +47,10 @@ const MiningModal = ({
   setLevelState
 }: Props) => {
   const title = [
-    { level: "LEVEL 1:", detail1: "9 CSC PER 12H", detail2: "CLAIM 9 CSC EACH 12H", price: "PRICE: 500 CSC" },
-    { level: "LEVEL 1:", detail1: "9 CSC PER 12H", detail2: "CLAIM 9 CSC EACH 12H", price: "PRICE: 500 CSC" },
-    { level: "LEVEL 2:", detail1: "18 CSC PER 12H", detail2: "CLAIM 18 CSC EACH 12H", price: "PRICE: 950 CSC" },
-    { level: "LEVEL 3:", detail1: "36 CSC PER 12H", detail2: "CLAIM 36 CSC EACH 12H", price: "PRICE: 1850 CSC" },
+    { level: "LEVEL 1:", detail1: "9 CSC PER 6H", detail2: "CLAIM 9 CSC EACH 6H", price: "PRICE: 500 CSC" },
+    { level: "LEVEL 1:", detail1: "9 CSC PER 6H", detail2: "CLAIM 9 CSC EACH 6H", price: "PRICE: 500 CSC" },
+    { level: "LEVEL 2:", detail1: "18 CSC PER 6H", detail2: "CLAIM 18 CSC EACH 6H", price: "PRICE: 950 CSC" },
+    { level: "LEVEL 3:", detail1: "36 CSC PER 6H", detail2: "CLAIM 36 CSC EACH 6H", price: "PRICE: 1850 CSC" },
   ]
   const { connected, chainID, address, connect } = useWeb3Context()
   const { user } = useSelector((state: any) => state.userModule)
@@ -63,17 +64,7 @@ const MiningModal = ({
   const [isCooldownStarted, setIsCooldownStarted] = useState(false)
   const [halfGet, setHalfGet] = useState(false);
   const [upgradeErrorFlag, setUpgradeErrorFlag] = useState(false)
-  var convertSecToHMS = (number: number) => {
-    const hours = Math.floor(number / 3600)
-      .toString()
-      .padStart(2, '0')
-    const minutes = Math.floor((number % 3600) / 60)
-      .toString()
-      .padStart(2, '0')
-    const seconds = (number % 60).toString().padStart(2, '0')
-    const formattedTime = `${minutes}:${seconds}`/*${hours}:*/
-    return formattedTime
-  }
+  const halfRemainTime = 21600;
   useEffect(() => {
     if (upgradeTab && levelState === 3) setBtnType("LIMIT");
     else if (!upgradeTab && levelState === 0) setBtnType("Buy")
@@ -87,7 +78,7 @@ const MiningModal = ({
           if (cooldownSec === 999999) {
             setBtnType('Start')
           }
-          else if (cooldownSec <= 50 && res.data.getStatus === false) {
+          else if (cooldownSec <= halfRemainTime && res.data.getStatus === false) {
             setCsc(res.data.csc)
             setBtnType('Claim')
           }
@@ -108,7 +99,7 @@ const MiningModal = ({
     if (isCooldownStarted) {
       var cooldownInterval = setInterval(() => {
         setRemainedTime((prevTime) => {
-          if (prevTime === 1 || prevTime === 51) {
+          if (prevTime === 1 || prevTime === halfRemainTime + 1) {
             setBtnType('Claim')
           }
           if (prevTime === 0) {
@@ -134,7 +125,7 @@ const MiningModal = ({
 
 
   const onButtonClick = async () => {
-    if (remainedTime <= 50 && remainedTime > 0 && btnType === "Claim" && halfGet === false) {
+    if (remainedTime <= halfRemainTime && remainedTime > 0 && btnType === "Claim" && halfGet === false) {
       dispatch(claimSiren(address, true, (res: any) => {
         setCsc(res.data.csc)
         setHalfGet(true);
@@ -396,7 +387,7 @@ const MiningModal = ({
               >
                 <img alt="" src="/assets/images/big-button.png" />
                 <p className='absolute text-[14px] text-center text-[#e7e1e1]' style={{ fontFamily: 'Anime Ace' }}>
-                  {(remainedTime === 0 ? btnType : ((remainedTime <= 50 && halfGet === false) ? btnType : convertSecToHMS(remainedTime)))}
+                  {(remainedTime === 0 ? btnType : ((remainedTime <= halfRemainTime && halfGet === false) ? btnType : convertSecToHMS(remainedTime)))}
                 </p>
               </Button>
               }

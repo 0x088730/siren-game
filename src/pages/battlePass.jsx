@@ -22,7 +22,7 @@ const initialLevelData = [
     { level: 12, image: "assets/images/cryptoIcon.png", value: "X100", getStatus: false, available: false, title1: "BUY 220 CSC TOKEN", title2: "100X RESOURCES, 100X WATER, 100X CSC" },
     { level: 13, image: "assets/images/claim-box.png", value: "X3, X50", getStatus: false, available: false, title1: "GET 5000 TEST CSC", title2: "3X CHESTS, 50X WATER" },
     { level: 14, image: "assets/images/characters/avatar/2.png", value: "X1", getStatus: false, available: false, title1: "BUY 1110 CSC TOKEN", title2: "RANDOM CHARACTER" },
-    { level: 15, image: "assets/images/characters/avatar/4.png", value: "X1", getStatus: false, available: false, title1: "GET 12000 TEST CSC, 5000 WATER, BUY 200+ CSC", title2: "RANDOM CHARACTER" },
+    { level: 15, image: "assets/images/characters/avatar/4.png", value: "X1", getStatus: false, available: false, title1: "GET 7000 TEST CSC, 5000 WATER, BUY 200+ CSC", title2: "RANDOM CHARACTER" },
 ]
 
 export const BattlePass = (props) => {
@@ -67,8 +67,6 @@ export const BattlePass = (props) => {
                 getRandomValue();
             })
         }
-        // const video = document.getElementById('backgroundVideo')
-        // video.style.display = "none"
     }, [address])
 
     useEffect(() => {

@@ -13,6 +13,7 @@ import {
 } from '../../store/user/actions'
 import { useWeb3Context } from '../../hooks/web3Context'
 import { global } from '../../common/global'
+import { convertSecToHMS } from '../../utils/timer'
 
 interface Props {
   open: any
@@ -50,18 +51,6 @@ const ExchangeModal = ({
   const [btnType, setBtnType] = useState('Start')
   const [avatar, setAvatar] = useState("");
 
-  var convertSecToHMS = (number: number) => {
-    const hours = Math.floor(number / 3600)
-      .toString()
-      .padStart(2, '0')
-    const minutes = Math.floor((number % 3600) / 60)
-      .toString()
-      .padStart(2, '0')
-    const seconds = (number % 60).toString().padStart(2, '0')
-    const formattedTime = `${minutes}:${seconds}` /*${hours}:*/
-    return formattedTime
-  }
-
   const onBtnClick = () => {
     if (remainedTime > 0)
       return
@@ -74,7 +63,7 @@ const ExchangeModal = ({
       dispatch(
         startHunterUpgradeCooldown(address, userCount, avatar, (resp: any) => {
           if (resp.data === true) {
-            setRemainedTime(30)
+            setRemainedTime(7200)
             setIsCooldownStarted(true)
           }
         }),
