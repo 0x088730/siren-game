@@ -48,9 +48,9 @@ export const BattlePass = (props) => {
         }
     }, [])
     useEffect(() => {
-        // if (address === undefined || address === null || address === "") {
-        //     return navigate("/", { replace: true });
-        // }
+        if (address === undefined || address === null || address === "") {
+            return navigate("/", { replace: true });
+        }
         if (address !== undefined && address !== null && address !== "") {
             getRewardWithLevel(address).then(res => {
                 setAvailable(res.available);
