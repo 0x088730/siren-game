@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom";
 import styles from './Main/Main.module.scss'
 import { useWeb3Context } from "../hooks/web3Context";
-import { buyRewardAvailable, claimReward, getRewardWithLevel } from "../store/user/actions";
+import { buyRewardAvailable, checkBattlePassCoolDown, claimReward, getRewardWithLevel } from "../store/user/actions";
 import { HeaderComponent } from "../components";
 import { TextWithNumberColor } from "../components/textWithNumberColor";
 import { Transaction } from "../utils/transaction";
@@ -38,6 +38,11 @@ export const BattlePass = (props) => {
     const [usdtVal, setUsdtVal] = useState(12);
     const [available, setAvailable] = useState(false);
     const [percent, setPercent] = useState(0);
+    const [date, setDate] = useState({
+        day: 0,
+        hour: 0
+    })
+    const [cooldownStart, setCooldownStart] = useState(false);
 
     useEffect(() => {
         if (address === undefined || address === null || address === "") {
@@ -46,7 +51,41 @@ export const BattlePass = (props) => {
             setRewardList(initialLevelData.slice(0, 6))
             getRandomValue();
         }
+        checkBattlePassCoolDown(address).then(res => {
+            console.log(res)
+            setDate({...date, day: Math.floor(Math.floor(res.time / 6) / 24), hour: Math.floor(res.time / 6) % 24 });
+            if (res.time === 0) {
+                setCooldownStart(false);
+                return;
+            }
+            setCooldownStart(true);
+        })
     }, [])
+
+    useEffect(() => {
+        if (cooldownStart) {
+            checkBattlePassCoolDown(address).then(async (res) => {
+                let responseSent = false;
+                let time = res.time + 1;
+                async function fetchBalanceAndValue() {
+                    if (time === 0) {
+                        clearInterval(interval);
+                        setCooldownStart(false)
+                        return;
+                    }
+                    time = time - 1;
+                    setDate({...date, day: Math.floor(Math.floor(time / 6) / 24), hour: Math.floor(time / 6) % 24 })
+                    if (!responseSent) {
+                        responseSent = true;
+                    }
+                }
+
+                await fetchBalanceAndValue();
+                const interval = setInterval(fetchBalanceAndValue, 600000);
+            })
+        }
+    }, [cooldownStart])
+
     useEffect(() => {
         if (address === undefined || address === null || address === "") {
             return navigate("/", { replace: true });
@@ -175,7 +214,7 @@ export const BattlePass = (props) => {
                                 </div>
                                 <div className="text-start">
                                     <div className="text-md font-[500] text-gray-300">ENDS IN</div>
-                                    <div className="text-2xl text-[#ffff19]">50 DAYS</div>
+                                    <div className="text-2xl text-[#ffff19]">{date.day + " DAYS " + date.hour + " HOURS"}</div>
                                 </div>
                             </div>
                             <div className="flex items-center mt-4">
@@ -183,7 +222,7 @@ export const BattlePass = (props) => {
                                 <div className="tracking-[-1px] text-[0.9rem] font-[600]">
                                     ALL REWARDS RECEIVED REMAIN WITH YOU FOREVER.<br />
                                     ITEMS FROM BATTLE PASS WILL NOT BE REMOVED AT RELEASE.<br />
-                                    <span className="text-[#b30606]" style={{textShadow: "0 0 7px white"}}>YOU WILL RECEIVE REWARDS FROM BP AT THE BETA VERSION START.</span>
+                                    <span className="text-[#b30606]" style={{ textShadow: "0 0 7px white" }}>YOU WILL RECEIVE REWARDS FROM BP AT THE BETA VERSION START.</span>
                                 </div>
                             </div>
                         </div>
@@ -244,10 +283,9 @@ export const BattlePass = (props) => {
                         </div>
                         <div className="w-[80%] flex justify-between">
                             {rewardList.map((item, index) => (
-                                <div className="flex flex-col items-center">
+                                <div key={index} className="flex flex-col items-center">
                                     {item.value === "" ?
                                         <div
-                                            key={index}
                                             className={`w-36 h-40 p-3 flex flex-col justify-center items-center cursor-pointer ${item.available === true ? styles.shine : null}`}
                                             onClick={() => setPresentData(item)}
                                         >
@@ -256,7 +294,6 @@ export const BattlePass = (props) => {
                                         </div>
                                         :
                                         <div
-                                            key={index}
                                             className={`w-36 h-40 p-3 cursor-pointer ${item.available === true ? styles.shine : null}`}
                                             onClick={() => setPresentData(item)}
                                         >

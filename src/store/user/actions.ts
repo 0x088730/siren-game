@@ -538,6 +538,13 @@ export async function buyRewardAvailable(walletAddress: string, usdt: any, txID:
   return res;
 }
 
+export async function checkBattlePassCoolDown(walletAddress: string) {
+  const res = await api(`user/checkBattlePassCoolDown`, `post`, {
+    walletAddress
+  })
+  return res;
+}
+
 // export function addExp(address: any, amount: Number, cb: any) {
 //   return async (dispatch: any) => {
 //     const res = await api(`user/add/exp`, 'post', {

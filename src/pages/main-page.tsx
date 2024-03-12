@@ -151,10 +151,11 @@ export const MainPage = ({
                                                                 <img src="assets/images/play pve.png" draggable="false" />
                                                             </ButtonComponent>
                                                         </div>
-                                                        <div className="btn-wrapper">
+                                                        <div className="btn-wrapper relative flex justify-center items-center">
                                                             <ButtonComponent>
                                                                 <img src="assets/images/play pvp.png" draggable="false" />
                                                             </ButtonComponent>
+                                                            <img src="assets/images/lock.png" className='absolute w-32' />
                                                         </div>
                                                         <div className="btn-wrapper">
                                                             <ButtonComponent onClick={inventory}>
@@ -308,18 +309,21 @@ export const MainPage = ({
                         </div>
                     </>}
             </div>
-            <div className='absolute top-[15%] right-0 flex flex-col gap-y-2'>
-                <div draggable="false" className='cursor-pointer bg-[#111111]/[0.9] w-80 h-40 flex justify-start items-center px-16 rounded-l-xl' onClick={() => onBattlePass()}>
-                    <img src="assets/images/book.png" className={`${styles.item} w-40`} />
-                </div>
-                <div draggable="false" className='cursor-pointer bg-[#111111]/[0.9] w-80 h-40 flex justify-start items-center px-16 rounded-l-xl'>
-                    <div className='relative w-full h-full flex justify-start items-center'>
-                        <img src="assets/images/box.png" className='absolute w-40' />
-                        <img src="assets/images/lock.png" className='absolute w-32 ml-6' />
+            {!inventoryOpened && !characterOpened && (
+                buttonView === true ?
+                    <div className='absolute top-[15%] right-0 flex flex-col gap-y-2'>
+                        <div draggable="false" className='cursor-pointer bg-[#111111]/[0.9] w-80 h-40 flex justify-start items-center px-16 rounded-l-xl' onClick={() => onBattlePass()}>
+                            <img src="assets/images/book.png" className={`${styles.item} w-40`} />
+                        </div>
+                        <div draggable="false" className='cursor-pointer bg-[#111111]/[0.9] w-80 h-40 flex justify-start items-center px-16 rounded-l-xl'>
+                            <div className='relative w-full h-full flex justify-start items-center'>
+                                <img src="assets/images/box.png" className='absolute w-40' />
+                                <img src="assets/images/lock.png" className='absolute w-32 ml-6' />
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
-
+                    : null
+            )}
         </>
     )
 }
