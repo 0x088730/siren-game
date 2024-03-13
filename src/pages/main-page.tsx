@@ -119,7 +119,7 @@ export const MainPage = ({
             <video
                 id="backgroundVideo"
                 src="assets/background/main.mp4"
-                className="absolute object-cover object-center w-full h-full bgVideo"
+                className="absolute object-cover object-center w-full h-full bgVideo min-w-[1600px]"
                 style={{ display: display }}
                 autoPlay
                 loop
@@ -162,20 +162,6 @@ export const MainPage = ({
                                                                 <img src="assets/images/inventory.png" draggable="false" />
                                                             </ButtonComponent>
                                                         </div>
-                                                    </div>
-                                                    <div className="btn-ligroup">
-                                                        <ButtonComponent onClick={character}>
-                                                            <img
-                                                                src="assets/images/characters.png" draggable="false"
-                                                            />
-                                                        </ButtonComponent>
-                                                        {/* <Link to="/land" className="button muted-button"> */}
-                                                        <ButtonComponent onClick={() => !address ? null : onLand()}>
-                                                            <img
-                                                                src="assets/images/land.png" draggable="false"
-                                                            />
-                                                        </ButtonComponent>
-                                                        {/* </Link> */}
                                                     </div>
                                                 </div> : null
                                         )}
@@ -311,14 +297,26 @@ export const MainPage = ({
             </div>
             {!inventoryOpened && !characterOpened && (
                 buttonView === true ?
-                    <div className='absolute top-[15%] right-0 flex flex-col gap-y-2'>
-                        <div draggable="false" className='cursor-pointer bg-[#111111]/[0.9] w-80 h-40 flex justify-start items-center px-16 rounded-l-xl' onClick={() => onBattlePass()}>
-                            <img src="assets/images/book.png" className={`${styles.item} w-40`} />
-                        </div>
-                        <div draggable="false" className='cursor-pointer bg-[#111111]/[0.9] w-80 h-40 flex justify-start items-center px-16 rounded-l-xl'>
-                            <div className='relative w-full h-full flex justify-start items-center'>
-                                <img src="assets/images/box.png" className='absolute w-40' />
-                                <img src="assets/images/lock.png" className='absolute w-32 ml-6' />
+                    <div className='absolute w-full h-full min-w-[1600px]'>
+                        <div className='relative w-full h-full'>
+                            <div className='absolute top-[15%] right-0 flex flex-col gap-y-2'>
+                                <div draggable="false" className='cursor-pointer bg-[#111111]/[0.9] w-80 h-40 flex justify-start items-center px-16 rounded-l-xl' onClick={() => onBattlePass()}>
+                                    <img src="assets/images/book.png" className={`${styles.item} w-40`} />
+                                </div>
+                                <div draggable="false" className='cursor-pointer bg-[#111111]/[0.9] w-80 h-40 flex justify-start items-center px-16 rounded-l-xl'>
+                                    <div className='relative w-full h-full flex justify-start items-center'>
+                                        <img src="assets/images/box.png" className='absolute w-40' />
+                                        <img src="assets/images/lock.png" className='absolute w-32 ml-6' />
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="btn-ligroup">
+                                <ButtonComponent onClick={character}>
+                                    <img src="assets/images/characters.png" draggable="false" />
+                                </ButtonComponent>
+                                <ButtonComponent onClick={() => !address ? null : onLand()}>
+                                    <img src="assets/images/land.png" draggable="false" />
+                                </ButtonComponent>
                             </div>
                         </div>
                     </div>

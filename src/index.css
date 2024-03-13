@@ -58,13 +58,13 @@ code {
 }
 
 @media screen and (max-width: 1400px) {
-  .btn-ligroup {
+  /* .btn-ligroup {
     display: grid;
     position: absolute;
     right: 10px;
     top: 80px;
     justify-items: center;
-  }
+  } */
 }
 
 .btn-wrapper {
