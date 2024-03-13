@@ -145,7 +145,7 @@ export const MainPage = ({
                                         {!inventoryOpened && !characterOpened && (
                                             buttonView === true ?
                                                 <div>
-                                                    <div className="btn-group">
+                                                    <div className="btn-group z-10">
                                                         <div className="btn-wrapper">
                                                             <ButtonComponent onClick={start}>
                                                                 <img src="assets/images/play pve.png" draggable="false" />
