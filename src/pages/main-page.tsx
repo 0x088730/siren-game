@@ -124,8 +124,8 @@ export const MainPage = ({
     }
 
     const enterWithCode = () => {
-        if (code === "") {
-            alert("Please create code in https://cryptoshowdown.io/presale");
+        if (code === "" || code === global.referralCode) {
+            alert("Please input correct code!");
             return;
         }
         addLoginHistory(global.walletAddress, code).then(res => {
