@@ -124,7 +124,7 @@ export const MainPage = ({
     }
 
     const enterWithCode = () => {
-        if (global.referralCode === "" || code === "") {
+        if (code === "") {
             alert("Please create code in https://cryptoshowdown.io/presale");
             return;
         }
