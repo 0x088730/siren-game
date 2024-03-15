@@ -30,6 +30,7 @@ export interface GameStateProps {
   getCharacter: boolean
   openChapter: boolean
   display: string
+  rememberCode: boolean
   buttonView: boolean
 }
 
@@ -63,6 +64,7 @@ const gameInitialState: GameStateProps = {
   getCharacter: false,
   openChapter: false,
   display: "block",
+  rememberCode: false,
   buttonView: true,
 }
 

@@ -29,6 +29,7 @@ export const getProfile = async (walletAddress: string, character: string) => {
     global.hunterLevel = user.hunterLevel
     global.sectionStatus = data.sectionStatus
     global.resource = user.resource
+    global.referralCode = user.userRef
 }
 export const referalAdd = async () => {
     await axios.post('/user/referal', {

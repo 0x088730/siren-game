@@ -82,6 +82,9 @@ export const gameSlice = createSlice({
     setDisplay: (state: GameStateProps, action: PayloadAction<string>) => {
       state.display = action.payload
     },
+    setRememberCode: (state: GameStateProps, action: PayloadAction<boolean>) => {
+      state.rememberCode = action.payload
+    },
     setButtonView: (state: GameStateProps, action: PayloadAction<boolean>) => {
       state.buttonView = action.payload
     }
@@ -106,6 +109,7 @@ export const {
   getCharacterStatus,
   openChapterPage,
   setDisplay,
+  setRememberCode,
   setButtonView
 } = gameSlice.actions
 

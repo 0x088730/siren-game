@@ -33,6 +33,7 @@ const ExchangeModal = ({
   setEgg,
 }: Props) => {
   const { connected, chainID, address, connect } = useWeb3Context()
+  const count = [0, 1, 2];
 
   const userModule = useSelector((state: any) => state.userModule)
   const [openCharacterChoose, setOpenChraracterChoose] = useState(false)
@@ -49,7 +50,7 @@ const ExchangeModal = ({
   const [isCooldownStarted, setIsCooldownStarted] = useState(false)
   const dispatch = useDispatch<any>()
   const [btnType, setBtnType] = useState('Start')
-  const [avatar, setAvatar] = useState("");
+  const [avatar, setAvatar] = useState(["", "", ""]);
 
   const onBtnClick = () => {
     if (remainedTime > 0)
@@ -72,11 +73,11 @@ const ExchangeModal = ({
       dispatch(
         claimHunter(address, (resp: any) => {
           setBtnType('Start')
-          setAvatar("")
+          setAvatar(["", "", ""])
           setSelectedCharacterList([-1, -1, -1])
           setCsc(resp.data.csc);
           setEgg(resp.data.egg);
-          setClaimBar({siren: -1, egg: -1, claim: true})
+          setClaimBar({ siren: -1, egg: -1, claim: true })
         }),
       )
     }
@@ -160,7 +161,7 @@ const ExchangeModal = ({
         }),
       )
   }, [open, dispatch])
-
+  console.log(avatar)
   const onUpgradeLevel = () => {
     if (btnType !== "Start" || remainedTime >= 0) {
       alert("please get claim first")
@@ -190,13 +191,21 @@ const ExchangeModal = ({
     }))
   }
 
+  const selectCharacter = (item: any) => {
+    if (remainedTime > 0 || btnType === "Claim") return;
+    if (item <= upgradeLevel) {
+      setSelectedCharacterIndex(item);
+      setOpenChraracterChoose(true)
+    }
+  }
+
   const style = {
     position: 'absolute' as const,
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
     width: {
-      xs: 150,
+      xs: 180,
       md: 700,
     },
   }
@@ -218,7 +227,135 @@ const ExchangeModal = ({
             className='absolute top-0 right-0 w-[7%] cursor-pointer z-[5] translate-x-[26%] translate-y-[-27%]'
             onClick={handleClose}
           />
-          <Box
+          <div className='absolute top-0 font-bold text-[#e7e1e1] leading-[100%] flex justify-center w-full'
+            style={{ fontFamily: 'Anime Ace' }}
+          >
+            <img alt="" src="assets/images/head-bg.png" className='w-72 -mt-12' />
+            <p className={`absolute text-[20px] text-center -mt-6 leading-6`}>Hunting <br />Lodge</p>
+          </div>
+          <div className='absolute top-0 w-full h-full p-12 flex flex-col justify-start items-center text-[#e7e1e1] font-bold'>
+            <div className='flex justify-between items-center w-full'>
+              <div className='relative w-48 h-48 border-4 rounded-lg border-[#ffffff]/[0.2] flex justify-center items-center cursor-pointer text-[14px]' onClick={() => { selectCharacter(0) }}>
+                <img alt="" src="assets/images/huntingImg1.png" className='w-full h-full border-2 border-black rounded-md' />
+                {avatar[0] === "" ?
+                  <>
+                    <img src="assets/images/shadow.png" alt="" className='absolute w-36' />
+                    <div className='absolute text-center'>CLICK TO SELECT<br />CHARACTER</div>
+                  </>
+                  :
+                  <img src={avatar[0]} alt="" className='absolute w-28' />
+                }
+              </div>
+              <div className='relative w-48 h-48 border-4 rounded-lg border-[#ffffff]/[0.2] flex justify-center items-center cursor-pointer text-[14px]' onClick={() => { selectCharacter(1) }}>
+                {upgradeLevel === 1 ?
+                  <>
+                    <img alt="" src="assets/images/huntingImg1.png" className='w-full h-full border-2 border-black rounded-md' />
+                    {avatar[1] === "" ?
+                      <>
+                        <img src="assets/images/shadow.png" alt="" className='absolute w-36' />
+                        <div className='absolute text-center'>CLICK TO SELECT<br />CHARACTER</div>
+                      </>
+                      :
+                      <img src={avatar[1]} alt="" className='absolute w-28' />
+                    }
+                  </>
+                  :
+                  <>
+                    <img alt="" src="assets/images/huntingImg2.png" className='w-full h-full border-2 border-black rounded-md' />
+                    <img src="assets/images/shadow.png" alt="" className='absolute w-36' />
+                    <div className='absolute w-full flex flex-col justify-center items-center gap-y-4'>
+                      <div className='flex justify-center items-center'><img src='assets/images/cryptoIcon.png' width={25} />100 CSC</div>
+                      <div className={`relative flex justify-center items-center w-3/4`}>
+                        <img src="/assets/images/upgrade btn.png" alt="" className='w-full' />
+                        <div
+                          className={`absolute`}
+                          onClick={() => onUpgradeLevel()}
+                        >
+                          UPGRADE
+                        </div>
+                      </div>
+                    </div>
+                    <div className='absolute bottom-4'>NEED 2 LVL WALL</div>
+                  </>
+                }
+              </div>
+              <div className='relative w-48 h-48 border-4 rounded-lg border-[#ffffff]/[0.2] flex justify-center items-center cursor-pointer text-[14px]' onClick={() => { selectCharacter(2) }}>
+                {upgradeLevel === 2 ?
+                  <>
+                    <img alt="" src="assets/images/huntingImg1.png" className='w-full h-full border-2 border-black rounded-md' />
+                    {avatar[2] === "" ?
+                      <>
+                        <img src="assets/images/shadow.png" alt="" className='absolute w-36' />
+                        <div className='absolute text-center'>CLICK TO SELECT<br />CHARACTER</div>
+                      </>
+                      :
+                      <img src={avatar[2]} alt="" className='absolute w-28' />
+                    }
+                  </>
+                  :
+                  <>
+                    <img alt="" src="assets/images/huntingImg2.png" className='w-full h-full border-2 border-black rounded-md' />
+                    <img src="assets/images/shadow.png" alt="" className='absolute w-36' />
+                    <div className='absolute w-full flex flex-col justify-center items-center gap-y-4'>
+                      <div className='flex justify-center items-center'><img src='assets/images/cryptoIcon.png' width={25} />100 CSC</div>
+                      <div className={`relative flex justify-center items-center w-3/4 ${upgradeLevel === 1 ? "" : "grayscale"}`}>
+                        <img src="/assets/images/upgrade btn.png" alt="" className='w-full' />
+                        <div
+                          className={`absolute`}
+                          onClick={() => { if (upgradeLevel === 1) onUpgradeLevel() }}
+                        >
+                          {upgradeLevel === 1 ? "UPGRADE" : "UNLOCK"}
+                        </div>
+                      </div>
+                    </div>
+                    <div className='absolute bottom-4'>NEED 3 LVL WALL</div>
+                  </>
+                }
+              </div>
+            </div>
+            <div className='w-full mt-12'>
+              <div className='mb-0'>CAN BE FOUND</div>
+              <div className='flex justify-center items-center text-[13px] text-[#e7e1e1]' style={{ fontFamily: 'Anime Ace', }}>
+                <div className='flex gap-x-8'>
+                  <div className='relative w-24 h-24 flex justify-center items-center'>
+                    <img alt="" src="assets/images/roomBtn.png" className='w-full h-full' />
+                    <p className='absolute text-center'>
+                      {claimBar.siren === -1 ? '5-15' : claimBar.siren !== -2 ? claimBar.siren : ''}<br />
+                      {claimBar.siren !== -2 ? 'CSC' : ""}
+                    </p>
+                  </div>
+                  <div className='relative w-24 h-24 flex justify-center items-center'>
+                    <img alt="" src="assets/images/roomBtn.png" className='w-full h-full' />
+                    <p className='absolute text-center'>
+                      {claimBar.egg === -1 ? '20-40' : claimBar.egg !== -2 ? claimBar.egg : ''}<br />
+                      {claimBar.egg !== -2 ? 'RES' : ""}
+                    </p>
+                  </div>
+                  <div className='relative w-24 h-24 flex justify-center items-center'>
+                    <img alt="" src="assets/images/roomBtn.png" className='w-full h-full' />
+                    <p
+                      className='flex justify-center absolute text-center text-[#e7e1e1] text-[14px]'
+                      style={{ fontFamily: 'Anime Ace', }}
+                    >
+                      {claimBar.claim === true ? (
+                        <img
+                          src="assets/item/box-closed.png"
+                          alt=""
+                          className='w-[55%] mt-[-20px]'
+                        />
+                      ) : (
+                        ''
+                      )}
+                    </p>
+                  </div>
+                  <div className='relative w-24 h-24 flex justify-center items-center'>
+                    <img alt="" src="assets/images/roomBtn.png" className='w-full h-full' />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          {/* <Box
             sx={{
               position: 'absolute',
               top: 0,
@@ -227,17 +364,6 @@ const ExchangeModal = ({
               height: '100%',
             }}
           >
-            <Box>
-              <p className='text-[35px] text-center mt-[8%] text-[#e7e1e1]'
-                style={{
-                  fontFamily: 'Marko One, serif',
-                  textTransform: 'uppercase',
-                  lineHeight: '100%',
-                }}
-              >
-                Hunting Lodge
-              </p>
-            </Box>
             <Grid
               container
               spacing={2}
@@ -461,11 +587,11 @@ const ExchangeModal = ({
                   }}
                 >
                   <img src="/assets/images/roomBtn.png" alt="" />
-                  <p className='absolute text-[14px] text-center text-[#e7e1e1]' style={{ fontFamily: 'Anime Ace' }}>
-                    {/* {claimBar[2]===true?
+                  <p className='absolute text-[14px] text-center text-[#e7e1e1]' style={{ fontFamily: 'Anime Ace' }}> */}
+          {/* {claimBar[2]===true?
                     <img src="assets/item/box-closed.png" alt="" style={{width:"100%",height:"100%",padding:"8%"}}/>
                     :""} */}
-                  </p>
+          {/* </p>
                 </Button>
               </Grid>
             </Grid>
@@ -478,21 +604,18 @@ const ExchangeModal = ({
                 alignItems: 'center',
               }}
             >
-              <Button className='w-[40%]'
-                onClick={() => onBtnClick()}
-                sx={{
-                  marginLeft: 'auto',
-                  marginRight: 'auto',
-                }}
-              >
-                <img alt="" src="/assets/images/big-button.png" />
-                <p className='absolute text-[14px] text-center text-[#e7e1e1]'
-                  style={{ fontFamily: 'Anime Ace' }}
-                >
-                  {remainedTime <= 0 ? btnType : convertSecToHMS(remainedTime)}
-                </p>
-              </Button>
+
             </Grid>
+          </Box> */}
+          <Box className='flex justify-center absolute -bottom-4 w-full'>
+            <Button className='w-60' onClick={() => onBtnClick()}>
+              <img alt="" src="/assets/images/big-button.png" />
+              <p className='absolute text-[14px] text-center text-[#e7e1e1] font-bold'
+                style={{ fontFamily: 'Anime Ace' }}
+              >
+                {remainedTime <= 0 ? btnType : convertSecToHMS(remainedTime)}
+              </p>
+            </Button>
           </Box>
         </Box>
       </Modal>
@@ -502,6 +625,7 @@ const ExchangeModal = ({
         selectedCharacterList={selectedCharacterList}
         selectedCharacterIndex={selectedCharacterIndex}
         setSelectedCharacter={setSelectedCharacter}
+        avatar={avatar}
         setAvatar={setAvatar}
       />
     </>

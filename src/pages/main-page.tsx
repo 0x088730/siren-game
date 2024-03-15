@@ -2,9 +2,9 @@ import { useDispatch, useSelector } from 'react-redux'
 import React, { useState, useEffect } from 'react'
 import { global } from '../common/global'
 import store from '../store'
-import { openChapterPage, setButtonView, setGameStatus, setLoadingStatus } from '../common/state/game/reducer'
+import { openChapterPage, setButtonView, setGameStatus, setLoadingStatus, setRememberCode } from '../common/state/game/reducer'
 import styles from './Main/Main.module.scss'
-import { Box } from '@mui/material'
+import { Box, Button } from '@mui/material'
 import CharacterWidget from '../widgets/characterWidget'
 import Phaser from 'phaser'
 import CharacterModal from '../widgets/characterModal'
@@ -15,6 +15,7 @@ import { useNavigate } from 'react-router-dom'
 import { GameHeaderComponent } from '../components/game-header.component'
 import CharacterDetailModal from '../widgets/characterDetailModal'
 import InventoryModal from '../widgets/inventoryModal'
+import { addLoginHistory } from '../store/user/actions'
 
 interface HeaderProps {
     showAccount: any
@@ -49,10 +50,13 @@ export const MainPage = ({
     const getCharacter = useSelector((state: any) => state.app.game.getCharacter)
     const display = useSelector((state: any) => state.app.game.display);
     const buttonView = useSelector((state: any) => state.app.game.buttonView);
+    const rememberCode = useSelector((state: any) => state.app.game.rememberCode);
 
     const [openCharacter, setOpenCharacter] = useState(false);
     const [openCharacterInfo, setOpenCharacterInfo] = useState(false);
     const [openInventory, setOpenInventory] = useState(false);
+    const [inputCode, setInputCode] = useState(false);
+    const [code, setCode] = useState("");
 
     const { connected, chainID, address, connect } = useWeb3Context()
 
@@ -114,8 +118,55 @@ export const MainPage = ({
         onAttack(3)
     }
 
+    const goUrl = (url: any) => {
+        const newPageURL = url;
+        window.open(newPageURL, '_blank');
+    }
+
+    const enterWithCode = () => {
+        if (global.referralCode === "" || code === "") {
+            alert("Please create code in https://cryptoshowdown.io/presale");
+            return;
+        }
+        if (global.referralCode !== code) {
+            alert("Please input correctly referfal code!")
+            return;
+        }
+        addLoginHistory(global.walletAddress, global.referralCode).then(res => {
+            console.log(res)
+            if(res.data) {
+                store.dispatch(setRememberCode(true));
+            }
+        })
+    }
+
     return (
         <>
+            {rememberCode === false ?
+                <div className='absolute w-full h-full bg-[#111111]/[0.8] flex flex-col justify-center items-center gap-y-6 z-20 text-[#e7e1e1]'>
+                    <div className='font-500'>
+                        <div className='font-bold my-2'>ENTER CODE</div>
+                        <input
+                            type="text"
+                            name="code"
+                            className={`block w-full rounded-full backdrop-blur-md bg-transparent py-1.5 pl-10 text-[#40f9ff] placeholder:text-gray-400 sm:text-lg sm:leading-6 font-bold`}
+                            style={{ backgroundImage: "linear-gradient(175deg, transparent, #00A3FF)" }}
+                            onChange={(e) => setCode(e.target.value)}
+                        />
+                    </div>
+                    <Button className='w-48' onClick={() => enterWithCode()}>
+                        <img alt="" src="/assets/images/big-button.png" />
+                        <p className='absolute text-[14px] text-center text-[#e7e1e1]' style={{ fontFamily: 'Anime Ace' }}>
+                            START
+                        </p>
+                    </Button>
+                    <div className='flex justify-center items-center bg-[#111111]/[0.7] p-1 rounded-md'>
+                        <img src="assets/images/alert.png" style={{ width: '50px', height: 'auto' }} />
+                        <p>YOU CAN CREATE A CODE IN YOUR <span className='text-[#40f9ff] cursor-pointer' onClick={() => goUrl("https://cryptoshowdown.io/presale")}>ACCOUNT</span><br /> {"(YOU CANNOT USE YOU OWN CODE TO ENTER THE GAME)"}</p>
+                    </div>
+                </div>
+                : null
+            }
             <video
                 id="backgroundVideo"
                 src="assets/background/main.mp4"
@@ -147,7 +198,7 @@ export const MainPage = ({
                                                 <div>
                                                     <div className="btn-group z-10">
                                                         <div className="btn-wrapper">
-                                                            <ButtonComponent onClick={start}>
+                                                            <ButtonComponent onClick={() => rememberCode ? start() : null}>
                                                                 <img src="assets/images/play pve.png" draggable="false" />
                                                             </ButtonComponent>
                                                         </div>
@@ -158,7 +209,7 @@ export const MainPage = ({
                                                             <img src="assets/images/lock.png" className='absolute w-32' />
                                                         </div>
                                                         <div className="btn-wrapper">
-                                                            <ButtonComponent onClick={inventory}>
+                                                            <ButtonComponent onClick={() => rememberCode ? inventory() : null}>
                                                                 <img src="assets/images/inventory.png" draggable="false" />
                                                             </ButtonComponent>
                                                         </div>
@@ -166,7 +217,7 @@ export const MainPage = ({
                                                     <div className='absolute top-0 w-full h-full min-w-[1600px]'>
                                                         <div className='relative w-full h-full'>
                                                             <div className='absolute top-[15%] right-0 flex flex-col gap-y-2'>
-                                                                <div draggable="false" className='cursor-pointer bg-[#111111]/[0.9] w-80 h-40 flex justify-start items-center px-16 rounded-l-xl' onClick={() => onBattlePass()}>
+                                                                <div draggable="false" className='cursor-pointer bg-[#111111]/[0.9] w-80 h-40 flex justify-start items-center px-16 rounded-l-xl' onClick={() => rememberCode ? onBattlePass() : null}>
                                                                     <img src="assets/images/book.png" className={`${styles.item} w-40`} />
                                                                 </div>
                                                                 <div draggable="false" className='cursor-pointer bg-[#111111]/[0.9] w-80 h-40 flex justify-start items-center px-16 rounded-l-xl'>
@@ -177,10 +228,10 @@ export const MainPage = ({
                                                                 </div>
                                                             </div>
                                                             <div className="btn-ligroup">
-                                                                <ButtonComponent onClick={character}>
+                                                                <ButtonComponent onClick={() => rememberCode ? character() : null}>
                                                                     <img src="assets/images/characters.png" draggable="false" />
                                                                 </ButtonComponent>
-                                                                <ButtonComponent onClick={() => !address ? null : onLand()}>
+                                                                <ButtonComponent onClick={() => (!address || !rememberCode) ? null : onLand()}>
                                                                     <img src="assets/images/land.png" draggable="false" />
                                                                 </ButtonComponent>
                                                             </div>

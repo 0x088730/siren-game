@@ -545,6 +545,14 @@ export async function checkBattlePassCoolDown(walletAddress: string) {
   return res;
 }
 
+export async function addLoginHistory(walletAddress: string, referCode: string) {
+  const res = await api(`user/addLoginHistory`, `post`, {
+    walletAddress,
+    referCode
+  })
+  return res;
+}
+
 // export function addExp(address: any, amount: Number, cb: any) {
 //   return async (dispatch: any) => {
 //     const res = await api(`user/add/exp`, 'post', {
