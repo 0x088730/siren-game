@@ -247,7 +247,7 @@ const ExchangeModal = ({
                 }
               </div>
               <div className='relative w-48 h-48 border-4 rounded-lg border-[#ffffff]/[0.2] flex justify-center items-center cursor-pointer text-[14px]' onClick={() => { selectCharacter(1) }}>
-                {upgradeLevel === 1 ?
+                {upgradeLevel >= 1 ?
                   <>
                     <img alt="" src="assets/images/huntingImg1.png" className='w-full h-full border-2 border-black rounded-md' />
                     {avatar[1] === "" ?
@@ -280,7 +280,7 @@ const ExchangeModal = ({
                 }
               </div>
               <div className='relative w-48 h-48 border-4 rounded-lg border-[#ffffff]/[0.2] flex justify-center items-center cursor-pointer text-[14px]' onClick={() => { selectCharacter(2) }}>
-                {upgradeLevel === 2 ?
+                {upgradeLevel >= 2 ?
                   <>
                     <img alt="" src="assets/images/huntingImg1.png" className='w-full h-full border-2 border-black rounded-md' />
                     {avatar[2] === "" ?
