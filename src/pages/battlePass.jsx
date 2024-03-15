@@ -52,7 +52,6 @@ export const BattlePass = (props) => {
             getRandomValue();
         }
         checkBattlePassCoolDown(address).then(res => {
-            console.log(res)
             setDate({...date, day: Math.floor(Math.floor(res.time / 6) / 24), hour: Math.floor(res.time / 6) % 24 });
             if (res.time === 0) {
                 setCooldownStart(false);

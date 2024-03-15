@@ -128,15 +128,13 @@ export const MainPage = ({
             alert("Please create code in https://cryptoshowdown.io/presale");
             return;
         }
-        if (global.referralCode !== code) {
-            alert("Please input correctly referfal code!")
-            return;
-        }
-        addLoginHistory(global.walletAddress, global.referralCode).then(res => {
-            console.log(res)
-            if(res.data) {
-                store.dispatch(setRememberCode(true));
+        addLoginHistory(global.walletAddress, code).then(res => {
+            if (res.data === false) {
+                alert(res.message);
+                return;
             }
+            store.dispatch(setRememberCode(true));
+            global.referralCode = res.data;
         })
     }
 
