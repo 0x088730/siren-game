@@ -329,11 +329,11 @@ const MiningModal = ({
             style={{ fontFamily: 'Anime Ace' }}
           >
             <img alt="" src="assets/images/head-bg.png" className='w-72 -mt-12' />
-            <p className={`absolute text-[20px] text-center ${!upgradeTab ? "-mt-2" : "-mt-6 leading-6"}`}>TAWER<br />{upgradeTab && ' UPGRADE'}</p>
+            <p className={`absolute text-[20px] text-center ${!upgradeTab ? "-mt-2" : "-mt-6 leading-6"}`}>TOWER<br />{upgradeTab && ' UPGRADE'}</p>
           </div>
           {!upgradeTab ?
             <div className='absolute top-0 w-full h-full px-12 py-20 flex justify-between items-center text-[#e7e1e1] font-bold'>
-              <div className={`${(levelState === 0 || levelState === 1) ? styles.lvl1Box : levelState === 2 ? styles.lvl2Box : styles.lvl3Box} relative h-full w-60 flex flex-col justify-center items-center py-6 px-4 rounded-2xl`}>
+              <div className={`${levelState === 1 ? styles.lvl1Box : levelState === 2 ? styles.lvl2Box : styles.lvl3Box} relative ${levelState === 0 ? "invisible" : ""} h-full w-60 flex flex-col justify-center items-center py-6 px-4 rounded-2xl`}>
                 {/* <img alt="" src="assets/images/reward_bg_1.png" className='absolute w-full h-full' /> */}
                 <img alt="" src={`assets/images/box${levelState === 0 ? 1 : levelState}.png`} className='z-10 w-48 mb-8' />
                 <div className='flex flex-col justify-center items-center z-10'>
