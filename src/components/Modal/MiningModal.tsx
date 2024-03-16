@@ -345,13 +345,23 @@ const MiningModal = ({
                 </div>
               </div>
               <div className='flex flex-col justify-center items-center gap-y-6'>
+                <div className={`absolute top-48 text-[1.5rem] ${btnType === "Buy" ? "hidden" : ""}`}>{convertSecToHMS(remainedTime)}</div>
                 {(levelState !== 0 || upgradeTab === false) &&
+                  (remainedTime === 0 || (remainedTime <= halfRemainTime && halfGet === false) ?
                   <Button className='w-48' onClick={() => onButtonClick()}>
                     <img alt="" src="/assets/images/big-button.png" />
                     <p className='absolute text-[14px] text-center text-[#e7e1e1]' style={{ fontFamily: 'Anime Ace' }}>
-                      {(remainedTime === 0 ? btnType : ((remainedTime <= halfRemainTime && halfGet === false) ? btnType : convertSecToHMS(remainedTime)))}
+                      {(remainedTime === 0 ? btnType : ((remainedTime <= halfRemainTime && halfGet === false) ? btnType : "Claim"))}
                     </p>
                   </Button>
+                  :
+                  <Button className='w-48 grayscale'>
+                    <img alt="" src="/assets/images/big-button.png" />
+                    <p className='absolute text-[14px] text-center text-[#e7e1e1]' style={{ fontFamily: 'Anime Ace' }}>
+                      Claim
+                    </p>
+                  </Button>
+                  )
                 }
               </div>
               <div className='flex flex-col justify-center items-center'>
@@ -543,14 +553,8 @@ const MiningModal = ({
 
 
           {/* </Box> */}
-          <Box className='flex justify-center absolute bottom-0 w-full'>
-            <Button
-              onClick={!upgradeTab ? onUpgradeTab : onFarmTab}
-              sx={{
-                width: '140px',
-                padding: '0',
-              }}
-            >
+          <Box className='flex justify-center absolute -bottom-2 w-full'>
+            <Button className='w-48 p-0' onClick={!upgradeTab ? onUpgradeTab : onFarmTab}>
               <img alt="" src="/assets/images/tabbutton.png" />
               <p className="absolute font-bold text-[14px] text-center text-[#ffffff]" style={{ fontFamily: 'Anime Ace' }}>
                 {!upgradeTab ? "UPGRADE" : "FARM"}
