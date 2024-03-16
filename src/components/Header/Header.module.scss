@@ -294,3 +294,30 @@ header {
 }
 
 ;
+
+.lvl1Box {
+  border: 2px solid #3A2E32;
+  background-image: radial-gradient(#7B5634, #000000);
+  box-shadow: 0 0 5px white;
+  border-radius: 1rem;
+}
+
+.lvl2Box {
+  border: 2px solid #3A2E32;
+  background-image: radial-gradient(#9B9B9B, #000000);
+  box-shadow: 0 0 5px white;
+  border-radius: 1rem;
+}
+
+.lvl3Box {
+  border: 2px solid #3A2E32;
+  background-image: radial-gradient(#B39D2B, #000000);
+  box-shadow: 0 0 5px white;
+  border-radius: 1rem;
+}
+
+.characterBox {
+  border: 1px solid #887A00;
+  background-image: radial-gradient(#E7C92F, #000000);
+  border-radius: 4px;
+}

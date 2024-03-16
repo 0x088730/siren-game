@@ -14,6 +14,7 @@ import {
 import { useWeb3Context } from '../../hooks/web3Context'
 import { global } from '../../common/global'
 import { convertSecToHMS } from '../../utils/timer'
+import styles from "./Header.module.scss"
 
 interface Props {
   open: any
@@ -224,18 +225,19 @@ const ExchangeModal = ({
           <img
             alt=""
             src="/images/support/support_md_close_btn.png"
-            className='absolute top-0 right-0 w-[7%] cursor-pointer z-[5] translate-x-[26%] translate-y-[-27%]'
+            className='absolute top-0 right-0 w-[7%] cursor-pointer translate-x-[26%] translate-y-[-27%] z-20'
             onClick={handleClose}
           />
-          <div className='absolute top-0 font-bold text-[#e7e1e1] leading-[100%] flex justify-center w-full'
+          <div className='absolute top-0 font-bold text-[#e7e1e1] leading-[100%] flex justify-center w-full z-10'
             style={{ fontFamily: 'Anime Ace' }}
           >
             <img alt="" src="assets/images/head-bg.png" className='w-72 -mt-12' />
             <p className={`absolute text-[20px] text-center -mt-6 leading-6`}>Hunting <br />Lodge</p>
           </div>
+          <div className='absolute w-[40.5rem] h-[26.5rem] bg-[#3C1E10]/[0.6] top-[1.6rem] left-[1.7rem] rounded-xl'></div>
           <div className='absolute top-0 w-full h-full p-12 flex flex-col justify-start items-center text-[#e7e1e1] font-bold'>
             <div className='flex justify-between items-center w-full'>
-              <div className='relative w-48 h-48 border-4 rounded-lg border-[#ffffff]/[0.2] flex justify-center items-center cursor-pointer text-[14px]' onClick={() => { selectCharacter(0) }}>
+              <div className={`relative w-48 h-48 border-4 rounded-lg ${avatar[0] === "" ? "border-[#ffffff]/[0.2]" : "border-[#FFE60A]"} flex justify-center items-center cursor-pointer text-[14px]`} onClick={() => { selectCharacter(0) }}>
                 <img alt="" src="assets/images/huntingImg1.png" className='w-full h-full border-2 border-black rounded-md' />
                 {avatar[0] === "" ?
                   <>
@@ -243,10 +245,12 @@ const ExchangeModal = ({
                     <div className='absolute text-center'>CLICK TO SELECT<br />CHARACTER</div>
                   </>
                   :
-                  <img src={avatar[0]} alt="" className='absolute w-28' />
+                  <div className={`${styles.characterBox} absolute w-full h-full border-[3px] border-[#605a20]/[0.7] rounded-[1.2rem] flex justify-center items-center cursor-pointer`}>
+                    <img src={avatar[0]} alt="" className='absolute w-36' />
+                  </div>
                 }
               </div>
-              <div className='relative w-48 h-48 border-4 rounded-lg border-[#ffffff]/[0.2] flex justify-center items-center cursor-pointer text-[14px]' onClick={() => { selectCharacter(1) }}>
+              <div className={`relative w-48 h-48 border-4 rounded-lg ${avatar[1] === "" ? "border-[#ffffff]/[0.2]" : "border-[#FFE60A]"} flex justify-center items-center cursor-pointer text-[14px]`} onClick={() => { selectCharacter(1) }}>
                 {upgradeLevel >= 1 ?
                   <>
                     <img alt="" src="assets/images/huntingImg1.png" className='w-full h-full border-2 border-black rounded-md' />
@@ -256,7 +260,9 @@ const ExchangeModal = ({
                         <div className='absolute text-center'>CLICK TO SELECT<br />CHARACTER</div>
                       </>
                       :
-                      <img src={avatar[1]} alt="" className='absolute w-28' />
+                      <div className={`${styles.characterBox} absolute w-full h-full border-[3px] border-[#605a20]/[0.7] rounded-[1.2rem] flex justify-center items-center cursor-pointer`}>
+                        <img src={avatar[1]} alt="" className='absolute w-36' />
+                      </div>
                     }
                   </>
                   :
@@ -279,7 +285,7 @@ const ExchangeModal = ({
                   </>
                 }
               </div>
-              <div className='relative w-48 h-48 border-4 rounded-lg border-[#ffffff]/[0.2] flex justify-center items-center cursor-pointer text-[14px]' onClick={() => { selectCharacter(2) }}>
+              <div className={`relative w-48 h-48 border-4 rounded-lg ${avatar[2] === "" ? "border-[#ffffff]/[0.2]" : "border-[#FFE60A]"} flex justify-center items-center cursor-pointer text-[14px]`} onClick={() => { selectCharacter(2) }}>
                 {upgradeLevel >= 2 ?
                   <>
                     <img alt="" src="assets/images/huntingImg1.png" className='w-full h-full border-2 border-black rounded-md' />
@@ -289,7 +295,9 @@ const ExchangeModal = ({
                         <div className='absolute text-center'>CLICK TO SELECT<br />CHARACTER</div>
                       </>
                       :
-                      <img src={avatar[2]} alt="" className='absolute w-28' />
+                      <div className={`${styles.characterBox} absolute w-full h-full border-[3px] border-[#605a20]/[0.7] rounded-[1.2rem] flex justify-center items-center cursor-pointer`}>
+                        <img src={avatar[2]} alt="" className='absolute w-36' />
+                      </div>
                     }
                   </>
                   :

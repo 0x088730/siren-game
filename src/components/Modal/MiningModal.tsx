@@ -17,6 +17,7 @@ import {
 import { checkPremium } from '../../utils/checkPremium'
 import { getWithdrewSirenAmount } from '../../utils/user'
 import { global } from '../../common/global'
+import styles from "../Header/Header.module.scss"
 import { convertSecToHMS } from '../../utils/timer'
 
 interface Props {
@@ -305,7 +306,7 @@ const MiningModal = ({
     transform: 'translate(-50%, -50%)',
     width: {
       xs: 180,
-      md: 700,
+      md: 750,
     },
   }
   return (
@@ -316,8 +317,8 @@ const MiningModal = ({
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={style}>
-          <img alt="" src="assets/images/tower-bg.webp" />
+        <Box sx={style} className='h-[512px]'>
+          <img alt="" src={`assets/images/${upgradeTab ? "tower-bg-upgrade.png" : "tower-bg.webp"}`} />
           <img
             alt=""
             src="/images/support/support_md_close_btn.png"
@@ -332,9 +333,9 @@ const MiningModal = ({
           </div>
           {!upgradeTab ?
             <div className='absolute top-0 w-full h-full px-12 py-20 flex justify-between items-center text-[#e7e1e1] font-bold'>
-              <div className='relative h-full w-60 flex flex-col justify-center items-center p-8'>
-                <img alt="" src="assets/images/reward_bg_1.png" className='absolute w-full h-full' />
-                <img alt="" src={`assets/images/box${levelState === 0 ? 1 : levelState }.png`} className='z-10 w-40 my-8' />
+              <div className={`${(levelState === 0 || levelState === 1) ? styles.lvl1Box : levelState === 2 ? styles.lvl2Box : styles.lvl3Box} relative h-full w-60 flex flex-col justify-center items-center py-6 px-4 rounded-2xl`}>
+                {/* <img alt="" src="assets/images/reward_bg_1.png" className='absolute w-full h-full' /> */}
+                <img alt="" src={`assets/images/box${levelState === 0 ? 1 : levelState}.png`} className='z-10 w-48 mb-8' />
                 <div className='flex flex-col justify-center items-center z-10'>
                   <p>{title[levelState].level}</p>
                   <div className='flex justify-center items-end'>
@@ -364,11 +365,11 @@ const MiningModal = ({
             </div>
             :
             <div className='absolute top-0 w-full h-full px-12 py-16 flex flex-col justify-center items-center gap-y-4 text-[#e7e1e1] font-bold'>
-              <div className='flex justify-between items-center w-full h-full'>
+              <div className='flex justify-evenly items-center w-full h-full'>
                 {count.map((item, index) => (
-                  <div key={index} className='h-full w-48 flex flex-col justify-center items-center gap-y-2'>
-                    <div className='relative flex flex-col justify-center items-center p-4 gap-y-2'>
-                      <img alt="" src="assets/images/reward_bg_2.png" className='absolute top-0 w-full h-full' />
+                  <div key={index} className='h-full w-48 flex flex-col justify-center items-center gap-y-2 rounded-2xl'>
+                    <div className={`${item === 1 ? styles.lvl1Box : item === 2 ? styles.lvl2Box : styles.lvl3Box} relative flex flex-col justify-center items-center p-4 gap-y-2`}>
+                      {/* <img alt="" src="assets/images/reward_bg_2.png" className='absolute top-0 w-full h-full' /> */}
                       <img alt="" src={`assets/images/box${item}.png`} className='z-10 w-36 my-4' />
                       <div className='flex flex-col justify-center items-center z-10 text-[15px]'>
                         <p>{title[item].level}</p>
@@ -378,7 +379,7 @@ const MiningModal = ({
                     <div className='flex flex-col justify-end items-center gap-y-2 w-full h-20'>
                       {item > levelState ? <p className='text-[14px]'>{title[item].price}</p> : null}
                       {item <= levelState ?
-                        <img alt="" src="/assets/images/check.png" className='w-12 h-12' />
+                        <img alt="" src="/assets/images/check.png" className='w-20 h-16' />
                         :
                         item === levelState + 1 ?
                           <Button className='w-48' onClick={() => onUpgrade()}>

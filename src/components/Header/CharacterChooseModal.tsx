@@ -5,6 +5,7 @@ import Modal from '@mui/material/Modal'
 import React, { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { global } from '../../common/global'
+import styles from "./Header.module.scss"
 
 interface Props {
   open: any
@@ -36,7 +37,7 @@ const CharacterChooseModal = ({ open, setOpen,
     setSelectedCharacter(characterNo);
     handleClose();
     let currentAvatar = avatar;
-    currentAvatar[selectedCharacterIndex] = `/assets/character/idle/${characterNo}.gif`
+    currentAvatar[selectedCharacterIndex] = `assets/images/characters/avatar/${characterNo}.png`
     setAvatar(currentAvatar);
   }
 
@@ -64,14 +65,14 @@ const CharacterChooseModal = ({ open, setOpen,
                 !selectedCharacterList.includes(characterNo)
               return <Grid item xs={5}>
                 <div
-                  className={`relative w-36 h-36 border-[3px] border-[#605a20]/[0.7] rounded-[1.2rem] flex justify-center items-center cursor-pointer ${available ? "" : "grayscale"}`}
+                  className={`${styles.characterBox} relative w-36 h-36 border-[3px] border-[#605a20]/[0.7] rounded-[1.2rem] flex justify-center items-center cursor-pointer ${available ? "" : "grayscale"}`}
                   onClick={() => {
                     if (available === true) {
                       select(characterNo);
                     }
                   }}
                 >
-                  <img src={`assets/images/reward_bg_2.png`} alt="" className='w-full h-full' />
+                  {/* <img src={`assets/images/reward_bg_2.png`} alt="" className='w-full h-full' /> */}
                   <img src={`assets/images/characters/avatar/${characterNo}.png`} alt="" className='absolute w-10/12 h-10/12' />
                 </div>
                 {/* <img src={`/assets/character/avatars/${characterNo}${available === false ? "-1" : ""}.png`} alt=""
