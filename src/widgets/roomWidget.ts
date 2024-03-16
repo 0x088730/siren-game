@@ -236,7 +236,7 @@ export default class RoomWidget extends Phaser.GameObjects.Container {
       //chapter
       const gChapter = global.room.chapter
 
-      document.body.style.backgroundImage = 'url(assets/background/chapter.jpg)'
+      document.body.style.backgroundImage = 'url(https://iksqvifj67dwchip.public.blob.vercel-storage.com/background/chapter-e4YXpWNzmhYgjYW1U3uscZbCRC5XBp.jpg)'
       for (let i = 0; i < this.chapter.length; i++) {
         this.chapter.getAt(i).setVisible(true)
       }
@@ -279,7 +279,7 @@ export default class RoomWidget extends Phaser.GameObjects.Container {
       ]
       this.section = new Phaser.Structs.List(null)
 
-      document.body.style.backgroundImage = 'url(assets/background/section.jpg)'
+      document.body.style.backgroundImage = 'url(https://iksqvifj67dwchip.public.blob.vercel-storage.com/background/section-FcXvmm1rYUgsp7Cl51MuLEwKeawCqT.jpg)'
       for (let i = 0; i < this.chapter.length; i++) {
         this.chapter.getAt(i).setVisible(false)
       }

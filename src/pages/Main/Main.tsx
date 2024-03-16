@@ -69,7 +69,7 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
 
     // const video = document.getElementById('backgroundVideo') as HTMLElement
     // video.style.display = "none"
-    document.body.style.backgroundImage = "url(assets/background/background.jpg)";
+    document.body.style.backgroundImage = "url(https://iksqvifj67dwchip.public.blob.vercel-storage.com/background/background-ZmVO9VcRcA8nQrT8efb1hyvB5ICiTw.jpg)";
 
     setTimeout(() => {
       if (address && wallLevelState !== 0) store.dispatch(setLoadingStatus(false));
@@ -358,7 +358,7 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
     <>
       {isLoading === true ?
         <>
-          <img src="assets/images/loading.gif" className="w-full h-full" />
+          <img src="https://iksqvifj67dwchip.public.blob.vercel-storage.com/background/loading-UUdMq9Eljlh95ZmCoFA42LIYO4vPog.gif" className="w-full h-full" />
         </>
         :
         <>

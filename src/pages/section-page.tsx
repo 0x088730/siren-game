@@ -67,7 +67,7 @@ export const SectionPage = ({
         //     if (res.message === "PVE Start") {
                 const page = document.getElementById("sectionPage") as HTMLElement
                 page.style.display = "none"
-                changeBackground('url(assets/background/bg.jpg)')
+                changeBackground('url(https://iksqvifj67dwchip.public.blob.vercel-storage.com/background/bg-Tb688buNrJp4hV2u8rPn8aPBG4lg5c.jpg)')
                 store.dispatch(setGameStatus(1))
                 const game = phaserGame.scene.keys.game as Game
                 game.startGame(index)

@@ -19,7 +19,7 @@ export const DefaultLayout: React.FC<AppProps> = (props) => {
   return (
     <div className="h-full">
       {isLoading === true ?
-        <img src="assets/images/loading.gif" style={{ width: "100%", height: "100%" }} />
+        <img src="https://iksqvifj67dwchip.public.blob.vercel-storage.com/background/loading-UUdMq9Eljlh95ZmCoFA42LIYO4vPog.gif" style={{ width: "100%", height: "100%" }} />
         :
         connected === false && address === "" ?
           <Suspense fallback={<div></div>}>

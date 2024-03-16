@@ -167,7 +167,7 @@ export const MainPage = ({
             }
             <video
                 id="backgroundVideo"
-                src="assets/background/main.mp4"
+                src="https://iksqvifj67dwchip.public.blob.vercel-storage.com/background/main-0KNTJspBC3DSN9hKdOjQLRRleLkPtF.mp4"
                 className="absolute object-cover object-center w-full h-full bgVideo min-w-[1600px]"
                 style={{ display: display }}
                 autoPlay
@@ -178,7 +178,7 @@ export const MainPage = ({
             <div className="relative w-full overflow-hidden">
                 {isLoading === true ?
                     <>
-                        <img src="assets/images/loading.gif" className='w-full h-full' />
+                        <img src="https://iksqvifj67dwchip.public.blob.vercel-storage.com/background/loading-UUdMq9Eljlh95ZmCoFA42LIYO4vPog.gif" className='w-full h-full' />
                     </>
                     :
                     <>

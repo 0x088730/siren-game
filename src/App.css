@@ -91,7 +91,7 @@ body {
 }
 
 .battlePass {
-  background-image: url("/public/assets/background/battlepass.png") !important;
+  background-image: url("https://iksqvifj67dwchip.public.blob.vercel-storage.com/background/battlepass-LoTParshvA4JsOPYD5WCDoHetBqNph.png") !important;
   background-size: 100% 100%;
 }
 
@@ -101,7 +101,7 @@ body {
 }
 
 .connectPage {
-  background-image: url("/public/assets/background/connect_bg.png") !important;
+  background-image: url("https://iksqvifj67dwchip.public.blob.vercel-storage.com/background/connect_bg-7fbKJUNbaIJZSQHYq9cnmvVb01sf9W.png") !important;
   background-size: 100% 100%;
   background-repeat: no-repeat;
 }

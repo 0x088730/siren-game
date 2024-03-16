@@ -107,7 +107,7 @@ export default class Game extends Phaser.Scene {
   startGame(section: any) {
     global.section = Number(section);
     store.dispatch(setTurnFormat())
-    this.changeBackground('url(assets/background/bg.jpg)')
+    this.changeBackground('url(https://iksqvifj67dwchip.public.blob.vercel-storage.com/background/bg-Tb688buNrJp4hV2u8rPn8aPBG4lg5c.jpg)')
     store.dispatch(setGameStatus(1))
     this.scene.start('battle')
   }
@@ -135,7 +135,7 @@ export default class Game extends Phaser.Scene {
 
     store.dispatch(setGameStatus(2))
 
-    this.changeBackground('url(assets/background/chapter.jpg')
+    this.changeBackground('url(https://iksqvifj67dwchip.public.blob.vercel-storage.com/background/chapter-e4YXpWNzmhYgjYW1U3uscZbCRC5XBp.jpg')
     //this.roomWidget.destroy()
 
     this.roomWidget = new RoomWidget(this, 880, 530)

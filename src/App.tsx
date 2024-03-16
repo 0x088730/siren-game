@@ -51,7 +51,7 @@ const App: React.FC = () => {
             <Route
               path="/"
               element={
-                <Suspense fallback={<img src="assets/images/loading.gif" style={{width: "100%", height: "100%"}} />}>
+                <Suspense fallback={<img src="https://iksqvifj67dwchip.public.blob.vercel-storage.com/background/loading-UUdMq9Eljlh95ZmCoFA42LIYO4vPog.gif" style={{width: "100%", height: "100%"}} />}>
                   <DefaultLayout
                     onModalShow={openModal}
                     component={
@@ -72,7 +72,7 @@ const App: React.FC = () => {
             />
             <Route path="/battlepass"
               element={
-                <Suspense fallback={<img src="assets/images/loading.gif" style={{width: "100%", height: "100%"}} />}>
+                <Suspense fallback={<img src="https://iksqvifj67dwchip.public.blob.vercel-storage.com/background/loading-UUdMq9Eljlh95ZmCoFA42LIYO4vPog.gif" style={{width: "100%", height: "100%"}} />}>
                   <BattlePass onModalShow={openModal} />
                 </Suspense>
               }
@@ -80,7 +80,7 @@ const App: React.FC = () => {
             <Route
               path="/land"
               element={
-                <Suspense fallback={<img src="assets/images/loading.gif" className='w-full h-full' />}>
+                <Suspense fallback={<img src="https://iksqvifj67dwchip.public.blob.vercel-storage.com/background/loading-UUdMq9Eljlh95ZmCoFA42LIYO4vPog.gif" className='w-full h-full' />}>
                   <Main
                     showAccount={showAccount}
                     setShowAccount={setShowAccount}
