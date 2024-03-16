@@ -162,7 +162,7 @@ const ExchangeModal = ({
         }),
       )
   }, [open, dispatch])
-  console.log(avatar)
+
   const onUpgradeLevel = () => {
     if (btnType !== "Start" || remainedTime >= 0) {
       alert("please get claim first")

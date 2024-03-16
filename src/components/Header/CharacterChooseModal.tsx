@@ -63,7 +63,7 @@ const CharacterChooseModal = ({ open, setOpen,
               let available =
                 global.characters.filter(character => character.characterNo === characterNo - 1).length > 0 &&
                 !selectedCharacterList.includes(characterNo)
-              return <Grid item xs={5}>
+              return <Grid key={characterNo} item xs={5}>
                 <div
                   className={`${styles.characterBox} relative w-36 h-36 border-[3px] border-[#605a20]/[0.7] rounded-[1.2rem] flex justify-center items-center cursor-pointer ${available ? "" : "grayscale"}`}
                   onClick={() => {
