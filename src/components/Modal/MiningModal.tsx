@@ -66,7 +66,7 @@ const MiningModal = ({
   const [isCooldownStarted, setIsCooldownStarted] = useState(false)
   const [halfGet, setHalfGet] = useState(false);
   const [upgradeErrorFlag, setUpgradeErrorFlag] = useState(false)
-  const [barHeight, setBarHeight] = useState("284px");
+  const [barHeight, setBarHeight] = useState("344px");
 
   const halfRemainTime = 21600;
   useEffect(() => {
@@ -84,17 +84,17 @@ const MiningModal = ({
             setBtnType('Start')
           }
           else if (cooldownSec <= halfRemainTime && res.data.getStatus === false) {
-            setBarHeight(Math.floor((1 - cooldownSec / 43200) * 284) + "px");
+            setBarHeight(Math.floor((1 - cooldownSec / 43200) * 344) + "px");
             setCsc(res.data.csc)
             setBtnType('Claim')
           }
           else if (cooldownSec <= 0) {
-            setBarHeight("284px");
+            setBarHeight("344px");
             setCsc(res.data.csc)
             setBtnType('Claim')
           }
           else {
-            setBarHeight(Math.floor((1 - cooldownSec / 43200) * 284) + "px");
+            setBarHeight(Math.floor((1 - cooldownSec / 43200) * 344) + "px");
             setRemainedTime(cooldownSec)
             setIsCooldownStarted(true)
           }
@@ -113,10 +113,10 @@ const MiningModal = ({
           if (prevTime === 0) {
             clearInterval(cooldownInterval)
             setIsCooldownStarted(false)
-            setBarHeight('284px')
+            setBarHeight('344px')
             return 0
           }
-          setBarHeight(Math.floor((1 - prevTime / 43200) * 284) + "px");
+          setBarHeight(Math.floor((1 - prevTime / 43200) * 344) + "px");
           return prevTime - 1
         })
       }, 1000)
@@ -366,9 +366,9 @@ const MiningModal = ({
               </div>
               <div className='flex flex-col justify-center items-center'>
                 <div>{levelState === 1 ? "9csc" : levelState === 2 ? "18csc" : levelState === 3 ? "36csc" : "0csc"}</div>
-                <div className='relative w-8 h-72 flex justify-center items-end'>
+                <div className='relative w-12 h-[22rem] flex justify-center items-end'>
                   <img alt="" src="/assets/images/progress-bar.png" className='h-full w-full' />
-                  <img alt="" src="/assets/images/bar.png" style={{ height: `${barHeight}` }} className={`absolute z-10 w-[1.6rem] mb-[0.2rem] opacity-80 rounded-b-lg`} />
+                  <img alt="" src="/assets/images/bar.png" style={{ height: `${barHeight}` }} className={`absolute z-10 w-[2.5rem] mb-[0.2rem] opacity-80 rounded-b-2xl`} />
                 </div>
                 <div>0csc</div>
               </div>
