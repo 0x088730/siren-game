@@ -363,7 +363,7 @@ const MiningModal = ({
                   </Button>
                   )
                 }
-                <div className={`absolute top-72 text-[1rem] ${levelState === 0 ? "hidden" : ""}`}>{title[levelState].price}</div>
+                <div className={`absolute top-72 text-[1rem] ${levelState === 0 ? "" : "hidden"}`}>{title[levelState].price}</div>
               </div>
               <div className='flex flex-col justify-center items-center'>
                 <div>{levelState === 1 ? "9csc" : levelState === 2 ? "18csc" : levelState === 3 ? "36csc" : "0csc"}</div>
