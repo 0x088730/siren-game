@@ -84,7 +84,7 @@ const MiningModal = ({
             setBtnType('Start')
           }
           else if (cooldownSec <= halfRemainTime && res.data.getStatus === false) {
-            setBarHeight(Math.floor((1 - cooldownSec / 43200) * 344) + "px");
+            setBarHeight(cooldownSec <= 0 ? "344px" : (Math.floor((1 - cooldownSec / 43200) * 344) + "px"));
             setCsc(res.data.csc)
             setBtnType('Claim')
           }
@@ -94,7 +94,7 @@ const MiningModal = ({
             setBtnType('Claim')
           }
           else {
-            setBarHeight(Math.floor((1 - cooldownSec / 43200) * 344) + "px");
+            setBarHeight(cooldownSec <= 0 ? "344px" : (Math.floor((1 - cooldownSec / 43200) * 344) + "px"));
             setRemainedTime(cooldownSec)
             setIsCooldownStarted(true)
           }
@@ -116,7 +116,7 @@ const MiningModal = ({
             setBarHeight('344px')
             return 0
           }
-          setBarHeight(Math.floor((1 - prevTime / 43200) * 344) + "px");
+          setBarHeight(prevTime <= 0 ? "344px" : (Math.floor((1 - prevTime / 43200) * 344) + "px"));
           return prevTime - 1
         })
       }, 1000)
