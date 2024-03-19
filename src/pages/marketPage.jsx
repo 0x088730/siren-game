@@ -1,5 +1,7 @@
 import { useState } from "react";
 import styles from './Main/Main.module.scss'
+import { buyCharacterAndWeapon } from "../store/user/actions";
+import { global } from "../common/global";
 
 export const MarketPage = (props) => {
     const characterData = [
@@ -19,7 +21,6 @@ export const MarketPage = (props) => {
         { weaponNo: 8, src: "https://iksqvifj67dwchip.public.blob.vercel-storage.com/weapon/8-PbbBpdgZEOwTPzej1EqCEl2WeFMkvm.png", price: 7000 },
         { weaponNo: 9, src: "https://iksqvifj67dwchip.public.blob.vercel-storage.com/weapon/9-9CPJSnJ30ZuxdC0uKMh1T5oHdruiIr.png", price: 8000 },
     ]
-    const weaponCount = [1, 2, 3, 4]
     const [nav, setNav] = useState("market");
     const [characterIndex, setCharacterIndex] = useState({ first: 0, last: 2 })
     const [presentCharacter, setPresentCharacter] = useState(characterData.slice(0, 2))
@@ -50,6 +51,12 @@ export const MarketPage = (props) => {
             setWeaponIndex({ first: weaponIndex.first + 4, last: weaponIndex.last + 4 });
             setPresentWeapon(weaponData.slice(weaponIndex.first + 4, weaponIndex.last + 4))
         }
+    }
+
+    const onBuy = (object, number) => {
+        // buyCharacterAndWeapon(global.walletAddress, object, number).then(res => {
+        //     console.log(res)
+        // })
     }
 
     return (
@@ -88,7 +95,7 @@ export const MarketPage = (props) => {
                                         </div>
                                         <img src={item.src} draggable="false" className={`absolute top-16 ${(item.characterNo === 1 || item.characterNo === 4) ? "w-40" : item.characterNo === 2 ? "w-32" : "w-56"}`} />
                                         <div className="w-full h-[18%] flex justify-center items-center">
-                                            <img src={`assets/images/buy-button.png`} draggable="false" className="cursor-pointer" />
+                                            <img src={`assets/images/buy-button.png`} draggable="false" className={`cursor-pointer ${item.characterNo === 1 ? "hidden" : ""}`} onClick={() => onBuy("character", item.characterNo)} />
                                         </div>
                                     </div>
                                 ))}
@@ -109,7 +116,7 @@ export const MarketPage = (props) => {
                                                 <img alt="" className='w-[18px]' src="assets/images/cryptoIcon.png" />
                                                 {item.price} CSC
                                             </div>
-                                            <img src={`assets/images/buy-button.png`} draggable="false" className="cursor-pointer w-28" />
+                                            <img src={`assets/images/buy-button.png`} draggable="false" className="cursor-pointer w-28" onClick={() => onBuy("character", item.weaponNo)} />
                                         </div>
                                     </div>
                                 ))}

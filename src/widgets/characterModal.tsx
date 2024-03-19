@@ -60,7 +60,12 @@ const CharacterModal = ({ openCharacter, setOpenCharacter, setPageStatus }: Prop
                                     <div className='flex-col' key={index}>
                                         <div className='relative'>
                                             <img src={`/assets/character/avatars/${index}.png`} draggable="false" className='fit-content cursor-pointer' onClick={onSection} />
-                                            {index === "1" && <div className="absolute top-[15px] left-[-35px] font-['Anime Ace'] text-[#808080] text-[20px] font-['Anime Ace'] font-[800] -rotate-45" style={{ textShadow: "3px 0px black" }}>common</div>}
+                                            <div
+                                                className={`absolute ${index === "3" ? "top-[5px] left-[-5px]" : "top-[15px] left-[-35px]"} font-['Anime Ace'] text-[#808080] text-[20px] font-['Anime Ace'] font-[800] -rotate-45`}
+                                                style={{ textShadow: "3px 0px black" }}
+                                            >
+                                                {index === "2" ? "common" : index === "3" ? "rare" : index === "4" ? "legendary" : ""}
+                                            </div>
                                         </div>
                                         <div className="text-[#ffffff] mt-[-10px] font-['Anime Ace']">LVL: {Math.floor(global.characters.filter((character) => character.characterName === `siren-${index}`)[0].exp.valueOf() / 100 + 1)}</div>
                                     </div>

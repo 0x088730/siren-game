@@ -72,16 +72,8 @@ const CharacterChooseModal = ({ open, setOpen,
                     }
                   }}
                 >
-                  {/* <img src={`assets/images/reward_bg_2.png`} alt="" className='w-full h-full' /> */}
                   <img src={`assets/images/characters/avatar/${characterNo}.png`} alt="" className='absolute w-10/12 h-10/12' />
                 </div>
-                {/* <img src={`/assets/character/avatars/${characterNo}${available === false ? "-1" : ""}.png`} alt=""
-                    style={{ position: 'absolute', top: 0, zIndex: "20", height: "100%", }}
-                    onClick={() => {
-                      if (available === true) {
-                        select(characterNo);
-                      }
-                    }} /> */}
               </Grid>
             })}
           </Box>
