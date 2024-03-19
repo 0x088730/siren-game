@@ -15,6 +15,7 @@ const DefaultLayout = React.lazy(() => import('./pages/default-layout').then(mod
 const BattlePass = React.lazy(() => import('./pages/battlePass').then(module => ({ default: module.BattlePass })));
 const Main = React.lazy(() => import('./pages').then(module => ({ default: module.Main })));
 const GamePage = React.lazy(() => import('./pages').then(module => ({ default: module.GamePage })));
+const MarketPage = React.lazy(() => import('./pages/marketPage').then(module => ({ default: module.MarketPage })));
 
 const onAttack = (type: number) => {
   const battle = phaserGame.scene.keys.battle as Battle
@@ -74,6 +75,14 @@ const App: React.FC = () => {
               element={
                 <Suspense fallback={<img src="https://iksqvifj67dwchip.public.blob.vercel-storage.com/background/loading-UUdMq9Eljlh95ZmCoFA42LIYO4vPog.gif" style={{width: "100%", height: "100%"}} />}>
                   <BattlePass onModalShow={openModal} />
+                </Suspense>
+              }
+            />
+            
+            <Route path="/market"
+              element={
+                <Suspense fallback={<img src="https://iksqvifj67dwchip.public.blob.vercel-storage.com/background/loading-UUdMq9Eljlh95ZmCoFA42LIYO4vPog.gif" style={{width: "100%", height: "100%"}} />}>
+                  <MarketPage onModalShow={openModal} />
                 </Suspense>
               }
             />

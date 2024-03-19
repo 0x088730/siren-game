@@ -105,3 +105,13 @@ body {
   background-size: 100% 100%;
   background-repeat: no-repeat;
 }
+
+.marketPage {
+  background-image: url("https://iksqvifj67dwchip.public.blob.vercel-storage.com/background/market-GcgEuS8yyipykH0IitGRBjZzM36Ml1.webp") !important;
+  background-size: 100% 100%;
+}
+
+.main-bg {
+  background-image: url("https://iksqvifj67dwchip.public.blob.vercel-storage.com/background/main-bg-Y5vmpNqtC1rW9dIr6X4YyuPiKQhKQH.webp") !important;
+  background-size: 100% 100%;
+}

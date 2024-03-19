@@ -10,7 +10,7 @@ import { Transaction } from "../utils/transaction";
 const initialLevelData = [
     { level: 1, image: "assets/images/rock.png", value: "X30", getStatus: false, available: false, title1: "WIN 1 FIGHT IN PVE", title2: "30X RESOURCES" },
     { level: 2, image: "assets/images/cryptoIcon.png", value: "X15", getStatus: false, available: false, title1: "OPEN CHEST", title2: "15X CSC" },
-    { level: 3, image: "assets/images/cryptoIcon.png", value: "X20", getStatus: false, available: false, title1: "BUY A TAVERN", title2: "20X CSC" },
+    { level: 3, image: "assets/images/cryptoIcon.png", value: "X20", getStatus: false, available: false, title1: "BUY A TOWER", title2: "20X CSC" },
     { level: 4, image: "assets/images/weapon/3.png", value: "", getStatus: false, available: false, title1: "GET 200 WATER", title2: "RANDOM WEAPON" },
     { level: 5, image: "assets/images/claim-box.png", value: "X2", getStatus: false, available: false, title1: "WIN IN 4 ROOMS IN THE FIRST LOCATION", title2: "2X CHESTS" },
     { level: 6, image: "assets/images/cryptoIcon.png", value: "X20", getStatus: false, available: false, title1: "WIN 20 BATTLES", title2: "20X CSC" },

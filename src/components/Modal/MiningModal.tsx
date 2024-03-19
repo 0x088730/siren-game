@@ -322,7 +322,7 @@ const MiningModal = ({
           <img
             alt=""
             src="/images/support/support_md_close_btn.png"
-            className='absolute top-0 right-0 w-[6%] cursor-pointer z-[5] translate-x-[26%] translate-y-[-27%]'
+            className='absolute top-0 right-0 w-[7%] cursor-pointer z-[5] translate-x-[26%] translate-y-[-27%]'
             onClick={handleClose}
           />
           <div className='absolute top-0 font-bold text-[#e7e1e1] leading-[100%] flex justify-center w-full'
