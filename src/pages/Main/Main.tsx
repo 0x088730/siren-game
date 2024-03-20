@@ -833,7 +833,7 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
             >
               <img
                 alt=""
-                style={{ position: 'absolute', left: '50%', top: '78%', }}
+                style={{ position: 'absolute', left: '50%', top: '780px', }}
                 src={`/images/rock.png`}
               />
             </Box>
