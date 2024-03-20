@@ -2,6 +2,8 @@ import { useState } from "react";
 import styles from './Main/Main.module.scss'
 import { buyCharacterAndWeapon } from "../store/user/actions";
 import { global } from "../common/global";
+import { LazyLoadImage } from "react-lazy-load-image-component"
+import 'react-lazy-load-image-component/src/effects/blur.css';
 
 export const MarketPage = (props) => {
     const characterData = [
@@ -93,7 +95,9 @@ export const MarketPage = (props) => {
                                                 {item.price} CSC
                                             </div>
                                         </div>
-                                        <img src={item.src} loading="lazy" draggable="false" className={`absolute top-16 ${(item.characterNo === 1 || item.characterNo === 4) ? "w-40" : item.characterNo === 2 ? "w-32" : "w-56"}`} />
+                                        <div className={`absolute top-16 ${(item.characterNo === 1 || item.characterNo === 4) ? "w-40" : item.characterNo === 2 ? "w-32" : "w-56"}`}>
+                                            <LazyLoadImage src={item.src} loading="lazy" effect="blur" draggable="false" className="w-full h-full" />
+                                        </div>
                                         <div className="w-full h-[18%] flex justify-center items-center">
                                             <img src={`assets/images/buy-button.png`} draggable="false" className={`cursor-pointer ${item.characterNo === 1 ? "hidden" : ""}`} onClick={() => onBuy("character", item.characterNo)} />
                                         </div>
@@ -110,7 +114,9 @@ export const MarketPage = (props) => {
                             <div className="w-[266px] h-[400px] flex flex-wrap justify-between items-start gap-y-4">
                                 {presentWeapon.map((item, index) => (
                                     <div key={index} className="w-[125px] h-[192px] bg-black rounded-lg">
-                                        <img src={item.src} draggable="false" className="w-full h-2/3 rounded-t-lg" />
+                                        <div className="w-full h-2/3 rounded-t-lg">
+                                            <LazyLoadImage src={item.src} loading="lazy" effect="blur" draggable="false" className="w-full h-full" />
+                                        </div>
                                         <div className="w-full h-1/3 flex flex-col justify-center items-center gap-y-1">
                                             <div className="flex justify-center items-center gap-x-2 text-[12px]">
                                                 <img alt="" className='w-[18px]' src="assets/images/cryptoIcon.png" />
