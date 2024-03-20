@@ -831,9 +831,8 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
                 width: 'fit-content',
               }}
             >
-              <img
+              <img className={`absolute left-[50%] ${styles.rockPos}`}
                 alt=""
-                style={{ position: 'absolute', left: '50%', top: '780px', }}
                 src={`/images/rock.png`}
               />
             </Box>

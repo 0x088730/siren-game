@@ -22,6 +22,7 @@
     background-image: url("../../../public/assets/images/num_btn.png") !important;
     background-size: cover;
 }
+
 .numBtnIn {
     background-image: url("../../../public/assets/images/num_btn_inclaim.png") !important;
     background-size: cover;
@@ -184,5 +185,15 @@
         opacity: 0;
         box-shadow: none;
 
+    }
+}
+
+.rockPos {
+    top: 780px;
+}
+
+@media screen and (min-height: 900px) {
+    .rockPos {
+        top: 78%;
     }
 }
