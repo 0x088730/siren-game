@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styles from './Main/Main.module.scss'
 import { buyCharacterAndWeapon } from "../store/user/actions";
 import { global } from "../common/global";
@@ -28,6 +28,10 @@ export const MarketPage = (props) => {
     const [presentCharacter, setPresentCharacter] = useState(characterData.slice(0, 2))
     const [weaponIndex, setWeaponIndex] = useState({ first: 0, last: 4 })
     const [presentWeapon, setPresentWeapon] = useState(weaponData.slice(0, 4))
+    const [loaded1, setLoaded1] = useState(false)
+    const [loaded2, setLoaded2] = useState(false)
+    const [loaded3, setLoaded3] = useState(false)
+    const [loaded4, setLoaded4] = useState(false)
 
     const onPrevious = (from) => {
         if (from === "character") {
@@ -59,6 +63,13 @@ export const MarketPage = (props) => {
         // buyCharacterAndWeapon(global.walletAddress, object, number).then(res => {
         //     console.log(res)
         // })
+    }
+
+    useEffect(() => {
+        console.log(loaded1, loaded2, loaded3, loaded4)
+    }, [presentCharacter])
+    const setLoading = (index) => {
+        console.log(index)
     }
 
     return (
@@ -96,7 +107,7 @@ export const MarketPage = (props) => {
                                             </div>
                                         </div>
                                         <div className={`absolute top-16 ${(item.characterNo === 1 || item.characterNo === 4) ? "w-40" : item.characterNo === 2 ? "w-32" : "w-56"}`}>
-                                            <LazyLoadImage src={item.src} loading="lazy" effect="blur" draggable="false" className="w-full h-full" />
+                                            <LazyLoadImage key={item.src} src={item.src} loading="lazy" effect="blur" draggable="false" className="w-full h-full" />
                                         </div>
                                         <div className="w-full h-[18%] flex justify-center items-center">
                                             <img src={`assets/images/buy-button.png`} draggable="false" className={`cursor-pointer ${item.characterNo === 1 ? "hidden" : ""}`} onClick={() => onBuy("character", item.characterNo)} />
@@ -115,7 +126,7 @@ export const MarketPage = (props) => {
                                 {presentWeapon.map((item, index) => (
                                     <div key={index} className="w-[125px] h-[192px] bg-black rounded-lg">
                                         <div className="w-full h-2/3 rounded-t-lg">
-                                            <LazyLoadImage src={item.src} loading="lazy" effect="blur" draggable="false" className="w-full h-full" />
+                                            <LazyLoadImage key={item.src} src={item.src} loading="lazy" effect="blur" draggable="false" className="w-full h-full rounded-t-lg" />
                                         </div>
                                         <div className="w-full h-1/3 flex flex-col justify-center items-center gap-y-1">
                                             <div className="flex justify-center items-center gap-x-2 text-[12px]">
@@ -135,7 +146,7 @@ export const MarketPage = (props) => {
                         </div>
                     </div>
                 </div>
-            </div>
+            </div >
         </>
     );
 }
