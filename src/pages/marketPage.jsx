@@ -93,7 +93,7 @@ export const MarketPage = (props) => {
                                                 {item.price} CSC
                                             </div>
                                         </div>
-                                        <img src={item.src} draggable="false" className={`absolute top-16 ${(item.characterNo === 1 || item.characterNo === 4) ? "w-40" : item.characterNo === 2 ? "w-32" : "w-56"}`} />
+                                        <img src={item.src} loading="lazy" draggable="false" className={`absolute top-16 ${(item.characterNo === 1 || item.characterNo === 4) ? "w-40" : item.characterNo === 2 ? "w-32" : "w-56"}`} />
                                         <div className="w-full h-[18%] flex justify-center items-center">
                                             <img src={`assets/images/buy-button.png`} draggable="false" className={`cursor-pointer ${item.characterNo === 1 ? "hidden" : ""}`} onClick={() => onBuy("character", item.characterNo)} />
                                         </div>
