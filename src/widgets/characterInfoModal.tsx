@@ -173,7 +173,7 @@ const CharacterInfoModal = ({ openCharacterInfo, setOpenCharacterInfo }: Props) 
                             <img src={`/assets/character/idle/1.gif`} draggable="false" className='absolute cursor-pointer' />
                         </div>
                         <div className='absolute top-6 left-10 w-[125px] h-[38px] cursor-pointer flex items-center justify-center' style={{ backgroundImage: "url(assets/images/energy-bar.png)", backgroundSize: '100% 100%' }} onClick={() => setNav("energy")}>
-                            {userData.energy}
+                            {userData.resource}
                         </div>
                         <div className='absolute top-[2.5rem] left-[12.8rem] text-[65px] w-28'>
                             {Math.floor(userData.exp / 100) + 1}
