@@ -1,6 +1,8 @@
 import axios from "axios";
 import { global } from './global'
 import config from '../utils/config'
+import store from "../store";
+import { setRememberCode } from "./state/game/reducer";
 
 // axios.defaults.baseURL = `${config.server}:${config.port}${config.baseURL}`
 axios.defaults.baseURL = `${config.server}${config.baseURL}`
@@ -30,6 +32,7 @@ export const getProfile = async (walletAddress: string, character: string) => {
     global.sectionStatus = data.sectionStatus
     global.resource = user.resource
     global.referralCode = user.userRef
+    store.dispatch(setRememberCode(user.enterCodeStatus));
 }
 export const referalAdd = async () => {
     await axios.post('/user/referal', {
