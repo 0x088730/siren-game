@@ -1,24 +1,20 @@
 import { Grid /* , TextField, Tooltip */ } from '@mui/material'
 import Box from '@mui/material/Box'
 import Modal from '@mui/material/Modal'
-import { useDispatch, useSelector } from 'react-redux'
 import { global } from '../common/global'
-import phaserGame from '../PhaserGame'
-import Game from '../scenes/game.scene'
 import { useEffect, useState } from 'react'
 import { energySwap, getProfile, itemModify, itemRevive } from '../common/api'
-import { useWeb3Context } from '../hooks/web3Context'
 import store from '../store'
 import { setButtonView } from '../common/state/game/reducer'
 
 interface Props {
     openCharacterInfo: boolean
     setOpenCharacterInfo: any
+    selectCharacter: any
 }
 
-const CharacterInfoModal = ({ openCharacterInfo, setOpenCharacterInfo }: Props) => {
+const CharacterInfoModal = ({ openCharacterInfo, setOpenCharacterInfo, selectCharacter }: Props) => {
     const weaponImage = ["1", "2", "3", "4", "5", "6", "7", "8", "9"];
-    const characterImage1 = ["1_1", "2_1", "3_1", "4_1"];
     const [nav, setNav] = useState("");
     const [swapValue, setSwapValue] = useState("");
     const [userData, setUserData] = useState({
@@ -154,23 +150,15 @@ const CharacterInfoModal = ({ openCharacterInfo, setOpenCharacterInfo }: Props) 
                     <img
                         alt=""
                         src="/images/support/support_md_close_btn.png"
-                        style={{
-                            position: 'absolute',
-                            top: 0,
-                            right: 0,
-                            width: '45px',
-                            transform: 'translate(26%, -27%)',
-                            cursor: 'pointer',
-                            zIndex: 5,
-                        }}
+                        className='absolute top-0 right-0 w-[45px] translate-x-[26%] translate-y-[-27%] cursor-pointer z-[5]'
                         onClick={() => {
                             setOpenCharacterInfo(false);
                             store.dispatch(setButtonView(true));
                         }}
                     />
                     <div className='relative w-[54%] h-full font-semibold text-white' style={{ backgroundImage: "url(assets/images/model-bg.png)", backgroundSize: '100% 100%' }}>
-                        <div className='absolute top-[13.3rem] left-36 w-[200px]'>
-                            <img src={`/assets/character/idle/1.gif`} draggable="false" className='absolute cursor-pointer' />
+                        <div className={`absolute ${selectCharacter && selectCharacter.characterNo === 1 ? "top-52 left-40 w-40" : selectCharacter && selectCharacter.characterNo === 2 ? "top-[17rem] left-32 w-60" : "top-52 left-36 w-[200px]"}`}>
+                            <img src={`/assets/character/idle/${selectCharacter && selectCharacter.characterNo + 1}.gif`} draggable="false" className='absolute cursor-pointer' />
                         </div>
                         <div className='absolute top-6 left-10 w-[125px] h-[38px] cursor-pointer flex items-center justify-center' style={{ backgroundImage: "url(assets/images/energy-bar.png)", backgroundSize: '100% 100%' }} onClick={() => setNav("energy")}>
                             {userData.energy}

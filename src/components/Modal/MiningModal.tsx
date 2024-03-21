@@ -49,10 +49,10 @@ const MiningModal = ({
 }: Props) => {
   const count = [1, 2, 3];
   const title = [
-    { level: "LEVEL 1:", detail1: "9 CSC PER 6H", detail2: "CLAIM 9 CSC EACH 6H", price: "PRICE: 500 CSC" },
-    { level: "LEVEL 1:", detail1: "9 CSC PER 6H", detail2: "CLAIM 9 CSC EACH 6H", price: "PRICE: 500 CSC" },
-    { level: "LEVEL 2:", detail1: "18 CSC PER 6H", detail2: "CLAIM 18 CSC EACH 6H", price: "PRICE: 950 CSC" },
-    { level: "LEVEL 3:", detail1: "36 CSC PER 6H", detail2: "CLAIM 36 CSC EACH 6H", price: "PRICE: 1850 CSC" },
+    { level: "LEVEL 1:", detail1: "9 CSC PER 12H", detail2: "CLAIM 9 CSC EACH 12H", price: "PRICE: 500 CSC" },
+    { level: "LEVEL 1:", detail1: "9 CSC PER 12H", detail2: "CLAIM 9 CSC EACH 12H", price: "PRICE: 500 CSC" },
+    { level: "LEVEL 2:", detail1: "18 CSC PER 12H", detail2: "CLAIM 18 CSC EACH 12H", price: "PRICE: 950 CSC" },
+    { level: "LEVEL 3:", detail1: "36 CSC PER 12H", detail2: "CLAIM 36 CSC EACH 12H", price: "PRICE: 1850 CSC" },
   ]
   const { connected, chainID, address, connect } = useWeb3Context()
   const { user } = useSelector((state: any) => state.userModule)
@@ -68,7 +68,7 @@ const MiningModal = ({
   const [upgradeErrorFlag, setUpgradeErrorFlag] = useState(false)
   const [barHeight, setBarHeight] = useState("344px");
 
-  const halfRemainTime = 21600;
+  const halfRemainTime = 43200;
   useEffect(() => {
     if (upgradeTab && levelState === 3) setBtnType("LIMIT");
     else if (!upgradeTab && levelState === 0) setBtnType("Buy")
@@ -84,7 +84,7 @@ const MiningModal = ({
             setBtnType('Start')
           }
           else if (cooldownSec <= halfRemainTime && res.data.getStatus === false) {
-            setBarHeight(cooldownSec <= 0 ? "344px" : (Math.floor((1 - cooldownSec / 43200) * 344) + "px"));
+            setBarHeight(cooldownSec <= 0 ? "344px" : (Math.floor((1 - cooldownSec / 86400) * 344) + "px"));
             setCsc(res.data.csc)
             setBtnType('Claim')
           }
@@ -94,7 +94,7 @@ const MiningModal = ({
             setBtnType('Claim')
           }
           else {
-            setBarHeight(cooldownSec <= 0 ? "344px" : (Math.floor((1 - cooldownSec / 43200) * 344) + "px"));
+            setBarHeight(cooldownSec <= 0 ? "344px" : (Math.floor((1 - cooldownSec / 86400) * 344) + "px"));
             setRemainedTime(cooldownSec)
             setIsCooldownStarted(true)
           }
@@ -116,7 +116,7 @@ const MiningModal = ({
             setBarHeight('344px')
             return 0
           }
-          setBarHeight(prevTime <= 0 ? "344px" : (Math.floor((1 - prevTime / 43200) * 344) + "px"));
+          setBarHeight(prevTime <= 0 ? "344px" : (Math.floor((1 - prevTime / 86400) * 344) + "px"));
           return prevTime - 1
         })
       }, 1000)

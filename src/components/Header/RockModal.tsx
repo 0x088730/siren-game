@@ -37,13 +37,12 @@ const RockModal = ({
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: '500px',
-    height: '580px',
-    background: "url(/assets/images/set.png)",
+    width: '410px',
+    height: '600px',
+    background: "url(/assets/images/well-bg.webp)",
     backgroundSize: '100% 100%',
     bgcolor: 'transparent',
     boxShadow: 24,
-    p: 4,
     pt: 1,
   }
 
@@ -61,90 +60,62 @@ const RockModal = ({
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={style} className="w-[450px]">
+        <Box sx={style} className="w-[410px]">
           <img
             alt=""
             src="/images/support/support_md_close_btn.png"
-            style={{
-              position: 'absolute',
-              top: 0,
-              right: 0,
-              width: '8%',
-              transform: 'translate(26%, -27%)',
-              cursor: 'pointer',
-              zIndex: 5,
-            }}
+            className='absolute top-0 right-0 w-[12%] cursor-pointer translate-x-[26%] translate-y-[-27%] z-20'
             onClick={handleClose}
           />
-          <Grid container>
-            <Grid item xs={12} sm={12} md={12}>
-              <div
-                className='well-back'
+          <div className='absolute top-0 font-bold text-[#e7e1e1] leading-[100%] flex justify-center w-full'
+            style={{ fontFamily: 'Anime Ace' }}
+          >
+            <img alt="" src="assets/images/head-bg.png" className='w-72 -mt-12' />
+            <p className={`absolute text-[20px] text-center -mt-2`}>WELL</p>
+          </div>
+          <div className='absolute top-[57%] flex flex-col justify-center items-center gap-y-4 w-full'>
+            <div className='w-[220px] h-[130px] bg-[#151219]/[0.8] rounded-xl text-white p-4 pt-6 flex flex-col justify-center items-center gap-y-4' style={{boxShadow: "0 0 7px black"}}>
+              <div className='text-lg font-bold'>REWARD</div>
+              <div className='flex flex-col items-center justify-center gap-y-2 text-[14px] w-full'>
+                <div className='flex justify-between w-full'>
+                  <div><img alt="" className='w-[22px] mx-[3px] float-left' src="assets/images/white_clock.png" />TIME:</div>
+                  <div>3H</div>
+                </div>
+                <div className='flex justify-between w-full'>
+                  <div>
+                    AMOUNT:
+                  </div>
+                  <div><img alt="" className='w-[22px] mx-[3px] float-left' src="/images/res_res.png" />20 CSC</div>
+                </div>
+              </div>
+            </div>
+            <div className='flex flex-col gap-y-2'>
+              <h2 className="text-md text-white upgrade-label text-center flex justify-center items-center"
+                style={{ fontFamily: 'Anime Ace', }}
+              >
+                PRICE: <img alt="" className='w-[22px] mx-[7px]' src="assets/images/cryptoIcon.png" /> 2 CSC
+              </h2>
+              <Button className='text-white border-none w-48 h-10'
                 style={{
-                  width: '300px',
-                  height: '300px',
-                  background: "url(/assets/images/well.png)",
+                  background: "url(/assets/images/big-button.png)",
                   backgroundSize: 'cover',
-                  margin: 'auto',
-                  marginTop: '20px',
+                  backgroundRepeat: 'no-repeat',
+                  fontFamily: 'Anime Ace'
                 }}
-              ></div>
-              <Box
-                sx={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                  gap: '20px',
+                onClick={() => {
+                  if (btnTitle === "START")
+                    onRock()
+                  if (btnTitle === "CLAIM") {
+                    setRockClaim()
+                  }
                 }}
               >
-                <h2 className="font-bold text-2xl mb-4 text-white upgrade-label"
-                  style={{
-                    fontFamily: 'Anime Ace',
-                    fontSize: '20px',
-                    marginTop: '15px',
-                    marginBottom: '0px',
-                    textAlign: 'center',
-                  }}
-                >
-                  AMOUNT: 5<br></br>
-                  TIME: 12 HOURS<br></br>
-                </h2>
-                <Button
-                  style={{
-                    background: "url(/assets/images/big-button.png)",
-                    backgroundSize: 'cover',
-                    backgroundRepeat: 'no-repeat',
-                    fontFamily: 'Anime Ace',
-                    color: 'white',
-                    border: 'none',
-                    width: '200px',
-                    height: '42px'
-                  }}
-                  onClick={(/* e */) => {
-                    if (btnTitle === "START")
-                      onRock()
-                    if (btnTitle === "CLAIM") {
-                      setRockClaim()
-                    }
-                  }}
-                >
+                <p className='text-white font-bold'>
                   {(remainedTime === 0 ? btnTitle : convertSecToHMS(remainedTime))}
-                  {/* {counting === 0 ? 'START' : timer === 0 ? 'CLAIM' : `${showHourMinutes(timer)}`} */}
-                </Button>
-                <h2 className="font-bold text-2xl mb-4 text-white upgrade-label"
-                  style={{
-                    fontFamily: 'Anime Ace',
-                    fontSize: '20px',
-                    marginTop: '15px',
-                    marginBottom: '0px',
-                    textAlign: 'center',
-                  }}
-                >
-                  PRICE: 2 CSC<br></br>
-                </h2>
-              </Box>
-            </Grid>
-          </Grid>
+                </p>
+              </Button>
+            </div>
+          </div>
         </Box>
       </Modal>
     </>
