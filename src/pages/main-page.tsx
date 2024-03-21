@@ -134,13 +134,14 @@ export const MainPage = ({
                 return;
             }
             store.dispatch(setRememberCode(true));
+            global.referralCodeStatua = true
             global.referralCode = res.data;
         })
     }
 
     return (
         <>
-            {rememberCode === false ?
+            {global.referralCodeStatua === false ?
                 <div className='absolute w-full h-full bg-[#111111]/[0.8] flex flex-col justify-center items-center gap-y-6 z-20 text-[#e7e1e1]'>
                     <div className='font-500'>
                         <div className='font-bold my-2'>ENTER CODE</div>

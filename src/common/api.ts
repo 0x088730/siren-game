@@ -32,6 +32,7 @@ export const getProfile = async (walletAddress: string, character: string) => {
     global.sectionStatus = data.sectionStatus
     global.resource = user.resource
     global.referralCode = user.userRef
+    global.referralCodeStatua = user.enterCodeStatus
     store.dispatch(setRememberCode(user.enterCodeStatus));
 }
 export const referalAdd = async () => {
