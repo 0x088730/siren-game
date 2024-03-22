@@ -6,6 +6,8 @@ import { useEffect, useState } from 'react'
 import { energySwap, getProfile, itemModify, itemRevive } from '../common/api'
 import store from '../store'
 import { setButtonView } from '../common/state/game/reducer'
+import { LazyLoadImage } from "react-lazy-load-image-component"
+import 'react-lazy-load-image-component/src/effects/blur.css';
 
 interface Props {
     openCharacterInfo: boolean
@@ -14,6 +16,12 @@ interface Props {
 }
 
 const CharacterInfoModal = ({ openCharacterInfo, setOpenCharacterInfo, selectCharacter }: Props) => {
+    const characterImage = [
+        "https://iksqvifj67dwchip.public.blob.vercel-storage.com/1-dxSqH5RqoAF0FmHDZDZtoNZqshr4MZ.gif",
+        "https://iksqvifj67dwchip.public.blob.vercel-storage.com/2-eqE9y7IXKZRou5NJf6LGHgPgoivqgY.gif",
+        "https://iksqvifj67dwchip.public.blob.vercel-storage.com/3-Enr2FgCVbtXJTKmB3a7rEDZ7lpFkE8.gif",
+        "https://iksqvifj67dwchip.public.blob.vercel-storage.com/4-fIWCjNpJg2gJHqstmQk6VlVsjHYxwz.gif",
+    ]
     const weaponImage = ["1", "2", "3", "4", "5", "6", "7", "8", "9"];
     const [nav, setNav] = useState("");
     const [swapValue, setSwapValue] = useState("");
@@ -170,7 +178,8 @@ const CharacterInfoModal = ({ openCharacterInfo, setOpenCharacterInfo, selectCha
                     />
                     <div className='relative w-[54%] h-full font-semibold text-white' style={{ backgroundImage: "url(assets/images/model-bg.png)", backgroundSize: '100% 100%' }}>
                         <div className={`absolute ${selectCharacter && selectCharacter.characterNo === 1 ? "top-52 left-40 w-40" : selectCharacter && selectCharacter.characterNo === 2 ? "top-[17rem] left-32 w-60" : "top-52 left-36 w-[200px]"}`}>
-                            <img src={`/assets/character/idle/${selectCharacter && selectCharacter.characterNo + 1}.gif`} draggable="false" className='absolute cursor-pointer' />
+                            <LazyLoadImage src={characterImage[selectCharacter && selectCharacter.characterNo]} loading="lazy" effect="blur" draggable="false" className="w-full h-full" />
+                            {/* <img src={characterImage[selectCharacter && selectCharacter.characterNo]} draggable="false" className='absolute cursor-pointer' /> */}
                         </div>
                         <div className='absolute top-6 left-10 w-[125px] h-[38px] cursor-pointer flex items-center justify-center' style={{ backgroundImage: "url(assets/images/energy-bar.png)", backgroundSize: '100% 100%' }} onClick={() => setNav("energy")}>
                             {userData.energy}
