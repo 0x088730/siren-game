@@ -58,7 +58,7 @@ const UpgradeWallModal = ({
       >
         <Box sx={style} className="w-[450px] relative">
           <img
-            alt=""
+            alt="" draggable="false"
             src="/images/support/support_md_close_btn.png"
             style={{
               position: 'absolute',
@@ -72,7 +72,7 @@ const UpgradeWallModal = ({
             onClick={handleClose}
           />
           <div className='absolute wall w-[85%] h-[400px] bg-transparent mt-[20px]'>
-            <img src={"assets/images/border" + (userModule.user.wall === 3 ? 3 : (userModule.user.wall + 1)) + ".png"} alt="" className='h-5/6 object-cover object-center' />
+            <img draggable="false" src={"assets/images/border" + (userModule.user.wall === 3 ? 3 : (userModule.user.wall + 1)) + ".png"} alt="" className='h-5/6 object-cover object-center' />
           </div>
           <Grid container>
             <Grid item xs={12} sm={12} md={12}>

@@ -220,10 +220,10 @@ const ExchangeModal = ({
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <img alt="" src="/images/support/support_md_bg.png" />
+          <img alt="" draggable="false" src="/images/support/support_md_bg.png" />
 
           <img
-            alt=""
+            alt="" draggable="false"
             src="/images/support/support_md_close_btn.png"
             className='absolute top-0 right-0 w-[7%] cursor-pointer translate-x-[26%] translate-y-[-27%] z-20'
             onClick={handleClose}
@@ -231,29 +231,29 @@ const ExchangeModal = ({
           <div className='absolute top-0 font-bold text-[#e7e1e1] leading-[100%] flex justify-center w-full z-10'
             style={{ fontFamily: 'Anime Ace' }}
           >
-            <img alt="" src="assets/images/head-bg.png" className='w-72 -mt-12' />
+            <img alt="" draggable="false" src="assets/images/head-bg.png" className='w-72 -mt-12' />
             <p className={`absolute text-[20px] text-center -mt-6 leading-6`}>Hunting <br />Lodge</p>
           </div>
           <div className='absolute w-[40.5rem] h-[26.5rem] bg-[#3C1E10]/[0.6] top-[1.6rem] left-[1.7rem] rounded-xl'></div>
           <div className='absolute top-0 w-full h-full p-12 flex flex-col justify-start items-center text-[#e7e1e1] font-bold'>
             <div className='flex justify-between items-center w-full'>
               <div className={`relative w-48 h-48 border-4 rounded-lg ${avatar[0] === "" ? "border-[#ffffff]/[0.2]" : "border-[#FFE60A]"} flex justify-center items-center cursor-pointer text-[14px]`} onClick={() => { selectCharacter(0) }}>
-                <img alt="" src="assets/images/huntingImg1.png" className='w-full h-full border-2 border-black rounded-md' />
+                <img alt="" draggable="false" src="assets/images/huntingImg1.png" className='w-full h-full border-2 border-black rounded-md' />
                 {avatar[0] === "" ?
                   <>
-                    <img src="assets/images/shadow.png" alt="" className='absolute w-36' />
+                    <img src="assets/images/shadow.png" alt="" draggable="false" className='absolute w-36' />
                     <div className='absolute text-center'>CLICK TO SELECT<br />CHARACTER</div>
                   </>
                   :
                   <div className={`${styles.characterBox} absolute w-full h-full border-[3px] border-[#605a20]/[0.7] rounded-[1.2rem] flex justify-center items-center cursor-pointer`}>
-                    <img src={avatar[0]} alt="" className='absolute w-36' />
+                    <img draggable="false" src={avatar[0]} alt="" className='absolute w-36' />
                   </div>
                 }
               </div>
               <div className={`relative w-48 h-48 border-4 rounded-lg ${avatar[1] === "" ? "border-[#ffffff]/[0.2]" : "border-[#FFE60A]"} flex justify-center items-center cursor-pointer text-[14px]`} onClick={() => { selectCharacter(1) }}>
                 {upgradeLevel >= 1 ?
                   <>
-                    <img alt="" src="assets/images/huntingImg1.png" className='w-full h-full border-2 border-black rounded-md' />
+                    <img alt="" draggable="false" src="assets/images/huntingImg1.png" className='w-full h-full border-2 border-black rounded-md' />
                     {avatar[1] === "" ?
                       <>
                         <img src="assets/images/shadow.png" alt="" className='absolute w-36' />
@@ -261,18 +261,18 @@ const ExchangeModal = ({
                       </>
                       :
                       <div className={`${styles.characterBox} absolute w-full h-full border-[3px] border-[#605a20]/[0.7] rounded-[1.2rem] flex justify-center items-center cursor-pointer`}>
-                        <img src={avatar[1]} alt="" className='absolute w-36' />
+                        <img src={avatar[1]} alt="" draggable="false" className='absolute w-36' />
                       </div>
                     }
                   </>
                   :
                   <>
-                    <img alt="" src="assets/images/huntingImg2.png" className='w-full h-full border-2 border-black rounded-md' />
-                    <img src="assets/images/shadow.png" alt="" className='absolute w-36' />
+                    <img alt="" draggable="false" src="assets/images/huntingImg2.png" className='w-full h-full border-2 border-black rounded-md' />
+                    <img draggable="false" src="assets/images/shadow.png" alt="" className='absolute w-36' />
                     <div className='absolute w-full flex flex-col justify-center items-center gap-y-4'>
-                      <div className='flex justify-center items-center'><img src='assets/images/cryptoIcon.png' width={25} />100 CSC</div>
+                      <div className='flex justify-center items-center'><img draggable="false" src='assets/images/cryptoIcon.png' width={25} />100 CSC</div>
                       <div className={`relative flex justify-center items-center w-3/4`}>
-                        <img src="/assets/images/upgrade btn.png" alt="" className='w-full' />
+                        <img draggable="false" src="/assets/images/upgrade btn.png" alt="" className='w-full' />
                         <div
                           className={`absolute`}
                           onClick={() => onUpgradeLevel()}
@@ -288,26 +288,26 @@ const ExchangeModal = ({
               <div className={`relative w-48 h-48 border-4 rounded-lg ${avatar[2] === "" ? "border-[#ffffff]/[0.2]" : "border-[#FFE60A]"} flex justify-center items-center cursor-pointer text-[14px]`} onClick={() => { selectCharacter(2) }}>
                 {upgradeLevel >= 2 ?
                   <>
-                    <img alt="" src="assets/images/huntingImg1.png" className='w-full h-full border-2 border-black rounded-md' />
+                    <img alt="" draggable="false" src="assets/images/huntingImg1.png" className='w-full h-full border-2 border-black rounded-md' />
                     {avatar[2] === "" ?
                       <>
-                        <img src="assets/images/shadow.png" alt="" className='absolute w-36' />
+                        <img src="assets/images/shadow.png" alt="" draggable="false" className='absolute w-36' />
                         <div className='absolute text-center'>CLICK TO SELECT<br />CHARACTER</div>
                       </>
                       :
                       <div className={`${styles.characterBox} absolute w-full h-full border-[3px] border-[#605a20]/[0.7] rounded-[1.2rem] flex justify-center items-center cursor-pointer`}>
-                        <img src={avatar[2]} alt="" className='absolute w-36' />
+                        <img src={avatar[2]} alt="" draggable="false" className='absolute w-36' />
                       </div>
                     }
                   </>
                   :
                   <>
-                    <img alt="" src="assets/images/huntingImg2.png" className='w-full h-full border-2 border-black rounded-md' />
-                    <img src="assets/images/shadow.png" alt="" className='absolute w-36' />
+                    <img alt="" draggable="false" src="assets/images/huntingImg2.png" className='w-full h-full border-2 border-black rounded-md' />
+                    <img src="assets/images/shadow.png" alt="" draggable="false" className='absolute w-36' />
                     <div className='absolute w-full flex flex-col justify-center items-center gap-y-4'>
-                      <div className='flex justify-center items-center'><img src='assets/images/cryptoIcon.png' width={25} />100 CSC</div>
+                      <div className='flex justify-center items-center'><img draggable="false" src='assets/images/cryptoIcon.png' width={25} />100 CSC</div>
                       <div className={`relative flex justify-center items-center w-3/4 ${upgradeLevel === 1 ? "" : "grayscale"}`}>
-                        <img src="/assets/images/upgrade btn.png" alt="" className='w-full' />
+                        <img draggable="false" src="/assets/images/upgrade btn.png" alt="" className='w-full' />
                         <div
                           className={`absolute`}
                           onClick={() => { if (upgradeLevel === 1) onUpgradeLevel() }}
@@ -326,21 +326,21 @@ const ExchangeModal = ({
               <div className='flex justify-center items-center text-[13px] text-[#e7e1e1]' style={{ fontFamily: 'Anime Ace', }}>
                 <div className='flex gap-x-8'>
                   <div className='relative w-24 h-24 flex justify-center items-center'>
-                    <img alt="" src="assets/images/roomBtn.png" className='w-full h-full' />
+                    <img alt="" draggable="false" src="assets/images/roomBtn.png" className='w-full h-full' />
                     <p className='absolute text-center'>
                       {claimBar.siren === -1 ? '5-15' : claimBar.siren !== -2 ? claimBar.siren : ''}<br />
                       {claimBar.siren !== -2 ? 'CSC' : ""}
                     </p>
                   </div>
                   <div className='relative w-24 h-24 flex justify-center items-center'>
-                    <img alt="" src="assets/images/roomBtn.png" className='w-full h-full' />
+                    <img alt="" draggable="false" src="assets/images/roomBtn.png" className='w-full h-full' />
                     <p className='absolute text-center'>
                       {claimBar.egg === -1 ? '20-40' : claimBar.egg !== -2 ? claimBar.egg : ''}<br />
                       {claimBar.egg !== -2 ? 'RES' : ""}
                     </p>
                   </div>
                   <div className='relative w-24 h-24 flex justify-center items-center'>
-                    <img alt="" src="assets/images/roomBtn.png" className='w-full h-full' />
+                    <img alt="" draggable="false" src="assets/images/roomBtn.png" className='w-full h-full' />
                     <p
                       className='flex justify-center absolute text-center text-[#e7e1e1] text-[14px]'
                       style={{ fontFamily: 'Anime Ace', }}
@@ -348,7 +348,7 @@ const ExchangeModal = ({
                       {claimBar.claim === true ? (
                         <img
                           src="assets/item/box-closed.png"
-                          alt=""
+                          alt="" draggable="false"
                           className='w-[55%] mt-[-20px]'
                         />
                       ) : (
@@ -357,7 +357,7 @@ const ExchangeModal = ({
                     </p>
                   </div>
                   <div className='relative w-24 h-24 flex justify-center items-center'>
-                    <img alt="" src="assets/images/roomBtn.png" className='w-full h-full' />
+                    <img alt="" draggable="false" src="assets/images/roomBtn.png" className='w-full h-full' />
                   </div>
                 </div>
               </div>
@@ -617,7 +617,7 @@ const ExchangeModal = ({
           </Box> */}
           <Box className='flex justify-center absolute -bottom-4 w-full'>
             <Button className='w-60' onClick={() => onBtnClick()}>
-              <img alt="" src="/assets/images/big-button.png" />
+              <img alt="" draggable="false" src="/assets/images/big-button.png" />
               <p className='absolute text-[14px] text-center text-[#e7e1e1] font-bold'
                 style={{ fontFamily: 'Anime Ace' }}
               >

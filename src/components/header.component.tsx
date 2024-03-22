@@ -71,7 +71,7 @@ export const HeaderComponent = ({onModalShow}: HeaderProps) => {
         <div className="flex justify-between bg-black/30 p-2 backdrop-blur min-w-[1600px]">
           <div className="flex">
             <div className="flex gap-4">
-              <img src='assets/images/logo.png' alt='' className='w-[330px]' />
+              <img draggable="false" src='assets/images/logo.png' alt='' className='w-[330px]' />
               {/* {NavItems.map((item: any, index: number) => (
                 <p key={index} className={`font-Anime Ace	text-2xl text-white`}>
                   {item.label}

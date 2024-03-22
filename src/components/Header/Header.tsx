@@ -132,19 +132,19 @@ const Header = ({ showAccount, setShowAccount, csc, realCSC, eggs, resource }: H
         </button>
       )}
       <p className={styles.resource}>
-        <img alt="" className='w-[25px] mx-[3px]' src="/images/cryptoIcon.png" />
+        <img alt="" draggable="false" className='w-[25px] mx-[3px]' src="/images/cryptoIcon.png" />
         TEST CSC: {csc}
       </p>
       <p className={styles.resource}>
-        <img alt="" className='w-[25px] mx-[3px]' src="/images/cryptoIcon.png" />
+        <img alt="" draggable="false" className='w-[25px] mx-[3px]' src="/images/cryptoIcon.png" />
         REAL CSC: {realCSC}
       </p>
       <p className={styles.resource}>
-        <img alt="" className='w-[25px] mx-[3px]' src="/images/res_res.png" />
+        <img alt="" draggable="false" className='w-[25px] mx-[3px]' src="/images/res_res.png" />
         Water: {resource}
       </p>
       <p className={styles.resource}>
-        <img alt="" className='w-[20px] mx-[3px]' src="/images/res_egg.png" />
+        <img alt="" draggable="false" className='w-[20px] mx-[3px]' src="/images/res_egg.png" />
         Res: {eggs}
       </p>
     </Box>

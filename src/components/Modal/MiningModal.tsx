@@ -307,9 +307,9 @@ const MiningModal = ({
         aria-describedby="modal-modal-description"
       >
         <Box sx={style} className='h-[512px]'>
-          <img alt="" src={`assets/images/${upgradeTab ? "tower-bg-upgrade.png" : "tower-bg.webp"}`} />
+          <img alt="" draggable="false" src={`assets/images/${upgradeTab ? "tower-bg-upgrade.png" : "tower-bg.webp"}`} />
           <img
-            alt=""
+            alt="" draggable="false"
             src="/images/support/support_md_close_btn.png"
             className='absolute top-0 right-0 w-[7%] cursor-pointer z-[5] translate-x-[26%] translate-y-[-27%]'
             onClick={handleClose}
@@ -317,18 +317,18 @@ const MiningModal = ({
           <div className='absolute top-0 font-bold text-[#e7e1e1] leading-[100%] flex justify-center w-full'
             style={{ fontFamily: 'Anime Ace' }}
           >
-            <img alt="" src="assets/images/head-bg.png" className='w-72 -mt-12' />
+            <img alt="" draggable="false" src="assets/images/head-bg.png" className='w-72 -mt-12' />
             <p className={`absolute text-[20px] text-center ${!upgradeTab ? "-mt-2" : "-mt-6 leading-6"}`}>TOWER<br />{upgradeTab && ' UPGRADE'}</p>
           </div>
           {!upgradeTab ?
             <div className='absolute top-0 w-full h-full px-12 py-20 flex justify-between items-center text-[#e7e1e1] font-bold'>
               <div className={`${(levelState === 0 || levelState === 1) ? styles.lvl1Box : levelState === 2 ? styles.lvl2Box : styles.lvl3Box} relative h-full w-60 flex flex-col justify-center items-center py-6 px-4 rounded-2xl`}>
                 {/* <img alt="" src="assets/images/reward_bg_1.png" className='absolute w-full h-full' /> */}
-                <img alt="" src={`assets/images/box${levelState === 0 ? 1 : levelState}.png`} className='z-10 w-48 mb-8' />
+                <img alt="" draggable="false" src={`assets/images/box${levelState === 0 ? 1 : levelState}.png`} className='z-10 w-48 mb-8' />
                 <div className='flex flex-col justify-center items-center z-10'>
                   <p>{title[levelState].level}</p>
                   <div className='flex justify-center items-end'>
-                    <img src='assets/images/cryptoIcon.png' width={30} />
+                    <img draggable="false" src='assets/images/cryptoIcon.png' width={30} />
                     <p>{title[levelState].detail1}</p>
                   </div>
                 </div>
@@ -338,14 +338,14 @@ const MiningModal = ({
                 {(levelState !== 0 || upgradeTab === false) &&
                   (remainedTime === 0 ?
                     <Button className='w-48' onClick={() => onButtonClick()}>
-                      <img alt="" src="/assets/images/big-button.png" />
+                      <img alt="" draggable="false" src="/assets/images/big-button.png" />
                       <p className='absolute text-[14px] text-center text-[#e7e1e1]' style={{ fontFamily: 'Anime Ace' }}>
                         {(remainedTime === 0 ? btnType : "Claim")}
                       </p>
                     </Button>
                     :
                     <Button className='w-48 grayscale'>
-                      <img alt="" src="/assets/images/big-button.png" />
+                      <img alt="" draggable="false" src="/assets/images/big-button.png" />
                       <p className='absolute text-[14px] text-center text-[#e7e1e1]' style={{ fontFamily: 'Anime Ace' }}>
                         Claim
                       </p>
@@ -357,8 +357,8 @@ const MiningModal = ({
               <div className='flex flex-col justify-center items-center'>
                 <div>{levelState === 1 ? "9csc" : levelState === 2 ? "18csc" : levelState === 3 ? "36csc" : "0csc"}</div>
                 <div className='relative w-12 h-[22rem] flex justify-center items-end'>
-                  <img alt="" src="/assets/images/progress-bar.png" className='h-full w-full' />
-                  <img alt="" src="/assets/images/bar.png" style={{ height: `${barHeight}` }} className={`absolute z-10 w-[2.5rem] mb-[0.2rem] opacity-80 rounded-b-2xl`} />
+                  <img alt="" draggable="false" src="/assets/images/progress-bar.png" className='h-full w-full' />
+                  <img alt="" draggable="false" src="/assets/images/bar.png" style={{ height: `${barHeight}` }} className={`absolute z-10 w-[2.5rem] mb-[0.2rem] opacity-80 rounded-b-2xl`} />
                 </div>
                 <div>0csc</div>
               </div>
@@ -370,27 +370,27 @@ const MiningModal = ({
                   <div key={index} className='h-full w-48 flex flex-col justify-center items-center gap-y-2 rounded-2xl'>
                     <div className={`${item === 1 ? styles.lvl1Box : item === 2 ? styles.lvl2Box : styles.lvl3Box} relative flex flex-col justify-center items-center p-4 gap-y-2`}>
                       {/* <img alt="" src="assets/images/reward_bg_2.png" className='absolute top-0 w-full h-full' /> */}
-                      <img alt="" src={`assets/images/box${item}.png`} className='z-10 w-36 my-4' />
+                      <img alt="" draggable="false" src={`assets/images/box${item}.png`} className='z-10 w-36 my-4' />
                       <div className='flex flex-col justify-center items-center z-10 text-[15px]'>
                         <p>{title[item].level}</p>
-                        <div className='flex justify-center'><img src='assets/images/cryptoIcon.png' width={20}></img><p>{title[item].detail1}</p></div>
+                        <div className='flex justify-center'><img draggable="false" src='assets/images/cryptoIcon.png' width={20}></img><p>{title[item].detail1}</p></div>
                       </div>
                     </div>
                     <div className='flex flex-col justify-end items-center gap-y-2 w-full h-20'>
                       {item > levelState ? <p className='text-[14px]'>{title[item].price}</p> : null}
                       {item <= levelState ?
-                        <img alt="" src="/assets/images/check.png" className='w-20 h-16' />
+                        <img alt="" draggable="false" src="/assets/images/check.png" className='w-20 h-16' />
                         :
                         item === levelState + 1 ?
                           <Button className='w-48' onClick={() => onUpgrade()}>
-                            <img alt="" src="/assets/images/big-button.png" />
+                            <img alt="" draggable="false" src="/assets/images/big-button.png" />
                             <p className='absolute text-[14px] text-center text-[#e7e1e1]' style={{ fontFamily: 'Anime Ace' }}>
                               UPGRADE
                             </p>
                           </Button>
                           :
                           <Button className='w-48'>
-                            <img alt="" src="/assets/images/big-button.png" className='grayscale' />
+                            <img alt="" draggable="false" src="/assets/images/big-button.png" className='grayscale' />
                             <p className='absolute text-[14px] text-center text-[#e7e1e1]' style={{ fontFamily: 'Anime Ace' }}>
                               UPGRADE
                             </p>
@@ -401,7 +401,7 @@ const MiningModal = ({
                 ))}
               </div>
               <div className='flex justify-center items-center bg-[#111111]/[0.9] p-1 rounded-md'>
-                <img src="assets/images/alert.png" style={{ width: '30px', height: 'auto' }} />
+                <img draggable="false" src="assets/images/alert.png" style={{ width: '30px', height: 'auto' }} />
                 <p>Lvl{levelState === 1 ? 5 : levelState === 2 ? 10 : ''}+ character required for upgrade.</p>
               </div>
             </div>
@@ -545,7 +545,7 @@ const MiningModal = ({
           {/* </Box> */}
           <Box className='flex justify-center absolute -bottom-2 w-full'>
             <Button className='w-48 p-0' onClick={!upgradeTab ? onUpgradeTab : onFarmTab}>
-              <img alt="" src="/assets/images/tabbutton.png" />
+              <img alt="" draggable="false" src="/assets/images/tabbutton.png" />
               <p className="absolute font-bold text-[14px] text-center text-[#ffffff]" style={{ fontFamily: 'Anime Ace' }}>
                 {!upgradeTab ? "UPGRADE" : "FARM"}
               </p>

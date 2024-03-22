@@ -154,13 +154,13 @@ export const MainPage = ({
                         />
                     </div>
                     <Button className='w-48' onClick={() => enterWithCode()}>
-                        <img alt="" src="/assets/images/big-button.png" />
+                        <img alt="" draggable="false" src="/assets/images/big-button.png" />
                         <p className='absolute text-[14px] text-center text-[#e7e1e1]' style={{ fontFamily: 'Anime Ace' }}>
                             START
                         </p>
                     </Button>
                     <div className='flex justify-center items-center bg-[#111111]/[0.7] p-1 rounded-md'>
-                        <img src="assets/images/alert.png" style={{ width: '50px', height: 'auto' }} />
+                        <img draggable="false" src="assets/images/alert.png" style={{ width: '50px', height: 'auto' }} />
                         <p>YOU CAN CREATE A CODE IN YOUR <span className='text-[#40f9ff] cursor-pointer' onClick={() => goUrl("https://cryptoshowdown.io/presale")}>ACCOUNT</span><br /> {"(YOU CANNOT USE YOU OWN CODE TO ENTER THE GAME)"}</p>
                     </div>
                 </div>
@@ -205,7 +205,7 @@ export const MainPage = ({
                                                             <ButtonComponent>
                                                                 <img src="assets/images/play pvp.png" draggable="false" />
                                                             </ButtonComponent>
-                                                            <img src="assets/images/lock.png" className='absolute w-32' />
+                                                            <img draggable="false" src="assets/images/lock.png" className='absolute w-32' />
                                                         </div>
                                                         <div className="btn-wrapper">
                                                             <ButtonComponent onClick={() => rememberCode ? inventory() : null}>
@@ -217,12 +217,12 @@ export const MainPage = ({
                                                         <div className='relative w-full h-full'>
                                                             <div className='absolute top-[15%] right-0 flex flex-col gap-y-2'>
                                                                 <div draggable="false" className='cursor-pointer bg-[#111111]/[0.9] w-80 h-40 flex justify-start items-center px-16 rounded-l-xl' onClick={() => rememberCode ? onBattlePass() : null}>
-                                                                    <img src="assets/images/book.png" className={`${styles.item} w-40`} />
+                                                                    <img draggable="false" src="assets/images/book.png" className={`${styles.item} w-40`} />
                                                                 </div>
                                                                 <div draggable="false" className='cursor-pointer bg-[#111111]/[0.9] w-80 h-40 flex justify-start items-center px-16 rounded-l-xl'>
                                                                     <div className='relative w-full h-full flex justify-start items-center'>
-                                                                        <img src="assets/images/box.png" className='absolute w-40' />
-                                                                        <img src="assets/images/lock.png" className='absolute w-32 ml-6' />
+                                                                        <img draggable="false" src="assets/images/box.png" className='absolute w-40' />
+                                                                        <img draggable="false" src="assets/images/lock.png" className='absolute w-32 ml-6' />
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -356,7 +356,7 @@ export const MainPage = ({
                                                     }}
                                                 >
                                                     <div className="w-[129px]">
-                                                        <img src="assets/images/btn_attack.png" />
+                                                        <img draggable="false" src="assets/images/btn_attack.png" />
                                                     </div>
                                                 </button>
 

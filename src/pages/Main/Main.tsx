@@ -434,8 +434,9 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
                     position: 'relative',
                   }}
                 >
-                  <img alt="" src="/images/support/support_md_bg.png" />
+                  <img alt="" src="/images/support/support_md_bg.png" draggable="false" />
                   <img
+                    draggable="false"
                     alt=""
                     src="/images/support/support_md_character.png"
                     style={{
@@ -447,6 +448,7 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
                     }}
                   />
                   <img
+                    draggable="false"
                     alt=""
                     src="/images/support/support_md_close_btn.png"
                     style={{
@@ -567,7 +569,7 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
                               }}
                               href="#outlined-buttons"
                             >
-                              <img alt="" src="/assets/images/big-button.png" />
+                              <img alt="" src="/assets/images/big-button.png" draggable="false" />
                               <p
                                 style={{
                                   position: 'absolute',
@@ -645,6 +647,7 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
             <Box sx={{ pointerEvents: `${TEST_MODE || connected ? '' : 'none'}` }}>
               <div className="wall-wallet min-w-[1600px] min-h-[900px]">
                 <img
+                  draggable="false"
                   src={'assets/images/border' + wallLevelState + '.png'}
                   className={`${styles.item} absolute cursor-pointer w-full h-full min-h-[900px]`}
                   onClick={() => setOpenUpgradeWall(true)}
@@ -672,7 +675,7 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
                     }}
                     onClick={(e) => setOpenSwap(true)}
                   >
-                    <img alt="" src="/images/storage.png" className={`${styles.item} transform -translate-x-1/2 -translate-y-1/2`} />
+                    <img alt="" draggable="false" src="/images/storage.png" className={`${styles.item} transform -translate-x-1/2 -translate-y-1/2`} />
                   </Box>
                   <Box
                     sx={{
@@ -683,7 +686,7 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
                     }}
                     onClick={(e) => setOpenDeposit(true)}
                   >
-                    <img alt="" src="/images/home.png" style={{ transform: 'translate(-45%, -50%)', maxWidth: '240px' }} className={styles.item} />
+                    <img alt="" draggable="false" src="/images/home.png" style={{ transform: 'translate(-45%, -50%)', maxWidth: '240px' }} className={styles.item} />
                   </Box>
                   <Box
                     sx={{
@@ -700,7 +703,7 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
                     }}
                   >
                     <img
-                      alt=""
+                      alt="" draggable="false"
                       className={styles.item}
                       style={{ transform: 'translate(20%, -115%)' }}
                       width={'75%'}
@@ -716,7 +719,7 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
                     }}
                     onClick={(e) => setOpenMining(true)}
                   >
-                    <img alt="" src="/images/mining.png" style={{ transform: 'translate(-50%, -50%)' }} className={styles.item} />
+                    <img alt="" draggable="false" src="/images/mining.png" style={{ transform: 'translate(-50%, -50%)' }} className={styles.item} />
                   </Box>
                 </Box>
                 <Box
@@ -746,6 +749,7 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
                         }}
                       >
                         <img
+                          draggable="false"
                           alt=""
                           className={styles.item}
                           width={'100'}
@@ -769,7 +773,7 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
               }}
             >
               <img
-                alt=""
+                alt="" draggable="false"
                 style={{ position: 'absolute', left: '2%', top: '50%' }}
                 src={`/images/greentree1.png`}
               />
@@ -782,7 +786,7 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
               }}
             >
               <img
-                alt=""
+                alt="" draggable="false"
                 style={{ position: 'absolute', left: '15%', top: '65%', width: '280px', height: '300px' }}
                 src={`/images/pinktree.png`}
               />
@@ -795,7 +799,7 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
               }}
             >
               <img
-                alt=""
+                alt="" draggable="false"
                 style={{ position: 'absolute', right: '5%', top: '55%', }}
                 src={`/images/greentree2.png`}
               />
@@ -807,7 +811,7 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
                 width: 'fit-content',
               }}
             >
-              <img className={`absolute left-[50%] ${styles.rockPos}`}
+              <img className={`absolute left-[50%] ${styles.rockPos}`} draggable="false"
                 alt=""
                 src={`/images/rock.png`}
               />
@@ -840,7 +844,7 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
                   maxWidth: '180px',
                 }}
               >
-                <img alt="" src="/images/login_icon.png" />
+                <img alt="" src="/images/login_icon.png" draggable="false" />
               </Box>
               <Box
                 sx={{
@@ -858,7 +862,7 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
                       connect()
                     }}
                   >
-                    <img alt="" src="/images/icon_metamask.png" />
+                    <img alt="" src="/images/icon_metamask.png" draggable="false" />
                     Connect Metamask
                   </Button>
                 </Box>
@@ -872,7 +876,7 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
                       variant="contained"
                       color="success"
                     >
-                      <img alt="" src="/images/icon_bcs.png" />
+                      <img alt="" draggable="false" src="/images/icon_bcs.png" />
                       Buy/Sell BCS
                     </Button>
                   </a>
@@ -886,7 +890,7 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
                       setOpenInstruction(true)
                     }}
                   >
-                    <img alt="" src="/images/icon_youtube.png" />
+                    <img alt="" draggable="false" src="/images/icon_youtube.png" />
                     INSTRUCTION
                   </Button>
                 </Box>
