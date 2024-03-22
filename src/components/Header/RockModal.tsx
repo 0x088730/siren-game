@@ -79,13 +79,13 @@ const RockModal = ({
               <div className='flex flex-col items-center justify-center gap-y-2 text-[14px] w-full'>
                 <div className='flex justify-between w-full'>
                   <div><img alt="" className='w-[22px] mx-[3px] float-left' src="assets/images/white_clock.png" />TIME:</div>
-                  <div>3H</div>
+                  <div>12H</div>
                 </div>
                 <div className='flex justify-between w-full'>
                   <div>
                     AMOUNT:
                   </div>
-                  <div><img alt="" className='w-[22px] mx-[3px] float-left' src="/images/res_res.png" />20 CSC</div>
+                  <div><img alt="" className='w-[22px] mx-[3px] float-left' src="/images/res_res.png" />5 WATER</div>
                 </div>
               </div>
             </div>
