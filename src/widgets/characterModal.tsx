@@ -59,7 +59,7 @@ const CharacterModal = ({ openCharacter, setOpenCharacter, setPageStatus }: Prop
                                                     Math.floor(global.characters.filter((character) => character.characterName === `siren-${index}`)[0].rarity.valueOf()) === 2 ?
                                                         "rare" :
                                                         Math.floor(global.characters.filter((character) => character.characterName === `siren-${index}`)[0].rarity.valueOf()) === 3 ?
-                                                            "legendary" : ""
+                                                            "legendary" : "common"
                                                 }
                                             </div>
                                         </div>

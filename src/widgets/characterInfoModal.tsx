@@ -42,13 +42,20 @@ const CharacterInfoModal = ({ openCharacterInfo, setOpenCharacterInfo, selectCha
 
     useEffect(() => {
         if (global.walletAddress !== "" && global.walletAddress !== null && global.walletAddress !== undefined) {
-            setUserData({ energy: global.energy, resource: Number(global.resource), exp: global.exp, critical: global.critical, hp: global.hp })
+            setUserData({
+                energy: selectCharacter ? selectCharacter.energy : 0,
+                resource: !isNaN(Number(global.resource)) ? Number(global.resource) : 0,
+                exp: selectCharacter ? selectCharacter.exp : 0,
+                critical: selectCharacter ? selectCharacter.critical : 0,
+                hp: selectCharacter ? selectCharacter.hp : 0
+            })
             let embed = [];
             for (let i = 0; i < global.embed.length; i++) {
-                embed.push(global.embed[i].item.replace('_', '-'))
+                if (global.embed[i].character === (selectCharacter && selectCharacter.characterName))
+                    embed.push(global.embed[i].item.replace('_', '-'))
             }
             setEmbedGem(embed);
-            updateHpCritical(global.hp, global.critical, embed)
+            updateHpCritical(selectCharacter && selectCharacter.hp, selectCharacter && selectCharacter.critical, embed)
             let gem = [];
             for (let i = 0; i < global.purchase.length; i++) {
                 if (global.purchase[i].item === "loot") continue;
@@ -68,8 +75,7 @@ const CharacterInfoModal = ({ openCharacterInfo, setOpenCharacterInfo, selectCha
             alert('Water is less than Swap Amount!!!')
             return
         }
-        energySwap(global.walletAddress, global.currentCharacterName, swapAmount, (res: any) => {
-            global.energy = res.energy;
+        energySwap(global.walletAddress, selectCharacter.characterName, swapAmount, (res: any) => {
             global.resource = res.resource;
             setUserData({ ...userData, energy: res.energy, resource: res.resource })
         })
@@ -80,10 +86,13 @@ const CharacterInfoModal = ({ openCharacterInfo, setOpenCharacterInfo, selectCha
         if (from === "embed") {
             if (embedStatus === true) return;
             embedStatus = true;
-            itemRevive(global.walletAddress, global.currentCharacterName, type.replace("-", "_"), (res: any) => {
+            itemRevive(global.walletAddress, selectCharacter.characterName, type.replace("-", "_"), (res: any) => {
+                global.embed = res.embed;
+                global.purchase = res.purchase;
                 let embed = [];
                 for (let i = 0; i < res.embed.length; i++) {
-                    embed.push(res.embed[i].item.replace('_', '-'))
+                    if (res.embed[i].character === (selectCharacter && selectCharacter.characterName))
+                        embed.push(res.embed[i].item.replace('_', '-'))
                 }
                 setEmbedGem(embed);
                 updateHpCritical(global.hp, global.critical, embed)
@@ -100,10 +109,13 @@ const CharacterInfoModal = ({ openCharacterInfo, setOpenCharacterInfo, selectCha
         if (from === "list") {
             if (modifyStatus === true) return;
             modifyStatus = true;
-            itemModify(global.walletAddress, global.currentCharacterName, type.replace("-", "_"), -1, global.room.chapter, global.room.section, global.chapter, global.section, "win", (res: any) => {
+            itemModify(global.walletAddress, selectCharacter.characterName, type.replace("-", "_"), -1, global.room.chapter, global.room.section, global.chapter, global.section, "win", (res: any) => {
+                global.embed = res.embed;
+                global.purchase = res.purchase;
                 let embed = [];
                 for (let i = 0; i < res.embed.length; i++) {
-                    embed.push(res.embed[i].item.replace('_', '-'))
+                    if (res.embed[i].character === (selectCharacter && selectCharacter.characterName))
+                        embed.push(res.embed[i].item.replace('_', '-'))
                 }
                 setEmbedGem(embed);
                 updateHpCritical(global.hp, global.critical, embed)

@@ -48,7 +48,7 @@ export const getRoom = async () => {
 export const setCurrentCharacter = async (character: string) => {
     await (await axios.post('/user/current-character', { walletAddress: global.walletAddress, character: character })).data.room
 }
-export const itemModify = async (walletAddress: string, character: string = 'siren-1', item: string, amount: number, currentChaper: number, currentSection: number, selectChapter: number, selectSection: number, win: string, cb: Function) => {
+export const itemModify = async (walletAddress: string, character: string, item: string, amount: number, currentChaper: number, currentSection: number, selectChapter: number, selectSection: number, win: string, cb: Function) => {
 
     const data = (await axios.post('/user/item', {
         walletAddress,
@@ -73,7 +73,7 @@ export const itemModify = async (walletAddress: string, character: string = 'sir
     });
 }
 
-export const itemRevive = async (walletAddress: string, character: string = 'siren-1', item: string, cb: Function) => {
+export const itemRevive = async (walletAddress: string, character: string, item: string, cb: Function) => {
     const data = (await axios.post('/user/item/revive', {
         walletAddress,
         character,
@@ -93,7 +93,7 @@ export const itemRevive = async (walletAddress: string, character: string = 'sir
     });
 }
 
-export const energySwap = async (walletAddress: string, character: string = 'siren-1', amount: Number, cb: Function) => {
+export const energySwap = async (walletAddress: string, character: string, amount: Number, cb: Function) => {
     const data = (await axios.post('/user/swap/energy', {
         walletAddress,
         character,
