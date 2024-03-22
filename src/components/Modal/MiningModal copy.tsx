@@ -64,10 +64,11 @@ const MiningModal = ({
   const [upgradeTab, setUpgradeTab] = React.useState(false)
   const [remainedTime, setRemainedTime] = React.useState(0)
   const [isCooldownStarted, setIsCooldownStarted] = useState(false)
+  const [halfGet, setHalfGet] = useState(false);
   const [upgradeErrorFlag, setUpgradeErrorFlag] = useState(false)
   const [barHeight, setBarHeight] = useState("344px");
 
-  let countTime = 43200;
+  const halfRemainTime = 43200;
   useEffect(() => {
     if (upgradeTab && levelState === 3) setBtnType("LIMIT");
     else if (!upgradeTab && levelState === 0) setBtnType("Buy")
@@ -76,10 +77,16 @@ const MiningModal = ({
     if (address !== "") {
       dispatch(
         checkCooldown(address, 'level-up', (res: any) => {
+          setHalfGet(res.data.getStatus);
           let cooldownSec = res.data.time
           if (cooldownSec === 999999) {
             setBarHeight("0px");
             setBtnType('Start')
+          }
+          else if (cooldownSec <= halfRemainTime && res.data.getStatus === false) {
+            setBarHeight(cooldownSec <= 0 ? "344px" : (Math.floor((1 - cooldownSec / 86400) * 344) + "px"));
+            setCsc(res.data.csc)
+            setBtnType('Claim')
           }
           else if (cooldownSec <= 0) {
             setBarHeight("344px");
@@ -87,7 +94,7 @@ const MiningModal = ({
             setBtnType('Claim')
           }
           else {
-            setBarHeight(cooldownSec <= 0 ? "344px" : (Math.floor((1 - cooldownSec / countTime) * 344) + "px"));
+            setBarHeight(cooldownSec <= 0 ? "344px" : (Math.floor((1 - cooldownSec / 86400) * 344) + "px"));
             setRemainedTime(cooldownSec)
             setIsCooldownStarted(true)
           }
@@ -100,7 +107,7 @@ const MiningModal = ({
     if (isCooldownStarted) {
       var cooldownInterval = setInterval(() => {
         setRemainedTime((prevTime) => {
-          if (prevTime === 1) {
+          if (prevTime === 1 || prevTime === halfRemainTime + 1) {
             setBtnType('Claim')
           }
           if (prevTime === 0) {
@@ -109,7 +116,7 @@ const MiningModal = ({
             setBarHeight('344px')
             return 0
           }
-          setBarHeight(prevTime <= 0 ? "344px" : (Math.floor((1 - prevTime / countTime) * 344) + "px"));
+          setBarHeight(prevTime <= 0 ? "344px" : (Math.floor((1 - prevTime / 86400) * 344) + "px"));
           return prevTime - 1
         })
       }, 1000)
@@ -128,9 +135,10 @@ const MiningModal = ({
 
 
   const onButtonClick = async () => {
-    if (remainedTime > 0 && btnType === "Claim") {
+    if (remainedTime <= halfRemainTime && remainedTime > 0 && btnType === "Claim" && halfGet === false) {
       dispatch(claimSiren(address, true, (res: any) => {
         setCsc(res.data.csc)
+        setHalfGet(true);
       }))
     }
     if (remainedTime > 0) {
@@ -198,6 +206,7 @@ const MiningModal = ({
     } else if (btnType === 'Claim') {
       dispatch(
         checkCooldown(address, 'level-up', (res: any) => {
+          setHalfGet(res.data.getStatus);
           let cooldownSec = res.data.time
           if (cooldownSec === 999999) {
             setBtnType('Start')
@@ -205,6 +214,7 @@ const MiningModal = ({
           else if (cooldownSec <= 0) {
             dispatch(claimSiren(address, false, (res: any) => {
               setCsc(res.data.csc)
+              setHalfGet(false)
               setBtnType('Start')
             }))
           }
@@ -219,9 +229,10 @@ const MiningModal = ({
   }
 
   const onUpgrade = () => {
-    if (remainedTime > 0 && btnType === "Claim") {
+    if (remainedTime <= halfRemainTime && remainedTime > 0 && btnType === "Claim" && halfGet === false) {
       dispatch(claimSiren(address, true, (res: any) => {
         setCsc(res.data.csc)
+        setHalfGet(true);
       }))
     }
     if (remainedTime > 0) {
@@ -336,20 +347,20 @@ const MiningModal = ({
               <div className='flex flex-col justify-center items-center gap-y-6'>
                 <div className={`absolute top-48 text-[1.5rem] ${btnType === "Buy" ? "hidden" : ""}`}>{convertSecToHMS(remainedTime)}</div>
                 {(levelState !== 0 || upgradeTab === false) &&
-                  (remainedTime === 0 ?
-                    <Button className='w-48' onClick={() => onButtonClick()}>
-                      <img alt="" src="/assets/images/big-button.png" />
-                      <p className='absolute text-[14px] text-center text-[#e7e1e1]' style={{ fontFamily: 'Anime Ace' }}>
-                        {(remainedTime === 0 ? btnType : "Claim")}
-                      </p>
-                    </Button>
-                    :
-                    <Button className='w-48 grayscale'>
-                      <img alt="" src="/assets/images/big-button.png" />
-                      <p className='absolute text-[14px] text-center text-[#e7e1e1]' style={{ fontFamily: 'Anime Ace' }}>
-                        Claim
-                      </p>
-                    </Button>
+                  (remainedTime === 0 || (remainedTime <= halfRemainTime && halfGet === false) ?
+                  <Button className='w-48' onClick={() => onButtonClick()}>
+                    <img alt="" src="/assets/images/big-button.png" />
+                    <p className='absolute text-[14px] text-center text-[#e7e1e1]' style={{ fontFamily: 'Anime Ace' }}>
+                      {(remainedTime === 0 ? btnType : ((remainedTime <= halfRemainTime && halfGet === false) ? btnType : "Claim"))}
+                    </p>
+                  </Button>
+                  :
+                  <Button className='w-48 grayscale'>
+                    <img alt="" src="/assets/images/big-button.png" />
+                    <p className='absolute text-[14px] text-center text-[#e7e1e1]' style={{ fontFamily: 'Anime Ace' }}>
+                      Claim
+                    </p>
+                  </Button>
                   )
                 }
                 <div className={`absolute top-72 text-[1rem] ${levelState === 0 ? "" : "hidden"}`}>{title[levelState].price}</div>
