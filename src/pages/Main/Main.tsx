@@ -133,7 +133,7 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
       return
     }
     setSelectedIndex(index)
-    handleOpen()
+    setOpenRock(true)
   }
 
   const showBirdModal = () => {
@@ -431,23 +431,10 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
               <Box sx={style}>
                 <Box
                   sx={{
-                    // width: 300,
-                    // height: 300,
                     position: 'relative',
                   }}
                 >
                   <img alt="" src="/images/support/support_md_bg.png" />
-                  {/* <img
-                    alt=""
-                    src="/images/support/support_md_character.png"
-                    style={{
-                      position: 'absolute',
-                      top: 0,
-                      left: 0,
-                      height: '145%',
-                      transform: 'translate(-56%, -15%)',
-                    }}
-                  /> */}
                   <img
                     alt=""
                     src="/images/support/support_md_character.png"
@@ -626,13 +613,10 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
             />
             <RockModal
               openRock={openRock}
-              counting={items[selectedIndex].counting}
-              timer={items[selectedIndex].timer}
               setOpen={setOpenRock}
-              onRock={() => onRockStart(1)}
-              setRockClaim={onRockClaim}
-              btnTitle={btnTitle}
-              setBtnTitle={setBtnTitle}
+              selectedIndex={selectedIndex}
+              setCsc={setCsc}
+              setResource={setResource}
             />
             <DepositModal
               open={openDeposit}
@@ -749,20 +733,12 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
                   {items.map((item, index) => (
                     <Box
                       sx={{
-
-                        // left:
-                        //   windowSize.width < MIN_SCREEN
-                        //     ? MIN_SCREEN - parseInt(item.posy, 10) - 30 + 'px'
-                        //     : Math.max(900, windowSize.width - 450 ) - parseInt(item.posy, 10) + 'px',
                         cursor: 'pointer',
                         margin: 'auto',
                       }}
-                      onClick={(e) => {
-                        showModal(index)
-                      }}
+                      onClick={(e) => { showModal(index) }}
                       key={index}
                     >
-                      {/* {item.item === 0 ? ( */}
                       <Box
                         sx={{
                           zIndex: 10,
