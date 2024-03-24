@@ -561,6 +561,20 @@ export async function buyCharacterAndWeapon(walletAddress: string, object: strin
   })
   return res;
 }
+
+export async function setBounsCoolDown(walletAddress: string) {
+  const res = await api(`user/setBounsCoolDown`, `post`, {
+    walletAddress,
+  })
+  return res;
+}
+
+export async function checkBounsCoolDown(walletAddress: string) {
+  const res = await api(`user/checkBounsCoolDown`, `post`, {
+    walletAddress,
+  })
+  return res;
+}
 // export function addExp(address: any, amount: Number, cb: any) {
 //   return async (dispatch: any) => {
 //     const res = await api(`user/add/exp`, 'post', {

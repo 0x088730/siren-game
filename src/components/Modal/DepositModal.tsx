@@ -1,5 +1,3 @@
-import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline'
-import { Grid, TextField, Stack, InputLabel, FormControl /* , Tooltip */ } from '@mui/material'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import Modal from '@mui/material/Modal'
@@ -14,8 +12,10 @@ import {
 import { deposit, sendToken } from '../../hooks/hook'
 import { useWeb3Context } from '../../hooks/web3Context'
 import {
+  checkBounsCoolDown,
   depositRequest,
   resourceRequest,
+  setBounsCoolDown,
   withdrawRequest,
 } from '../../store/user/actions'
 import { onShowAlert } from '../../store/utiles/actions'
@@ -47,10 +47,11 @@ const DepositModal = ({
   const handleOpen = () => setOpen(true)
   const handleClose = () => setOpen(false)
 
-  const [bcsAmount, setBCSAmount] = useState(320)
+  const [cscAmount, setcscAmount] = useState(320)
   const [cscTokenAmount, setCscTokenAmount] = useState(0)
-  const [withdrawableBcsAmount, setWithdrawableBcsAmount] = useState<number>(0)
+  const [withdrawablecscAmount, setWithdrawablecscAmount] = useState<number>(0)
   const [remainedTime, setRemainedTime] = useState(0);
+  const [isCooldownStarted, setIsCooldownStarted] = useState(false)
 
   useEffect(() => {
     ; (async () => {
@@ -65,17 +66,54 @@ const DepositModal = ({
         ' and withdrawable csc amount is ',
         maxAmount,
       )
-      setWithdrawableBcsAmount(maxAmount - Math.floor(withdrewSirenAmount / 10))
+      setWithdrawablecscAmount(maxAmount - Math.floor(withdrewSirenAmount / 10))
     })()
   }, [user.withdraws])
+
+  useEffect(() => {
+    if (address !== "") {
+      checkBounsCoolDown(address).then(res => {
+        let cooldownSec = res.time
+        if (cooldownSec === 99999999) {
+        }
+        else if (cooldownSec <= 0) {
+        }
+        else {
+          setRemainedTime(cooldownSec)
+          setIsCooldownStarted(true)
+        }
+      })
+    }
+  }, [open])
+
+  useEffect(() => {
+    if (isCooldownStarted) {
+      var cooldownInterval = setInterval(() => {
+        setRemainedTime((prevTime) => {
+          if (prevTime === 1) {
+            // checkTokenCoolDown(global.walletAddress).then(res => {
+            // })
+          }
+          if (prevTime === 0) {
+            clearInterval(cooldownInterval)
+            setIsCooldownStarted(false)
+            return 0
+          }
+          return prevTime - 1
+        })
+      }, 1000)
+    }
+
+    return () => clearInterval(cooldownInterval)
+  }, [isCooldownStarted])
 
   const onChangeAmount = (e: any) => {
     e.preventDefault()
     if (e.target.value < 0) {
-      setBCSAmount(320)
+      setcscAmount(320)
       return
     }
-    setBCSAmount(e.target.value)
+    setcscAmount(e.target.value)
   }
 
   const onChangeEggAmount = (e: any) => {
@@ -98,7 +136,7 @@ const DepositModal = ({
   }
 
   const onDeposit = async () => {
-    if (bcsAmount < 5) {
+    if (cscAmount < 5) {
       alert("minimal withdraw amount is 320CSC");
       return
     }
@@ -106,12 +144,12 @@ const DepositModal = ({
     const transaction = await deposit(
       address,
       ADMIN_WALLET_ADDRESS[chainId],
-      bcsAmount,
+      cscAmount,
     )
     dispatch(
       depositRequest(
         address,
-        bcsAmount,
+        cscAmount,
         transaction.transactionHash,
         (res: any) => {
           handleClose()
@@ -125,6 +163,16 @@ const DepositModal = ({
     )
   }
 
+  const startCooldown = () => {
+    setBounsCoolDown(address).then(res => {
+      if (!res.time) {
+        alert(res.message);
+        return;
+      }
+      setRemainedTime(res.time);
+      setIsCooldownStarted(true);
+    })
+  }
   const onWithdraw = async () => {
     return
     if (cscTokenAmount < 10) {
@@ -132,7 +180,7 @@ const DepositModal = ({
       return
     }
 
-    if (withdrawableBcsAmount * 10 <= cscTokenAmount) {
+    if (withdrawablecscAmount * 10 <= cscTokenAmount) {
       dispatch(
         onShowAlert(
           `you can withdraw only ${checkPremium(user.premium) ? 20 : 10} per day`,
@@ -203,7 +251,7 @@ const DepositModal = ({
                   <input className='border-black border-2 w-full rounded-md bg-[#6F5241] text-white'
                     style={{ boxShadow: "inset 0 0px 4px 0 #000000" }}
                     name="bcs"
-                    value={bcsAmount}
+                    value={cscAmount}
                     onChange={onChangeAmount}
                   />
                 </div>
