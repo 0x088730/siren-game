@@ -3,8 +3,7 @@ import { Grid, TextField, Stack, InputLabel, FormControl /* , Tooltip */ } from 
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import Modal from '@mui/material/Modal'
-import Typography from '@mui/material/Typography'
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import {
@@ -15,14 +14,12 @@ import {
 import { deposit, sendToken } from '../../hooks/hook'
 import { useWeb3Context } from '../../hooks/web3Context'
 import {
-  /* checkWithdrawableReqeust,  */ depositRequest,
+  depositRequest,
   resourceRequest,
   withdrawRequest,
 } from '../../store/user/actions'
 import { onShowAlert } from '../../store/utiles/actions'
 import { checkPremium } from '../../utils/checkPremium'
-// import { Withdraw } from "../../store/user/action-types";
-// import api from '../../utils/callApi';
 import { getBcsPrice, getWithdrewSirenAmount } from '../../utils/user'
 
 interface Props {
@@ -55,9 +52,7 @@ const DepositModal = ({
 
   useEffect(() => {
     ; (async () => {
-      // console.log('user withdraws changed', user.withdraws.length)
       const withdrewSirenAmount = getWithdrewSirenAmount(user.withdraws) // Siren
-      // const bcsPrice = await getBcsPrice();
       const bcsPrice = 1
       const maxAmount =
         (checkPremium(user.premium).isPremium ? 20 : 10) / bcsPrice
@@ -72,28 +67,18 @@ const DepositModal = ({
     })()
   }, [user.withdraws])
 
-  // useEffect(() => {
-  //   const timeoutId = setInterval(() => {
-  //     onResource()
-  //   }, 10000);
-  // },[])
-
   const onChangeAmount = (e: any) => {
     e.preventDefault()
-
     if (e.target.value < 0) {
       setBCSAmount(320)
       return
     }
-
     setBCSAmount(e.target.value)
   }
 
   const onChangeEggAmount = (e: any) => {
     e.preventDefault()
-
     if (e.target.value < 0) return
-
     setCscTokenAmount(e.target.value)
   }
 
@@ -121,7 +106,6 @@ const DepositModal = ({
       ADMIN_WALLET_ADDRESS[chainId],
       bcsAmount,
     )
-    // console.log('bcs deposite transaction: ', transaction)
     dispatch(
       depositRequest(
         address,
@@ -140,13 +124,12 @@ const DepositModal = ({
   }
 
   const onWithdraw = async () => {
+    return
     if (cscTokenAmount < 10) {
       alert("minimal withdraw amount is 300CSC");
       return
     }
 
-    // const res = await checkWithdrawableReqeust(address, SirenAmount)
-    // console.log(res)
     if (withdrawableBcsAmount * 10 <= cscTokenAmount) {
       dispatch(
         onShowAlert(
@@ -159,15 +142,11 @@ const DepositModal = ({
 
     dispatch(onShowAlert('Pease wait while confirming', 'info'))
 
-    // const transaction = await sendToken(address, FEE_WALLET_ADDRESS[chainId], 1)
-
     dispatch(
       withdrawRequest(
         address,
         cscTokenAmount,
-        // transaction.transactionHash,
         (res: any) => {
-          // console.log('callback')
           handleClose()
           if (res && res?.success) {
             dispatch(onShowAlert('Withdraw successfully', 'success'))
@@ -179,219 +158,89 @@ const DepositModal = ({
     )
   }
 
-  const style = {
-    position: 'absolute' as const,
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: {
-      xs: 150,
-      md: 650,
-    },
-  }
-
   return (
     <>
       <Modal
         open={open}
-        // open={true}
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={style}>
-          <img alt="" src="/images/support/support_md_bg.png" />
-
+        <Box className='absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%] w-[800px]'>
+          <img alt="" draggable="false" src={`assets/images/tower-bg-upgrade.png`} />
           <img
-            alt=""
+            alt="" draggable="false"
             src="/images/support/support_md_close_btn.png"
-            className='absolute top-0 right-0 w-[6%] translate-x-[26%] translate-y-[-27%] cursor-pointer z-[15]'
+            className='absolute top-0 right-0 w-[7%] cursor-pointer z-20 translate-x-[26%] translate-y-[-27%]'
             onClick={handleClose}
           />
-          <div className='absolute top-0 left-0 w-full h-full flex justify-center items-center p-6 ml-[1px] z-10'>
-            <div className='w-full h-full bg-[#000000]/[0.9] rounded-lg flex justify-center items-center text-white'>
-              BETA SOON
+          <div className='absolute top-0 font-bold text-[#e7e1e1] leading-[100%] flex justify-center w-full z-10'
+            style={{ fontFamily: 'Anime Ace' }}
+          >
+            <img alt="" draggable="false" src="assets/images/head-bg.png" className='w-72 -mt-12' />
+            <p className={`absolute text-[20px] text-center -mt-2`}>BANK</p>
+          </div>
+          <div className='absolute w-[46.4rem] h-[30.5rem] bg-[#588F58]/[0.5] top-[1.8rem] left-[1.95rem] rounded-xl'>
+            <div className='relative w-full h-full flex justify-center items-center text-white'>
+              <div className='absolute w-[6px] h-full bg-[#000000]/[0.3]' style={{ boxShadow: "inset 0 2px 4px 0 #000000" }}></div>
+              <div className='w-1/2 h-full flex flex-col justify-center items-center gap-y-8'>
+                <div className='font-bold text-[24px]'>DEPOSIT</div>
+                <div className='h-12'>
+                  <div className='flex justify-center items-center bg-[#111111]/[0.7] p-2 rounded-md text-[12px] font-light'>
+                    <img draggable="false" src="assets/images/alert.png" className='w-[30px]' />
+                    <p>MIN DEPOSIT: <span className='text-[#ffe86b]'>320</span> CSC</p>
+                  </div>
+                </div>
+                <div className='flex flex-col justify-center items-center gap-y-2'>
+                  <div className='flex justify-between items-center w-full'>
+                    <div>MIN:</div>
+                    <div className='flex justify-center items-center'>
+                      <img alt="" draggable="false" className='w-[20px] mx-2' src="/images/cryptoIcon.png" />320 CSC
+                    </div>
+                  </div>
+                  <input className='border-black border-2 w-full rounded-md bg-[#6F5241] text-white'
+                    name="bcs"
+                    value={bcsAmount}
+                    onChange={onChangeAmount}
+                  />
+                </div>
+                <Button onClick={onDeposit} className='w-52'>
+                  <img alt="" draggable="false" src="/assets/images/buy-btn.png" />
+                  <p className='absolute text-[16px] text-center text-[#e7e1e1] font-bold' style={{ fontFamily: 'Anime Ace' }}>
+                    Deposit
+                  </p>
+                </Button>
+              </div>
+              <div className='w-1/2 h-full flex flex-col justify-center items-center gap-y-8 p-6'>
+                <div className='font-bold text-[24px]'>WITHDRAW</div>
+                <div className='h-12'>
+                  <div className='flex justify-center items-start bg-[#111111]/[0.7] p-2 rounded-md text-[12px] font-light'>
+                    <img draggable="false" src="assets/images/alert.png" className='w-[30px]' />
+                    <p>YOU CAN WITHDRAW CSC: <span className='text-[#ffe86b]'>10$</span> A DAY AND <span className='text-[#ffe86b]'>20$</span> IF YOU HAVE PREMIUM</p>
+                  </div>
+                </div>
+                <div className='flex flex-col justify-center items-center gap-y-2'>
+                  <div className='flex justify-between items-center w-full'>
+                    <div>ANAILABLE:</div>
+                    <div className='flex justify-center items-center'>
+                      <img alt="" draggable="false" className='w-[20px] mx-2' src="/images/cryptoIcon.png" />10 CSC
+                    </div>
+                  </div>
+                  <input className='border-black border-2 w-full rounded-md bg-[#6F5241] text-white'
+                    name="Siren"
+                    value={cscTokenAmount}
+                    onChange={onChangeEggAmount}
+                  />
+                </div>
+                <Button onClick={onWithdraw} className='w-52'>
+                  <img alt="" draggable="false" src="/assets/images/big-button.png" />
+                  <p className='absolute text-[16px] text-center text-[#e7e1e1] font-bold' style={{ fontFamily: 'Anime Ace' }}>
+                    Withdraw
+                  </p>
+                </Button>
+              </div>
             </div>
           </div>
-          <Box
-            sx={{
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              width: '100%',
-              height: '100%',
-            }}
-          >
-            <Box>
-              <p
-                style={{
-                  fontFamily: 'Marko One, serif',
-                  fontSize: '35px',
-                  textTransform: 'uppercase',
-                  textAlign: 'center',
-                  marginTop: '8%',
-                  color: '#e7e1e1',
-                  lineHeight: '100%',
-                }}
-              >
-                Deposit and Withdraw
-              </p>
-              <p
-                style={{
-                  color: '#770909',
-                  marginTop: '12px',
-                  textAlign: 'center',
-                  marginBottom: '12px',
-                  fontWeight: 'bold'
-                }}
-              >
-                <ErrorOutlineIcon /> You can withdraw CSC: 10$ a day and 20$
-                <br /> if you have premium
-              </p>
-              <p></p>
-            </Box>
-            <Grid
-              container
-              spacing={2}
-              sx={{
-                padding: '2% 6% 6% 8%',
-                width: '100%',
-                height: '100%',
-                margin: 0,
-              }}
-            >
-              <Grid item xs={6} sx={{ padding: '0 !important' }}>
-                <Stack
-                  spacing={2}
-                  sx={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    fontFamily: 'Marko One, serif',
-                    fontSize: '18px',
-                    textTransform: 'uppercase',
-                    color: '#e7e1e1',
-                    lineHeight: '120%',
-                  }}
-                >
-                  <div style={{ marginTop: '0px', textAlign: "left" }}>
-                    <div style={{ fontFamily: 'Anime Ace', color: '#ffe86b', fontSize: '16px', margin: '2px 20px' }}>CSC</div>
-                    <TextField
-                      sx={{ mr: 1, textAlign: 'right', borderColor: 'white', width: '100%', borderRadius: '5px', backgroundColor: 'white' }}
-                      name="bcs"
-                      value={bcsAmount}
-                      size='small'
-                    />
-                  </div>
-                  <p style={{ textAlign: 'center' }}>You will receive <br /> {Number(bcsAmount)} CSC</p>
-                  <p
-                    style={{
-                      color: '#770909',
-                      marginTop: '12px',
-                      textAlign: 'center',
-                      fontFamily: 'Anime Ace',
-                      fontSize: '15px',
-                      fontWeight: 'bold'
-                    }}
-                  >
-                    <ErrorOutlineIcon /> Min deposit: 320csc
-                  </p>
-                  {/* <ErrorOutlineIcon />
-                    <Typography></Typography> */}
-                  {/* </Box> */}
-                  <Box
-                    sx={{
-                      display: 'flex',
-                      justifyContent: 'space-evenly',
-                    }}
-                  >
-                    <Button>
-                      <img alt="" src="/assets/images/big-button.png" style={{ width: '80%' }} />
-                      <p
-                        style={{
-                          position: 'absolute',
-                          fontFamily: 'Marko One, serif',
-                          fontSize: '16px',
-                          textTransform: 'uppercase',
-                          color: '#e7e1e1',
-                          lineHeight: '100%',
-                        }}
-                      >
-                        Deposit
-                      </p>
-                    </Button>
-                  </Box>
-                </Stack>
-              </Grid>
-              <Grid item xs={6} sx={{ padding: '0 !important' }}>
-                <Stack
-                  spacing={2}
-                  sx={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    fontFamily: 'Marko One, serif',
-                    fontSize: '18px',
-                    textTransform: 'uppercase',
-                    textAlign: 'center',
-                    color: '#e7e1e1',
-                    lineHeight: '120%',
-                  }}
-                >
-                  <div style={{ marginTop: '0px', textAlign: "left" }}>
-                    <div style={{ fontFamily: 'Anime Ace', color: '#ffe86b', fontSize: '16px', margin: '2px 20px' }}>CSC</div>
-                    <TextField
-                      sx={{ mr: 1, textAlign: 'right', borderColor: 'white', width: '100%', borderRadius: '5px', backgroundColor: 'white' }}
-                      name="Siren"
-                      value={cscTokenAmount}
-                      size='small'
-                    />
-                  </div>
-                  <p style={{ textAlign: 'center' }}>You will receive <br /> {Math.floor(cscTokenAmount / 10)} CSC</p>
-                  <p
-                    style={{
-                      color: '#770909',
-                      marginTop: '12px',
-                      textAlign: 'center',
-                      fontFamily: 'Anime Ace',
-                      fontSize: '15px',
-                      fontWeight: 'bold'
-                    }}
-                  >
-                    <ErrorOutlineIcon /> Availabe : {Math.floor(withdrawableBcsAmount).toString()}{' '}
-                    CSC
-                  </p>
-                  {/* <ErrorOutlineIcon />
-                    <Typography component="p">
-                      Availabe : {Math.floor(withdrawableBcsAmount).toString()}{' '}
-                      CSC
-                    </Typography> */}
-                  {/* </Box> */}
-                  <Box
-                    sx={{
-                      display: 'flex',
-                      justifyContent: 'space-evenly',
-                    }}
-                  >
-                    <Button>
-                      <img alt="" src="/assets/images/big-button.png" style={{ width: '80%' }} />
-                      <p
-                        style={{
-                          position: 'absolute',
-                          fontFamily: 'Marko One, serif',
-                          fontSize: '16px',
-                          textTransform: 'uppercase',
-                          textAlign: 'center',
-                          color: '#e7e1e1',
-                          lineHeight: '100%',
-                        }}
-                      >
-                        Withdraw
-                      </p>
-                    </Button>
-                  </Box>
-                </Stack>
-              </Grid>
-            </Grid>
-          </Box>
         </Box>
       </Modal>
     </>
