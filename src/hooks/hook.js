@@ -3,13 +3,13 @@ import Web3 from 'web3'
 
 import BUSD_ABI from '../utils/busd_abi.json'
 import PVP_ABI from '../utils/pvp_abi.json'
-import SPX_ABI from '../utils/bcs_abi.json'
+import CSC_ABI from '../utils/csc_abi.json'
 
 import { chainData } from './data'
 import { RefreshContext } from './refreshContext'
 import {} from '../config/config'
 import {
-  BUSD_CONTRACT_ADDRESS,
+  USDT_CONTRACT_ADDRESS,
   chainId,
   PVP_CONTRACT_ADDRESS,
   TOKEN_CONTRACT_ADDRESS,
@@ -114,7 +114,7 @@ export const sendToken = async (from, to, rawAmount) => {
   const amount = web3.utils.toWei(rawAmount.toString(), 'ether')
   var tokenContract = new web3.eth.Contract(
     BUSD_ABI,
-    BUSD_CONTRACT_ADDRESS[chainId],
+    USDT_CONTRACT_ADDRESS[chainId],
   )
 
   const result = await tokenContract.methods.transfer(to, amount).send({
@@ -130,7 +130,7 @@ export const deposit = async (from, to, rawAmount) => {
   const web3 = new Web3(window.ethereum)
   const amount = web3.utils.toWei(rawAmount.toString(), 'gwei')
   var tokenContract = new web3.eth.Contract(
-    SPX_ABI,
+    CSC_ABI,
     TOKEN_CONTRACT_ADDRESS[chainId],
   )
 
@@ -179,7 +179,7 @@ export const createRoomTransaction = async (address, value) => {
   const amount = web3.utils.toWei(value.toString(), 'ether')
   var busdContract = new web3.eth.Contract(
     BUSD_ABI,
-    BUSD_CONTRACT_ADDRESS[chainId],
+    USDT_CONTRACT_ADDRESS[chainId],
   )
   var pvpContract = new web3.eth.Contract(
     PVP_ABI,
@@ -214,7 +214,7 @@ export const enterRoomTransaction = async (address, roomid, value) => {
   const amount = web3.utils.toWei(value.toString(), 'ether')
   var busdContract = new web3.eth.Contract(
     BUSD_ABI,
-    BUSD_CONTRACT_ADDRESS[chainId],
+    USDT_CONTRACT_ADDRESS[chainId],
   )
   var pvpContract = new web3.eth.Contract(
     PVP_ABI,
@@ -284,7 +284,7 @@ export const mintNFT = async (address, type) => {
   const chainid = await web3.eth.getChainId()
   var busdContract = new web3.eth.Contract(
     BUSD_ABI,
-    BUSD_CONTRACT_ADDRESS[chainid],
+    USDT_CONTRACT_ADDRESS[chainid],
   )
   var nftContract = new web3.eth.Contract(
     NFT_ABI,

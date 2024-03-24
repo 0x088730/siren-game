@@ -21,6 +21,7 @@ import {
 import { onShowAlert } from '../../store/utiles/actions'
 import { checkPremium } from '../../utils/checkPremium'
 import { getBcsPrice, getWithdrewSirenAmount } from '../../utils/user'
+import { convertSecToHMS } from '../../utils/timer'
 
 interface Props {
   open: boolean
@@ -49,6 +50,7 @@ const DepositModal = ({
   const [bcsAmount, setBCSAmount] = useState(320)
   const [cscTokenAmount, setCscTokenAmount] = useState(0)
   const [withdrawableBcsAmount, setWithdrawableBcsAmount] = useState<number>(0)
+  const [remainedTime, setRemainedTime] = useState(0);
 
   useEffect(() => {
     ; (async () => {
@@ -211,6 +213,13 @@ const DepositModal = ({
                     Deposit
                   </p>
                 </Button>
+                <div className='absolute bottom-12 text-[12px] flex flex-col justify-center items-center'>
+                  <div>DEPOSIT BONUS: <span className='text-[#1ab306] font-bold'>+10%</span></div>
+                  <div className='flex justify-center items-center text-[#b30606] font-bold'>
+                    <img alt="" draggable="false" className='w-[20px] mx-[3px] float-left' src="assets/images/white_clock.png" />
+                    {convertSecToHMS(remainedTime)}
+                  </div>
+                </div>
               </div>
               <div className='w-1/2 h-full flex flex-col justify-center items-center gap-y-8 p-6'>
                 <div className='font-bold text-[24px]'>WITHDRAW</div>
