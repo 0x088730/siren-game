@@ -1,20 +1,5 @@
-import type { StockProps } from '../common/state/game/state'
-import StockItem from '../objects/stockItem'
-import store from '../store'
 import { global } from '../common/global'
-
-const stockTypes = [
-  'loot',
-  'gem_1',
-  'infernal_1',
-  'chimera_1',
-  'gem_2',
-  'infernal_2',
-  'chimera_2',
-  'gem_3',
-  'infernal_3',
-  'chimera_3',
-]
+import StockItem from '../objects/stockItem'
 
 export default class ItemWidget extends Phaser.GameObjects.Container {
   scene: Phaser.Scene
@@ -64,7 +49,6 @@ export default class ItemWidget extends Phaser.GameObjects.Container {
       const pX = Math.floor(j / this.row)
       const pY = Math.floor(j % this.row)
       const cell = this.itemList.getAt(j).setScale(1.2)
-      
       cell.move(pY * this.cellWidth - 260, pX * this.cellHeight - 160)
     }
   }
@@ -80,7 +64,7 @@ export default class ItemWidget extends Phaser.GameObjects.Container {
   build() {
     this.clear()
     this.itemList = new Phaser.Structs.List<StockItem>(null)
-    const data = global.purchase;
+    const data = global.purchase
     for (let j = 0; j < data.length; j++) {
       let type = data[j].item
       const count = data[j].stock
@@ -100,6 +84,4 @@ export default class ItemWidget extends Phaser.GameObjects.Container {
     }
     this.showItems()
   }
-
-  
 }

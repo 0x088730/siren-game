@@ -234,7 +234,7 @@ const ExchangeModal = ({
             <img alt="" draggable="false" src="assets/images/head-bg.png" className='w-72 -mt-12' />
             <p className={`absolute text-[20px] text-center -mt-6 leading-6`}>Hunting <br />Lodge</p>
           </div>
-          <div className='absolute w-[40.5rem] h-[26.5rem] bg-[#3C1E10]/[0.6] top-[1.6rem] left-[1.7rem] rounded-xl'></div>
+          <div className='absolute w-[40.5rem] h-[26.5rem] bg-[#3C1E10]/[0.6] top-[1.6rem] left-[1.7rem] rounded-xl' style={{ boxShadow: "inset 0 0px 10px 0 #000000ab" }}></div>
           <div className='absolute top-0 w-full h-full p-12 flex flex-col justify-start items-center text-[#e7e1e1] font-bold'>
             <div className='flex justify-between items-center w-full'>
               <div className={`relative w-48 h-48 border-4 rounded-lg ${avatar[0] === "" ? "border-[#ffffff]/[0.2]" : "border-[#FFE60A]"} flex justify-center items-center cursor-pointer text-[14px]`} onClick={() => { selectCharacter(0) }}>

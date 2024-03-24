@@ -230,7 +230,7 @@ const DepositModal = ({
             <img alt="" draggable="false" src="assets/images/head-bg.png" className='w-72 -mt-12' />
             <p className={`absolute text-[20px] text-center -mt-2`}>BANK</p>
           </div>
-          <div className='absolute w-[46.4rem] h-[30.5rem] bg-[#588F58]/[0.5] top-[1.8rem] left-[1.95rem] rounded-xl'>
+          <div className='absolute w-[46.4rem] h-[30.5rem] bg-[#588F58]/[0.5] top-[1.8rem] left-[1.95rem] rounded-xl' style={{ boxShadow: "inset 0 0px 10px 0 #000000ab" }}>
             <div className='relative w-full h-full flex justify-center items-center text-white'>
               <div className='absolute w-[6px] h-full bg-[#000000]/[0.3]' style={{ boxShadow: "inset 0 2px 4px 0 #000000" }}></div>
               <div className='w-1/2 h-full flex flex-col justify-center items-center gap-y-8'>

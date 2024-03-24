@@ -1,7 +1,8 @@
-import RoomItemWidget from './roomItemWidget'
-import { global } from '../common/global'
 import { getProfile, setCurrentCharacter } from '../common/api'
 import ChapterRoomItemWidget from './chapterRoomItemWidget'
+import RoomItemWidget from './roomItemWidget'
+import { global } from '../common/global'
+
 const avatarList = [1, 2, 3, 4]
 var characterClickFlag = false
 export default class RoomWidget extends Phaser.GameObjects.Container {
@@ -35,13 +36,12 @@ export default class RoomWidget extends Phaser.GameObjects.Container {
       // { x: 900, y: 20 },
     ]
     const gChapter = global.room.chapter
-    const gSection = global.room.section
     this.chapter = new Phaser.Structs.List(null)
     this.section = new Phaser.Structs.List(null)
     this.gMode = 1
     for (let i = 0; i < chapterPos.length; i++) {
       // let enable = gChapter > i ? true : false
-      let enable = i < gChapter ? true : false
+      const enable = i < gChapter ? true : false
       const chapterItem = new ChapterRoomItemWidget(
         this.scene,
         chapterPos[i].x,
@@ -49,9 +49,8 @@ export default class RoomWidget extends Phaser.GameObjects.Container {
         i + 1,
         enable,
         1,
-      );
-      // .setSize(107, 112)
-      chapterItem.background?.setInteractive();
+      )
+      chapterItem.background?.setInteractive()
       chapterItem.background?.on('pointerdown', () => {
         if (enable) {
           this.nChapter = i + 1
@@ -109,11 +108,11 @@ export default class RoomWidget extends Phaser.GameObjects.Container {
         })).setVisible(false),
     )
 
-    let characterList = global.characters
+    const characterList = global.characters
     for (let i = 0; i < avatarList.length; i++) {
       const row = Math.floor(i % 2)
       const col = Math.floor(i / 2)
-      let modelName =
+      const modelName =
         characterList.filter((character) => character.characterNo === i)
           .length > 0
           ? `model-${avatarList[i]}`
@@ -133,7 +132,7 @@ export default class RoomWidget extends Phaser.GameObjects.Container {
       } else if (rarity === '2') {
         rarity = 'legendary'
       }
-      let level =
+      const level =
         characterList.filter((character) => character.characterNo === i)
           .length > 0
           ? 'LVL:' +
@@ -184,25 +183,20 @@ export default class RoomWidget extends Phaser.GameObjects.Container {
           .on('pointerdown', () => {
             if (characterClickFlag === false) {
               characterClickFlag = true
-              if (
-                characterList.filter((character) => character.characterNo === i)
-                  .length > 0
-              ) {
+              if (characterList.filter((character) => character.characterNo === i).length > 0) {
                 setCurrentCharacter('siren-' + (i + 1)).then(() => {
-                  getProfile(global.walletAddress, 'siren-' + (i + 1)).then(() => {
-                    this.gameMode(3)
-                    characterClickFlag = false
-                  })
+                  getProfile(global.walletAddress, 'siren-' + (i + 1)).then(
+                    () => {
+                      this.gameMode(3)
+                      characterClickFlag = false
+                    })
                 })
-              }
-              else {
-                alert("you have to buy")
+              } else {
+                alert('you have to buy')
                 characterClickFlag = false
               }
-
             }
-
-          }),
+          })
       )
     }
     this.add(this.lvTexts)
@@ -231,12 +225,9 @@ export default class RoomWidget extends Phaser.GameObjects.Container {
   gameMode(mode: number) {
     this.gMode = mode
     if (mode === 1) {
-
       this.backBtn.setVisible(true)
-      //chapter
-      const gChapter = global.room.chapter
-
-      document.body.style.backgroundImage = 'url(https://iksqvifj67dwchip.public.blob.vercel-storage.com/background/chapter-e4YXpWNzmhYgjYW1U3uscZbCRC5XBp.jpg)'
+      document.body.style.backgroundImage =
+        'url(https://iksqvifj67dwchip.public.blob.vercel-storage.com/background/chapter-e4YXpWNzmhYgjYW1U3uscZbCRC5XBp.jpg)'
       for (let i = 0; i < this.chapter.length; i++) {
         this.chapter.getAt(i).setVisible(true)
       }
@@ -279,7 +270,8 @@ export default class RoomWidget extends Phaser.GameObjects.Container {
       ]
       this.section = new Phaser.Structs.List(null)
 
-      document.body.style.backgroundImage = 'url(https://iksqvifj67dwchip.public.blob.vercel-storage.com/background/section-FcXvmm1rYUgsp7Cl51MuLEwKeawCqT.jpg)'
+      document.body.style.backgroundImage =
+        'url(https://iksqvifj67dwchip.public.blob.vercel-storage.com/background/section-FcXvmm1rYUgsp7Cl51MuLEwKeawCqT.jpg)'
       for (let i = 0; i < this.chapter.length; i++) {
         this.chapter.getAt(i).setVisible(false)
       }
@@ -288,7 +280,7 @@ export default class RoomWidget extends Phaser.GameObjects.Container {
       }
 
       for (let i = 0; i < sectionPos.length; i++) {
-        let enable =
+        const enable =
           gChapter > this.nChapter || gSection >= i + 1 ? true : false
         const sectionItem = new RoomItemWidget(
           this.scene,

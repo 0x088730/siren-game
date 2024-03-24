@@ -11,7 +11,7 @@ export default class ResultWidget extends Phaser.GameObjects.Container {
     super(scene, x, y)
     this.scene = scene
     this.add(
-      (this.background = scene.add.image(0, 0, 'result-bg'))
+      (this.background = scene.add.image(0, 0, 'result-bg')),
       // .setDisplaySize(800, 600)
     )
     // const shader = scene.add.shader('outer-glow-shader', 0, 0, 800, 600);
@@ -34,16 +34,10 @@ export default class ResultWidget extends Phaser.GameObjects.Container {
         })),
     )
     this.add(
-      (this.claimBox = scene.add
-        .image(40, 200, 'claim-box')
-        .setScale(0.25)
-      ),
+      (this.claimBox = scene.add.image(40, 200, 'claim-box').setScale(0.25)),
     )
     this.add(
-      (this.claimXp = scene.add
-        .image(-80, 200, 'claim-xp')
-        .setScale(0.25)
-      ),
+      (this.claimXp = scene.add.image(-80, 200, 'claim-xp').setScale(0.25)),
     )
     this.add(
       (this.caption = scene.add
@@ -60,17 +54,15 @@ export default class ResultWidget extends Phaser.GameObjects.Container {
     this.setVisible(false)
   }
   show(owner: number) {
-    if ((global.section === 2 || global.section === 4) && owner === 1) {// && global.chapter * 4 + global.section + 1 > global.room.chapter * 4 + global.room.section) {
+    if ((global.section === 2 || global.section === 4) && owner === 1) {
       this.caption.setText('Claim')
       this.claimBox.setVisible(true)
-    }
-    else {
+    } else {
       if (owner === 2 || owner === 3) {
         this.caption.setText('Back')
         this.claimBox.setVisible(false)
         this.background.setVisible(false)
-      }
-      else {
+      } else {
         this.background.setVisible(true)
         this.caption.setText('Back')
         this.claimBox.setVisible(false)
