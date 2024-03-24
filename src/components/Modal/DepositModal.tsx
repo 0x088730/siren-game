@@ -199,6 +199,7 @@ const DepositModal = ({
                     </div>
                   </div>
                   <input className='border-black border-2 w-full rounded-md bg-[#6F5241] text-white'
+                    style={{ boxShadow: "inset 0 0px 4px 0 #000000" }}
                     name="bcs"
                     value={bcsAmount}
                     onChange={onChangeAmount}
@@ -227,6 +228,7 @@ const DepositModal = ({
                     </div>
                   </div>
                   <input className='border-black border-2 w-full rounded-md bg-[#6F5241] text-white'
+                    style={{ boxShadow: "inset 0 0px 4px 0 #000000" }}
                     name="Siren"
                     value={cscTokenAmount}
                     onChange={onChangeEggAmount}
