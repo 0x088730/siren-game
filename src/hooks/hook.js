@@ -2,12 +2,10 @@ import { useContext } from 'react'
 import Web3 from 'web3'
 
 import BUSD_ABI from '../utils/busd_abi.json'
-import PVP_ABI from '../utils/pvp_abi.json'
 import CSC_ABI from '../utils/csc_abi.json'
+import PVP_ABI from '../utils/pvp_abi.json'
 
-import { chainData } from './data'
-import { RefreshContext } from './refreshContext'
-import {} from '../config/config'
+import { NFT_ABI } from './abi/nft_contract_abi'
 import {
   USDT_CONTRACT_ADDRESS,
   chainId,
@@ -15,7 +13,8 @@ import {
   TOKEN_CONTRACT_ADDRESS,
   NFT_CONTRACT_ADDRESS,
 } from './constants'
-import { NFT_ABI } from './abi/nft_contract_abi'
+import { chainData } from './data'
+import { RefreshContext } from './refreshContext'
 
 const defaultChainId = chainId
 
@@ -136,10 +135,9 @@ export const deposit = async (from, to, rawAmount) => {
 
   const result = await tokenContract.methods.transfer(to, amount).send({
     from: from,
-    gas: 270000,
-    gasPrice: 0,
+    gas: 200000,
+    gasPrice: web3.utils.toWei('10', 'gwei'),
   })
-  //console.log('deposite transaction: ', result)
   return result
 }
 
@@ -148,14 +146,14 @@ export const getTransaction = async () => {
   const txData = await web3.eth.getTransactionReceipt(
     '0x0572cfd34d02f18e3baf25f67e272a10eedda878e07bfe673df152b8d9b6bf7d',
   )
-  const txHist = await web3.eth.getTransaction(
-    '0x0572cfd34d02f18e3baf25f67e272a10eedda878e07bfe673df152b8d9b6bf7d',
-  )
+  // const txHist = await web3.eth.getTransaction(
+  //   '0x0572cfd34d02f18e3baf25f67e272a10eedda878e07bfe673df152b8d9b6bf7d',
+  // )
   //console.log(txData, txHist)
-  const to = txHist.input.substring(34, 74)
-  const data = txData.logs[0]
-  const wei = web3.utils.hexToNumberString(data.data)
-  const amount = web3.utils.fromWei(wei, 'ether')
+  // const to = txHist.input.substring(34, 74)
+  // const data = txData.logs[0]
+  // const wei = web3.utils.hexToNumberString(data.data)
+  // const amount = web3.utils.fromWei(wei, 'ether')
 
   //console.log(txData, txHist)
 
@@ -276,8 +274,6 @@ export const getPvpRoomList = async () => {
   //console.log('rool list = ', result)
   return result
 }
-
-export const handleGetPrivateKey = (address) => {}
 
 export const mintNFT = async (address, type) => {
   const web3 = new Web3(window.ethereum)

@@ -136,7 +136,7 @@ const DepositModal = ({
   }
 
   const onDeposit = async () => {
-    if (cscAmount < 5) {
+    if (cscAmount < 320) {
       alert("minimal withdraw amount is 320CSC");
       return
     }
