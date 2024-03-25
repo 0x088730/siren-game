@@ -54,6 +54,7 @@ const DepositModal = ({
   const [withdrawablecscAmount, setWithdrawablecscAmount] = useState<number>(0)
   const [remainedTime, setRemainedTime] = useState(0);
   const [isCooldownStarted, setIsCooldownStarted] = useState(false)
+  const [pendingStatus, setPendingStatus] = useState(false);
 
   useEffect(() => {
     ; (async () => {
@@ -142,12 +143,19 @@ const DepositModal = ({
       alert("minimal withdraw amount is 320CSC");
       return
     }
+    setPendingStatus(true)
     dispatch(onShowAlert('Pease wait while confirming', 'info'))
-    const transaction = await deposit(
-      address,
-      ADMIN_WALLET_ADDRESS[chainId],
-      cscAmount,
-    )
+    let transaction;
+    try {
+      transaction = await deposit(
+        address,
+        ADMIN_WALLET_ADDRESS[chainId],
+        cscAmount,
+      )
+    } catch (e) {
+      setPendingStatus(false)
+    }
+
     dispatch(
       depositRequest(
         address,
@@ -161,6 +169,7 @@ const DepositModal = ({
           } else {
             dispatch(onShowAlert('Deposit faild!', 'warning'))
           }
+          setPendingStatus(false)
         },
       ),
     )
@@ -232,6 +241,15 @@ const DepositModal = ({
           >
             <img alt="" draggable="false" src="assets/images/head-bg.png" className='w-72 -mt-12' />
             <p className={`absolute text-[20px] text-center -mt-2`}>BANK</p>
+          </div>
+          <div className={`absolute w-full h-full top-0 z-20 ${pendingStatus ? "block" : "hidden"}`}>
+            <div className='relative w-full h-full flex justify-center items-center'>
+              <img draggable="false" src="assets/images/pending.webp" className='absolute w-[55%]' style={{ boxShadow: "10px 10px 10px black" }} />
+              <div className='flex justify-center items-center z-30'>
+                <span className="loader"></span>
+                <div className='text-center text-white font-bold text-[18px] ml-4'>DEPOSIT IS PENDING<br />DON'T CLOSE THIS WINDOW</div>
+              </div>
+            </div>
           </div>
           <div className='absolute w-[46.4rem] h-[30.5rem] bg-[#588F58]/[0.5] top-[1.8rem] left-[1.95rem] rounded-xl' style={{ boxShadow: "inset 0 0px 10px 0 #000000ab" }}>
             <div className='relative w-full h-full flex justify-center items-center text-white'>
