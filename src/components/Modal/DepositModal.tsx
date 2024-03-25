@@ -30,7 +30,7 @@ interface Props {
   egg: any
   onExchange: any
   onExchangeEgg: any
-  setCsc: any
+  setRealCSC: any
 }
 
 const DepositModal = ({
@@ -40,7 +40,7 @@ const DepositModal = ({
   egg,
   onExchange,
   onExchangeEgg,
-  setCsc
+  setRealCSC
 }: Props) => {
   const { connected, chainID, address, connect } = useWeb3Context()
   const { user } = useSelector((state: any) => state.userModule)
@@ -156,7 +156,7 @@ const DepositModal = ({
         (res: any) => {
           handleClose()
           if (res) {
-            setCsc(res.cscTokenAmount)
+            setRealCSC(res.tokenAmount.csc)
             dispatch(onShowAlert('Deposit successfully', 'success'))
           } else {
             dispatch(onShowAlert('Deposit faild!', 'warning'))

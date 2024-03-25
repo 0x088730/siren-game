@@ -627,7 +627,7 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
               egg={eggs}
               onExchange={onExchange}
               onExchangeEgg={onExchangeEgg}
-              setCsc={setCsc}
+              setRealCSC={setRealCSC}
             />
             <MiningModal
               open={openMining}
