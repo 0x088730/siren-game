@@ -245,7 +245,7 @@ export const BattlePass = (props) => {
                                                 }
                                             >
                                                 {presentData.value === "" ?
-                                                    <img src={presentData.getStatus === true ? presentData.image : `assets/images/weapon/${presentData.level === 4 ? randomVal[0] : randomVal[1]}.png`} draggable="false" className="rounded-xl border-1 border-black w-full h-full" style={{ boxShadow: "0 0 5px #FFA723" }} alt="" />
+                                                    <img src={presentData.getStatus === true ? presentData.image : `assets/images/weapon/${presentData.level === 4 ? randomVal[0] : randomVal[1]}.png`} draggable="false" className="rounded-xl border-[1px] border-black w-full h-full" style={{ boxShadow: "0 0 5px #FFA723" }} alt="" />
                                                     :
                                                     <>
                                                         {

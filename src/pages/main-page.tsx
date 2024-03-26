@@ -16,6 +16,7 @@ import { GameHeaderComponent } from '../components/game-header.component'
 import CharacterDetailModal from '../widgets/characterDetailModal'
 import InventoryModal from '../widgets/inventoryModal'
 import { addLoginHistory } from '../store/user/actions'
+import GuildModal from '../widgets/guildModal'
 
 interface HeaderProps {
     showAccount: any
@@ -53,6 +54,7 @@ export const MainPage = ({
     const rememberCode = useSelector((state: any) => state.app.game.rememberCode);
 
     const [openCharacter, setOpenCharacter] = useState(false);
+    const [openGuild, setOpenGuild] = useState(false);
     const [openCharacterInfo, setOpenCharacterInfo] = useState(false);
     const [openInventory, setOpenInventory] = useState(false);
     const [inputCode, setInputCode] = useState(false);
@@ -91,6 +93,12 @@ export const MainPage = ({
         // onCharacter()
         store.dispatch(setButtonView(false));
         setOpenCharacter(true);
+    }
+    const guild = () => {
+        if (global.walletAddress === "0x2710A268e7e5084bf26F5c3FD38bfb0D7b7703D2" || global.walletAddress === "0x1cb6FC66926224EE12d4714a2A1E8F2ca509f0c1") {
+            store.dispatch(setButtonView(false));
+            setOpenGuild(true);
+        }
     }
     const onLand = () => {
         store.dispatch(setLoadingStatus(true));
@@ -227,11 +235,14 @@ export const MainPage = ({
                                                                 </div>
                                                             </div>
                                                             <div className="btn-ligroup">
+                                                                <ButtonComponent onClick={() => rememberCode ? guild() : null}>
+                                                                    <img src="assets/images/guild.webp" draggable="false" className='w-[260px]' />
+                                                                </ButtonComponent>
                                                                 <ButtonComponent onClick={() => rememberCode ? character() : null}>
-                                                                    <img src="assets/images/characters.png" draggable="false" />
+                                                                    <img src="assets/images/characters.png" draggable="false" className='w-[265px]' />
                                                                 </ButtonComponent>
                                                                 <ButtonComponent onClick={() => (!address || !rememberCode) ? null : onLand()}>
-                                                                    <img src="assets/images/land.png" draggable="false" />
+                                                                    <img src="assets/images/land.png" draggable="false" className='w-[200px]' />
                                                                 </ButtonComponent>
                                                             </div>
                                                         </div>
@@ -248,6 +259,10 @@ export const MainPage = ({
                                         <InventoryModal
                                             openInventory={openInventory}
                                             setOpenInventory={setOpenInventory}
+                                        />
+                                        <GuildModal
+                                            openGuild={openGuild}
+                                            setOpenGuild={setOpenGuild}
                                         />
                                     </div>
                                 )}
