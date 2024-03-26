@@ -163,7 +163,6 @@ const DepositModal = ({
         cscAmount,
         transaction.transactionHash,
         (res: any) => {
-          handleClose()
           if (res) {
             setRealCSC(res.claimedCSC)
             dispatch(onShowAlert('Deposit successfully', 'success'))
@@ -171,6 +170,9 @@ const DepositModal = ({
             dispatch(onShowAlert('Deposit faild!', 'warning'))
           }
           setPendingStatus(false)
+          if (remainedTime <= 0) {
+            startCooldown();
+          }
         },
       ),
     )

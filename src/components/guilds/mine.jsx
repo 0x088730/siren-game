@@ -18,22 +18,6 @@ const playersList = [
     { walletAddress: "0x96ca266261f828bab32e800f5797f0edc2cce66f", amount: 6847 },
 ]
 
-// const msgData = [
-//     { walletAddress: "0x29704734361342a7f394f1867fd084b538b75ee2", time: "5 min ago", detail: "Hello! Ready to play?" },
-//     { walletAddress: "0x1cb6fc66926224ee12d4714a2a1e8f2ca509f0c1", time: "5 min ago", detail: "Certainly! Are we playing today?" },
-//     { walletAddress: "0x96ca266261f828bab32e800f5797f0edc2cce66f", time: "5 min ago", detail: "Yes! When are you free?" },
-//     { walletAddress: "0x2710A268e7e5084bf26F5c3FD38bfb0D7b7703D2", time: "5 min ago", detail: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat." },
-//     { walletAddress: "0x29704734361342a7f394f1867fd084b538b75ee2", time: "5 min ago", detail: "Hello! Ready to play?" },
-//     { walletAddress: "0x1cb6fc66926224ee12d4714a2a1e8f2ca509f0c1", time: "5 min ago", detail: "Certainly! Are we playing today?" },
-//     { walletAddress: "0x96ca266261f828bab32e800f5797f0edc2cce66f", time: "5 min ago", detail: "Yes! When are you free?" },
-//     { walletAddress: "0x29704734361342a7f394f1867fd084b538b75ee2", time: "5 min ago", detail: "Hello! Ready to play?" },
-//     { walletAddress: "0x1cb6fc66926224ee12d4714a2a1e8f2ca509f0c1", time: "5 min ago", detail: "Certainly! Are we playing today?" },
-//     { walletAddress: "0x96ca266261f828bab32e800f5797f0edc2cce66f", time: "5 min ago", detail: "Yes! When are you free?" },
-//     { walletAddress: "0x29704734361342a7f394f1867fd084b538b75ee2", time: "5 min ago", detail: "Hello! Ready to play?" },
-//     { walletAddress: "0x1cb6fc66926224ee12d4714a2a1e8f2ca509f0c1", time: "5 min ago", detail: "Certainly! Are we playing today?" },
-//     { walletAddress: "0x96ca266261f828bab32e800f5797f0edc2cce66f", time: "5 min ago", detail: "Yes! When are you free?" },
-// ]
-
 const MinePart = (props) => {
     const [chatPart, setChatPart] = useState(false);
     const [message, setMessage] = useState("")
