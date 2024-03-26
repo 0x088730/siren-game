@@ -12,6 +12,7 @@ const CreatePart = (props) => {
     const [nameFree, setNameFree] = useState(false);
     const [createAvailable, setCreateAvailable] = useState(true);
     const [inputFile, setInputFile] = useState("");
+    const [imgLoading, setImgLoading] = useState(false);
 
     useEffect(() => {
         if (name === "1") setNameExist(true);
@@ -35,12 +36,13 @@ const CreatePart = (props) => {
             alert("File is too large...")
             return;
         }
+        setImgLoading(true);
         const formData = new FormData();
         formData.append('file', event.target.files[0]);
         axios.post(`${process.env.REACT_APP_API_URL}/api/v1/user/upload`, formData)
             .then(res => {
-                let path = res.data.substring(res.data.indexOf("\\") + 1);
-                setInputFile(path)
+                setInputFile(res.data.slice(7, res.data.length))
+                setImgLoading(false);
             })
     }
 
@@ -74,9 +76,14 @@ const CreatePart = (props) => {
             <div className="text-[#ffff19] text-[14px] font-[400] flex-mid mt-2">GUILD BOUNS: <span className='text-white'> +10% CSC EARN</span></div>
             <div className='flex-mid mt-16 mb-12 gap-x-6'>
                 <div className='flex-mid relative w-32 h-32 bg-[#ffffff]/[0.4] rounded-lg border-[1px] border-[#464646] text-[47px] font-serif'>
-                    {inputFile === "" ? "+" : <img alt="" draggable="false" className='w-full h-full rounded-md' src={`${process.env.REACT_APP_API_URL}/${inputFile}`} />}
-                    <label className='absolute w-full h-full cursor-pointer' htmlFor="myInput"></label>
-                    <input className='absolute w-full h-full hidden' id='myInput' type='file' accept='image/*' onChange={(e) => fileInput(e)} />
+                    {imgLoading ?
+                        <span className="loader"></span> :
+                        <>
+                            {inputFile === "" ? "+" : <img alt="" draggable="false" className='w-full h-full rounded-md object-cover' src={`${process.env.REACT_APP_API_URL}/${inputFile}`} />}
+                            <label className='absolute w-full h-full cursor-pointer' htmlFor="myInput"></label>
+                            <input className='absolute w-full h-full hidden' id='myInput' type='file' accept='image/*' onChange={(e) => fileInput(e)} />
+                        </>
+                    }
                 </div>
                 <div className='relative flex-mid flex-col items-start gap-y-2'>
                     <div className='text-white'>GUILD NAME</div>
