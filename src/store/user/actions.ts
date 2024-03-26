@@ -562,26 +562,23 @@ export async function buyCharacterAndWeapon(walletAddress: string, object: strin
   return res;
 }
 
-export async function setBounsCoolDown(walletAddress: string) {
+export async function setBounsCoolDown() {
   const res = await api(`user/setBounsCoolDown`, `post`, {
-    walletAddress,
   })
   return res;
 }
 
-export async function checkBounsCoolDown(walletAddress: string) {
+export async function checkBounsCoolDown() {
   const res = await api(`user/checkBounsCoolDown`, `post`, {
-    walletAddress,
   })
   return res;
 }
 
-export async function createGuildField(walletAddress: string, image: string, title: string, formData: any) {
+export async function createGuildField(walletAddress: string, image: string, title: string) {
   const res = await api(`user/createGuildField`, `post`, {
     walletAddress,
     image,
     title,
-    formData
   })
   return res;
 }

@@ -75,7 +75,7 @@ const DepositModal = ({
 
   useEffect(() => {
     if (address !== "") {
-      checkBounsCoolDown(address).then(res => {
+      checkBounsCoolDown().then(res => {
         let cooldownSec = res.time
         if (cooldownSec === 99999999) {
         }
@@ -170,16 +170,13 @@ const DepositModal = ({
             dispatch(onShowAlert('Deposit faild!', 'warning'))
           }
           setPendingStatus(false)
-          if (remainedTime <= 0) {
-            startCooldown();
-          }
         },
       ),
     )
   }
 
   const startCooldown = () => {
-    setBounsCoolDown(address).then(res => {
+    setBounsCoolDown().then(res => {
       if (!res.time) {
         alert(res.message);
         return;
