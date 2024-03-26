@@ -575,6 +575,40 @@ export async function checkBounsCoolDown(walletAddress: string) {
   })
   return res;
 }
+
+export async function createGuildField(walletAddress: string, image: string, title: string, formData: any) {
+  const res = await api(`user/createGuildField`, `post`, {
+    walletAddress,
+    image,
+    title,
+    formData
+  })
+  return res;
+}
+
+export async function getGuild(walletAddress: string) {
+  const res = await api(`user/getGuild`, `post`, {
+    walletAddress,
+  })
+  return res;
+}
+
+export async function joinGuild(walletAddress: string, guild: any) {
+  const res = await api(`user/joinGuild`, `post`, {
+    walletAddress,
+    guild,
+  })
+  return res;
+}
+
+export async function addMessage(walletAddress: string, message: string, guild: any) {
+  const res = await api(`user/addMessage`, `post`, {
+    walletAddress,
+    message,
+    guild,
+  })
+  return res;
+}
 // export function addExp(address: any, amount: Number, cb: any) {
 //   return async (dispatch: any) => {
 //     const res = await api(`user/add/exp`, 'post', {

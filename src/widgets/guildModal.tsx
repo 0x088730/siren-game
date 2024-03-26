@@ -10,6 +10,7 @@ import { setButtonView } from '../common/state/game/reducer'
 import MinePart from '../components/guilds/mine'
 import CreatePart from '../components/guilds/create'
 import ListPart from '../components/guilds/list'
+import { getGuild } from '../store/user/actions'
 
 interface Props {
     openGuild: boolean
@@ -19,6 +20,7 @@ interface Props {
 const GuildModal = ({ openGuild, setOpenGuild }: Props) => {
     const [nav, setNav] = useState("list");
     const [searchName, setSearchName] = useState("");
+
     return (
         <>
             <Modal
@@ -55,10 +57,10 @@ const GuildModal = ({ openGuild, setOpenGuild }: Props) => {
                         </div>
                         <div className={`w-full ${nav === "mine" ? "px-0 my-0 h-[29.75rem]" : "px-8 my-6 h-[26.75rem]"} overflow-y-auto`}>
                             {nav === "list" ?
-                                <ListPart />
+                                <ListPart nav={nav} />
                                 :
                                 nav === "mine" ?
-                                    <MinePart />
+                                    <MinePart nav={nav} setNav={setNav} />
                                     :
                                     <CreatePart />
                             }

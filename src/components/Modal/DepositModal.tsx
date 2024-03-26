@@ -154,6 +154,7 @@ const DepositModal = ({
       )
     } catch (e) {
       setPendingStatus(false)
+      return;
     }
 
     dispatch(
@@ -164,7 +165,7 @@ const DepositModal = ({
         (res: any) => {
           handleClose()
           if (res) {
-            setRealCSC(res.tokenAmount.csc)
+            setRealCSC(res.claimedCSC)
             dispatch(onShowAlert('Deposit successfully', 'success'))
           } else {
             dispatch(onShowAlert('Deposit faild!', 'warning'))
