@@ -622,6 +622,14 @@ export async function addMessage(walletAddress: string, message: string, guild: 
   })
   return res;
 }
+
+export async function leaveGuild(walletAddress: string, guild: any) {
+  const res = await api(`user/leaveGuild`, `post`, {
+    walletAddress,
+    guild,
+  })
+  return res;
+}
 // export function addExp(address: any, amount: Number, cb: any) {
 //   return async (dispatch: any) => {
 //     const res = await api(`user/add/exp`, 'post', {

@@ -1,7 +1,7 @@
 import Button from '@mui/material/Button'
 import { useEffect, useState } from 'react';
 import { global } from '../../common/global';
-import { addMessage } from '../../store/user/actions';
+import { addMessage, leaveGuild } from '../../store/user/actions';
 import { convertSecToHMS } from '../../utils/timer';
 
 const MinePart = (props) => {
@@ -53,8 +53,16 @@ const MinePart = (props) => {
         })
     }
 
-    const leaveGuild = () => {
-
+    const onLeave = () => {
+        leaveGuild(global.walletAddress, userGuild).then(res => {
+            console.log(res)
+            setGuildList(res.data.guildList);
+            setUserGuild(res.data.userGuild);
+            setMsgData([]);
+            setUserStatus(res.data.userStatus);
+            setMessage("");
+            setChatPart(false);
+        })
     }
 
     return (
@@ -99,7 +107,7 @@ const MinePart = (props) => {
                                 <div className='flex-mid text-[12px]'>TOTAL EARN: <img alt="" draggable="false" className='w-[20px] mx-2' src="/images/cryptoIcon.png" /> {userGuild.earnAmount} CSC</div>
                             </div>
                         </div>
-                        <Button className='w-44' onClick={() => leaveGuild()}>
+                        <Button className='w-44' onClick={() => onLeave()}>
                             <img alt="" draggable="false" src="/assets/images/leave-btn.png" />
                             <p className='absolute text-[14px] text-center text-[#e7e1e1]' style={{ fontFamily: 'Anime Ace' }}>
                                 LEAVE
