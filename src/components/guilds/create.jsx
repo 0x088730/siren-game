@@ -1,6 +1,6 @@
 import Button from '@mui/material/Button'
 import { useEffect, useState } from 'react';
-import { createGuildField, getGuild } from '../../store/user/actions';
+import { createGuildField } from '../../store/user/actions';
 import { global } from '../../common/global';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
@@ -10,6 +10,8 @@ import 'react-lazy-load-image-component/src/effects/blur.css';
 const freeList = ["siren1", "siren2", "siren3", "siren4", "siren5"]
 
 const CreatePart = (props) => {
+    const { guildList, setGuildList, userStatus, setUserStatus, userGuild, setUserGuild } = props;
+
     const dispatch = useDispatch();
     const userModule = useSelector((state) => state.userModule)
     const [name, setName] = useState("");
@@ -17,19 +19,6 @@ const CreatePart = (props) => {
     const [nameFree, setNameFree] = useState(false);
     const [inputFile, setInputFile] = useState("");
     const [imgLoading, setImgLoading] = useState(false);
-    const [guildList, setGuildList] = useState([]);
-
-    useEffect(() => {
-        if (global.walletAddress !== '' && props.nav === "create") {
-            getGuild(global.walletAddress).then(res => {
-                if (res.success && res.data) {
-                    setGuildList(res.data)
-                } else {
-                    alert(res.message)
-                }
-            })
-        }
-    }, [props.nav])
 
     useEffect(() => {
         if (name !== "") {
@@ -73,6 +62,10 @@ const CreatePart = (props) => {
             alert("Please input guild name!")
             return;
         }
+        if (nameExist) {
+            alert("Already exist!")
+            return;
+        }
         if (name.length < 3 || name.length > 10) {
             alert("Max name length is 10, min 3!")
             return;
@@ -83,8 +76,10 @@ const CreatePart = (props) => {
         }
         dispatch(
             createGuildField(global.walletAddress, inputFile, name, (res) => {
-                console.log(res)
-                if (res.success && res.data) {
+                if (res.success) {
+                    setUserStatus(res.userStatus);
+                    setGuildList(res.guildList);
+                    setUserGuild(res.userGuild);
                     setInputFile("");
                     setName("");
                     alert("Create successfully!")
@@ -132,7 +127,7 @@ const CreatePart = (props) => {
                     <div className={`absolute top-20 text-[14px] ${nameExist ? "text-[#FF1E1E]" : "text-[#52FF52]"} ${(nameExist || nameFree) ? "block" : "hidden"}`}>{nameExist ? "THIS NAME IS ALREADY TAKEN" : "THIS NAME IS FREE"}</div>
                 </div>
             </div>
-            <Button className={`w-60 ${!nameExist ? "" : "grayscale"}`} onClick={createGuild}>
+            <Button className={`w-60 ${(!userStatus) ? "" : "grayscale"}`} onClick={(!userStatus) ? createGuild : null}>
                 <img alt="" draggable="false" src="/assets/images/big-button.png" />
                 <p className='absolute text-[16px] text-center text-[#e7e1e1] font-bold' style={{ fontFamily: 'Anime Ace' }}>
                     CREATE GUILD

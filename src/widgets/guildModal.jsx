@@ -1,10 +1,7 @@
-import { Grid /* , TextField, Tooltip */ } from '@mui/material'
 import Box from '@mui/material/Box'
 import Modal from '@mui/material/Modal'
 import { global } from '../common/global'
 import { useEffect, useState } from 'react'
-import { energySwap, getProfile } from '../common/api'
-import CharacterInfoModal from './characterInfoModal'
 import store from '../store'
 import { setButtonView } from '../common/state/game/reducer'
 import MinePart from '../components/guilds/mine'
@@ -12,14 +9,46 @@ import CreatePart from '../components/guilds/create'
 import ListPart from '../components/guilds/list'
 import { getGuild } from '../store/user/actions'
 
-interface Props {
-    openGuild: boolean
-    setOpenGuild: any
-}
-
-const GuildModal = ({ openGuild, setOpenGuild }: Props) => {
+const GuildModal = ({ openGuild, setOpenGuild }) => {
     const [nav, setNav] = useState("list");
     const [searchName, setSearchName] = useState("");
+    const [guildList, setGuildList] = useState([]);
+    const [presentList, setPresentList] = useState([]);
+    const [userStatus, setUserStatus] = useState(false);
+    const [userGuild, setUserGuild] = useState({})
+
+    useEffect(() => {
+        setPresentList(guildList);
+    }, [nav])
+    useEffect(() => {
+        if (global.walletAddress !== '') {
+            getGuild(global.walletAddress).then(res => {
+                if (res.success && res.data) {
+                    setGuildList(res.data.guildList);
+                    setPresentList(res.data.guildList);
+                    setUserGuild(res.data.userGuild);
+                    setUserStatus(res.data.userStatus)
+                } else {
+                    alert(res.message)
+                }
+            })
+        }
+    }, [openGuild])
+
+    useEffect(() => {
+        if (searchName !== "") {
+            setPresentList([]);
+            let currentArray = [];
+            for (let i = 0; i < guildList.length; i++) {
+                if (guildList[i].title.includes(searchName)) {
+                    currentArray.push(guildList[i]);
+                }
+            }
+            setPresentList(currentArray);
+        } else {
+            setPresentList(guildList);
+        }
+    }, [searchName])
 
     return (
         <>
@@ -57,12 +86,33 @@ const GuildModal = ({ openGuild, setOpenGuild }: Props) => {
                         </div>
                         <div className={`w-full ${nav === "mine" ? "px-0 my-0 h-[29.75rem]" : "px-8 my-6 h-[26.75rem]"} overflow-y-auto`}>
                             {nav === "list" ?
-                                <ListPart nav={nav} searchName={searchName} />
+                                <ListPart
+                                    userStatus={userStatus}
+                                    setUserStatus={setUserStatus}
+                                    guildList={guildList}
+                                    setGuildList={setGuildList}
+                                    presentList={presentList}
+                                    setPresentList={setPresentList}
+                                    userGuild={userGuild}
+                                    setUserGuild={setUserGuild}
+                                />
                                 :
                                 nav === "mine" ?
-                                    <MinePart nav={nav} setNav={setNav} />
+                                    <MinePart
+                                        nav={nav} setNav={setNav}
+                                        guildList={guildList} setGuildList={setGuildList}
+                                        userGuild={userGuild} setUserGuild={setUserGuild}
+                                        userStatus={userStatus} setUserStatus={setUserStatus}
+                                    />
                                     :
-                                    <CreatePart nav={nav} />
+                                    <CreatePart
+                                        userStatus={userStatus}
+                                        setUserStatus={setUserStatus}
+                                        guildList={guildList}
+                                        setGuildList={setGuildList}
+                                        userGuild={userGuild}
+                                        setUserGuild={setUserGuild}
+                                    />
                             }
                         </div>
                     </div>

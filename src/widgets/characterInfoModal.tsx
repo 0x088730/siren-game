@@ -85,6 +85,11 @@ const CharacterInfoModal = ({ openCharacterInfo, setOpenCharacterInfo, selectCha
         }
         energySwap(global.walletAddress, selectCharacter.characterName, swapAmount, (res: any) => {
             global.resource = res.resource;
+            for(let i=0; i<global.characters.length; i++) {
+                if(global.characters[i].characterName === selectCharacter.characterName) {
+                    global.characters[i].energy = res.energy;
+                }
+            }
             setUserData({ ...userData, energy: res.energy, resource: res.resource })
         })
     }

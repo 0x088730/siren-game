@@ -1,46 +1,17 @@
 import Button from '@mui/material/Button'
-import { useEffect, useState } from 'react';
-import { getGuild, joinGuild } from '../../store/user/actions';
+import { joinGuild } from '../../store/user/actions';
 import { global } from '../../common/global';
 
 const ListPart = (props) => {
-    const [guildList, setGuildList] = useState([]);
-    const [presentList, setPresentList] = useState([]);
+    const { guildList, setGuildList, presentList, setPresentList, userStatus, setUserStatus, userGuild, setUserGuild } = props;
 
-    useEffect(() => {
-        if (props.searchName !== "") {
-            setPresentList([]);
-            let currentArray = [];
-            for (let i = 0; i < guildList.length; i++) {
-                if (guildList[i].title.includes(props.searchName)) {
-                    currentArray.push(guildList[i]);
-                }
-            }
-            setPresentList(currentArray);
-        } else {
-            setPresentList(guildList);
-        }
-    }, [props.searchName])
-
-    useEffect(() => {
-        if (global.walletAddress !== '' && props.nav === "list") {
-            getGuild(global.walletAddress).then(res => {
-                if (res.success && res.data) {
-                    setGuildList(res.data)
-                    setPresentList(res.data)
-                } else {
-                    alert(res.message)
-                }
-            })
-        }
-    }, [props.nav])
-    const onJoin = (guild, index) => {
+    const onJoin = (guild) => {
         joinGuild(global.walletAddress, guild).then(res => {
             if (res.success && res.data) {
-                let currentArray = guildList;
-                currentArray[index] = res.data;
-                setGuildList(currentArray);
-                setPresentList(currentArray);
+                setGuildList(res.data.guildList);
+                setPresentList(res.data.guildList);
+                setUserGuild(res.data.userGuild);
+                setUserStatus(res.data.userStatus);
             } else {
                 alert(res.message);
             }
@@ -57,7 +28,7 @@ const ListPart = (props) => {
                     </div>
                     <div className='flex-mid text-[12px]'>TOTAL EARN: <img alt="" draggable="false" className='w-[20px] mx-2' src="/images/cryptoIcon.png" /> {item.earnAmount} CSC</div>
                     <div key={index} className='text-[12px]'>PLAYERS: {item.members.length}/{item.totalMembers}</div>
-                    <Button className='w-44' onClick={() => onJoin(item, index)}>
+                    <Button className={`w-44 ${userStatus ? "grayscale" : ""}`} onClick={() => userStatus ? null : onJoin(item)}>
                         <img alt="" draggable="false" src="/assets/images/buy-btn.png" />
                         <p className='absolute text-[14px] text-center text-[#e7e1e1]' style={{ fontFamily: 'Anime Ace' }}>
                             JOIN
