@@ -73,6 +73,10 @@ const CreatePart = (props) => {
             alert("Please input guild name!")
             return;
         }
+        if (name.length < 3 || name.length > 10) {
+            alert("Max name length is 10, min 3!")
+            return;
+        }
         if (inputFile === "") {
             alert("Please input file!")
             return;

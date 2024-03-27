@@ -2,6 +2,7 @@ import Button from '@mui/material/Button'
 import { useEffect, useState } from 'react';
 import { global } from '../../common/global';
 import { addMessage, getGuild } from '../../store/user/actions';
+import { convertSecToHMS } from '../../utils/timer';
 
 const playersList = [
     { walletAddress: "0x1cb6fc66926224ee12d4714a2a1e8f2ca509f0c1", amount: 6847 },
@@ -24,6 +25,8 @@ const MinePart = (props) => {
     const [msgData, setMsgData] = useState([])
     const [guildList, setGuildList] = useState([]);
     const [currentGuild, setCurrentGuild] = useState({})
+    const [remainTime, setRemainTime] = useState(0);
+    const [isCooldownStarted, setIsCooldownStarted] = useState(false);
 
     useEffect(() => {
         if (global.walletAddress !== '' && props.nav === "mine") {
@@ -39,12 +42,34 @@ const MinePart = (props) => {
         }
     }, [props.nav])
 
+    useEffect(() => {
+        if (isCooldownStarted) {
+            var cooldownInterval = setInterval(() => {
+                setRemainTime((prevTime) => {
+                    if (prevTime === 1) {
+                        setIsCooldownStarted(false)
+                    }
+                    if (prevTime === 0) {
+                        clearInterval(cooldownInterval)
+                        setIsCooldownStarted(false)
+                        return 0
+                    }
+                    return prevTime - 1
+                })
+            }, 1000)
+        }
+
+        return () => clearInterval(cooldownInterval)
+    }, [isCooldownStarted])
+
     const onMessage = () => {
         if (message === "") {
             alert("Please input message...")
             return;
         }
         addMessage(global.walletAddress, message, currentGuild).then(res => {
+            setRemainTime(10);
+            setIsCooldownStarted(true)
             let currentArray = guildList;
             currentArray[0] = res.data;
             setGuildList(currentArray);
@@ -93,10 +118,10 @@ const MinePart = (props) => {
                 <>
                     <div className='flex-mid justify-between w-full h-[80px] bg-[#000000]/[0.25] px-8'>
                         <div className='flex-mid gap-x-2'>
-                            <img alt="" draggable="false" className='w-[60px]' src="assets/character/list/list1.png" />
+                            <img alt="" draggable="false" className='w-[60px]' src={`${process.env.REACT_APP_API_URL}/${currentGuild.image}`} />
                             <div className='flex-mid flex-col items-start text-white'>
-                                <div className='text-[14px] font-bold'>GUILD NAME</div>
-                                <div className='flex-mid text-[12px]'>TOTAL EARN: <img alt="" draggable="false" className='w-[20px] mx-2' src="/images/cryptoIcon.png" /> 6874 CSC</div>
+                                <div className='text-[14px] font-bold'>{currentGuild.title}</div>
+                                <div className='flex-mid text-[12px]'>TOTAL EARN: <img alt="" draggable="false" className='w-[20px] mx-2' src="/images/cryptoIcon.png" /> {currentGuild.earnAmount} CSC</div>
                             </div>
                         </div>
                         <Button className='w-44' onClick={() => leaveGuild()}>
@@ -116,20 +141,20 @@ const MinePart = (props) => {
                                 {msgData.map((item, index) => (
                                     <div key={index}>
                                         <div className='flex justify-start items-center gap-x-4'>
-                                            <div className={`text-[14px] ${global.walletAddress.toLowerCase() === item.user ? "text-[#D04AFF]" : currentGuild.creator.toLowerCase() === item.user ? "text-[#2ac736]" : "text-[#fee53a]"}`}>{global.walletAddress.toLowerCase() === item.user ? "YOU" : item.user.slice(0, 4) + " ... " + item.user.slice(-4)}:</div>
+                                            <div className={`text-[14px] ${global.walletAddress.toLowerCase() === item.user ? "text-[#D04AFF] font-bold" : currentGuild.creator.toLowerCase() === item.user ? "text-[#2ac736] font-bold" : "text-[#fee53a]"}`}>{global.walletAddress.toLowerCase() === item.user ? "YOU" : item.user.slice(0, 4) + " ... " + item.user.slice(-4)}:</div>
                                             <div className='text-[10px] text-[#BCBCBC]'>{item.createdAt}</div>
                                         </div>
-                                        <div className='text-white text-[11px] text-left ml-6'>{item.detail}</div>
+                                        <div className='text-white text-[11px] text-left ml-6 break-words'>{item.detail}</div>
                                     </div>
                                 ))}
                             </div>
                             <div className='absolute bottom-0 bg-[#000000]/[0.25] w-full h-12 rounded-b-xl p-2'>
                                 <input
-                                    className={`border-[#fafafa]/[0.2] border-[1px] rounded-lg bg-[#000000]/[0.2] text-[14px] text-[#888888] w-full h-full`}
+                                    className={`border-[#fafafa]/[0.2] border-[1px] rounded-lg bg-[#000000]/[0.2] text-[14px] text-[#888888] w-full h-full ${remainTime > 0 ? "text-right" : ""}`}
                                     name="message"
-                                    value={message}
+                                    value={remainTime > 0 ? convertSecToHMS(remainTime) : message}
                                     placeholder='ENTER YOUR MESSAGE...'
-                                    onChange={(e) => setMessage(e.target.value)}
+                                    onChange={(e) => remainTime > 0 ? null : setMessage(e.target.value)}
                                     onKeyDown={(e) => {
                                         if (e.key === 'Enter') {
                                             onMessage();
@@ -143,10 +168,10 @@ const MinePart = (props) => {
                                 <div className='text-[12px]'>PLAYERS:</div>
                                 <div className='text-[12px]'>9/40</div>
                             </div>
-                            {playersList.map((item, index) => (
+                            {currentGuild.members.map((item, index) => (
                                 <div key={index} className='flex-mid justify-between p-2 bg-[#9C97B5]/[0.4] border-[1px] border-[#16171D]/[0.5] rounded-lg w-full h-10 mt-[0.1rem]'>
-                                    <div className={`text-[14px] ${currentGuild.creator === item.walletAddress.toLowerCase() ? "text-[#2ac736]" : ""}`}>{item.walletAddress.slice(0, 4) + " ... " + item.walletAddress.slice(-4)}</div>
-                                    <div className='flex-mid text-[12px]'>EARN: <img alt="" draggable="false" className='w-[20px] mx-2' src="/images/cryptoIcon.png" /> {item.amount} CSC</div>
+                                    <div className={`text-[14px] ${currentGuild.creator === item.toLowerCase() ? "text-[#2ac736] font-bold" : ""}`}>{item.slice(0, 4) + " ... " + item.slice(-4)}</div>
+                                    <div className='flex-mid text-[12px]'>EARN: <img alt="" draggable="false" className='w-[20px] mx-2' src="/images/cryptoIcon.png" /> 0 CSC</div>
                                 </div>
                             ))}
                         </div>
