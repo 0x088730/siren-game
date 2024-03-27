@@ -5,12 +5,29 @@ import { global } from '../../common/global';
 
 const ListPart = (props) => {
     const [guildList, setGuildList] = useState([]);
+    const [presentList, setPresentList] = useState([]);
+
+    useEffect(() => {
+        if (props.searchName !== "") {
+            setPresentList([]);
+            let currentArray = [];
+            for (let i = 0; i < guildList.length; i++) {
+                if (guildList[i].title.includes(props.searchName)) {
+                    currentArray.push(guildList[i]);
+                }
+            }
+            setPresentList(currentArray);
+        } else {
+            setPresentList(guildList);
+        }
+    }, [props.searchName])
 
     useEffect(() => {
         if (global.walletAddress !== '' && props.nav === "list") {
             getGuild(global.walletAddress).then(res => {
                 if (res.success && res.data) {
                     setGuildList(res.data)
+                    setPresentList(res.data)
                 } else {
                     alert(res.message)
                 }
@@ -23,6 +40,7 @@ const ListPart = (props) => {
                 let currentArray = guildList;
                 currentArray[index] = res.data;
                 setGuildList(currentArray);
+                setPresentList(currentArray);
             } else {
                 alert(res.message);
             }
@@ -31,7 +49,7 @@ const ListPart = (props) => {
 
     return (
         <div className='flex-mid flex-col gap-y-2'>
-            {guildList.map((item, index) => (
+            {presentList.map((item, index) => (
                 <div key={index} className='flex-mid justify-between gap-x-2 w-full h-16 rounded-lg border-[1px] border-[#CFD4FF]/[0.2] bg-[#9C97B5]/[0.4] text-white'>
                     <div className='flex-mid gap-x-2'>
                         <img alt="" draggable="false" className='w-[60px] rounded-full' src={`${process.env.REACT_APP_API_URL}/${item.image}`} />

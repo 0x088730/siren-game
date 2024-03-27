@@ -1,32 +1,50 @@
 import Button from '@mui/material/Button'
 import { useEffect, useState } from 'react';
-import { createGuildField } from '../../store/user/actions';
+import { createGuildField, getGuild } from '../../store/user/actions';
 import { global } from '../../common/global';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
+import { LazyLoadImage } from "react-lazy-load-image-component"
+import 'react-lazy-load-image-component/src/effects/blur.css';
+
+const freeList = ["siren1", "siren2", "siren3", "siren4", "siren5"]
 
 const CreatePart = (props) => {
+    const dispatch = useDispatch();
     const userModule = useSelector((state) => state.userModule)
     const [name, setName] = useState("");
     const [nameExist, setNameExist] = useState(false);
     const [nameFree, setNameFree] = useState(false);
-    const [createAvailable, setCreateAvailable] = useState(true);
     const [inputFile, setInputFile] = useState("");
     const [imgLoading, setImgLoading] = useState(false);
+    const [guildList, setGuildList] = useState([]);
 
     useEffect(() => {
-        if (name === "1") setNameExist(true);
-        else if (name === "2") setNameFree(true);
-        else {
-            setNameExist(false);
-            setNameFree(false);
+        if (global.walletAddress !== '' && props.nav === "create") {
+            getGuild(global.walletAddress).then(res => {
+                if (res.success && res.data) {
+                    setGuildList(res.data)
+                } else {
+                    alert(res.message)
+                }
+            })
         }
-    }, [name])
+    }, [props.nav])
 
     useEffect(() => {
-        if (name === "" || name === "1") setCreateAvailable(false);
-        else {
-            setCreateAvailable(true);
+        if (name !== "") {
+            let status = false
+            for (let i = 0; i < guildList.length; i++) {
+                if (guildList[i].title === name) {
+                    status = true;
+                }
+            }
+            setNameExist(status)
+            if (freeList.includes(name)) {
+                setNameFree(true);
+            } else {
+                setNameFree(false);
+            }
         }
     }, [name])
 
@@ -59,15 +77,18 @@ const CreatePart = (props) => {
             alert("Please input file!")
             return;
         }
-        createGuildField(global.walletAddress, inputFile, name).then(res => {
-            if (res.success && res.data) {
-                setInputFile("");
-                setName("");
-                alert("Create successfully!")
-            } else {
-                alert(res.message);
-            }
-        })
+        dispatch(
+            createGuildField(global.walletAddress, inputFile, name, (res) => {
+                console.log(res)
+                if (res.success && res.data) {
+                    setInputFile("");
+                    setName("");
+                    alert("Create successfully!")
+                } else {
+                    alert(res.message);
+                }
+            }),
+        )
     }
 
     return (
@@ -79,7 +100,17 @@ const CreatePart = (props) => {
                     {imgLoading ?
                         <span className="loader"></span> :
                         <>
-                            {inputFile === "" ? "+" : <img alt="" draggable="false" className='w-full h-full rounded-md object-cover' src={`${process.env.REACT_APP_API_URL}/${inputFile}`} />}
+                            {inputFile === "" ?
+                                "+" :
+                                <LazyLoadImage
+                                    src={`${process.env.REACT_APP_API_URL}/${inputFile}`}
+                                    loading="lazy"
+                                    effect="blur"
+                                    draggable="false"
+                                    width={'100%'} height={'100%'}
+                                    className='w-full h-full rounded-md object-cover'
+                                />
+                            }
                             <label className='absolute w-full h-full cursor-pointer' htmlFor="myInput"></label>
                             <input className='absolute w-full h-full hidden' id='myInput' type='file' accept='image/*' onChange={(e) => fileInput(e)} />
                         </>
@@ -90,13 +121,14 @@ const CreatePart = (props) => {
                     <input
                         className={`${nameExist ? "border-[#FF1E1E]" : nameFree ? "border-[#52FF52]" : "border-[#fafafa]/[0.2]"}  border-[1px] rounded-lg bg-[#FFFFFF] text-[14px] text-[#847D87] w-[320px]`}
                         name="name"
+                        value={name}
                         placeholder='ENTER A NAME FOR YOUR GUILD...'
                         onChange={(e) => setName(e.target.value)}
                     />
                     <div className={`absolute top-20 text-[14px] ${nameExist ? "text-[#FF1E1E]" : "text-[#52FF52]"} ${(nameExist || nameFree) ? "block" : "hidden"}`}>{nameExist ? "THIS NAME IS ALREADY TAKEN" : "THIS NAME IS FREE"}</div>
                 </div>
             </div>
-            <Button className={`w-60 ${createAvailable ? "" : "grayscale"}`} onClick={createGuild}>
+            <Button className={`w-60 ${!nameExist ? "" : "grayscale"}`} onClick={createGuild}>
                 <img alt="" draggable="false" src="/assets/images/big-button.png" />
                 <p className='absolute text-[16px] text-center text-[#e7e1e1] font-bold' style={{ fontFamily: 'Anime Ace' }}>
                     CREATE GUILD

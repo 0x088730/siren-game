@@ -49,8 +49,14 @@ const MinePart = (props) => {
             currentArray[0] = res.data;
             setGuildList(currentArray);
             setMsgData(res.data.messages);
+            setMessage("")
         })
     }
+
+    const leaveGuild = () => {
+
+    }
+
     return (
         <>
             {!chatPart ?
@@ -93,7 +99,7 @@ const MinePart = (props) => {
                                 <div className='flex-mid text-[12px]'>TOTAL EARN: <img alt="" draggable="false" className='w-[20px] mx-2' src="/images/cryptoIcon.png" /> 6874 CSC</div>
                             </div>
                         </div>
-                        <Button className='w-44' onClick={onMessage}>
+                        <Button className='w-44' onClick={() => leaveGuild()}>
                             <img alt="" draggable="false" src="/assets/images/leave-btn.png" />
                             <p className='absolute text-[14px] text-center text-[#e7e1e1]' style={{ fontFamily: 'Anime Ace' }}>
                                 LEAVE
@@ -121,8 +127,14 @@ const MinePart = (props) => {
                                 <input
                                     className={`border-[#fafafa]/[0.2] border-[1px] rounded-lg bg-[#000000]/[0.2] text-[14px] text-[#888888] w-full h-full`}
                                     name="message"
+                                    value={message}
                                     placeholder='ENTER YOUR MESSAGE...'
                                     onChange={(e) => setMessage(e.target.value)}
+                                    onKeyDown={(e) => {
+                                        if (e.key === 'Enter') {
+                                            onMessage();
+                                        }
+                                    }}
                                 />
                             </div>
                         </div>

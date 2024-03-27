@@ -65,6 +65,13 @@ export const MainPage = ({
     const handleOpenAccount = (flag: boolean) => {
         setShowAccount(false)
     }
+
+    useEffect(() => {
+        if (gameState === 1) {
+            document.body.style.backgroundImage = 'url(https://iksqvifj67dwchip.public.blob.vercel-storage.com/background/bg-Tb688buNrJp4hV2u8rPn8aPBG4lg5c.jpg)'
+        }
+    }, [])
+
     const start = () => {
         if (global.wall === 0) {
             return
@@ -73,7 +80,7 @@ export const MainPage = ({
             alert('Your energy is less than 10. Please charge energy')
             return
         }
-        store.dispatch(setGameStatus(1))
+        // store.dispatch(setGameStatus(1))
         // store.dispatch(openChapterPage(true));
         setPageStatus("chapter");
         // onStart()

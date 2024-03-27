@@ -51,18 +51,18 @@ const GuildModal = ({ openGuild, setOpenGuild }: Props) => {
                                     className='h-[40px] w-[260px] rounded-lg border-[1px] border-[#FAFAFA]/[0.2] bg-[#D9E1FF]/[0.1] text-[#9F98A2] text-[14px] pl-10'
                                     name="name"
                                     placeholder='ENTER GUILD NAME...'
-                                    onChange={(e) => setSearchName(e.target.value)}
+                                    onChange={(e) => { setNav("list"); setSearchName(e.target.value); }}
                                 />
                             </div>
                         </div>
                         <div className={`w-full ${nav === "mine" ? "px-0 my-0 h-[29.75rem]" : "px-8 my-6 h-[26.75rem]"} overflow-y-auto`}>
                             {nav === "list" ?
-                                <ListPart nav={nav} />
+                                <ListPart nav={nav} searchName={searchName} />
                                 :
                                 nav === "mine" ?
                                     <MinePart nav={nav} setNav={setNav} />
                                     :
-                                    <CreatePart />
+                                    <CreatePart nav={nav} />
                             }
                         </div>
                     </div>
