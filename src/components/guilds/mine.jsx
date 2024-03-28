@@ -75,7 +75,7 @@ const MinePart = (props) => {
     const time = (createdAt) => {
         let time = Math.floor((Date.now() - (new Date(createdAt)).getTime()) / 1000)
         if (time > 86400) return Math.floor(time / 86400) + " DAYS AGO"
-        if (time > 3600) return Math.floor(time / 3600) + " HOURS " + Math.floor(time % 3600) + " MINS AGO"
+        if (time > 3600) return Math.floor(time / 3600) + " HOURS " + Math.floor(Math.floor(time % 3600) / 60) + " MINS AGO"
         if (time > 60) return Math.floor(time / 60) + " MINS AGO"
         if (time < 60) return "NOW"
     }
