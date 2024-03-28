@@ -54,7 +54,7 @@ const CreatePart = (props) => {
     }
 
     const createGuild = () => {
-        if (userModule.cscTokenAmount < 50) {
+        if (userModule.user.cscTokenAmount < 50) {
             alert("CSC token not enough!")
             return;
         }
