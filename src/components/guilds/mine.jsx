@@ -74,7 +74,7 @@ const MinePart = (props) => {
 
     return (
         <>
-            {!chatPart ?
+            {!userStatus ?
                 <div className='px-8 my-6'>
                     <div className="text-white text-[24px] font-bold">YOU ARE NOT A MEMBER OF ANY GUILD<span className='text-[#ffff19]'>!</span></div>
                     <div className="text-[#E5E5E5] text-[14px] font-[400]">GUILD INFOMATION WILL BE DISPLAYED HERE AFTER YOU JOIN OR CREATE YOUR GUILD</div>
