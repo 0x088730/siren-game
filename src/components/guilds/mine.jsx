@@ -153,8 +153,8 @@ const MinePart = (props) => {
                             </div>
                             {userGuild.members.map((item, index) => (
                                 <div key={index} className='flex-mid justify-between p-2 bg-[#9C97B5]/[0.4] border-[1px] border-[#16171D]/[0.5] rounded-lg w-full h-10 mt-[0.1rem]'>
-                                    <div className={`text-[14px] ${userGuild.creator === item.toLowerCase() ? "text-[#2ac736] font-bold" : ""}`}>{item.slice(0, 4) + " ... " + item.slice(-4)}</div>
-                                    <div className='flex-mid text-[12px]'>EARN: <img alt="" draggable="false" className='w-[20px] mx-2' src="/images/cryptoIcon.png" /> 0 CSC</div>
+                                    <div className={`text-[14px] ${userGuild.creator === item.address.toLowerCase() ? "text-[#2ac736] font-bold" : ""}`}>{item.address.slice(0, 4) + " ... " + item.address.slice(-4)}</div>
+                                    <div className='flex-mid text-[12px]'>EARN: <img alt="" draggable="false" className='w-[20px] mx-2' src="/images/cryptoIcon.png" /> {item.earn} CSC</div>
                                 </div>
                             ))}
                         </div>
