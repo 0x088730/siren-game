@@ -44,6 +44,10 @@ const MinePart = (props) => {
             return;
         }
         addMessage(global.walletAddress, message, userGuild).then(res => {
+            if (res.data === false) {
+                alert(res.message);
+                return;
+            }
             setRemainTime(10);
             setIsCooldownStarted(true)
             setGuildList(res.data.guildList);
@@ -55,7 +59,10 @@ const MinePart = (props) => {
 
     const onLeave = () => {
         leaveGuild(global.walletAddress, userGuild).then(res => {
-            console.log(res)
+            if (res.data === false) {
+                alert(res.message);
+                return;
+            }
             setGuildList(res.data.guildList);
             setUserGuild(res.data.userGuild);
             setMsgData([]);

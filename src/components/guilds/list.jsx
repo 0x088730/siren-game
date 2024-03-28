@@ -7,14 +7,14 @@ const ListPart = (props) => {
 
     const onJoin = (guild) => {
         joinGuild(global.walletAddress, guild).then(res => {
-            if (res.success && res.data) {
-                setGuildList(res.data.guildList);
-                setPresentList(res.data.guildList);
-                setUserGuild(res.data.userGuild);
-                setUserStatus(res.data.userStatus);
-            } else {
+            if (res.data === false) {
                 alert(res.message);
+                return;
             }
+            setGuildList(res.data.guildList);
+            setPresentList(res.data.guildList);
+            setUserGuild(res.data.userGuild);
+            setUserStatus(res.data.userStatus);
         })
     }
 
@@ -23,7 +23,7 @@ const ListPart = (props) => {
             {presentList.map((item, index) => (
                 <div key={index} className='flex-mid justify-between gap-x-2 w-full h-16 rounded-lg border-[1px] border-[#CFD4FF]/[0.2] bg-[#9C97B5]/[0.4] text-white'>
                     <div className='flex-mid gap-x-2'>
-                        <img alt="" draggable="false" className='w-[60px] rounded-full' src={`${process.env.REACT_APP_API_URL}/${item.image}`} />
+                        <img alt="" draggable="false" className='w-[60px] h-[60px] rounded-full' src={`${process.env.REACT_APP_API_URL}/${item.image}`} />
                         <div className='text-[14px] font-bold'>{item.title}</div>
                     </div>
                     <div className='flex-mid text-[12px]'>TOTAL EARN: <img alt="" draggable="false" className='w-[20px] mx-2' src="/images/cryptoIcon.png" /> {item.earnAmount} CSC</div>

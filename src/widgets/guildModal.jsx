@@ -23,14 +23,14 @@ const GuildModal = ({ openGuild, setOpenGuild }) => {
     useEffect(() => {
         if (global.walletAddress !== '') {
             getGuild(global.walletAddress).then(res => {
-                if (res.success && res.data) {
-                    setGuildList(res.data.guildList);
-                    setPresentList(res.data.guildList);
-                    setUserGuild(res.data.userGuild);
-                    setUserStatus(res.data.userStatus)
-                } else {
-                    alert(res.message)
+                if (res.data === false) {
+                    alert(res.message);
+                    return;
                 }
+                setGuildList(res.data.guildList);
+                setPresentList(res.data.guildList);
+                setUserGuild(res.data.userGuild);
+                setUserStatus(res.data.userStatus)
             })
         }
     }, [openGuild])

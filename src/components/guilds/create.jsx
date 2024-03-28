@@ -76,16 +76,16 @@ const CreatePart = (props) => {
         }
         dispatch(
             createGuildField(global.walletAddress, inputFile, name, (res) => {
-                if (res.success) {
-                    setUserStatus(res.userStatus);
-                    setGuildList(res.guildList);
-                    setUserGuild(res.userGuild);
-                    setInputFile("");
-                    setName("");
-                    alert("Create successfully!")
-                } else {
+                if (res.data === false) {
                     alert(res.message);
+                    return;
                 }
+                setUserStatus(res.userStatus);
+                setGuildList(res.guildList);
+                setUserGuild(res.userGuild);
+                setInputFile("");
+                setName("");
+                alert("Create successfully!")
             }),
         )
     }
