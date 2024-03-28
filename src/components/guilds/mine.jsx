@@ -72,6 +72,14 @@ const MinePart = (props) => {
         })
     }
 
+    const time = (createdAt) => {
+        let time = Math.floor((Date.now() - (new Date(createdAt)).getTime()) / 1000)
+        if (time > 86400) return Math.floor(time / 86400) + " DAYS AGO"
+        if (time > 3600) return Math.floor(time / 3600) + " HOURS " + Math.floor(time % 3600) + " MINS AGO"
+        if (time > 60) return Math.floor(time / 60) + " MINS AGO"
+        if (time < 60) return "NOW"
+    }
+
     return (
         <>
             {!userStatus ?
@@ -132,7 +140,9 @@ const MinePart = (props) => {
                                     <div key={index}>
                                         <div className='flex justify-start items-center gap-x-4'>
                                             <div className={`text-[14px] ${global.walletAddress.toLowerCase() === item.user ? "text-[#D04AFF] font-bold" : userGuild.creator.toLowerCase() === item.user ? "text-[#2ac736] font-bold" : "text-[#fee53a]"}`}>{global.walletAddress.toLowerCase() === item.user ? "YOU" : item.user.slice(0, 4) + " ... " + item.user.slice(-4)}:</div>
-                                            <div className='text-[10px] text-[#BCBCBC]'>{item.createdAt}</div>
+                                            <div className='text-[10px] text-[#BCBCBC]'>
+                                                {time(item.createdAt)}
+                                            </div>
                                         </div>
                                         <div className='text-white text-[11px] text-left ml-6 break-words'>{item.detail}</div>
                                     </div>
@@ -156,7 +166,7 @@ const MinePart = (props) => {
                         <div className="w-[380px] h-[380px] mt-2 text-white overflow-y-auto">
                             <div className='flex-mid justify-between w-full'>
                                 <div className='text-[12px]'>PLAYERS:</div>
-                                <div className='text-[12px]'>9/40</div>
+                                <div className='text-[12px]'>{userGuild.members.length}/{userGuild.totalMembers}</div>
                             </div>
                             {userGuild.members.map((item, index) => (
                                 <div key={index} className='flex-mid justify-between p-2 bg-[#9C97B5]/[0.4] border-[1px] border-[#16171D]/[0.5] rounded-lg w-full h-10 mt-[0.1rem]'>
