@@ -6,7 +6,7 @@ import { Web3ContextProvider } from './hooks/web3Context'
 import './App.css'
 
 import phaserGame from './PhaserGame'
-import type Battle from './scenes/battle.scene'
+import type Battle from './scenes/battle.scene1'
 import type Game from './scenes/game.scene'
 import store from './store'
 import { global } from './common/global'

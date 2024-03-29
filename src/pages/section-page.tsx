@@ -4,11 +4,9 @@ import { global } from '../common/global'
 import store from '../store'
 import { openChapterPage, setGameStatus, setLoadingStatus } from '../common/state/game/reducer'
 import styles from './Main/Main.module.scss'
-// import Battle from '../scenes/battle.scene'
 import Phaser from 'phaser'
 import phaserGame from '../PhaserGame'
 import type Game from '../scenes/game.scene'
-import type Battle from '../scenes/battle.scene'
 import { sectionManage } from '../store/user/actions'
 import { getProfile } from '../common/api'
 
@@ -63,22 +61,14 @@ export const SectionPage = ({
                 return;
             }
         }
-        // sectionManage(global.walletAddress, index).then(res => {
-        //     if (res.message === "PVE Start") {
-                const page = document.getElementById("sectionPage") as HTMLElement
-                page.style.display = "none"
-                changeBackground('url(https://iksqvifj67dwchip.public.blob.vercel-storage.com/background/bg-Tb688buNrJp4hV2u8rPn8aPBG4lg5c.jpg)')
-                store.dispatch(setGameStatus(1))
-                const game = phaserGame.scene.keys.game as Game
-                game.startGame(index)
-                store.dispatch(setLoadingStatus(true));
-                setPageStatus("main")
-        //     }
-        //     else {
-        //         alert(res.message);
-        //         return;
-        //     }
-        // })
+        const page = document.getElementById("sectionPage") as HTMLElement
+        page.style.display = "none"
+        changeBackground('url(https://iksqvifj67dwchip.public.blob.vercel-storage.com/background/bg-Tb688buNrJp4hV2u8rPn8aPBG4lg5c.jpg)')
+        store.dispatch(setGameStatus(1))
+        const game = phaserGame.scene.keys.game as Game
+        game.startGame(index)
+        store.dispatch(setLoadingStatus(true));
+        setPageStatus("main")
     }
     const changeBackground = (src: string) => {
         document.body.style.backgroundImage = src

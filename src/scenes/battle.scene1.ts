@@ -20,7 +20,7 @@ import { clearInterval } from 'timers'
 
 // import Game from './game.scene'
 
-export default class Battle extends Phaser.Scene {
+export default class Battle1 extends Phaser.Scene {
   // myPlayer!: MyPlayer
   // mysprite: Phaser.Physics.Arcade.Sprite
   mysprite!: Phaser.GameObjects.Sprite
@@ -88,7 +88,7 @@ export default class Battle extends Phaser.Scene {
   enemy_damage1: number = 150
 
   constructor() {
-    super('battle')
+    super('battle1')
   }
 
   init() { }

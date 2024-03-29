@@ -52,6 +52,8 @@ code {
 .btn-ligroup {
   display: flex;
   position: absolute;
+  justify-content: center;
+  align-items: center;
   right: 70px;
   top: 515px;
   margin-top: 30px

@@ -1,0 +1,341 @@
+
+ewrhuiwe.png
+size: 2048,2048
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Hair
+  rotate: true
+  xy: 1205, 1054
+  size: 120, 303
+  orig: 123, 311
+  offset: 3, 6
+  index: -1
+Hair2
+  rotate: false
+  xy: 1035, 280
+  size: 113, 127
+  orig: 115, 130
+  offset: 1, 1
+  index: -1
+Head
+  rotate: true
+  xy: 1540, 1006
+  size: 473, 374
+  orig: 522, 487
+  offset: 13, 60
+  index: -1
+body
+  rotate: false
+  xy: 1540, 1481
+  size: 448, 559
+  orig: 450, 564
+  offset: 1, 3
+  index: -1
+hand01
+  rotate: false
+  xy: 797, 82
+  size: 236, 325
+  orig: 238, 334
+  offset: 1, 8
+  index: -1
+leg02
+  rotate: false
+  xy: 1916, 966
+  size: 124, 513
+  orig: 124, 516
+  offset: 0, 2
+  index: -1
+Барьер_0
+  rotate: false
+  xy: 2, 1176
+  size: 1536, 864
+  orig: 1536, 864
+  offset: 0, 0
+  index: -1
+Барьер_20
+  rotate: true
+  xy: 2, 458
+  size: 348, 804
+  orig: 1536, 864
+  offset: 562, 47
+  index: -1
+Барьер_21
+  rotate: true
+  xy: 2, 458
+  size: 348, 804
+  orig: 1536, 864
+  offset: 562, 47
+  index: -1
+Барьер_22
+  rotate: true
+  xy: 2, 458
+  size: 348, 804
+  orig: 1536, 864
+  offset: 562, 47
+  index: -1
+Барьер_23
+  rotate: false
+  xy: 1205, 178
+  size: 356, 826
+  orig: 1536, 864
+  offset: 559, 25
+  index: -1
+Барьер_24
+  rotate: false
+  xy: 1205, 178
+  size: 356, 826
+  orig: 1536, 864
+  offset: 559, 25
+  index: -1
+Барьер_25
+  rotate: true
+  xy: 2, 808
+  size: 366, 827
+  orig: 1536, 864
+  offset: 558, 20
+  index: -1
+Барьер_26
+  rotate: true
+  xy: 2, 808
+  size: 366, 827
+  orig: 1536, 864
+  offset: 558, 20
+  index: -1
+Барьер_27
+  rotate: true
+  xy: 2, 808
+  size: 366, 827
+  orig: 1536, 864
+  offset: 558, 20
+  index: -1
+Барьер_28
+  rotate: false
+  xy: 1563, 152
+  size: 369, 812
+  orig: 1536, 864
+  offset: 557, 12
+  index: -1
+Барьер_29
+  rotate: false
+  xy: 1563, 152
+  size: 369, 812
+  orig: 1536, 864
+  offset: 557, 12
+  index: -1
+Барьер_30
+  rotate: true
+  xy: 2, 38
+  size: 369, 793
+  orig: 1536, 864
+  offset: 557, 13
+  index: -1
+Барьер_31
+  rotate: true
+  xy: 2, 38
+  size: 369, 793
+  orig: 1536, 864
+  offset: 557, 13
+  index: -1
+Барьер_32
+  rotate: true
+  xy: 2, 38
+  size: 369, 793
+  orig: 1536, 864
+  offset: 557, 13
+  index: -1
+Барьер_33
+  rotate: false
+  xy: 831, 409
+  size: 372, 765
+  orig: 1536, 864
+  offset: 558, 28
+  index: -1
+Барьер_34
+  rotate: false
+  xy: 831, 409
+  size: 372, 765
+  orig: 1536, 864
+  offset: 558, 28
+  index: -1
+
+ewrhuiwe2.png
+size: 2048,2048
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+hand02
+  rotate: true
+  xy: 562, 1824
+  size: 222, 247
+  orig: 226, 249
+  offset: 2, 1
+  index: -1
+leg01
+  rotate: true
+  xy: 2, 1844
+  size: 202, 558
+  orig: 202, 558
+  offset: 0, 0
+  index: -1
+sword
+  rotate: true
+  xy: 811, 1729
+  size: 317, 520
+  orig: 317, 520
+  offset: 0, 0
+  index: -1
+Барьер_1
+  rotate: true
+  xy: 775, 260
+  size: 362, 776
+  orig: 1536, 864
+  offset: 568, 24
+  index: -1
+Барьер_10
+  rotate: true
+  xy: 2, 1130
+  size: 354, 751
+  orig: 1536, 864
+  offset: 572, 76
+  index: -1
+Барьер_11
+  rotate: true
+  xy: 2, 1130
+  size: 354, 751
+  orig: 1536, 864
+  offset: 572, 76
+  index: -1
+Барьер_12
+  rotate: true
+  xy: 2, 1130
+  size: 354, 751
+  orig: 1536, 864
+  offset: 572, 76
+  index: -1
+Барьер_13
+  rotate: false
+  xy: 1518, 1011
+  size: 355, 686
+  orig: 1536, 864
+  offset: 567, 150
+  index: -1
+Барьер_14
+  rotate: false
+  xy: 1518, 1011
+  size: 355, 686
+  orig: 1536, 864
+  offset: 567, 150
+  index: -1
+Барьер_15
+  rotate: true
+  xy: 1333, 1699
+  size: 347, 713
+  orig: 1536, 864
+  offset: 567, 131
+  index: -1
+Барьер_16
+  rotate: true
+  xy: 1333, 1699
+  size: 347, 713
+  orig: 1536, 864
+  offset: 567, 131
+  index: -1
+Барьер_17
+  rotate: true
+  xy: 1333, 1699
+  size: 347, 713
+  orig: 1536, 864
+  offset: 567, 131
+  index: -1
+Барьер_18
+  rotate: true
+  xy: 758, 1352
+  size: 345, 758
+  orig: 1536, 864
+  offset: 566, 88
+  index: -1
+Барьер_19
+  rotate: true
+  xy: 758, 1352
+  size: 345, 758
+  orig: 1536, 864
+  offset: 566, 88
+  index: -1
+Барьер_2
+  rotate: false
+  xy: 1559, 233
+  size: 362, 776
+  orig: 1536, 864
+  offset: 568, 24
+  index: -1
+Барьер_3
+  rotate: true
+  xy: 786, 624
+  size: 355, 771
+  orig: 1536, 864
+  offset: 574, 33
+  index: -1
+Барьер_35
+  rotate: true
+  xy: 755, 981
+  size: 369, 755
+  orig: 1536, 864
+  offset: 561, 28
+  index: -1
+Барьер_36
+  rotate: true
+  xy: 755, 981
+  size: 369, 755
+  orig: 1536, 864
+  offset: 561, 28
+  index: -1
+Барьер_37
+  rotate: true
+  xy: 755, 981
+  size: 369, 755
+  orig: 1536, 864
+  offset: 561, 28
+  index: -1
+Барьер_4
+  rotate: true
+  xy: 2, 274
+  size: 355, 771
+  orig: 1536, 864
+  offset: 574, 33
+  index: -1
+Барьер_5
+  rotate: true
+  xy: 2, 631
+  size: 348, 782
+  orig: 1536, 864
+  offset: 578, 38
+  index: -1
+Барьер_6
+  rotate: true
+  xy: 2, 631
+  size: 348, 782
+  orig: 1536, 864
+  offset: 578, 38
+  index: -1
+Барьер_7
+  rotate: true
+  xy: 2, 631
+  size: 348, 782
+  orig: 1536, 864
+  offset: 578, 38
+  index: -1
+Барьер_8
+  rotate: true
+  xy: 2, 1486
+  size: 336, 754
+  orig: 1536, 864
+  offset: 590, 68
+  index: -1
+Барьер_9
+  rotate: true
+  xy: 2, 1486
+  size: 336, 754
+  orig: 1536, 864
+  offset: 590, 68
+  index: -1

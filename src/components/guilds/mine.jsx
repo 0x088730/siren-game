@@ -138,7 +138,7 @@ const MinePart = (props) => {
                             <div className='w-full h-[17.5rem] px-2 mt-10 overflow-y-auto'>
                                 {msgData.map((item, index) => (
                                     <div key={index}>
-                                        <div className='flex justify-start items-center gap-x-4'>
+                                        <div className='flex justify-between items-center gap-x-4'>
                                             <div className={`text-[14px] ${global.walletAddress.toLowerCase() === item.user ? "text-[#D04AFF] font-bold" : userGuild.creator.toLowerCase() === item.user ? "text-[#2ac736] font-bold" : "text-[#fee53a]"}`}>{global.walletAddress.toLowerCase() === item.user ? "YOU" : item.user.slice(0, 4) + " ... " + item.user.slice(-4)}:</div>
                                             <div className='text-[10px] text-[#BCBCBC]'>
                                                 {time(item.createdAt)}

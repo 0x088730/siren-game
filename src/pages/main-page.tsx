@@ -243,13 +243,13 @@ export const MainPage = ({
                                                             </div>
                                                             <div className="btn-ligroup">
                                                                 <ButtonComponent onClick={() => rememberCode ? guild() : null}>
-                                                                    <img src="assets/images/guild.webp" draggable="false" className='w-[260px]' />
+                                                                    <img src="assets/images/guild_icon.webp" draggable="false" className='w-[208px]' />
                                                                 </ButtonComponent>
                                                                 <ButtonComponent onClick={() => rememberCode ? character() : null}>
-                                                                    <img src="assets/images/characters.png" draggable="false" className='w-[265px]' />
+                                                                    <img src="assets/images/character_icon.webp" draggable="false" className='w-[256px]' />
                                                                 </ButtonComponent>
                                                                 <ButtonComponent onClick={() => (!address || !rememberCode) ? null : onLand()}>
-                                                                    <img src="assets/images/land.png" draggable="false" className='w-[200px]' />
+                                                                    <img src="assets/images/land_icon.webp" draggable="false" className='w-[205px] mb-[13px]' />
                                                                 </ButtonComponent>
                                                             </div>
                                                         </div>
