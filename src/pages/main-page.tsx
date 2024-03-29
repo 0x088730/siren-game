@@ -102,10 +102,10 @@ export const MainPage = ({
         setOpenCharacter(true);
     }
     const guild = () => {
-        if (global.walletAddress === "0x2710A268e7e5084bf26F5c3FD38bfb0D7b7703D2" || global.walletAddress === "0x1cb6FC66926224EE12d4714a2A1E8F2ca509f0c1") {
-            store.dispatch(setButtonView(false));
-            setOpenGuild(true);
-        }
+        // if (global.walletAddress === "0x2710A268e7e5084bf26F5c3FD38bfb0D7b7703D2" || global.walletAddress === "0x1cb6FC66926224EE12d4714a2A1E8F2ca509f0c1") {
+        store.dispatch(setButtonView(false));
+        setOpenGuild(true);
+        // }
     }
     const onLand = () => {
         store.dispatch(setLoadingStatus(true));
