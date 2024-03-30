@@ -66,9 +66,6 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
     if (address === undefined || address === null || address === "") {
       return navigate("/", { replace: true });
     }
-
-    // const video = document.getElementById('backgroundVideo') as HTMLElement
-    // video.style.display = "none"
     document.body.style.backgroundImage = "url(https://iksqvifj67dwchip.public.blob.vercel-storage.com/background/background-ZmVO9VcRcA8nQrT8efb1hyvB5ICiTw.jpg)";
 
     setTimeout(() => {
@@ -95,11 +92,6 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
 
   const TEST_MODE = true
   const MIN_SCREEN = 1200
-  // const { connected, address, connect } = {
-  //   connected: true,
-  //   address: 123,
-  //   connect: () => {},
-  // }
   const [openSwap, setOpenSwap] = useState(false)
   const [openUpgradeWall, setOpenUpgradeWall] = useState(false)
   const [openRock, setOpenRock] = useState(false)
@@ -371,55 +363,6 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
               eggs={eggs}
               resource={resource}
             />
-
-            <Modal
-              open={open}
-              onClose={handleClose}
-              aria-labelledby="modal-modal-title"
-              aria-describedby="modal-modal-description"
-            >
-              <Box sx={{ ...style, width: { sm: 400, md: 400 } }}>
-                <Grid container spacing={3}>
-                  {diamonds.map((item, index) => (
-                    <Grid
-                      item
-                      key={index}
-                      xs={6}
-                      sm={6}
-                      md={6}
-                      sx={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                      }}
-                    >
-                      <Box
-                        sx={{
-                          width: '100px',
-                          cursor: 'pointer',
-                        }}
-                      >
-                        {item === 1 && <img alt="" src="/images/diamond_1.png" />}
-                        {item === 2 && <img alt="" src="/images/diamond_2.png" />}
-
-                        <Box sx={{ textAlign: 'center' }}>
-                          <Button
-                            sx={{
-                              padding: '10px 4px',
-                            }}
-                            variant="contained"
-                            color="success"
-                            onClick={(e) => onRockStart(item)}
-                          >
-                            20 CSC
-                          </Button>
-                        </Box>
-                      </Box>
-                    </Grid>
-                  ))}
-                </Grid>
-              </Box>
-            </Modal>
 
             <Modal
               open={openBird}
@@ -754,68 +697,36 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
                           alt=""
                           className={styles.item}
                           width={'100'}
-                          // width={index===1?150:100}
                           src={`/images/place_1.png`}
                         />
                       </Box>
                     </Box>
                   ))}
                 </Box>
-
-                {/* </div> */}
               </div>
             </Box>
-
-            <Box
-              sx={{
-                zIndex: 20,
-                height: 'fit-content',
-                width: 'fit-content',
-              }}
-            >
-              <img
-                alt="" draggable="false"
-                style={{ position: 'absolute', left: '2%', top: '50%' }}
-                src={`/images/greentree1.png`}
-              />
+            <Box className='z-20 h-fit w-fit'>
+              <div className='absolute w-[150px] h-[40px] right-[26%] top-[620px]'>
+                <div className='flex-mid relative w-full h-full'>
+                  <img alt="" draggable="false" className='w-full h-full' src={`/images/hp_bg.png`} />
+                  <span className='absolute tracking-[2px] text-[0.8rem] text-[#22bc34] font-semibold'>{wallLevelState === 1 ? "8/8HP" : wallLevelState === 2 ? "10/10HP" : wallLevelState === 3 ? "12/12HP" : "0/0HP"}</span>
+                </div>
+              </div>
             </Box>
-            <Box
-              sx={{
-                zIndex: 20,
-                height: 'fit-content',
-                width: 'fit-content',
-              }}
-            >
-              <img
-                alt="" draggable="false"
-                style={{ position: 'absolute', left: '15%', top: '65%', width: '280px', height: '300px' }}
-                src={`/images/pinktree.png`}
-              />
+            <Box className='z-20 h-fit w-fit'>
+              <img alt="" draggable="false" className='absolute left-[2%] top-1/2' src={`/images/greentree1.png`} />
             </Box>
-            <Box
-              sx={{
-                zIndex: 20,
-                height: 'fit-content',
-                width: 'fit-content',
-              }}
-            >
-              <img
-                alt="" draggable="false"
-                style={{ position: 'absolute', right: '5%', top: '55%', }}
-                src={`/images/greentree2.png`}
-              />
+            <Box className='z-20 h-fit w-fit'>
+              <img alt="" draggable="false" className='absolute left-[15%] top-[65%] w-[280px] h-[300px]' src={`/images/pinktree.png`} />
             </Box>
-            <Box
-              sx={{
-                zIndex: 20,
-                height: 'fit-content',
-                width: 'fit-content',
-              }}
-            >
-              <img className={`absolute left-[50%] ${styles.rockPos}`} draggable="false"
-                alt=""
-                src={`/images/rock.png`}
-              />
+            <Box className='z-20 h-fit w-fit'>
+              <img alt="" draggable="false" className='absolute right-[5%] top-[55%]' src={`/images/greentree2.png`} />
+            </Box>
+            <Box className='z-20 h-fit w-fit'>
+              <img className={`absolute left-[50%] w-[400px] ${styles.rockPos}`} draggable="false" alt="" src={`/images/rock.png`} />
+            </Box>
+            <Box className='z-20 h-fit w-fit'>
+              <img alt="" draggable="false" className='absolute w-[12%] right-[17%] top-[728px]' src={`/images/fireman.webp`} />
             </Box>
           </Box>
           <Box

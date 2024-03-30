@@ -18,9 +18,7 @@ import { useWeb3Context } from '../../hooks/web3Context'
 import {
   /* buyMining,  */ buyPremium /* , claimMining, requestMining */,
 } from '../../store/user/actions'
-// import { showMinutes } from "../../utils/timer";
 import { onShowAlert } from '../../store/utiles/actions'
-// import AllInclusiveIcon from '@mui/icons-material/AllInclusive';
 
 interface Props {
   open: boolean
@@ -69,18 +67,8 @@ const PreniumModal = ({ open, setOpen }: Props) => {
   }
 
   const style = {
-    position: 'absolute' as const,
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: '500px',
-    height: '650px',
     background: "url(/assets/images/set.png)",
     backgroundSize: '100% 100%',
-    bgcolor: 'transparent',
-    boxShadow: 24,
-    p: 4,
-    pt: 1,
   }
 
   return (
@@ -91,80 +79,41 @@ const PreniumModal = ({ open, setOpen }: Props) => {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={style} className="w-[450px]">
+        <Box sx={style} className="absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%] w-[450px] h-[650px] bg-transparent p-4 pt-1">
           <img
             alt=""
             src="/images/support/support_md_close_btn.png"
-            style={{
-              position: 'absolute',
-              top: 0,
-              right: 0,
-              width: '8%',
-              transform: 'translate(26%, -27%)',
-              cursor: 'pointer',
-              zIndex: 5,
-            }}
+            className='absolute top-0 right-0 w-[12%] translate-x-[26%] translate-y-[-27%] cursor-pointer z-10'
             onClick={handleClose}
           />
           <Grid container>
             <Grid item xs={12} sm={12} md={12}>
               <div
-                className='well-back'
+                className='well-back w-[350px] h-[300px] m-[auto] mt-[50px]'
                 style={{
-                  width: '350px',
-                  height: '300px',
                   background: "url(images/premium.png)",
                   backgroundSize: 'cover',
-                  margin: 'auto',
-                  marginTop: '50px',
                 }}
               ></div>
-              <Box
-                sx={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                  gap: '20px',
-                }}
-              >
-                <h2 className="font-bold text-2xl mb-4 text-white upgrade-label"
-                  style={{
-                    fontFamily: 'Anime Ace',
-                    fontSize: '20px',
-                    marginTop: '15px',
-                    marginBottom: '0px',
-                    textAlign: 'center',
-                  }}
-                >
+              <Box className='flex flex-col items-center gap-[20px]'>
+                <h2 className="font-bold text-[20px] mb-0 mt-4 text-white upgrade-label text-center" style={{ fontFamily: 'Anime Ace' }}>
                   TIME: 30 DAYS<br></br>
-                  WATER CLAIM: +30%<br></br>                  
+                  WATER CLAIM: +30%<br></br>
                   WALL HP: +20%<br></br>
                 </h2>
                 <Button
+                  className='text-white border-none w-[200px] h-11'
                   style={{
                     background: "url(/assets/images/big-button.png)",
                     backgroundSize: 'cover',
                     backgroundRepeat: 'no-repeat',
                     fontFamily: 'Anime Ace',
-                    color: 'white',
-                    border: 'none',
-                    width: '200px',
-                    height: '42px'
                   }}
                   onClick={(e) => onBuyPremium()}
                 >
                   buy
-                  {/* {counting === 0 ? 'START' : timer === 0 ? 'CLAIM' : `${showHourMinutes(timer)}`} */}
                 </Button>
-                <h2 className="font-bold text-2xl mb-4 text-white upgrade-label"
-                  style={{
-                    fontFamily: 'Anime Ace',
-                    fontSize: '20px',
-                    marginTop: '15px',
-                    marginBottom: '0px',
-                    textAlign: 'center',
-                  }}
-                >
+                <h2 className="font-bold text-[20px] mb-0 mt-4 text-white upgrade-label text-center" style={{ fontFamily: 'Anime Ace' }}>
                   PRICE: 9.9<span className='text-[#28d433]'> USDT</span><br></br>
                 </h2>
               </Box>

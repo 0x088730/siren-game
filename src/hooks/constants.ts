@@ -11,7 +11,7 @@ export const chainId: 56 | 97 =
 // export const LAND_COST = 0.01;
 
 // export const chainId = 56;
-export const PREMIUM_COST = 25 // 50
+export const PREMIUM_COST = 9.9 // 50
 
 export const LAND_COST = [4320, 1000, 3240]
 
