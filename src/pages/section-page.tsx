@@ -72,7 +72,7 @@ export const SectionPage = ({
     }
     const changeBackground = (src: string) => {
         document.body.style.backgroundImage = src
-        document.body.style.backgroundSize = "cover"
+        // document.body.style.backgroundSize = "100% 100%"
     }
     return (
         <div id="sectionPage">

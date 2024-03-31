@@ -38,12 +38,6 @@
     filter: drop-shadow(1px 1px 0.25rem rgb(255, 19, 149)) drop-shadow(-1px -1px 0.25rem rgb(255, 19, 149));
 }
 
-@media screen and (max-height: 900px) {
-    .image_top_pos {
-        padding-top: 445px;
-    }
-}
-
 .loginbg {
     background: url("../../images/login_mask.png");
 
@@ -188,12 +182,59 @@
     }
 }
 
+.image_top_pos {
+    padding-top: 445px;
+}
+
+.hpPos {
+    top: 590px;
+}
+
 .rockPos {
     top: 740px;
 }
 
+.firemanPos {
+    top: 700px;
+}
+
+.pinktreePos {
+    top: 600px;
+}
+
+.greentreePos1 {
+    top: 490px;
+}
+
+.greentreePos2 {
+    top: 510px;
+}
+
 @media screen and (min-height: 900px) {
+    .hpPos {
+        top: 65%;
+    }
+
     .rockPos {
-        top: 78%;
+        top: 83%;
+    }
+
+    .firemanPos {
+        top: 77%;
+    }
+
+    .pinktreePos {
+        top: 65%;
+    }
+
+    .greentreePos1 {
+        top: 50%;
+    }
+
+    .greentreePos2 {
+        top: 55%;
+    }
+    .image_top_pos {
+        padding-top: 25.2%;
     }
 }

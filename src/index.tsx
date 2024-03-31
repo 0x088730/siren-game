@@ -9,12 +9,12 @@ import reportWebVitals from './reportWebVitals'
 // document.body.style.backgroundImage = 'url(assets/background/main.gif)'
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
-const wheel = document.getElementById('root') as HTMLElement
-wheel.addEventListener('wheel', event => {
-  if (event.ctrlKey) {
-    event.preventDefault()
-  }
-}, true)
+// const wheel = document.getElementById('root') as HTMLElement
+// wheel.addEventListener('wheel', event => {
+//   if (event.ctrlKey) {
+//     event.preventDefault()
+//   }
+// }, true)
 root.render(
   <React.StrictMode>
     <App />

@@ -44,7 +44,7 @@ const InventoryModal = ({ openInventory, setOpenInventory }: Props) => {
         setOpenInventory(false);
         store.dispatch(setDisplay("none"));
         document.body.style.backgroundImage = 'url(assets/images/claim-bg.jpg)';
-        document.body.style.backgroundSize = "cover"
+        // document.body.style.backgroundSize = "100% 100%"
         const gameScene = phaserGame.scene.scenes[1];
         const claimWidget = new ClaimWidget(gameScene, 960, 540);
         claimWidget.appear();

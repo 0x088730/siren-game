@@ -587,126 +587,62 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
             />
 
             <InstructionModal open={openInstruction} setOpen={setOpenInstruction} />
-
-            <Box sx={{ pointerEvents: `${TEST_MODE || connected ? '' : 'none'}` }}>
-              <div className="wall-wallet min-w-[1600px] min-h-[900px]">
-                <img
-                  draggable="false"
-                  src={'assets/images/border' + wallLevelState + '.png'}
-                  className={`${styles.item} absolute cursor-pointer w-full h-full min-h-[900px]`}
-                  onClick={() => setOpenUpgradeWall(true)}
-                />
-                <Box
-                  sx={{
-                    width: '50%',
-                    paddingTop: '25.2%',
-                    // transform: 'translateY(-20vh)',                
-
-                    justifyContent: 'space-between',
-                    margin: 'auto',
-                    display: 'flex',
-                    zIndex: 20,
-                  }}
-                  className={styles.image_top_pos}
-                >
-                  <Box
-                    sx={{
-                      cursor: 'pointer',
-                      transform: 'translateY(-100px)',
-                      height: 'fit-content',
-
-                      zIndex: 20,
-                    }}
-                    onClick={(e) => setOpenSwap(true)}
-                  >
-                    <img alt="" draggable="false" src="/images/storage.png" className={`${styles.item} transform -translate-x-1/2 -translate-y-1/2`} />
-                  </Box>
-                  <Box
-                    sx={{
-                      cursor: 'pointer',
-                      transform: 'translate(20px, 20px)',
-                      height: 'fit-content',
-                      zIndex: 20,
-                    }}
-                    onClick={(e) => setOpenDeposit(true)}
-                  >
-                    <img alt="" draggable="false" src="/images/home.png" style={{ transform: 'translate(-45%, -50%)', maxWidth: '240px' }} className={styles.item} />
-                  </Box>
-                  <Box
-                    sx={{
-                      // left: `${Math.max(innerWidth, 1200) / 2 - 75}px`,
-                      zIndex: 20,
-                      transform: 'translateY(200px)',
-                      height: 'fit-content',
-                      width: 'fit-content',
-
-                      cursor: 'pointer',
-                    }}
-                    onClick={(e) => {
-                      showBirdModal()
-                    }}
-                  >
-                    <img
-                      alt="" draggable="false"
-                      className={styles.item}
-                      style={{ transform: 'translate(20%, -115%)' }}
-                      width={'75%'}
-                      src={`/images/bird_place.png`}
-                    />
-                  </Box>
-                  <Box
-                    sx={{
-                      zIndex: 20,
-                      transform: 'translate(100%, -180px)',
-                      height: 'fit-content',
-                      cursor: 'pointer',
-                    }}
-                    onClick={(e) => setOpenMining(true)}
-                  >
-                    <img alt="" draggable="false" src="/images/mining.png" style={{ transform: 'translate(-50%, -50%)' }} className={styles.item} />
-                  </Box>
-                </Box>
-                <Box
-                  sx={{
-                    position: 'absolute',
-                    display: 'flex',
-                    width: '30%',
-                    margin: 'auto',
-                    top: '25%',
-                    left: '50%',
-                    transform: "translateX(-50%)"
-                  }}
-                >
-                  {items.map((item, index) => (
-                    <Box
-                      sx={{
-                        cursor: 'pointer',
-                        margin: 'auto',
-                      }}
-                      onClick={(e) => { showModal(index) }}
-                      key={index}
-                    >
-                      <Box
-                        sx={{
-                          zIndex: 10,
-                          transform: index === 1 ? 'translateY(-30%) ' : index === 2 ? 'translateY(30%) ' : ''
-                        }}
-                      >
-                        <img
-                          draggable="false"
-                          alt=""
-                          className={styles.item}
-                          width={'100'}
-                          src={`/images/place_1.png`}
-                        />
-                      </Box>
-                    </Box>
-                  ))}
-                </Box>
+            <Box className='h-fit w-fit'>
+              <img
+                alt="" draggable="false"
+                className={`${styles.item} absolute top-[7%] left-0 w-full h-full min-h-[900px] cursor-pointer`}
+                src={'assets/images/border' + wallLevelState + '.png'}
+                onClick={() => setOpenUpgradeWall(true)}
+              />
+            </Box>
+            <Box className='z-20 h-fit w-fit'>
+              <div className='absolute flex gap-[14%] left-[35%] top-[30%] w-1/3'>
+                {items.map((item, index) => (
+                  <img
+                    key={index}
+                    draggable="false"
+                    alt=""
+                    className={`${styles.item} w-[18%] cursor-pointer ${index === 1 ? "translate-y-[-20%]" : index === 2 ? "translate-y-[20%]" : ""}`}
+                    src={`/images/place_1.png`}
+                    onClick={(e) => { showModal(index) }}
+                  />
+                ))}
               </div>
             </Box>
             <Box className='z-20 h-fit w-fit'>
-              <div className='absolute w-[150px] h-[40px] right-[26%] top-[620px]'>
+              <img
+                alt="" draggable="false"
+                className={`${styles.item} absolute left-[19%] w-[12%] top-[36%] cursor-pointer`}
+                src={`/images/storage.png`}
+                onClick={(e) => setOpenSwap(true)}
+              />
+            </Box>
+            <Box className='z-20 h-fit w-fit'>
+              <img
+                alt="" draggable="false"
+                className={`${styles.item} absolute left-[33%] w-[12%] top-[48%] cursor-pointer`}
+                src={`/images/home.png`}
+                onClick={(e) => setOpenDeposit(true)}
+              />
+            </Box>
+            <Box className='z-20 h-fit w-fit'>
+              <img
+                alt="" draggable="false"
+                className={`${styles.item} absolute left-[50%] w-[10%] top-[57%] cursor-pointer`}
+                src={`/images/bird_place.png`}
+                onClick={(e) => { showBirdModal() }}
+              />
+            </Box>
+            <Box className='z-20 h-fit w-fit'>
+              <img
+                alt="" draggable="false"
+                className={`${styles.item} absolute left-[68%] w-[14%] top-[24%] cursor-pointer`}
+                src={`/images/mining.png`}
+                onClick={(e) => setOpenMining(true)}
+              />
+            </Box>
+            <Box className='z-20 h-fit w-fit'>
+              <div className={`absolute w-[8%] h-[4%] right-[26%] ${styles.hpPos}`}>
                 <div className='flex-mid relative w-full h-full'>
                   <img alt="" draggable="false" className='w-full h-full' src={`/images/hp_bg.png`} />
                   <span className='absolute tracking-[2px] text-[0.8rem] text-[#22bc34] font-semibold'>{wallLevelState === 1 ? "8/8HP" : wallLevelState === 2 ? "10/10HP" : wallLevelState === 3 ? "12/12HP" : "0/0HP"}</span>
@@ -714,19 +650,19 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
               </div>
             </Box>
             <Box className='z-20 h-fit w-fit'>
-              <img alt="" draggable="false" className='absolute left-[2%] top-1/2' src={`/images/greentree1.png`} />
+              <img alt="" draggable="false" className={`absolute left-[2%] w-[18%] ${styles.greentreePos1}`} src={`/images/greentree1.png`} />
             </Box>
             <Box className='z-20 h-fit w-fit'>
-              <img alt="" draggable="false" className='absolute left-[15%] top-[65%] w-[280px] h-[300px]' src={`/images/pinktree.png`} />
+              <img alt="" draggable="false" className={`absolute left-[15%] w-[15%] ${styles.pinktreePos}`} src={`/images/pinktree.png`} />
             </Box>
             <Box className='z-20 h-fit w-fit'>
-              <img alt="" draggable="false" className='absolute right-[5%] top-[55%]' src={`/images/greentree2.png`} />
+              <img alt="" draggable="false" className={`absolute right-[5%] w-[14%] ${styles.greentreePos2}`} src={`/images/greentree2.png`} />
             </Box>
             <Box className='z-20 h-fit w-fit'>
-              <img className={`absolute left-[50%] w-[400px] ${styles.rockPos}`} draggable="false" alt="" src={`/images/rock.png`} />
+              <img className={`absolute left-[50%] w-[20%] ${styles.rockPos}`} draggable="false" alt="" src={`/images/rock.png`} />
             </Box>
             <Box className='z-20 h-fit w-fit'>
-              <img alt="" draggable="false" className='absolute w-[12%] right-[17%] top-[728px]' src={`/images/fireman.webp`} />
+              <img alt="" draggable="false" className={`absolute w-[12%] right-[17%] ${styles.firemanPos}`} src={`/images/fireman.webp`} />
             </Box>
           </Box>
           <Box

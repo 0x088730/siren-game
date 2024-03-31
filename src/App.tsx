@@ -6,7 +6,7 @@ import { Web3ContextProvider } from './hooks/web3Context'
 import './App.css'
 
 import phaserGame from './PhaserGame'
-import type Battle from './scenes/battle.scene1'
+import type Battle from './scenes/battle.scene'
 import type Game from './scenes/game.scene'
 import store from './store'
 import { global } from './common/global'
@@ -52,7 +52,7 @@ const App: React.FC = () => {
             <Route
               path="/"
               element={
-                <Suspense fallback={<img src="https://iksqvifj67dwchip.public.blob.vercel-storage.com/background/loading-UUdMq9Eljlh95ZmCoFA42LIYO4vPog.gif" style={{width: "100%", height: "100%"}} />}>
+                <Suspense fallback={<img src="https://iksqvifj67dwchip.public.blob.vercel-storage.com/background/loading-UUdMq9Eljlh95ZmCoFA42LIYO4vPog.gif" style={{ width: "100%", height: "100%" }} />}>
                   <DefaultLayout
                     onModalShow={openModal}
                     component={
@@ -73,15 +73,15 @@ const App: React.FC = () => {
             />
             <Route path="/battlepass"
               element={
-                <Suspense fallback={<img src="https://iksqvifj67dwchip.public.blob.vercel-storage.com/background/loading-UUdMq9Eljlh95ZmCoFA42LIYO4vPog.gif" style={{width: "100%", height: "100%"}} />}>
+                <Suspense fallback={<img src="https://iksqvifj67dwchip.public.blob.vercel-storage.com/background/loading-UUdMq9Eljlh95ZmCoFA42LIYO4vPog.gif" style={{ width: "100%", height: "100%" }} />}>
                   <BattlePass onModalShow={openModal} />
                 </Suspense>
               }
             />
-            
+
             <Route path="/market"
               element={
-                <Suspense fallback={<img src="https://iksqvifj67dwchip.public.blob.vercel-storage.com/background/loading-UUdMq9Eljlh95ZmCoFA42LIYO4vPog.gif" style={{width: "100%", height: "100%"}} />}>
+                <Suspense fallback={<img src="https://iksqvifj67dwchip.public.blob.vercel-storage.com/background/loading-UUdMq9Eljlh95ZmCoFA42LIYO4vPog.gif" style={{ width: "100%", height: "100%" }} />}>
                   <MarketPage onModalShow={openModal} />
                 </Suspense>
               }

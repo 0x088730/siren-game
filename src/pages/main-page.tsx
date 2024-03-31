@@ -191,7 +191,7 @@ export const MainPage = ({
                 muted
             ></video>
 
-            <div className="relative w-full overflow-hidden">
+            <div className="relative w-full overflow-hidden min-w-[1600px]">
                 {isLoading === true ?
                     <>
                         <img src="https://iksqvifj67dwchip.public.blob.vercel-storage.com/background/loading-UUdMq9Eljlh95ZmCoFA42LIYO4vPog.gif" className='w-full h-full' />

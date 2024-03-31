@@ -32,7 +32,7 @@ export default class Game extends Phaser.Scene {
     // const video = document.getElementById('backgroundVideo') as HTMLElement
     // video.style.display = "none"
     document.body.style.backgroundImage = src
-    document.body.style.backgroundSize = "cover"
+    // document.body.style.backgroundSize = "100% 100%"
     const htmlEles = document.getElementById("html") as HTMLElement
     htmlEles.style.overflow = "unset";
   }
@@ -109,7 +109,7 @@ export default class Game extends Phaser.Scene {
     store.dispatch(setTurnFormat())
     this.changeBackground('url(https://iksqvifj67dwchip.public.blob.vercel-storage.com/background/bg-Tb688buNrJp4hV2u8rPn8aPBG4lg5c.jpg)')
     store.dispatch(setGameStatus(1))
-    this.scene.start('battle1')
+    this.scene.start('battle')
   }
 
   inventory() {
