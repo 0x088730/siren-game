@@ -333,9 +333,10 @@ export function withdrawRequest(
 
     cb(res)
     if (res.success) {
+      if (res.data === false) return;
       dispatch({
         type: RESOURCE_CHANGE_SUCCESS,
-        payload: { data: res },
+        payload: { data: res.data.user },
       })
     }
   }

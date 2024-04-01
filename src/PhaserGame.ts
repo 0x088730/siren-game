@@ -5,6 +5,7 @@ import Battle from './scenes/battle.scene'
 import Battle2 from './scenes/battle.scene2'
 import Bootstrap from './scenes/bootstrap'
 import Game from './scenes/game.scene'
+
 const config: Phaser.Types.Core.GameConfig = {
   autoFocus: true,
   // backgroundColor: '#93cbee',
@@ -15,7 +16,7 @@ const config: Phaser.Types.Core.GameConfig = {
   physics: {
     arcade: {
       debug: true,
-      gravity: { y: 0 },
+      // gravity: { y: 0 },
     },
     default: 'arcade',
   },
@@ -31,7 +32,7 @@ const config: Phaser.Types.Core.GameConfig = {
     mode: Phaser.Scale.ScaleModes.FIT,
     width: 1920,
   },
-  scene: [Bootstrap, Game, Battle],
+  scene: [Bootstrap, Game, Battle, Battle2], // Include Battle2 scene in the game configuration
   transparent: true,
   type: Phaser.AUTO,
 }

@@ -570,6 +570,7 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
               egg={eggs}
               onExchange={onExchange}
               onExchangeEgg={onExchangeEgg}
+              realCSC={realCSC}
               setRealCSC={setRealCSC}
             />
             <MiningModal

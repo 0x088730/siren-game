@@ -13,6 +13,7 @@ import { deposit, sendToken } from '../../hooks/hook'
 import { useWeb3Context } from '../../hooks/web3Context'
 import {
   checkBounsCoolDown,
+  checkCooldown,
   depositRequest,
   resourceRequest,
   setBounsCoolDown,
@@ -30,6 +31,7 @@ interface Props {
   egg: any
   onExchange: any
   onExchangeEgg: any
+  realCSC: any
   setRealCSC: any
 }
 
@@ -40,6 +42,7 @@ const DepositModal = ({
   egg,
   onExchange,
   onExchangeEgg,
+  realCSC,
   setRealCSC
 }: Props) => {
   const { connected, chainID, address, connect } = useWeb3Context()
@@ -51,27 +54,12 @@ const DepositModal = ({
 
   const [cscAmount, setcscAmount] = useState(320)
   const [cscTokenAmount, setCscTokenAmount] = useState(0)
-  const [withdrawablecscAmount, setWithdrawablecscAmount] = useState<number>(0)
   const [remainedTime, setRemainedTime] = useState(0);
   const [isCooldownStarted, setIsCooldownStarted] = useState(false)
   const [pendingStatus, setPendingStatus] = useState(false);
 
-  useEffect(() => {
-    ; (async () => {
-      const withdrewSirenAmount = getWithdrewSirenAmount(user.withdraws) // Siren
-      const bcsPrice = 1
-      const maxAmount =
-        (checkPremium(user.premium).isPremium ? 20 : 10) / bcsPrice
-      console.log(
-        `csc price is ${bcsPrice}`,
-        'withdrew Siren amount: ',
-        withdrewSirenAmount,
-        ' and withdrawable csc amount is ',
-        maxAmount,
-      )
-      setWithdrawablecscAmount(maxAmount - Math.floor(withdrewSirenAmount / 10))
-    })()
-  }, [user.withdraws])
+  const [remainTimeWithdraw, setRemainTimeWithdraw] = useState(0);
+  const [isCooldownStartedWithdraw, setIsCooldownStartedWithdraw] = useState(false)
 
   useEffect(() => {
     if (address !== "") {
@@ -86,6 +74,22 @@ const DepositModal = ({
           setIsCooldownStarted(true)
         }
       })
+      dispatch(
+        checkCooldown(address, 'withdraw', (res: any) => {
+          let cooldownSec = res.data.time
+          if (cooldownSec === 999999) {
+            setRemainTimeWithdraw(0);
+          }
+          else if (cooldownSec <= 0) {
+            setRealCSC(res.data.user.claimedCSC)
+          }
+          else {
+            setRemainTimeWithdraw(cooldownSec)
+            setIsCooldownStartedWithdraw(true)
+          }
+
+        }),
+      )
     }
   }, [open])
 
@@ -110,6 +114,28 @@ const DepositModal = ({
     return () => clearInterval(cooldownInterval)
   }, [isCooldownStarted])
 
+  useEffect(() => {
+    if (isCooldownStartedWithdraw) {
+      var cooldownIntervalWithdraw = setInterval(() => {
+        setRemainTimeWithdraw((prevTime) => {
+          if (prevTime === 1) {
+            dispatch(
+              checkCooldown(address, 'withdraw', (res: any) => {
+              }))
+          }
+          if (prevTime === 0) {
+            clearInterval(cooldownIntervalWithdraw)
+            setIsCooldownStarted(false)
+            return 0
+          }
+          return prevTime - 1
+        })
+      }, 1000)
+    }
+
+    return () => clearInterval(cooldownIntervalWithdraw)
+  }, [isCooldownStartedWithdraw])
+
   const onChangeAmount = (e: any) => {
     e.preventDefault()
     if (e.target.value < 0) {
@@ -119,7 +145,7 @@ const DepositModal = ({
     setcscAmount(e.target.value)
   }
 
-  const onChangeEggAmount = (e: any) => {
+  const setWithdrawAmount = (e: any) => {
     e.preventDefault()
     if (e.target.value < 0) return
     setCscTokenAmount(e.target.value)
@@ -186,37 +212,32 @@ const DepositModal = ({
     })
   }
   const onWithdraw = async () => {
-    return
-    if (cscTokenAmount < 10) {
-      alert("minimal withdraw amount is 300CSC");
+    if (remainTimeWithdraw > 0) {
+      alert("please wait...");
       return
     }
-
-    if (withdrawablecscAmount * 10 <= cscTokenAmount) {
-      dispatch(
-        onShowAlert(
-          `you can withdraw only ${checkPremium(user.premium) ? 20 : 10} per day`,
-          'warning',
-        ),
-      )
+    let amount = user.premium > 0 ? 10 : 3
+    if (cscTokenAmount > amount || cscTokenAmount <= 0) {
+      alert("Please input correct CSC amount!");
       return
     }
-
-    dispatch(onShowAlert('Pease wait while confirming', 'info'))
+    if (realCSC < cscTokenAmount) {
+      alert("Not enough CSC token!");
+      return
+    }
 
     dispatch(
-      withdrawRequest(
-        address,
-        cscTokenAmount,
-        (res: any) => {
-          handleClose()
-          if (res && res?.success) {
-            dispatch(onShowAlert('Withdraw successfully', 'success'))
-          } else {
-            dispatch(onShowAlert(res?.message, 'warning'))
-          }
-        },
-      ),
+      withdrawRequest(address, cscTokenAmount, (res: any) => {
+        if (res.data === false) {
+          alert(res.message);
+          return
+        }
+        setRealCSC(res.data.user.claimedCSC);
+        alert("successful withdrawal, you will receive tokens to your wallet within 10 hours");
+        setCscTokenAmount(0);
+        setIsCooldownStartedWithdraw(true);
+        setRemainTimeWithdraw(res.data.time);
+      }),
     )
   }
 
@@ -302,22 +323,28 @@ const DepositModal = ({
                   <div className='flex justify-between items-center w-full'>
                     <div>ANAILABLE:</div>
                     <div className='flex justify-center items-center'>
-                      <img alt="" draggable="false" className='w-[20px] mx-2' src="/images/cryptoIcon.png" />10 CSC
+                      <img alt="" draggable="false" className='w-[20px] mx-2' src="/images/cryptoIcon.png" />{user.premium > 0 ? "10 CSC" : "3 CSC"}
                     </div>
                   </div>
                   <input className='border-black border-2 w-full rounded-md bg-[#6F5241] text-white'
                     style={{ boxShadow: "inset 0 0px 4px 0 #000000" }}
                     name="Siren"
                     value={cscTokenAmount}
-                    onChange={onChangeEggAmount}
+                    onChange={setWithdrawAmount}
                   />
                 </div>
-                <Button onClick={onWithdraw} className='w-52'>
+                <Button onClick={() => remainTimeWithdraw > 0 ? null : onWithdraw()} className={`w-52 ${remainTimeWithdraw > 0 ? "grayscale" : ""}`}>
                   <img alt="" draggable="false" src="/assets/images/big-button.png" />
                   <p className='absolute text-[16px] text-center text-[#e7e1e1] font-bold' style={{ fontFamily: 'Anime Ace' }}>
                     Withdraw
                   </p>
                 </Button>
+                <div className='absolute bottom-16 text-[12px] flex flex-col justify-center items-center'>
+                  <div className='flex justify-center items-center text-[#b30606] font-bold'>
+                    <img alt="" draggable="false" className='w-[20px] mx-[3px] float-left' src="assets/images/white_clock.png" />
+                    {convertSecToHMS(remainTimeWithdraw)}
+                  </div>
+                </div>
               </div>
             </div>
           </div>

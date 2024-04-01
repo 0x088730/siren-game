@@ -1,23 +1,17 @@
-import AlarmIcon from '@mui/icons-material/Alarm'
-import RocketLaunchIcon from '@mui/icons-material/RocketLaunch'
-import { Grid /* , TextField, Tooltip */ } from '@mui/material'
+import { Grid } from '@mui/material'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import Modal from '@mui/material/Modal'
-import { /* React,  */ useState /* , useEffect */ } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import {
   ADMIN_WALLET_ADDRESS,
   chainId,
   PREMIUM_COST,
-  URANIUM_MINE,
 } from '../../hooks/constants'
-import { /* deposit,  */ sendToken } from '../../hooks/hook'
+import { sendToken } from '../../hooks/hook'
 import { useWeb3Context } from '../../hooks/web3Context'
-import {
-  /* buyMining,  */ buyPremium /* , claimMining, requestMining */,
-} from '../../store/user/actions'
+import { buyPremium } from '../../store/user/actions'
 import { onShowAlert } from '../../store/utiles/actions'
 
 interface Props {
@@ -33,10 +27,6 @@ const PreniumModal = ({ open, setOpen }: Props) => {
 
   const handleOpen = () => setOpen(true)
   const handleClose = () => setOpen(false)
-  // const [showBuyButton, setBuyButton] = useState(true);
-  // const [requested, setRequested] = useState(false);
-  // const [uTime, setuTime] = useState(0);
-
   const onBuyPremium = async () => {
     handleClose()
     try {
@@ -111,7 +101,9 @@ const PreniumModal = ({ open, setOpen }: Props) => {
                   }}
                   onClick={(e) => onBuyPremium()}
                 >
-                  buy
+                  <div className='text-white'>
+                    buy
+                  </div>
                 </Button>
                 <h2 className="font-bold text-[20px] mb-0 mt-4 text-white upgrade-label text-center" style={{ fontFamily: 'Anime Ace' }}>
                   PRICE: 9.9<span className='text-[#28d433]'> USDT</span><br></br>
