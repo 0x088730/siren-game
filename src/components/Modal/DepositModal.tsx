@@ -60,6 +60,7 @@ const DepositModal = ({
 
   const [remainTimeWithdraw, setRemainTimeWithdraw] = useState(0);
   const [isCooldownStartedWithdraw, setIsCooldownStartedWithdraw] = useState(false)
+  const [premiumStatus, setPremiumStatus] = useState(false);
 
   useEffect(() => {
     if (address !== "") {
@@ -90,6 +91,9 @@ const DepositModal = ({
 
         }),
       )
+      const time = new Date(user.premium)
+      if (time.getTime() > 0) setPremiumStatus(true);
+      else setPremiumStatus(false);
     }
   }, [open])
 
@@ -216,7 +220,7 @@ const DepositModal = ({
       alert("please wait...");
       return
     }
-    let amount = user.premium > 0 ? 10 : 3
+    let amount = premiumStatus === true ? 10 : 3
     if (cscTokenAmount > amount || cscTokenAmount <= 0) {
       alert("Please input correct CSC amount!");
       return
@@ -323,7 +327,7 @@ const DepositModal = ({
                   <div className='flex justify-between items-center w-full'>
                     <div>ANAILABLE:</div>
                     <div className='flex justify-center items-center'>
-                      <img alt="" draggable="false" className='w-[20px] mx-2' src="/images/cryptoIcon.png" />{user.premium > 0 ? "10 CSC" : "3 CSC"}
+                      <img alt="" draggable="false" className='w-[20px] mx-2' src="/images/cryptoIcon.png" />{premiumStatus ? "10 CSC" : "3 CSC"}
                     </div>
                   </div>
                   <input className='border-black border-2 w-full rounded-md bg-[#6F5241] text-white'
