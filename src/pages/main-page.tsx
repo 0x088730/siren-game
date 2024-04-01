@@ -204,13 +204,12 @@ export const MainPage = ({
                                     openAccount={showAccount}
                                     setOpenAccount={handleOpenAccount}
                                 />
-
                                 {gameState === 0 && (
                                     <div className="flex flex-col justify-center flex-1 h-full d-flex">
                                         {!inventoryOpened && !characterOpened && (
                                             buttonView === true ?
                                                 <div>
-                                                    <div className="btn-group z-10">
+                                                    <div className="btn-group z-20">
                                                         <div className="btn-wrapper">
                                                             <ButtonComponent onClick={() => rememberCode ? start() : null}>
                                                                 <img src="assets/images/play pve.png" draggable="false" />
@@ -228,7 +227,7 @@ export const MainPage = ({
                                                             </ButtonComponent>
                                                         </div>
                                                     </div>
-                                                    <div className='absolute top-0 w-full h-full min-w-[1600px]'>
+                                                    <div className='absolute top-0 w-full h-full min-w-[1600px] z-10'>
                                                         <div className='relative w-full h-full'>
                                                             <div className='absolute top-[15%] right-0 flex flex-col gap-y-2'>
                                                                 <div draggable="false" className='cursor-pointer bg-[#111111]/[0.9] w-80 h-40 flex justify-start items-center px-16 rounded-l-xl' onClick={() => rememberCode ? onBattlePass() : null}>
@@ -273,65 +272,65 @@ export const MainPage = ({
                                         />
                                     </div>
                                 )}
-                                {gameState === 1 && (
-                                    <>
-                                        <GameHeaderComponent />
-                                        {!turn && atkBtnState && getCharacter && (
-                                            <div className="absolute bottom-0 right-0 gap-2 p-4">
-                                                <button className='absolute right-[200px] bottom-[50px]'
-                                                    onClick={() => {
-                                                        if (thirdTurn === 0) {
-                                                            thirdAttack()
-                                                        }
-                                                    }}
-                                                >
-
-                                                    <div className="w-[160px]">
-                                                        {thirdTurn === 0 && (
-                                                            <img src="assets/images/btn_attack_2.png" draggable="false" />
-                                                        )}
-                                                        {thirdTurn !== 0 && (
-                                                            <img src="assets/images/btn_attack_2_d.png" draggable="false" />
-                                                        )}
-                                                        {thirdTurn !== 0 && (
-                                                            <h1 className='absolute text-[60px] text-white left-[30px] top-[30px]'
-                                                                style={{ fontFamily: 'Anime Ace' }}
-                                                            >{`${5 - thirdTurn}T`}</h1>
-                                                        )}
-                                                    </div>
-                                                </button>
-                                                <button className='absolute right-[90px] bottom-[210px]'
-                                                    onClick={() => {
-                                                        if (secondTurn === 0) {
-                                                            secondAttack()
-                                                        }
-                                                    }}
-                                                >
-                                                    <div className="w-[160px]">
-                                                        {secondTurn === 0 && (
-                                                            <img src="assets/images/btn_attack_3.png" draggable="false" />
-                                                        )}
-                                                        {secondTurn !== 0 && (
-                                                            <img src="assets/images/btn_attack_3_d.png" draggable="false" />
-                                                        )}
-                                                        {secondTurn !== 0 && (
-                                                            <h1 className='absolute text-[60px] text-white left-[30px] top-[30px]'
-                                                                style={{ fontFamily: 'Anime Ace' }}
-                                                            >{`${4 - secondTurn}T`}</h1>
-                                                        )}
-                                                    </div>
-                                                </button>
-                                                <button className='absolute right-[10px] bottom-[50px]'
-                                                    onClick={normalAttack}
-                                                >
-                                                    <div className="w-[129px]">
-                                                        <img src="assets/images/btn_attack.png" draggable="false" />
-                                                    </div>
-                                                </button>
-                                            </div>
-                                        )}
-                                    </>
-                                )}
+                                <div id="phaser-container">
+                                    {gameState === 1 && (
+                                        <div className='absolute w-screen h-screen'>
+                                            {!turn && atkBtnState && getCharacter && (
+                                                <>
+                                                    <button className='absolute right-[200px] bottom-[50px]'
+                                                        onClick={() => {
+                                                            if (thirdTurn === 0) {
+                                                                thirdAttack()
+                                                            }
+                                                        }}
+                                                    >
+                                                        <div className="w-[160px]">
+                                                            {thirdTurn === 0 && (
+                                                                <img src="assets/images/btn_attack_2.png" draggable="false" />
+                                                            )}
+                                                            {thirdTurn !== 0 && (
+                                                                <img src="assets/images/btn_attack_2_d.png" draggable="false" />
+                                                            )}
+                                                            {thirdTurn !== 0 && (
+                                                                <h1 className='absolute text-[60px] text-white left-[30px] top-[30px]'
+                                                                    style={{ fontFamily: 'Anime Ace' }}
+                                                                >{`${5 - thirdTurn}T`}</h1>
+                                                            )}
+                                                        </div>
+                                                    </button>
+                                                    <button className='absolute right-[90px] bottom-[210px]'
+                                                        onClick={() => {
+                                                            if (secondTurn === 0) {
+                                                                secondAttack()
+                                                            }
+                                                        }}
+                                                    >
+                                                        <div className="w-[160px]">
+                                                            {secondTurn === 0 && (
+                                                                <img src="assets/images/btn_attack_3.png" draggable="false" />
+                                                            )}
+                                                            {secondTurn !== 0 && (
+                                                                <img src="assets/images/btn_attack_3_d.png" draggable="false" />
+                                                            )}
+                                                            {secondTurn !== 0 && (
+                                                                <h1 className='absolute text-[60px] text-white left-[30px] top-[30px]'
+                                                                    style={{ fontFamily: 'Anime Ace' }}
+                                                                >{`${4 - secondTurn}T`}</h1>
+                                                            )}
+                                                        </div>
+                                                    </button>
+                                                    <button className='absolute right-[10px] bottom-[50px]'
+                                                        onClick={normalAttack}
+                                                    >
+                                                        <div className="w-[129px]">
+                                                            <img src="assets/images/btn_attack.png" draggable="false" />
+                                                        </div>
+                                                    </button>
+                                                </>
+                                            )}
+                                        </div>
+                                    )}
+                                </div>
                                 {gameState === 1 && global.currentCharacterName === 'siren-4' && (
                                     <>
                                         <GameHeaderComponent />

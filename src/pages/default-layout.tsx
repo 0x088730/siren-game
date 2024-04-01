@@ -28,7 +28,7 @@ export const DefaultLayout: React.FC<AppProps> = (props) => {
           :
           <>
             {gameState === 0 && <HeaderComponent onModalShow={props.onModalShow} />}
-            <div className="grid h-full">{props.component}</div>
+            <div className={`grid h-full ${gameState === 1 ? "overflow-hidden" : "overflow-visible"}`}>{props.component}</div>
           </>
       }
     </div>
