@@ -107,7 +107,7 @@ export let global: UserProfile = {
   energy: 1000,
   resource: 0,
   characters: [],
-  currentCharacterName: '',
+  currentCharacterName: 'siren-1',
   hunterLevel: 0,
   attacking: false,
   sectionStatus: { section_2: true, section_4: true, time_2: 0, time_4: 0 },

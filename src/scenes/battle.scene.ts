@@ -848,6 +848,7 @@ export default class Battle extends Phaser.Scene {
     }
     this.resultWidget = new ResultWidget(this, 950, 500).setVisible(false)
     this.resultWidget.on('claim', () => {
+      global.currentCharacterName = "siren-1"
       store.dispatch(setGameStatus(0))
       store.dispatch(getCharacterStatus(false))
       // getProfile(global.walletAddress, 'siren-1')

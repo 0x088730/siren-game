@@ -27,7 +27,7 @@ export const SectionPage = ({
         // const video = document.getElementById('backgroundVideo') as HTMLElement
         // video.style.display = "none"
         if (global.walletAddress !== "") {
-            getProfile(global.walletAddress, "siren-1");
+            getProfile(global.walletAddress, global.currentCharacterName);
             setTimer({ second: Math.floor(global.sectionStatus.time_2 / 60000), fourth: Math.floor(global.sectionStatus.time_4 / 60000) })
         }
     }, [])

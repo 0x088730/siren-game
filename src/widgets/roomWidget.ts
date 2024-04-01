@@ -185,11 +185,11 @@ export default class RoomWidget extends Phaser.GameObjects.Container {
               characterClickFlag = true
               if (characterList.filter((character) => character.characterNo === i).length > 0) {
                 setCurrentCharacter('siren-' + (i + 1)).then(() => {
-                  getProfile(global.walletAddress, 'siren-' + (i + 1)).then(
-                    () => {
-                      this.gameMode(3)
-                      characterClickFlag = false
-                    })
+                  // getProfile(global.walletAddress, 'siren-' + (i + 1)).then(
+                  //   () => {
+                  //     this.gameMode(3)
+                  //     characterClickFlag = false
+                  //   })
                 })
               } else {
                 alert('you have to buy')

@@ -33,9 +33,9 @@ const CharacterDetailModal = ({ openCharacter, setOpenCharacter, openCharacterIn
     }
     useEffect(() => {
         if (address !== "" && address !== null && address !== undefined) {
-            getProfile(address, "siren-1")
+            getProfile(address, global.currentCharacterName)
         }
-    }, [])
+    }, [openCharacter])
 
     const onCharacter = (data: any) => {
         setSelectCharacter(data);

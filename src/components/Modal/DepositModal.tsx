@@ -51,7 +51,7 @@ const DepositModal = ({
 
   const handleOpen = () => setOpen(true)
   const handleClose = () => setOpen(false)
-
+  let nowPrice = 0.13;
   const [cscAmount, setcscAmount] = useState(320)
   const [cscTokenAmount, setCscTokenAmount] = useState(0)
   const [remainedTime, setRemainedTime] = useState(0);
@@ -220,7 +220,7 @@ const DepositModal = ({
       alert("please wait...");
       return
     }
-    let amount = premiumStatus === true ? 10 : 3
+    let amount = premiumStatus === true ? Math.floor(20 / nowPrice) : Math.floor(3 / nowPrice)
     if (cscTokenAmount > amount || cscTokenAmount <= 0) {
       alert("Please input correct CSC amount!");
       return
@@ -315,7 +315,7 @@ const DepositModal = ({
                   </div>
                 </div>
               </div>
-              <div className='w-1/2 h-full flex flex-col justify-center items-center gap-y-8 p-6'>
+              <div className='relative w-1/2 h-full flex flex-col justify-center items-center gap-y-8 p-6'>
                 <div className='font-bold text-[24px]'>WITHDRAW</div>
                 <div className='h-12'>
                   <div className='flex justify-center items-start bg-[#111111]/[0.7] p-2 rounded-md text-[12px] font-light'>
@@ -327,7 +327,7 @@ const DepositModal = ({
                   <div className='flex justify-between items-center w-full'>
                     <div>ANAILABLE:</div>
                     <div className='flex justify-center items-center'>
-                      <img alt="" draggable="false" className='w-[20px] mx-2' src="/images/cryptoIcon.png" />{premiumStatus ? "10 CSC" : "3 CSC"}
+                      <img alt="" draggable="false" className='w-[20px] mx-2' src="/images/cryptoIcon.png" />{premiumStatus ? `${Math.floor(20 / nowPrice)} CSC` : `${Math.floor(3 / nowPrice)} CSC`}
                     </div>
                   </div>
                   <input className='border-black border-2 w-full rounded-md bg-[#6F5241] text-white'
@@ -347,6 +347,12 @@ const DepositModal = ({
                   <div className='flex justify-center items-center text-[#b30606] font-bold'>
                     <img alt="" draggable="false" className='w-[20px] mx-[3px] float-left' src="assets/images/white_clock.png" />
                     {convertSecToHMS(remainTimeWithdraw)}
+                  </div>
+                </div>
+                <div className={`${premiumStatus ? "hidden" : ''} absolute bottom-4 flex justify-around items-center w-full`}>
+                  <div>ANAILABLE WITH PREM:</div>
+                  <div className='flex justify-center items-center'>
+                    <img alt="" draggable="false" className='w-[20px] mx-2' src="/images/cryptoIcon.png" />{`${Math.floor(20 / nowPrice)} CSC`}
                   </div>
                 </div>
               </div>

@@ -13,7 +13,7 @@ export const getProfile = async (walletAddress: string, character: string) => {
     })).data
     const user = data.user
 
-    let currentCharacter = user.characters.filter((character: any) => character.characterName === user.currentCharacterName)[0]
+    let currentCharacter = user.characters.filter((character: any) => character.characterName === global.currentCharacterName)[0]
     global.hp = currentCharacter.hp
     global.damage = currentCharacter.damage
     global.critical = currentCharacter.critical
@@ -26,7 +26,7 @@ export const getProfile = async (walletAddress: string, character: string) => {
     global.wall = user.wall
     global.energy = currentCharacter.energy
     global.characters = user.characters
-    global.currentCharacterName = user.currentCharacterName
+    global.currentCharacterName = currentCharacter.characterName
     global.level = user.level
     global.hunterLevel = user.hunterLevel
     global.sectionStatus = data.sectionStatus

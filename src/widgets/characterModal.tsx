@@ -25,7 +25,8 @@ const CharacterModal = ({ openCharacter, setOpenCharacter, setPageStatus }: Prop
         pt: 1,
     }
 
-    const onSection = () => {
+    const onSection = (character: any) => {
+        global.currentCharacterName = character.characterName;
         setPageStatus("section");
     }
 
@@ -49,7 +50,7 @@ const CharacterModal = ({ openCharacter, setOpenCharacter, setPageStatus }: Prop
                                 (global.characters as { characterName: string }[]).some(character => character.characterName === `siren-${index}`) ?
                                     <div className='flex-col' key={index}>
                                         <div className='relative'>
-                                            <img src={`/assets/character/avatars/${index}.png`} draggable="false" className='fit-content cursor-pointer' onClick={onSection} />
+                                            <img src={`/assets/character/avatars/${index}.png`} draggable="false" className='fit-content cursor-pointer' onClick={() => onSection(global.characters.filter((character) => character.characterName === `siren-${index}`)[0])} />
                                             <div
                                                 className={`absolute ${Math.floor(global.characters.filter((character) => character.characterName === `siren-${index}`)[0].rarity.valueOf()) === 2 ? "top-[5px] left-[-5px]" : "top-[15px] left-[-35px]"} font-['Anime Ace'] text-[#808080] text-[20px] font-['Anime Ace'] font-[800] -rotate-45`}
                                                 style={{ textShadow: "3px 0px black" }}
