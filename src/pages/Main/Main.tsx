@@ -33,8 +33,7 @@ import { NONE } from 'phaser'
 import { transform } from 'typescript'
 import store from '../../store'
 import { setLoadingStatus } from '../../common/state/game/reducer'
-import { RingLoader } from 'react-spinners'
-
+import Web3 from 'web3'
 interface MainProps {
   showAccount: any
   setShowAccount: any
@@ -53,8 +52,6 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
   const [resource, setResource] = useState(userModule.user.resource)
   const [wallLevelState, setWallLevelState] = useState(userModule.user.wall)
   const [csc, setCsc] = useState(userModule.user.cscTokenAmount)
-  const [realCSC, setRealCSC] = useState(userModule.user.claimedCSC);
-  // const resource = userModule.user.resource
 
   const [openInstruction, setOpenInstruction] = useState(false)
   const [windowSize, setWindowSize] = useState({
@@ -66,6 +63,7 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
     if (address === undefined || address === null || address === "") {
       return navigate("/", { replace: true });
     }
+
     document.body.style.backgroundImage = "url(https://iksqvifj67dwchip.public.blob.vercel-storage.com/background/background-ZmVO9VcRcA8nQrT8efb1hyvB5ICiTw.jpg)";
 
     setTimeout(() => {
@@ -90,6 +88,20 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
     }
   }, [])
 
+  useEffect(() => {
+    if (global.walletAddress !== "") {
+      var priceInterval = setInterval(async () => { // Make the arrow function async
+        let web3 = new Web3(window.ethereum);
+        const accounts = await web3.eth.getAccounts();
+        if (global.walletAddress !== accounts[0]) {
+          window.location.reload();
+        }
+      }, 1000);
+
+      return () => clearInterval(priceInterval);
+    }
+  }, []);
+
   const TEST_MODE = true
   const MIN_SCREEN = 1200
   const [openSwap, setOpenSwap] = useState(false)
@@ -98,6 +110,7 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
   const [openDeposit, setOpenDeposit] = useState(false)
   const [openMining, setOpenMining] = useState(false)
   const [levelState, setLevelState] = React.useState(global.level)
+  const [wallHP, setWallHP] = useState(0);
 
   const [btnTitle, setBtnTitle] = useState("")
   const [items, setItems] = useState([
@@ -144,9 +157,17 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
       )
     }
   }
+
   useEffect(() => {
     coolDownStatus(selectedIndex)
   }, [selectedIndex])
+
+  useEffect(() => {
+    const time = new Date(user.premium)
+    if (time.getTime() > 0) setWallHP(Math.floor((6 + wallLevelState * 2) * 1.2));
+    else setWallHP(Math.floor(6 + wallLevelState * 2));
+  }, [user, wallLevelState])
+
   const coolDownStatus = (cooldown: any) => {
     if (address !== "") {
       dispatch(
@@ -277,27 +298,6 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
     }
   }
 
-  const style = {
-    position: 'absolute' as const,
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: {
-      xs: 200,
-      sm: 400,
-      // md: 800,
-      md: 665,
-    },
-
-    border: 'none',
-    outline: 'none',
-    // maxHeight: '500px',
-    // overflow: 'auto',
-    overflow: 'initial',
-    // boxShadow: 24,
-    // p: 4,
-  }
-
   useEffect(() => {
     startTimer()
 
@@ -359,11 +359,9 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
               showAccount={showAccount}
               setShowAccount={setShowAccount}
               csc={csc}
-              realCSC={realCSC}
               eggs={eggs}
               resource={resource}
             />
-
             <Modal
               open={openBird}
               // open={true}
@@ -371,7 +369,7 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
               aria-labelledby="modal-modal-title"
               aria-describedby="modal-modal-description"
             >
-              <Box sx={style}>
+              <Box className='absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%] w-[665px] border-none outline-none overflow-[initial]'>
                 <Box
                   sx={{
                     position: 'relative',
@@ -570,8 +568,8 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
               egg={eggs}
               onExchange={onExchange}
               onExchangeEgg={onExchangeEgg}
-              realCSC={realCSC}
-              setRealCSC={setRealCSC}
+              csc={csc}
+              setCsc={setCsc}
             />
             <MiningModal
               open={openMining}
@@ -646,7 +644,7 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
               <div className={`absolute w-[8%] h-[4%] right-[26%] ${styles.hpPos}`}>
                 <div className='flex-mid relative w-full h-full'>
                   <img alt="" draggable="false" className='w-full h-full' src={`/images/hp_bg.png`} />
-                  <span className='absolute tracking-[2px] text-[0.8rem] text-[#22bc34] font-semibold'>{wallLevelState === 1 ? "8/8HP" : wallLevelState === 2 ? "10/10HP" : wallLevelState === 3 ? "12/12HP" : "0/0HP"}</span>
+                  <span className='absolute tracking-[2px] text-[0.8rem] text-[#22bc34] font-semibold'>{wallHP + "/" + wallHP + "HP"}</span>
                 </div>
               </div>
             </Box>

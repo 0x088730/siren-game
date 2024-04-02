@@ -31,12 +31,11 @@ interface HeaderProps {
   showAccount: any
   setShowAccount: any
   csc: any
-  realCSC: any
   eggs: any
   resource: any
 }
 
-const Header = ({ showAccount, setShowAccount, csc, realCSC, eggs, resource }: HeaderProps) => {
+const Header = ({ showAccount, setShowAccount, csc, eggs, resource }: HeaderProps) => {
   const navigate = useNavigate()
   const [searchParams] = useSearchParams()
   const ref = searchParams.get('ref')
@@ -133,11 +132,7 @@ const Header = ({ showAccount, setShowAccount, csc, realCSC, eggs, resource }: H
       )}
       <p className={styles.resource}>
         <img alt="" draggable="false" className='w-[25px] mx-[3px]' src="/images/cryptoIcon.png" />
-        TEST CSC: {csc}
-      </p>
-      <p className={styles.resource}>
-        <img alt="" draggable="false" className='w-[25px] mx-[3px]' src="/images/cryptoIcon.png" />
-        REAL CSC: {realCSC}
+        CSC: {csc}
       </p>
       <p className={styles.resource}>
         <img alt="" draggable="false" className='w-[25px] mx-[3px]' src="/images/res_res.png" />

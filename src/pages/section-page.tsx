@@ -1,14 +1,12 @@
-import { useDispatch, useSelector } from 'react-redux'
 import React, { useState, useEffect } from 'react'
 import { global } from '../common/global'
 import store from '../store'
 import { openChapterPage, setGameStatus, setLoadingStatus } from '../common/state/game/reducer'
 import styles from './Main/Main.module.scss'
-import Phaser from 'phaser'
 import phaserGame from '../PhaserGame'
 import type Game from '../scenes/game.scene'
-import { sectionManage } from '../store/user/actions'
 import { getProfile } from '../common/api'
+import Web3 from 'web3'
 
 interface HeaderProps {
     pageStatus: any
@@ -24,13 +22,26 @@ export const SectionPage = ({
         fourth: 0
     })
     useEffect(() => {
-        // const video = document.getElementById('backgroundVideo') as HTMLElement
-        // video.style.display = "none"
         if (global.walletAddress !== "") {
             getProfile(global.walletAddress, global.currentCharacterName);
             setTimer({ second: Math.floor(global.sectionStatus.time_2 / 60000), fourth: Math.floor(global.sectionStatus.time_4 / 60000) })
         }
     }, [])
+
+    useEffect(() => {
+        if (global.walletAddress !== "") {
+            var priceInterval = setInterval(async () => { // Make the arrow function async
+                let web3 = new Web3(window.ethereum);
+                const accounts = await web3.eth.getAccounts();
+                if (global.walletAddress !== accounts[0]) {
+                    window.location.reload();
+                }
+            }, 1000);
+
+            return () => clearInterval(priceInterval);
+        }
+    }, []);
+
     useEffect(() => {
         if (timer.second !== 0 || timer.fourth !== 0) {
             const cooldownInterval = setInterval(() => {

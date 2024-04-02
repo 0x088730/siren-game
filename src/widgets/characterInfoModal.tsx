@@ -248,7 +248,7 @@ const CharacterInfoModal = ({ openCharacterInfo, setOpenCharacterInfo, selectCha
                                         <Grid item xs={12} sm={12} md={12} style={{ display: "flex", flexWrap: 'wrap', justifyContent: 'space-around', alignItems: 'center', padding: "40px" }}>
                                             {weaponImage.map((index) => (
                                                 <div className='flex-col' key={index}>
-                                                    <img src={`/assets/item/weapon/${index}.png`} draggable="false" className='fit-content cursor-pointer w-[160px]' />
+                                                    {/* <img src={`/assets/item/weapon/${index}.png`} draggable="false" className='fit-content cursor-pointer w-[160px]' /> */}
                                                 </div>
                                             ))}
                                         </Grid>

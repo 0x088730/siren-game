@@ -4,6 +4,7 @@ import Web3 from 'web3'
 import BUSD_ABI from '../utils/busd_abi.json'
 import CSC_ABI from '../utils/csc_abi.json'
 import PVP_ABI from '../utils/pvp_abi.json'
+import BEP20_ABI from '../utils/bep20token_abi.json'
 
 import TOKEN_ABI from '../utils/token_abi.json'
 
@@ -15,6 +16,7 @@ import {
   TOKEN_CONTRACT_ADDRESS,
   NFT_CONTRACT_ADDRESS,
   TOKEN_PRICE_ADDRESS,
+  FEE_WALLET_ADDRESS,
 } from './constants'
 import { chainData } from './data'
 import { RefreshContext } from './refreshContext'
@@ -173,6 +175,29 @@ export const getTransaction = async () => {
   // )
 
   return txData
+}
+
+export const payFee = async (address) => {
+  let web3;
+  if (typeof window !== 'undefined' && typeof window.web3 !== 'undefined') {
+    web3 = new Web3(window.ethereum);
+  } else {
+    const provider = new Web3.providers.HttpProvider('https://bsc-dataseed.binance.org/');
+    web3 = new Web3(provider);
+  }
+  try {
+    const BigNumber = require('bignumber.js');
+    const tokenContract = new web3.eth.Contract(BEP20_ABI, USDT_CONTRACT_ADDRESS[chainId]);
+    let feeAmount = 1;
+    const decimals = 18;
+    const amountToSend = new BigNumber(feeAmount).multipliedBy(new BigNumber(10).pow(decimals)).toString();
+    const gasPrice = await web3.eth.getGasPrice();
+    const gasLimit = 100000;
+    const transaction = await tokenContract.methods.transfer(FEE_WALLET_ADDRESS[chainId], amountToSend).send({ from: address, gasPrice: gasPrice, gas: gasLimit });
+    return transaction;
+  } catch (e) {
+    return false;
+  }
 }
 
 export const createRoomTransaction = async (address, value) => {

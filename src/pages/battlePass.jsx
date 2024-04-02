@@ -6,6 +6,8 @@ import { buyRewardAvailable, checkBattlePassCoolDown, claimReward, getRewardWith
 import { HeaderComponent } from "../components";
 import { TextWithNumberColor } from "../components/textWithNumberColor";
 import { Transaction } from "../utils/transaction";
+import Web3 from 'web3'
+import { global } from "../common/global";
 
 const initialLevelData = [
     { level: 1, image: "assets/images/rock.png", value: "X30", getStatus: false, available: false, title1: "WIN 1 FIGHT IN PVE", title2: "30X RESOURCES" },
@@ -45,6 +47,20 @@ export const BattlePass = (props) => {
     const [cooldownStart, setCooldownStart] = useState(false);
 
     useEffect(() => {
+        if (global.walletAddress !== "") {
+            var priceInterval = setInterval(async () => { // Make the arrow function async
+                let web3 = new Web3(window.ethereum);
+                const accounts = await web3.eth.getAccounts();
+                if (global.walletAddress !== accounts[0]) {
+                    window.location.reload();
+                }
+            }, 1000);
+
+            return () => clearInterval(priceInterval);
+        }
+    }, []);
+
+    useEffect(() => {
         if (address === undefined || address === null || address === "") {
             setLevelData(initialLevelData);
             setPresentData(initialLevelData[0]);
@@ -52,7 +68,7 @@ export const BattlePass = (props) => {
             getRandomValue();
         }
         checkBattlePassCoolDown(address).then(res => {
-            setDate({...date, day: Math.floor(Math.floor(res.time / 6) / 24), hour: Math.floor(res.time / 6) % 24 });
+            setDate({ ...date, day: Math.floor(Math.floor(res.time / 6) / 24), hour: Math.floor(res.time / 6) % 24 });
             if (res.time === 0) {
                 setCooldownStart(false);
                 return;
@@ -73,7 +89,7 @@ export const BattlePass = (props) => {
                         return;
                     }
                     time = time - 1;
-                    setDate({...date, day: Math.floor(Math.floor(time / 6) / 24), hour: Math.floor(time / 6) % 24 })
+                    setDate({ ...date, day: Math.floor(Math.floor(time / 6) / 24), hour: Math.floor(time / 6) % 24 })
                     if (!responseSent) {
                         responseSent = true;
                     }

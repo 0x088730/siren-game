@@ -1,13 +1,10 @@
-import { useDispatch, useSelector } from 'react-redux'
-import React, { useState, useEffect } from 'react'
+import { useSelector } from 'react-redux'
+import { useState, useEffect } from 'react'
 import { global } from '../common/global'
 import store from '../store'
-import { openChapterPage, setButtonView, setGameStatus, setLoadingStatus, setRememberCode } from '../common/state/game/reducer'
+import { setButtonView, setLoadingStatus, setRememberCode } from '../common/state/game/reducer'
 import styles from './Main/Main.module.scss'
-import { Box, Button } from '@mui/material'
-import CharacterWidget from '../widgets/characterWidget'
-import Phaser from 'phaser'
-import CharacterModal from '../widgets/characterModal'
+import { Button } from '@mui/material'
 import InforModal from '../components/Header/InforModal'
 import { ButtonComponent } from '../components/button.component'
 import { useWeb3Context } from '../hooks/web3Context'
@@ -17,6 +14,7 @@ import CharacterDetailModal from '../widgets/characterDetailModal'
 import InventoryModal from '../widgets/inventoryModal'
 import { addLoginHistory } from '../store/user/actions'
 import GuildModal from '../widgets/guildModal'
+import Web3 from 'web3'
 
 interface HeaderProps {
     showAccount: any
@@ -57,7 +55,6 @@ export const MainPage = ({
     const [openGuild, setOpenGuild] = useState(false);
     const [openCharacterInfo, setOpenCharacterInfo] = useState(false);
     const [openInventory, setOpenInventory] = useState(false);
-    const [inputCode, setInputCode] = useState(false);
     const [code, setCode] = useState("");
 
     const { connected, chainID, address, connect } = useWeb3Context()
@@ -71,6 +68,20 @@ export const MainPage = ({
             document.body.style.backgroundImage = 'url(https://iksqvifj67dwchip.public.blob.vercel-storage.com/background/bg-Tb688buNrJp4hV2u8rPn8aPBG4lg5c.jpg)'
         }
     }, [])
+
+    useEffect(() => {
+        if (global.walletAddress !== "") {
+            var priceInterval = setInterval(async () => { // Make the arrow function async
+                let web3 = new Web3(window.ethereum);
+                const accounts = await web3.eth.getAccounts();
+                if (global.walletAddress !== accounts[0]) {
+                    window.location.reload();
+                }
+            }, 1000);
+
+            return () => clearInterval(priceInterval);
+        }
+    }, []);
 
     const start = () => {
         if (global.wall === 0) {

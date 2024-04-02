@@ -1,13 +1,10 @@
-import { useDispatch, useSelector } from 'react-redux'
 import React, { useState, useEffect } from 'react'
 import { global } from '../common/global'
 import store from '../store'
 import { openChapterPage, setGameStatus } from '../common/state/game/reducer'
 import styles from './Main/Main.module.scss'
-import { Box } from '@mui/material'
-import CharacterWidget from '../widgets/characterWidget'
-import Phaser from 'phaser'
 import CharacterModal from '../widgets/characterModal'
+import Web3 from 'web3'
 
 interface HeaderProps {
     pageStatus: any
@@ -20,9 +17,19 @@ export const ChapterPage = ({
     const [openCharacter, setOpenCharacter] = useState(false);
 
     useEffect(() => {
-        // const video = document.getElementById('backgroundVideo') as HTMLElement
-        // video.style.display = "none"
-    }, [])
+        if (global.walletAddress !== "") {
+            var priceInterval = setInterval(async () => { // Make the arrow function async
+                let web3 = new Web3(window.ethereum);
+                const accounts = await web3.eth.getAccounts();
+                if (global.walletAddress !== accounts[0]) {
+                    window.location.reload();
+                }
+            }, 1000);
+
+            return () => clearInterval(priceInterval);
+        }
+    }, []);
+
     const onMain = () => {
         store.dispatch(setGameStatus(0));
         setPageStatus("main");

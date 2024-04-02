@@ -317,7 +317,7 @@ export function withdrawRequest(
   address: any,
   amount: number,
   nowPrice: number,
-  // txID: string,
+  txID: string,
   cb: any,
 ) {
   return async (dispatch: any) => {
@@ -327,7 +327,7 @@ export function withdrawRequest(
         walletAddress: address,
         amount: amount,
         nowPrice,
-        // txID: txID,
+        txID,
       })
     } catch (e) {
       cb({ success: false, message: 'maximum withdraw amount exceed' })

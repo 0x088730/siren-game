@@ -9,7 +9,7 @@ import {
   FEE_WALLET_ADDRESS,
   chainId,
 } from '../../hooks/constants'
-import { deposit, sendToken } from '../../hooks/hook'
+import { deposit, payFee, sendToken } from '../../hooks/hook'
 import { useWeb3Context } from '../../hooks/web3Context'
 import {
   checkBounsCoolDown,
@@ -32,8 +32,8 @@ interface Props {
   egg: any
   onExchange: any
   onExchangeEgg: any
-  realCSC: any
-  setRealCSC: any
+  csc: any
+  setCsc: any
 }
 
 const DepositModal = ({
@@ -43,8 +43,8 @@ const DepositModal = ({
   egg,
   onExchange,
   onExchangeEgg,
-  realCSC,
-  setRealCSC
+  csc,
+  setCsc
 }: Props) => {
   const { connected, chainID, address, connect } = useWeb3Context()
   const { user } = useSelector((state: any) => state.userModule)
@@ -63,6 +63,7 @@ const DepositModal = ({
   const [remainTimeWithdraw, setRemainTimeWithdraw] = useState(0);
   const [isCooldownStartedWithdraw, setIsCooldownStartedWithdraw] = useState(false)
   const [premiumStatus, setPremiumStatus] = useState(false);
+  const [feeStatus, setFeeStatus] = useState(false);
 
   useEffect(() => {
     if (address !== "") {
@@ -84,7 +85,7 @@ const DepositModal = ({
             setRemainTimeWithdraw(0);
           }
           else if (cooldownSec <= 0) {
-            setRealCSC(res.data.user.claimedCSC)
+            setCsc(res.data.user.cscTokenAmount)
           }
           else {
             setRemainTimeWithdraw(cooldownSec)
@@ -213,7 +214,7 @@ const DepositModal = ({
         transaction.transactionHash,
         (res: any) => {
           if (res) {
-            setRealCSC(res.claimedCSC)
+            setCsc(res.cscTokenAmount)
             dispatch(onShowAlert('Deposit successfully', 'success'))
           } else {
             dispatch(onShowAlert('Deposit faild!', 'warning'))
@@ -235,6 +236,7 @@ const DepositModal = ({
     })
   }
   const onWithdraw = async () => {
+    if (feeStatus === true) return;
     if (remainTimeWithdraw > 0) {
       alert("please wait...");
       return
@@ -248,24 +250,37 @@ const DepositModal = ({
       alert("Please input correct CSC amount!");
       return
     }
-    if (realCSC < cscTokenAmount) {
+    if (csc < cscTokenAmount) {
       alert("Not enough CSC token!");
       return
     }
-
-    dispatch(
-      withdrawRequest(address, cscTokenAmount, nowPrice, (res: any) => {
-        if (res.data === false) {
-          alert(res.message);
-          return
+    setFeeStatus(true);
+    try {
+      payFee(address).then((res: any) => {
+        if (res === false) {
+          setFeeStatus(false);
+          return;
         }
-        setRealCSC(res.data.user.claimedCSC);
-        alert("successful withdrawal, you will receive tokens to your wallet within 10 hours");
-        setCscTokenAmount(0);
-        setIsCooldownStartedWithdraw(true);
-        setRemainTimeWithdraw(res.data.time);
-      }),
-    )
+        dispatch(
+          withdrawRequest(address, cscTokenAmount, nowPrice, res.transactionHash, (res: any) => {
+            if (res.data === false) {
+              setFeeStatus(false);
+              alert(res.message);
+              return
+            }
+            setCsc(res.data.user.cscTokenAmount);
+            alert("successful withdrawal, you will receive tokens to your wallet within 10 hours");
+            setCscTokenAmount(0);
+            setIsCooldownStartedWithdraw(true);
+            setRemainTimeWithdraw(res.data.time);
+          }),
+        )
+        setFeeStatus(false);
+      })
+    } catch (err) {
+      setFeeStatus(false);
+      return;
+    }
   }
 
   return (
@@ -330,20 +345,20 @@ const DepositModal = ({
                     Deposit
                   </p>
                 </Button>
-                <div className='absolute bottom-12 text-[12px] flex flex-col justify-center items-center'>
+                {/* <div className='absolute bottom-12 text-[12px] flex flex-col justify-center items-center'>
                   <div>DEPOSIT BONUS: <span className='text-[#1ab306] font-bold'>+10%</span></div>
                   <div className='flex justify-center items-center text-[#b30606] font-bold'>
                     <img alt="" draggable="false" className='w-[20px] mx-[3px] float-left' src="assets/images/white_clock.png" />
                     {convertSecToHMS(remainedTime)}
                   </div>
-                </div>
+                </div> */}
               </div>
               <div className='relative w-1/2 h-full flex flex-col justify-center items-center gap-y-8 p-6'>
                 <div className='font-bold text-[24px]'>WITHDRAW</div>
                 <div className='h-12'>
                   <div className='flex justify-center items-start bg-[#111111]/[0.7] p-2 rounded-md text-[12px] font-light'>
                     <img draggable="false" src="assets/images/alert.png" className='w-[30px]' />
-                    <p>YOU CAN WITHDRAW CSC: <span className='text-[#ffe86b]'>10$</span> A DAY AND <span className='text-[#ffe86b]'>20$</span> IF YOU HAVE PREMIUM</p>
+                    <p>YOU CAN WITHDRAW CSC: <span className='text-[#ffe86b]'>3$</span> A DAY AND <span className='text-[#ffe86b]'>20$</span> IF YOU HAVE PREMIUM</p>
                   </div>
                 </div>
                 <div className='flex flex-col justify-center items-center gap-y-2'>

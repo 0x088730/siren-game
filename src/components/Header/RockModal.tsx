@@ -73,7 +73,7 @@ const RockModal = ({
     dispatch(
       stakeDiamond(address, selectedIndex, 1, (res: any) => {
         if (res.success === false) return
-        setRemainedTime(43200)
+        setRemainedTime(21600)
         setCsc(res.data)
         setIsCooldownStarted(true)
       }),
@@ -90,6 +90,10 @@ const RockModal = ({
         else if (cooldownSec <= 0) {
           dispatch(
             claimDiamond(address, selectedIndex, (res: any) => {
+              if (res.data === false) {
+                alert(res.message)
+                return;
+              }
               setResource(res.data.resource)
               setBtnType("Start")
             }),
@@ -137,7 +141,7 @@ const RockModal = ({
               <div className='flex flex-col items-center justify-center gap-y-2 text-[14px] w-full'>
                 <div className='flex justify-between w-full'>
                   <div><img alt="" draggable="false" className='w-[22px] mx-[3px] float-left' src="assets/images/white_clock.png" />TIME:</div>
-                  <div>12H</div>
+                  <div>6H</div>
                 </div>
                 <div className='flex justify-between w-full'>
                   <div>
