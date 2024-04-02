@@ -93,7 +93,7 @@ const CreatePart = (props) => {
     return (
         <div className='flex-mid flex-col h-full'>
             <div className="text-white text-[24px] font-bold">CREATE YOUR GUILD</div>
-            <div className="text-[#ffff19] text-[14px] font-[400] flex-mid mt-2">GUILD BOUNS: <span className='text-white'> +10% CSC EARN</span></div>
+            <div className="text-[#ffff19] text-[14px] font-[400] flex-mid items-end mt-2">GUILD BOUNS<span className='text-[11px]'>(all members)</span>: <span className='text-white'> +10% CSC EARN</span></div>
             <div className='flex-mid mt-16 mb-12 gap-x-6'>
                 <div className='flex-mid relative w-32 h-32 bg-[#ffffff]/[0.4] rounded-lg border-[1px] border-[#464646] text-[47px] font-serif'>
                     {imgLoading ?

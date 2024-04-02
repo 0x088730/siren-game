@@ -57,7 +57,16 @@ const GuildModal = ({ openGuild, setOpenGuild }) => {
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
             >
-                <Box className="absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%] text-center w-[900px] h-[600px] p-2 pt-1" style={{ backgroundImage: "url(assets/images/frame.webp)", backgroundSize: '100% 100%' }}>
+                <Box className="absolute top-[55%] left-1/2 translate-x-[-50%] translate-y-[-50%] text-center w-[900px] h-[600px] p-2 pt-1" style={{ backgroundImage: "url(assets/images/frame.webp)", backgroundSize: '100% 100%' }}>
+                    <div className='absolute top-[-18%]'>
+                        <div className='flex-mid relative w-[866px] h-[95px]'>
+                            <img alt="" draggable="false" src="/assets/images/guild_title.webp" className='w-full h-full' />
+                            <div className='flex-mid absolute right-20 items-start text-white'>
+                                <div>EVENT:</div>
+                                <div>TOP 3 CSC EARN GUILD OWNERS WILL RECEIVE 200$(CSC)<br />TOP 1: 1000$ TOP 2: 600$ TOP 3: 400$ | <span>APRIL 16</span></div>
+                            </div>
+                        </div>
+                    </div>
                     <img
                         alt=""
                         src="/images/support/support_md_close_btn.png"
