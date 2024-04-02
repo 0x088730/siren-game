@@ -161,22 +161,22 @@ const DepositModal = ({
 
     // const transaction = await sendToken(address, FEE_WALLET_ADDRESS[chainId], 1)
 
-    dispatch(
-      withdrawRequest(
-        address,
-        cscTokenAmount,
-        // transaction.transactionHash,
-        (res: any) => {
-          // console.log('callback')
-          handleClose()
-          if (res && res?.success) {
-            dispatch(onShowAlert('Withdraw successfully', 'success'))
-          } else {
-            dispatch(onShowAlert(res?.message, 'warning'))
-          }
-        },
-      ),
-    )
+    // dispatch(
+    //   withdrawRequest(
+    //     address,
+    //     cscTokenAmount,
+    //     // transaction.transactionHash,
+    //     (res: any) => {
+    //       // console.log('callback')
+    //       handleClose()
+    //       if (res && res?.success) {
+    //         dispatch(onShowAlert('Withdraw successfully', 'success'))
+    //       } else {
+    //         dispatch(onShowAlert(res?.message, 'warning'))
+    //       }
+    //     },
+    //   ),
+    // )
   }
 
   const style = {

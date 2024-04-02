@@ -5,6 +5,8 @@ import BUSD_ABI from '../utils/busd_abi.json'
 import CSC_ABI from '../utils/csc_abi.json'
 import PVP_ABI from '../utils/pvp_abi.json'
 
+import TOKEN_ABI from '../utils/token_abi.json'
+
 import { NFT_ABI } from './abi/nft_contract_abi'
 import {
   USDT_CONTRACT_ADDRESS,
@@ -12,6 +14,7 @@ import {
   PVP_CONTRACT_ADDRESS,
   TOKEN_CONTRACT_ADDRESS,
   NFT_CONTRACT_ADDRESS,
+  TOKEN_PRICE_ADDRESS,
 } from './constants'
 import { chainData } from './data'
 import { RefreshContext } from './refreshContext'
@@ -304,4 +307,14 @@ export const mintNFT = async (address, type) => {
     gas: 270000,
     gasPrice: 0,
   })
+}
+
+export const tokenPrice = async (from, to, rawAmount) => {
+  const web3 = new Web3(window.ethereum)
+  var tokenContract = new web3.eth.Contract(
+    TOKEN_ABI,
+    TOKEN_PRICE_ADDRESS[chainId],
+  )
+  const result = await tokenContract.methods.getReserves().call();
+  return result;
 }

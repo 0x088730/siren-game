@@ -316,6 +316,7 @@ export function resourceRequest(
 export function withdrawRequest(
   address: any,
   amount: number,
+  nowPrice: number,
   // txID: string,
   cb: any,
 ) {
@@ -325,6 +326,7 @@ export function withdrawRequest(
       res = await api(`user/withdraw`, 'post', {
         walletAddress: address,
         amount: amount,
+        nowPrice,
         // txID: txID,
       })
     } catch (e) {

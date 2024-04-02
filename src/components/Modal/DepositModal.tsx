@@ -23,6 +23,7 @@ import { onShowAlert } from '../../store/utiles/actions'
 import { checkPremium } from '../../utils/checkPremium'
 import { getBcsPrice, getWithdrewSirenAmount } from '../../utils/user'
 import { convertSecToHMS } from '../../utils/timer'
+import { getPrice } from '../getPrice'
 
 interface Props {
   open: boolean
@@ -51,7 +52,8 @@ const DepositModal = ({
 
   const handleOpen = () => setOpen(true)
   const handleClose = () => setOpen(false)
-  let nowPrice = 0.13;
+  let [nowPrice, setNowPrice] = useState(0.12);
+  // let nowPrice = 0.13;
   const [cscAmount, setcscAmount] = useState(320)
   const [cscTokenAmount, setCscTokenAmount] = useState(0)
   const [remainedTime, setRemainedTime] = useState(0);
@@ -94,6 +96,23 @@ const DepositModal = ({
       const time = new Date(user.premium)
       if (time.getTime() > 0) setPremiumStatus(true);
       else setPremiumStatus(false);
+    }
+  }, [open])
+
+  useEffect(() => {
+    if (open === true) {
+      getPrice().then(res => {
+        if (res === false) return;
+        setNowPrice(res);
+      })
+      var priceInterval = setInterval(() => {
+        getPrice().then(res => {
+          if (res === false) return;
+          setNowPrice(res);
+        })
+      }, 30000)
+
+      return () => clearInterval(priceInterval)
     }
   }, [open])
 
@@ -220,6 +239,10 @@ const DepositModal = ({
       alert("please wait...");
       return
     }
+    if (nowPrice <= 0) {
+      alert("Invalid token price!");
+      return
+    }
     let amount = premiumStatus === true ? Math.floor(20 / nowPrice) : Math.floor(3 / nowPrice)
     if (cscTokenAmount > amount || cscTokenAmount <= 0) {
       alert("Please input correct CSC amount!");
@@ -231,7 +254,7 @@ const DepositModal = ({
     }
 
     dispatch(
-      withdrawRequest(address, cscTokenAmount, (res: any) => {
+      withdrawRequest(address, cscTokenAmount, nowPrice, (res: any) => {
         if (res.data === false) {
           alert(res.message);
           return

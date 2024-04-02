@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@apollo/client": "^3.9.10",
     "@emotion/react": "^11.9.3",
     "@emotion/styled": "^11.9.3",
     "@ethersproject/providers": "^5.7.2",
