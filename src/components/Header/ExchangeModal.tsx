@@ -65,7 +65,7 @@ const ExchangeModal = ({
       dispatch(
         startHunterUpgradeCooldown(address, userCount, avatar, (resp: any) => {
           if (resp.data === true) {
-            setRemainedTime(7200)
+            setRemainedTime(43200)
             setIsCooldownStarted(true)
           }
         }),

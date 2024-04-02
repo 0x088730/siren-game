@@ -58,7 +58,7 @@ const DepositModal = ({
   const [cscTokenAmount, setCscTokenAmount] = useState(0)
   const [remainedTime, setRemainedTime] = useState(0);
   const [isCooldownStarted, setIsCooldownStarted] = useState(false)
-  const [pendingStatus, setPendingStatus] = useState(false);
+  const [pendingStatus, setPendingStatus] = useState(0);
 
   const [remainTimeWithdraw, setRemainTimeWithdraw] = useState(0);
   const [isCooldownStartedWithdraw, setIsCooldownStartedWithdraw] = useState(false)
@@ -193,7 +193,7 @@ const DepositModal = ({
       alert("minimal withdraw amount is 320CSC");
       return
     }
-    setPendingStatus(true)
+    setPendingStatus(1)
     dispatch(onShowAlert('Pease wait while confirming', 'info'))
     let transaction;
     try {
@@ -203,7 +203,7 @@ const DepositModal = ({
         cscAmount,
       )
     } catch (e) {
-      setPendingStatus(false)
+      setPendingStatus(0)
       return;
     }
 
@@ -219,7 +219,7 @@ const DepositModal = ({
           } else {
             dispatch(onShowAlert('Deposit faild!', 'warning'))
           }
-          setPendingStatus(false)
+          setPendingStatus(0)
         },
       ),
     )
@@ -256,15 +256,18 @@ const DepositModal = ({
     }
     setFeeStatus(true);
     try {
+      setPendingStatus(2);
       payFee(address).then((res: any) => {
         if (res === false) {
           setFeeStatus(false);
+          setPendingStatus(0)
           return;
         }
         dispatch(
           withdrawRequest(address, cscTokenAmount, nowPrice, res.transactionHash, (res: any) => {
             if (res.data === false) {
               setFeeStatus(false);
+              setPendingStatus(0)
               alert(res.message);
               return
             }
@@ -276,9 +279,11 @@ const DepositModal = ({
           }),
         )
         setFeeStatus(false);
+        setPendingStatus(0)
       })
     } catch (err) {
       setFeeStatus(false);
+      setPendingStatus(0)
       return;
     }
   }
@@ -305,12 +310,12 @@ const DepositModal = ({
             <img alt="" draggable="false" src="assets/images/head-bg.png" className='w-72 -mt-12' />
             <p className={`absolute text-[20px] text-center -mt-2`}>BANK</p>
           </div>
-          <div className={`absolute w-full h-full top-0 z-20 ${pendingStatus ? "block" : "hidden"}`}>
+          <div className={`absolute w-full h-full top-0 z-20 ${pendingStatus !== 0 ? "block" : "hidden"}`}>
             <div className='relative w-full h-full flex justify-center items-center'>
               <img draggable="false" src="assets/images/pending.webp" className='absolute w-[55%]' style={{ boxShadow: "10px 10px 10px black" }} />
               <div className='flex justify-center items-center z-30'>
                 <span className="loader"></span>
-                <div className='text-center text-white font-bold text-[18px] ml-4'>DEPOSIT IS PENDING<br />DON'T CLOSE THIS WINDOW</div>
+                <div className='text-center text-white font-bold text-[18px] ml-4'>{`${pendingStatus === 1 ? "DEPOSIT" : pendingStatus === 2 ? "WITHDRAW" : ""}`} IS PENDING<br />DON'T CLOSE THIS WINDOW</div>
               </div>
             </div>
           </div>

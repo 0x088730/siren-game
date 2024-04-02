@@ -829,11 +829,13 @@ export default class Battle extends Phaser.Scene {
   onEnemyDead() {
     this.createHud("win");
     this.resultWidget.show(1)
+    store.dispatch(getCharacterStatus(false))
   }
 
   onSirenDead(type: any) {
     this.createHud("lose");
     this.resultWidget.show(type)
+    store.dispatch(getCharacterStatus(false))
   }
 
   createHud(winStatus: string) {
@@ -852,7 +854,6 @@ export default class Battle extends Phaser.Scene {
     this.resultWidget.on('claim', () => {
       global.currentCharacterName = "siren-1"
       store.dispatch(setGameStatus(0))
-      store.dispatch(getCharacterStatus(false))
       // getProfile(global.walletAddress, 'siren-1')
       this.scene.start('game')
       store.dispatch(setDisplay("block"))

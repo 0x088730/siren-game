@@ -51,8 +51,8 @@ const MiningModal = ({
   const title = [
     { level: "LEVEL 1:", detail1: "9 CSC PER 12H", detail2: "CLAIM 9 CSC EACH 12H", price: "PRICE: 500 CSC" },
     { level: "LEVEL 1:", detail1: "9 CSC PER 12H", detail2: "CLAIM 9 CSC EACH 12H", price: "PRICE: 500 CSC" },
-    { level: "LEVEL 2:", detail1: "18 CSC PER 12H", detail2: "CLAIM 18 CSC EACH 12H", price: "PRICE: 950 CSC" },
-    { level: "LEVEL 3:", detail1: "36 CSC PER 12H", detail2: "CLAIM 36 CSC EACH 12H", price: "PRICE: 1850 CSC" },
+    { level: "LEVEL 2:", detail1: "25 CSC PER 12H", detail2: "CLAIM 25 CSC EACH 12H", price: "PRICE: 950 CSC" },
+    { level: "LEVEL 3:", detail1: "50 CSC PER 12H", detail2: "CLAIM 50 CSC EACH 12H", price: "PRICE: 1850 CSC" },
   ]
   const { connected, chainID, address, connect } = useWeb3Context()
   const { user } = useSelector((state: any) => state.userModule)
@@ -73,7 +73,7 @@ const MiningModal = ({
     else if (!upgradeTab && levelState === 0) setBtnType("Buy")
   }, [open, upgradeTab])
   useEffect(() => {
-    if (address !== "") {
+    if (address !== "" && levelState !== 0) {
       dispatch(
         checkCooldown(address, 'level-up', (res: any) => {
           let cooldownSec = res.data.time
@@ -355,7 +355,7 @@ const MiningModal = ({
                 <div className={`absolute top-72 text-[1rem] ${levelState === 0 ? "" : "hidden"}`}>{title[levelState].price}</div>
               </div>
               <div className='flex flex-col justify-center items-center'>
-                <div>{levelState === 1 ? "9csc" : levelState === 2 ? "18csc" : levelState === 3 ? "36csc" : "0csc"}</div>
+                <div>{levelState === 1 ? "9csc" : levelState === 2 ? "25csc" : levelState === 3 ? "50csc" : "0csc"}</div>
                 <div className='relative w-12 h-[22rem] flex justify-center items-end'>
                   <img alt="" draggable="false" src="/assets/images/progress-bar.png" className='h-full w-full' />
                   <img alt="" draggable="false" src="/assets/images/bar.png" style={{ height: `${barHeight}` }} className={`absolute z-10 w-[2.5rem] mb-[0.2rem] opacity-80 rounded-b-2xl`} />
@@ -368,7 +368,7 @@ const MiningModal = ({
               <div className='flex justify-evenly items-center w-full h-full'>
                 {count.map((item, index) => (
                   <div key={index} className='h-full w-48 flex flex-col justify-center items-center gap-y-2 rounded-2xl'>
-                    <div className={`${item === 1 ? styles.lvl1Box : item === 2 ? styles.lvl2Box : styles.lvl3Box} relative flex flex-col justify-center items-center p-4 gap-y-2`}>
+                    <div className={`${item === 1 ? styles.lvl1Box : item === 2 ? styles.lvl2Box : styles.lvl3Box} relative flex flex-col justify-center items-center px-[0.8rem] py-4 gap-y-2`}>
                       {/* <img alt="" src="assets/images/reward_bg_2.png" className='absolute top-0 w-full h-full' /> */}
                       <img alt="" draggable="false" src={`assets/images/box${item}.png`} className='z-10 w-36 my-4' />
                       <div className='flex flex-col justify-center items-center z-10 text-[15px]'>
@@ -544,10 +544,10 @@ const MiningModal = ({
 
           {/* </Box> */}
           <Box className='flex justify-center absolute -bottom-2 w-full'>
-            <Button className='w-48 p-0' onClick={!upgradeTab ? onUpgradeTab : onFarmTab}>
+            <Button className='w-48 p-0' onClick={!upgradeTab && levelState !== 0 ? onUpgradeTab : onFarmTab}>
               <img alt="" draggable="false" src="/assets/images/tabbutton.png" />
               <p className="absolute font-bold text-[14px] text-center text-[#ffffff]" style={{ fontFamily: 'Anime Ace' }}>
-                {!upgradeTab ? "UPGRADE" : "FARM"}
+                {!upgradeTab && levelState !== 0 ? "UPGRADE" : "FARM"}
               </p>
             </Button>
           </Box>
