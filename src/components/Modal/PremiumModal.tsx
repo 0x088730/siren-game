@@ -11,8 +11,10 @@ import {
 } from '../../hooks/constants'
 import { sendToken } from '../../hooks/hook'
 import { useWeb3Context } from '../../hooks/web3Context'
-import { buyPremium } from '../../store/user/actions'
+import { buyPremium, checkPremiumCooldown } from '../../store/user/actions'
 import { onShowAlert } from '../../store/utiles/actions'
+import { useEffect, useState } from 'react'
+import { convertSecToDHMS } from '../../utils/timer'
 
 interface Props {
   open: boolean
@@ -20,18 +22,62 @@ interface Props {
 }
 
 const PreniumModal = ({ open, setOpen }: Props) => {
-  const { /* connected, chainID, */ address /* , connect */ } = useWeb3Context()
+  const { address } = useWeb3Context()
   const dispatch = useDispatch<any>()
-  const userModule = useSelector((state: any) => state.userModule)
-  const { user } = userModule
 
+  const [remainedTime, setRemainedTime] = useState(0)
+  const [isCooldownStarted, setIsCooldownStarted] = useState(false)
+  const [btnType, setBtnType] = useState("buy");
+  useEffect(() => {
+    if (open === true) {
+      checkCooldown();
+    }
+  }, [open])
+  useEffect(() => {
+    if (isCooldownStarted) {
+      var cooldownInterval = setInterval(() => {
+        setRemainedTime((prevTime) => {
+          if (prevTime === 1) {
+            setBtnType('buy')
+          }
+          if (prevTime === 0) {
+            checkCooldown();
+            clearInterval(cooldownInterval)
+            setIsCooldownStarted(false)
+            return 0
+          }
+          return prevTime - 1
+        })
+      }, 1000)
+    }
+
+    return () => clearInterval(cooldownInterval)
+  }, [isCooldownStarted])
+  const checkCooldown = () => {
+    checkPremiumCooldown(address).then((res: any) => {
+      let cooldownSec = res.data.time;
+      if (cooldownSec === 9999999) {
+        setBtnType("buy");
+      }
+      else if (cooldownSec <= 0) {
+        setBtnType("buy");
+      }
+      else {
+        setRemainedTime(cooldownSec);
+        setBtnType("");
+        setIsCooldownStarted(true)
+      }
+    })
+  }
   const handleOpen = () => setOpen(true)
   const handleClose = () => setOpen(false)
   const onBuyPremium = async () => {
-    handleClose()
+    if (remainedTime > 0) {
+      alert("Already bought premium!")
+      return;
+    }
     try {
       dispatch(onShowAlert('Pease wait while confirming', 'info'))
-
       const transaction = await sendToken(
         address,
         ADMIN_WALLET_ADDRESS[chainId],
@@ -43,6 +89,8 @@ const PreniumModal = ({ open, setOpen }: Props) => {
           PREMIUM_COST,
           transaction.transactionHash,
           (res: any) => {
+            setRemainedTime(2592000);
+            setIsCooldownStarted(true)
             if (res.success) {
               dispatch(onShowAlert('Buy permium successfully', 'success'))
             } else {
@@ -52,10 +100,8 @@ const PreniumModal = ({ open, setOpen }: Props) => {
         ),
       )
     } catch (e) {
-      // console.log(e);
     }
   }
-
   const style = {
     background: "url(/assets/images/set.png)",
     backgroundSize: '100% 100%',
@@ -95,14 +141,14 @@ const PreniumModal = ({ open, setOpen }: Props) => {
                   className='text-white border-none w-[200px] h-11'
                   style={{
                     background: "url(/assets/images/big-button.png)",
-                    backgroundSize: 'cover',
+                    backgroundSize: '100% 100%',
                     backgroundRepeat: 'no-repeat',
                     fontFamily: 'Anime Ace',
                   }}
                   onClick={(e) => onBuyPremium()}
                 >
                   <div className='text-white'>
-                    buy
+                    {remainedTime > 0 ? convertSecToDHMS(remainedTime) : "buy"}
                   </div>
                 </Button>
                 <h2 className="font-bold text-[20px] mb-0 mt-4 text-white upgrade-label text-center" style={{ fontFamily: 'Anime Ace' }}>

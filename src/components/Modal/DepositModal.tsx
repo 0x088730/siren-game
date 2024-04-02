@@ -6,10 +6,9 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import {
   ADMIN_WALLET_ADDRESS,
-  FEE_WALLET_ADDRESS,
   chainId,
 } from '../../hooks/constants'
-import { deposit, payFee, sendToken } from '../../hooks/hook'
+import { deposit, payFee} from '../../hooks/hook'
 import { useWeb3Context } from '../../hooks/web3Context'
 import {
   checkBounsCoolDown,
@@ -20,10 +19,9 @@ import {
   withdrawRequest,
 } from '../../store/user/actions'
 import { onShowAlert } from '../../store/utiles/actions'
-import { checkPremium } from '../../utils/checkPremium'
-import { getBcsPrice, getWithdrewSirenAmount } from '../../utils/user'
 import { convertSecToHMS } from '../../utils/timer'
 import { getPrice } from '../getPrice'
+import { global } from '../../common/global'
 
 interface Props {
   open: boolean
@@ -34,6 +32,7 @@ interface Props {
   onExchangeEgg: any
   csc: any
   setCsc: any
+  premiumStatus: any
 }
 
 const DepositModal = ({
@@ -44,7 +43,8 @@ const DepositModal = ({
   onExchange,
   onExchangeEgg,
   csc,
-  setCsc
+  setCsc,
+  premiumStatus
 }: Props) => {
   const { connected, chainID, address, connect } = useWeb3Context()
   const { user } = useSelector((state: any) => state.userModule)
@@ -52,9 +52,8 @@ const DepositModal = ({
 
   const handleOpen = () => setOpen(true)
   const handleClose = () => setOpen(false)
-  let [nowPrice, setNowPrice] = useState(0.12);
   // let nowPrice = 0.13;
-  const [cscAmount, setcscAmount] = useState(320)
+  const [cscAmount, setcscAmount] = useState(220)
   const [cscTokenAmount, setCscTokenAmount] = useState(0)
   const [remainedTime, setRemainedTime] = useState(0);
   const [isCooldownStarted, setIsCooldownStarted] = useState(false)
@@ -62,7 +61,6 @@ const DepositModal = ({
 
   const [remainTimeWithdraw, setRemainTimeWithdraw] = useState(0);
   const [isCooldownStartedWithdraw, setIsCooldownStartedWithdraw] = useState(false)
-  const [premiumStatus, setPremiumStatus] = useState(false);
   const [feeStatus, setFeeStatus] = useState(false);
 
   useEffect(() => {
@@ -94,26 +92,26 @@ const DepositModal = ({
 
         }),
       )
-      const time = new Date(user.premium)
-      if (time.getTime() > 0) setPremiumStatus(true);
-      else setPremiumStatus(false);
     }
   }, [open])
 
   useEffect(() => {
     if (open === true) {
-      getPrice().then(res => {
-        if (res === false) return;
-        setNowPrice(res);
-      })
-      var priceInterval = setInterval(() => {
+      if (global.nowPrice === 0.12) {
         getPrice().then(res => {
           if (res === false) return;
-          setNowPrice(res);
+          global.nowPrice = res;
         })
-      }, 30000)
+      } else {
+        var priceInterval = setInterval(() => {
+          getPrice().then(res => {
+            if (res === false) return;
+            global.nowPrice = res;
+          })
+        }, 60000)
 
-      return () => clearInterval(priceInterval)
+        return () => clearInterval(priceInterval)
+      }
     }
   }, [open])
 
@@ -163,7 +161,7 @@ const DepositModal = ({
   const onChangeAmount = (e: any) => {
     e.preventDefault()
     if (e.target.value < 0) {
-      setcscAmount(320)
+      setcscAmount(220)
       return
     }
     setcscAmount(e.target.value)
@@ -189,8 +187,8 @@ const DepositModal = ({
   }
 
   const onDeposit = async () => {
-    if (cscAmount < 320) {
-      alert("minimal withdraw amount is 320CSC");
+    if (cscAmount < 220) {
+      alert("minimal withdraw amount is 220CSC");
       return
     }
     setPendingStatus(1)
@@ -241,11 +239,11 @@ const DepositModal = ({
       alert("please wait...");
       return
     }
-    if (nowPrice <= 0) {
+    if (global.nowPrice <= 0) {
       alert("Invalid token price!");
       return
     }
-    let amount = premiumStatus === true ? Math.floor(20 / nowPrice) : Math.floor(3 / nowPrice)
+    let amount = premiumStatus === true ? Math.floor(20 / global.nowPrice) : Math.floor(3 / global.nowPrice)
     if (cscTokenAmount > amount || cscTokenAmount <= 0) {
       alert("Please input correct CSC amount!");
       return
@@ -264,7 +262,7 @@ const DepositModal = ({
           return;
         }
         dispatch(
-          withdrawRequest(address, cscTokenAmount, nowPrice, res.transactionHash, (res: any) => {
+          withdrawRequest(address, cscTokenAmount, global.nowPrice, res.transactionHash, (res: any) => {
             if (res.data === false) {
               setFeeStatus(false);
               setPendingStatus(0)
@@ -327,14 +325,14 @@ const DepositModal = ({
                 <div className='h-12'>
                   <div className='flex justify-center items-center bg-[#111111]/[0.7] p-2 rounded-md text-[12px] font-light'>
                     <img draggable="false" src="assets/images/alert.png" className='w-[30px]' />
-                    <p>MIN DEPOSIT: <span className='text-[#ffe86b]'>320</span> CSC</p>
+                    <p>MIN DEPOSIT: <span className='text-[#ffe86b]'>220</span> CSC</p>
                   </div>
                 </div>
                 <div className='flex flex-col justify-center items-center gap-y-2'>
                   <div className='flex justify-between items-center w-full'>
                     <div>MIN:</div>
                     <div className='flex justify-center items-center'>
-                      <img alt="" draggable="false" className='w-[20px] mx-2' src="/images/cryptoIcon.png" />320 CSC
+                      <img alt="" draggable="false" className='w-[20px] mx-2' src="/images/cryptoIcon.png" />220 CSC
                     </div>
                   </div>
                   <input className='border-black border-2 w-full rounded-md bg-[#6F5241] text-white'
@@ -370,7 +368,7 @@ const DepositModal = ({
                   <div className='flex justify-between items-center w-full'>
                     <div>ANAILABLE:</div>
                     <div className='flex justify-center items-center'>
-                      <img alt="" draggable="false" className='w-[20px] mx-2' src="/images/cryptoIcon.png" />{premiumStatus ? `${Math.floor(20 / nowPrice)} CSC` : `${Math.floor(3 / nowPrice)} CSC`}
+                      <img alt="" draggable="false" className='w-[20px] mx-2' src="/images/cryptoIcon.png" />{premiumStatus ? `${Math.floor(20 / global.nowPrice)} CSC` : `${Math.floor(3 / global.nowPrice)} CSC`}
                     </div>
                   </div>
                   <input className='border-black border-2 w-full rounded-md bg-[#6F5241] text-white'
@@ -395,7 +393,7 @@ const DepositModal = ({
                 <div className={`${premiumStatus ? "hidden" : ''} absolute bottom-4 flex justify-around items-center w-full`}>
                   <div>ANAILABLE WITH PREM:</div>
                   <div className='flex justify-center items-center'>
-                    <img alt="" draggable="false" className='w-[20px] mx-2' src="/images/cryptoIcon.png" />{`${Math.floor(20 / nowPrice)} CSC`}
+                    <img alt="" draggable="false" className='w-[20px] mx-2' src="/images/cryptoIcon.png" />{`${Math.floor(20 / global.nowPrice)} CSC`}
                   </div>
                 </div>
               </div>

@@ -21,16 +21,14 @@ import {
   swapEggs,
   swapResources,
   upgradeWall,
-  checkCooldown
+  checkCooldown,
+  checkPremiumCooldown
 } from '../../store/user/actions'
-import { showMinutes } from '../../utils/timer'
 
 import styles from './Main.module.scss'
 import UpgradeWallModal from '../../components/Header/UpgradeWallModal'
 import { global } from '../../common/global'
 import RockModal from '../../components/Header/RockModal'
-import { NONE } from 'phaser'
-import { transform } from 'typescript'
 import store from '../../store'
 import { setLoadingStatus } from '../../common/state/game/reducer'
 import Web3 from 'web3'
@@ -52,7 +50,7 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
   const [resource, setResource] = useState(userModule.user.resource)
   const [wallLevelState, setWallLevelState] = useState(userModule.user.wall)
   const [csc, setCsc] = useState(userModule.user.cscTokenAmount)
-
+  const [premiumStatus, setPremiumStatus] = useState(false);
   const [openInstruction, setOpenInstruction] = useState(false)
   const [windowSize, setWindowSize] = useState({
     width: window.innerWidth,
@@ -65,6 +63,19 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
     }
 
     document.body.style.backgroundImage = "url(https://iksqvifj67dwchip.public.blob.vercel-storage.com/background/background-ZmVO9VcRcA8nQrT8efb1hyvB5ICiTw.jpg)";
+
+    checkPremiumCooldown(address).then((res: any) => {
+      let cooldownSec = res.data.time;
+      if (cooldownSec === 9999999) {
+        setPremiumStatus(false);
+      }
+      else if (cooldownSec <= 0) {
+        setPremiumStatus(false);
+      }
+      else {
+        setPremiumStatus(true);
+      }
+    })
 
     setTimeout(() => {
       if (address && wallLevelState !== 0) store.dispatch(setLoadingStatus(false));
@@ -163,8 +174,7 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
   }, [selectedIndex])
 
   useEffect(() => {
-    const time = new Date(user.premium)
-    if (time.getTime() > 0) setWallHP(Math.floor((6 + wallLevelState * 2) * 1.2));
+    if (premiumStatus === true) setWallHP(Math.floor((6 + wallLevelState * 2) * 1.2));
     else setWallHP(Math.floor(6 + wallLevelState * 2));
   }, [user, wallLevelState])
 
@@ -570,6 +580,7 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
               onExchangeEgg={onExchangeEgg}
               csc={csc}
               setCsc={setCsc}
+              premiumStatus={premiumStatus}
             />
             <MiningModal
               open={openMining}

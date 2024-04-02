@@ -508,6 +508,13 @@ export async function getWithdrawAmount(address: string) {
   }
 }
 
+export async function checkPremiumCooldown(walletAddress: string) {
+  const res = await api(`user/checkPremiumCooldown`, `post`, {
+    walletAddress,
+  })
+  return res;
+}
+
 export async function sectionManage(walletAddress: string, sectionNum: number) {
   const res = await api(`user/sectionManage`, `post`, {
     walletAddress,

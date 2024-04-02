@@ -19,21 +19,24 @@ export const HeaderComponent = ({ onModalShow }: HeaderProps) => {
   )
   const { connected, chainID, address, connect } = useWeb3Context()
   const [userRef, setUserRef] = useState('')
-  let [nowPrice, setNowPrice] = useState(0.12);
+
   useEffect(() => {
     if (address !== "") {
-      getPrice().then(res => {
-        if (res === false) return;
-        setNowPrice(res);
-      })
-      var priceInterval = setInterval(() => {
+      if (global.nowPrice === 0.12) {
         getPrice().then(res => {
           if (res === false) return;
-          setNowPrice(res);
+          global.nowPrice = res;
         })
-      }, 30000)
+      } else {
+        var priceInterval = setInterval(() => {
+          getPrice().then(res => {
+            if (res === false) return;
+            global.nowPrice = res;
+          })
+        }, 60000)
 
-      return () => clearInterval(priceInterval)
+        return () => clearInterval(priceInterval)
+      }
     }
   }, [])
   useEffect(() => {
@@ -67,7 +70,7 @@ export const HeaderComponent = ({ onModalShow }: HeaderProps) => {
               <img draggable="false" src='assets/images/discord.webp' alt='' className='cursor-pointer' onClick={() => goUrl("https://discord.gg/9FRAyNg9Qh")} />
             </div>
             <div className='flex-mid text-white text-[16px]'>
-              <img alt="" draggable="false" className='w-[23px] mx-1' src="/images/cryptoIcon.png" />{`CSC PRICE $${nowPrice.toFixed(2)}(CHART)`}
+              <img alt="" draggable="false" className='w-[23px] mx-1' src="/images/cryptoIcon.png" />{`CSC PRICE $${global.nowPrice.toFixed(2)}(CHART)`}
             </div>
           </div>
           <div className="flex p-4 items-center">

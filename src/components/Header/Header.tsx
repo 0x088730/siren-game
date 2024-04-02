@@ -1,30 +1,14 @@
-// import { chainData } from "../../hooks/data";
-// import Jazzicon, { jsNumberForAddress } from 'react-jazzicon'
-import { Box, Button } from '@mui/material'
-import React, { useState, useEffect } from 'react'
-// import ExchangeModal from "./ExchangeModal";
+import { Box} from '@mui/material'
+import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import {
-  Link,
-  /* Navigate, NavLink, */ useNavigate,
-  useSearchParams,
-} from 'react-router-dom'
-
-import {
-  /* changeNetwork, */ getTransaction /* , sendToken */,
-} from '../../hooks/hook'
+import { Link, useSearchParams,} from 'react-router-dom'
 import { useWeb3Context } from '../../hooks/web3Context'
-import { /* buyPremium,  */ getResources } from '../../store/user/actions'
-// import { ADMIN_WALLET_ADDRESS, chainId, PREMIUM_COST } from "../../hook/constants";
+import { getResources } from '../../store/user/actions'
 import { onShowAlert } from '../../store/utiles/actions'
 import { checkPremium } from '../../utils/checkPremium'
-import { /* formatDecimal,  */ shortAddress } from '../../utils/tools'
-import AccountIcon from '../AccountIcon/AccountIcon'
+import { shortAddress } from '../../utils/tools'
 import PreniumModal from '../Modal/PremiumModal'
-
 import styles from './Header.module.scss'
-import HeaderModal from './HeaderModal'
-import { ClientRequest } from 'http'
 import InforModal from './InforModal'
 
 interface HeaderProps {
@@ -36,7 +20,6 @@ interface HeaderProps {
 }
 
 const Header = ({ showAccount, setShowAccount, csc, eggs, resource }: HeaderProps) => {
-  const navigate = useNavigate()
   const [searchParams] = useSearchParams()
   const ref = searchParams.get('ref')
 

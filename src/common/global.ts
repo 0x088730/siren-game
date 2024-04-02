@@ -59,6 +59,7 @@ export interface UserProfile {
   sectionStatus: { section_2: boolean, section_4: boolean, time_2: number, time_4: number }
   referralCode: string
   referralCodeStatua: boolean
+  nowPrice: number
 }
 
 export let global: UserProfile = {
@@ -112,7 +113,8 @@ export let global: UserProfile = {
   attacking: false,
   sectionStatus: { section_2: true, section_4: true, time_2: 0, time_4: 0 },
   referralCode: "",
-  referralCodeStatua: false
+  referralCodeStatua: false,
+  nowPrice: 0.12
 }
 
 export const changeItem = (resp: any) => {
