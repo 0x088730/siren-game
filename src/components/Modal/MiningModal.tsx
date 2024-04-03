@@ -51,8 +51,8 @@ const MiningModal = ({
   const title = [
     { level: "LEVEL 1:", detail1: "9 CSC PER 12H", detail2: "CLAIM 9 CSC EACH 12H", price: "PRICE: 500 CSC" },
     { level: "LEVEL 1:", detail1: "9 CSC PER 12H", detail2: "CLAIM 9 CSC EACH 12H", price: "PRICE: 500 CSC" },
-    { level: "LEVEL 2:", detail1: "25 CSC PER 12H", detail2: "CLAIM 25 CSC EACH 12H", price: "PRICE: 950 CSC" },
-    { level: "LEVEL 3:", detail1: "50 CSC PER 12H", detail2: "CLAIM 50 CSC EACH 12H", price: "PRICE: 1850 CSC" },
+    { level: "LEVEL 2:", detail1: "25 CSC PER 12H", detail2: "CLAIM 25 CSC EACH 12H", price: "PRICE: 900 CSC" },
+    { level: "LEVEL 3:", detail1: "50 CSC PER 12H", detail2: "CLAIM 50 CSC EACH 12H", price: "PRICE: 1750 CSC" },
   ]
   const { connected, chainID, address, connect } = useWeb3Context()
   const { user } = useSelector((state: any) => state.userModule)
@@ -137,11 +137,11 @@ const MiningModal = ({
       return
     }
     if (btnType === 'Upgrade') {
-      if (levelState === 1 && csc < 950) {
+      if (levelState === 1 && csc < 900) {
         alert("you don't have eough csc")
         return;
       }
-      if (levelState === 2 && csc < 1850) {
+      if (levelState === 2 && csc < 1750) {
         alert("you don't have eough csc");
         return;
       }
@@ -231,11 +231,11 @@ const MiningModal = ({
       alert("you don't have eough csc")
       return;
     }
-    if (levelState === 1 && csc < 950) {
+    if (levelState === 1 && csc < 900) {
       alert("you don't have eough csc")
       return;
     }
-    if (levelState === 2 && csc < 1850) {
+    if (levelState === 2 && csc < 1750) {
       alert("you don't have eough csc");
       return;
     }
@@ -243,6 +243,7 @@ const MiningModal = ({
       dispatch(buyLevel(address, (res: any) => {
         if (res.success === true) {
           if (res.data === false) {
+            alert(res.message)
             return
           }
           else {
@@ -403,9 +404,9 @@ const MiningModal = ({
                   </div>
                 ))}
               </div>
-              <div className='flex justify-center items-center bg-[#111111]/[0.9] p-1 rounded-md'>
+              <div className={`flex justify-center items-center bg-[#111111]/[0.9] p-1 rounded-md ${levelState === 0 || levelState === 3 ? "hidden" : ""}`}>
                 <img draggable="false" src="assets/images/alert.png" style={{ width: '30px', height: 'auto' }} />
-                <p>Lvl{levelState === 1 ? 5 : levelState === 2 ? 10 : ''}+ character required for upgrade.</p>
+                <p>Lvl{levelState === 1 ? "3" : levelState === 2 ? "5" : ''}+ character required for upgrade.</p>
               </div>
             </div>
           }
