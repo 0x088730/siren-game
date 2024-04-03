@@ -114,7 +114,7 @@ export let global: UserProfile = {
   sectionStatus: { section_2: true, section_4: true, time_2: 0, time_4: 0 },
   referralCode: "",
   referralCodeStatua: false,
-  nowPrice: 0.12
+  nowPrice: 0.13
 }
 
 export const changeItem = (resp: any) => {

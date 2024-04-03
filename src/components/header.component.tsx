@@ -22,7 +22,7 @@ export const HeaderComponent = ({ onModalShow }: HeaderProps) => {
 
   useEffect(() => {
     if (address !== "") {
-      if (global.nowPrice === 0.12) {
+      if (global.nowPrice === 0.13) {
         getPrice().then(res => {
           if (res === false) return;
           global.nowPrice = res;
