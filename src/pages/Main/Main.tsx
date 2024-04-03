@@ -148,9 +148,6 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
   const [selectedIndex, setSelectedIndex] = useState(0)
 
   const showModal = (index: any) => {
-    if (csc < 20) {
-      return
-    }
     setSelectedIndex(index)
     setOpenRock(true)
   }
@@ -573,6 +570,7 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
               openRock={openRock}
               setOpen={setOpenRock}
               selectedIndex={selectedIndex}
+              csc={csc}
               setCsc={setCsc}
               setResource={setResource}
             />

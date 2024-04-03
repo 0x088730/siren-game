@@ -11,6 +11,7 @@ interface Props {
   openRock: any,
   setOpen: any,
   selectedIndex: any,
+  csc: any,
   setCsc: any,
   setResource: any
 }
@@ -19,6 +20,7 @@ const RockModal = ({
   openRock,
   setOpen,
   selectedIndex,
+  csc,
   setCsc,
   setResource
 }: Props) => {
@@ -70,6 +72,10 @@ const RockModal = ({
   }, [isCooldownStarted])
 
   const onRockStart = () => {
+    if (csc < 2) {
+      alert("Not enough csc token!")
+      return;
+    }
     dispatch(
       stakeDiamond(address, selectedIndex, 1, (res: any) => {
         if (res.success === false) return

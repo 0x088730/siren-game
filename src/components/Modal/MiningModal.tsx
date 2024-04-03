@@ -227,6 +227,10 @@ const MiningModal = ({
     if (remainedTime > 0) {
       return
     }
+    if (levelState === 0 && csc < 500) {
+      alert("you don't have eough csc")
+      return;
+    }
     if (levelState === 1 && csc < 950) {
       alert("you don't have eough csc")
       return;
@@ -271,7 +275,6 @@ const MiningModal = ({
 
   }
   const onUpgradeTab = () => {
-    if (levelState === 0) return;
     if (remainedTime > 0 || btnType === 'Claim') return
     setBtnType('Upgrade')
     setUpgradeTab(true)
@@ -544,10 +547,10 @@ const MiningModal = ({
 
           {/* </Box> */}
           <Box className='flex justify-center absolute -bottom-2 w-full'>
-            <Button className='w-48 p-0' onClick={!upgradeTab && levelState !== 0 ? onUpgradeTab : onFarmTab}>
+            <Button className='w-48 p-0' onClick={!upgradeTab ? onUpgradeTab : onFarmTab}>
               <img alt="" draggable="false" src="/assets/images/tabbutton.png" />
               <p className="absolute font-bold text-[14px] text-center text-[#ffffff]" style={{ fontFamily: 'Anime Ace' }}>
-                {!upgradeTab && levelState !== 0 ? "UPGRADE" : "FARM"}
+                {upgradeTab ? "FARM" : "UPGRADE"}
               </p>
             </Button>
           </Box>
