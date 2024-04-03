@@ -24,12 +24,7 @@ interface Props {
   open: boolean
   setOpen: any
   csc: number
-  resource: any
   setCsc: any
-  setEggs: any
-  egg: any
-  onExchange: any
-  onExchangeEgg: any
   levelState: number
   setLevelState: any
 }
@@ -38,12 +33,7 @@ const MiningModal = ({
   open,
   setOpen,
   csc,
-  resource,
   setCsc,
-  setEggs,
-  egg,
-  onExchange,
-  onExchangeEgg,
   levelState,
   setLevelState
 }: Props) => {
@@ -410,143 +400,6 @@ const MiningModal = ({
               </div>
             </div>
           }
-
-          {/* <Box
-            sx={{
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              width: '100%',
-              height: '100%',
-            }}
-          >
-            <Box>
-
-            </Box>
-            <Grid
-              container
-              spacing={3}
-              sx={{
-                padding: '8% 6% 20% 8%',
-                width: '100%',
-                height: '36%',
-                margin: 0,
-                justifyContent: 'center',
-              }}
-            > */}
-          {/* {upgradeTab ?
-                <>
-                  <Grid item xs={4} sx={{ padding: '0 !important' }}>
-                    <Stack
-                      sx={{
-                        fontFamily: 'Anime Ace',
-                        fontSize: upgradeTab ? '14px' : '20px',
-                        width: upgradeTab ? '100%' : '200%',
-                        marginLeft: upgradeTab ? '0px' : "-50%",
-                        fontWeight: 'bold',
-                        color: '#e7e1e1',
-                        textAlign: 'center',
-                      }}
-                    >
-                      <p>{title[1].level}</p>
-                      <div className='flex justify-center'><img src='assets/images/cryptoIcon.png' width={20}></img><p>{title[1].detail1}</p></div>
-                      <p>{title[1].price}</p>
-                    </Stack>
-                  </Grid> */}
-          {/* <Grid item xs={4} sx={{ padding: '0 !important' }}>
-                    <Stack
-                      sx={{
-                        fontFamily: 'Anime Ace',
-                        fontSize: upgradeTab ? '14px' : '20px',
-                        width: upgradeTab ? '100%' : '200%',
-                        marginLeft: upgradeTab ? '0px' : "-50%",
-                        fontWeight: 'bold',
-                        color: '#e7e1e1',
-                        textAlign: 'center',
-                      }}
-                    >
-                      <p>{title[2].level}</p>
-                      <div className='flex justify-center'><img src='assets/images/cryptoIcon.png' width={20}></img><p>{title[2].detail1}</p></div> */}
-          {/* <p>{title[2].detail2}</p> */}
-          {/* <p>{title[2].price}</p>
-                    </Stack>
-                  </Grid>
-                  <Grid item xs={4} sx={{ padding: '0 !important' }}>
-                    <Stack
-                      sx={{
-                        fontFamily: 'Anime Ace',
-                        fontSize: upgradeTab ? '14px' : '20px',
-                        width: upgradeTab ? '100%' : '200%',
-                        marginLeft: upgradeTab ? '0px' : "-50%",
-                        fontWeight: 'bold',
-                        color: '#e7e1e1',
-                        textAlign: 'center',
-                      }}
-                    >
-                      <p>{title[3].level}</p>
-                      <div className='flex justify-center'><img src='assets/images/cryptoIcon.png' width={20}></img><p>{title[3].detail1}</p></div> */}
-          {/* <p>{title[3].detail2}</p> */}
-          {/* <p>{title[3].price}</p>
-                    </Stack>
-                  </Grid>
-                </>
-                :
-                <>
-                  <Grid item xs={4} sx={{ padding: '0 !important' }}>
-                    <Stack
-                      sx={{
-                        fontFamily: 'Anime Ace',
-                        fontSize: '20px',
-                        width: '200%',
-                        marginLeft: "-50%",
-                        fontWeight: 'bold',
-                        color: '#e7e1e1',
-                        textAlign: 'center',
-                      }}
-                    >
-                      <p>{title[levelState].level}</p>
-                      <div className='flex justify-center'><img src='assets/images/cryptoIcon.png' width={upgradeTab ? 20 : 30}></img><p>{title[levelState].detail1}</p></div> */}
-          {/* <p>{title[levelState].detail2}</p> */}
-          {/* </Stack>
-                  </Grid>
-                </>
-              }
-            </Grid>
-            <Box
-              sx={{
-                display: 'flex',
-                justifyContent: 'space-evenly',
-              }}
-            >{(levelState !== 0 || upgradeTab === false) &&
-              <Button
-                onClick={() => onButtonClick()}
-                sx={{
-                  width: '200px',
-                }}
-              >
-                <img alt="" src="/assets/images/big-button.png" />
-                <p className='absolute text-[14px] text-center text-[#e7e1e1]' style={{ fontFamily: 'Anime Ace' }}>
-                  {(remainedTime === 0 ? btnType : ((remainedTime <= halfRemainTime && halfGet === false) ? btnType : convertSecToHMS(remainedTime)))}
-                </p>
-              </Button>
-              }
-            </Box>
-
-            {upgradeTab ?
-              <div className='text-[14px] font-bold text-[#e7e1e1] flex justify-center' style={{ fontFamily: 'Anime Ace' }}>
-                <img src="assets/images/alert.png" style={{ width: '30px', height: 'auto' }} />
-                <p>Lvl{levelState === 1 ? 5 : levelState === 2 ? 10 : ''}+ character required for upgrade.</p>
-              </div> : null
-            }
-
-            {!upgradeTab && btnType === "Buy" ?
-              <div className='text-[14px] font-bold text-[#e7e1e1] text-center' style={{ fontFamily: 'Anime Ace' }}>
-                <p>{title[levelState].price}</p>
-              </div> : null
-            } */}
-
-
-          {/* </Box> */}
           <Box className='flex justify-center absolute -bottom-2 w-full'>
             <Button className='w-48 p-0' onClick={!upgradeTab ? onUpgradeTab : onFarmTab}>
               <img alt="" draggable="false" src="/assets/images/tabbutton.png" />

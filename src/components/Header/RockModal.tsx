@@ -13,7 +13,7 @@ interface Props {
   selectedIndex: any,
   csc: any,
   setCsc: any,
-  setResource: any
+  setWater: any
 }
 
 const RockModal = ({
@@ -22,9 +22,9 @@ const RockModal = ({
   selectedIndex,
   csc,
   setCsc,
-  setResource
+  setWater
 }: Props) => {
-  const { connected, chainID, address, connect } = useWeb3Context()
+  const { address } = useWeb3Context()
   const dispatch = useDispatch<any>()
   const [remainedTime, setRemainedTime] = useState(0)
   const [btnType, setBtnType] = React.useState('Start')
@@ -100,7 +100,7 @@ const RockModal = ({
                 alert(res.message)
                 return;
               }
-              setResource(res.data.resource)
+              setWater(res.data.water)
               setBtnType("Start")
             }),
           )

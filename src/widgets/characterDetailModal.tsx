@@ -19,18 +19,7 @@ interface Props {
 const CharacterDetailModal = ({ openCharacter, setOpenCharacter, openCharacterInfo, setOpenCharacterInfo, address }: Props) => {
     const characterImage = ["1", "2", "3", "4"];
     const [selectCharacter, setSelectCharacter] = useState();
-    const style = {
-        position: 'absolute' as const,
-        top: '50%',
-        left: '50%',
-        transform: 'translate(-50%, -50%)',
-        width: 600,
-        height: 600,
-        boxShadow: 24,
-        textAlign: 'center',
-        p: 2,
-        pt: 1,
-    }
+    const style = { boxShadow: 24, }
     useEffect(() => {
         if (address !== "" && address !== null && address !== undefined) {
             getProfile(address, global.currentCharacterName)
@@ -52,7 +41,7 @@ const CharacterDetailModal = ({ openCharacter, setOpenCharacter, openCharacterIn
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
             >
-                <Box sx={style} className="w-[450px]" style={{ backgroundImage: "url(assets/images/set2.png)", backgroundSize: 'cover' }}>
+                <Box sx={style} className="absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%] w-[600px] h-[600px] text-center p-2 pt-1" style={{ backgroundImage: "url(assets/images/set2.png)", backgroundSize: 'cover' }}>
                     <img
                         alt=""
                         src="/images/support/support_md_close_btn.png"

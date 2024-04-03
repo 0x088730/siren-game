@@ -26,10 +26,6 @@ import { global } from '../../common/global'
 interface Props {
   open: boolean
   setOpen: any
-  resource: any
-  egg: any
-  onExchange: any
-  onExchangeEgg: any
   csc: any
   setCsc: any
   premiumStatus: any
@@ -38,10 +34,6 @@ interface Props {
 const DepositModal = ({
   open,
   setOpen,
-  resource,
-  egg,
-  onExchange,
-  onExchangeEgg,
   csc,
   setCsc,
   premiumStatus

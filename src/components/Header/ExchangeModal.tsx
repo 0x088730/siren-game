@@ -20,28 +20,26 @@ interface Props {
   open: any
   setOpen: any
   csc: any
-  egg: any
+  resource: any
   setCsc: any
-  setEgg: any
+  setResource: any
 }
 
 const ExchangeModal = ({
   open,
   setOpen,
   csc,
-  egg,
+  resource,
   setCsc,
-  setEgg,
+  setResource,
 }: Props) => {
-  const { connected, chainID, address, connect } = useWeb3Context()
-  const count = [0, 1, 2];
+  const { address, connect } = useWeb3Context()
 
-  const userModule = useSelector((state: any) => state.userModule)
   const [openCharacterChoose, setOpenChraracterChoose] = useState(false)
   const [selectedCharacterIndex, setSelectedCharacterIndex] = useState(-1)
   const [selectedCharacterList, setSelectedCharacterList] = useState([-1, -1, -1])
   const [claimBar, setClaimBar] = useState({
-    siren: -1, egg: -1, claim: true
+    csc: -1, res: -1, claim: true
   })
   const [selectedCharacter, setSelectedCharacter] = useState(-1)
 
@@ -77,8 +75,8 @@ const ExchangeModal = ({
           setAvatar(["", "", ""])
           setSelectedCharacterList([-1, -1, -1])
           setCsc(resp.data.csc);
-          setEgg(resp.data.egg);
-          setClaimBar({ siren: -1, egg: -1, claim: true })
+          setResource(resp.data.resource);
+          setClaimBar({ csc: -1, res: -1, claim: true })
         }),
       )
     }
@@ -125,8 +123,6 @@ const ExchangeModal = ({
             )
           }
           if (prevTime === 0) {
-
-
             return 0
           }
           return prevTime - 1
@@ -171,12 +167,10 @@ const ExchangeModal = ({
     if (csc < 100) {
       alert("you need more csc")
       return
-
     }
     if (upgradeLevel === 0 && global.wall < 2) {
       alert("you have to reach level 2 of wall")
       return
-
     }
     else if (upgradeLevel === 1 && global.wall < 3) {
       alert("you have to reach level 3 of wall")
@@ -328,15 +322,15 @@ const ExchangeModal = ({
                   <div className='relative w-24 h-24 flex justify-center items-center'>
                     <img alt="" draggable="false" src="assets/images/roomBtn.png" className='w-full h-full' />
                     <p className='absolute text-center'>
-                      {claimBar.siren === -1 ? '5-15' : claimBar.siren !== -2 ? claimBar.siren : ''}<br />
-                      {claimBar.siren !== -2 ? 'CSC' : ""}
+                      {claimBar.csc === -1 ? '5-15' : claimBar.csc !== -2 ? claimBar.csc : ''}<br />
+                      {claimBar.csc !== -2 ? 'CSC' : ""}
                     </p>
                   </div>
                   <div className='relative w-24 h-24 flex justify-center items-center'>
                     <img alt="" draggable="false" src="assets/images/roomBtn.png" className='w-full h-full' />
                     <p className='absolute text-center'>
-                      {claimBar.egg === -1 ? '20-40' : claimBar.egg !== -2 ? claimBar.egg : ''}<br />
-                      {claimBar.egg !== -2 ? 'RES' : ""}
+                      {claimBar.res === -1 ? '20-40' : claimBar.res !== -2 ? claimBar.res : ''}<br />
+                      {claimBar.res !== -2 ? 'RES' : ""}
                     </p>
                   </div>
                   <div className='relative w-24 h-24 flex justify-center items-center'>
@@ -363,258 +357,6 @@ const ExchangeModal = ({
               </div>
             </div>
           </div>
-          {/* <Box
-            sx={{
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              width: '100%',
-              height: '100%',
-            }}
-          >
-            <Grid
-              container
-              spacing={2}
-              sx={{
-                padding: '0 6%',
-                width: '100%',
-                height: '40%',
-                margin: 0,
-              }}
-            >
-              <Grid
-                item
-                xs={4}
-                sx={{
-                  padding: '0 !important',
-                  position: 'relative',
-                  height: '100%',
-                  marginLeft: 'auto',
-                  marginRight: 'auto',
-                }}
-                onClick={() => {
-                  setSelectedCharacterIndex(0)
-                  setOpenChraracterChoose(true)
-                }}
-              >
-                <img
-                  src="/assets/images/character_bar.png"
-                  alt=""
-                  className='relative h-full mx-auto p-[10px]'
-                />
-
-                {selectedCharacterList[0] !== -1 && <img
-                  // src={`/assets/images/characters/avatar/${selectedCharacterList[0]}.png`}
-                  src={avatar}
-                  alt=""
-                  className='absolute top-[-15px] mx-auto p-[30%] z-20 w-[120%] h-[115%]'
-                />}
-              </Grid>
-              <Grid
-                item
-                xs={4}
-                sx={{
-                  padding: '0 !important',
-                  position: 'relative',
-                  height: '100%',
-                  marginLeft: 'auto',
-                  marginRight: 'auto',
-                }}
-                onClick={() => {
-                  if (upgradeLevel >= 1) {
-                    setSelectedCharacterIndex(1)
-                    setOpenChraracterChoose(true)
-                  }
-                }}
-              >
-                <img
-                  src={`/assets/images/${upgradeLevel >= 1 ? 'character_bar' : 'character_bar1'
-                    }.png`}
-                  alt=""
-                  className='relative p-[10px] h-full mx-auto'
-                />
-                {upgradeLevel >= 1 && selectedCharacterList[1] !== -1 && (
-                  <img
-                    src={`/assets/images/characters/avatar/${selectedCharacterList[1]}.png`}
-                    alt=""
-                    className='absolute top-[-15px] mx-auto p-[30%] z-20 w-[120%] h-[115%]'
-                  />
-                )}
-                {(upgradeLevel === 0 || upgradeLevel === undefined) ? (
-                  <div className='absolute text-center text-[11px] top-[50%] text-white'>
-                    <Button
-                      sx={{
-                        position: 'relative',
-                        padding: '10px',
-                        height: '100%',
-                        marginLeft: 'auto',
-                        marginRight: 'auto',
-                      }}
-                    >
-                      <img src="/assets/images/upgrade btn.png" alt="" />
-                      <p className='absolute text-[15px] text-center text-[#e7e1e1]' style={{ fontFamily: 'Anime Ace' }} onClick={onUpgradeLevel}>Upgrade </p>
-                    </Button>
-                    <p>100 CSC</p>
-                    <p>NEED 2 LVL WALL</p>
-                  </div>
-                ) : null}
-              </Grid>
-              <Grid
-                item
-                xs={4}
-                sx={{
-                  padding: '0 !important',
-                  position: 'relative',
-                  height: '100%',
-                  marginLeft: 'auto',
-                  marginRight: 'auto',
-                }}
-                onClick={() => {
-                  if (upgradeLevel >= 2) {
-                    setSelectedCharacterIndex(2)
-                    setOpenChraracterChoose(true)
-                  }
-                }}
-              >
-                <img
-                  src={`/assets/images/${upgradeLevel >= 2 ? 'character_bar' : 'character_bar1'
-                    }.png`}
-                  alt=""
-                  className='relative p-[10px] h-full mx-auto'
-                />
-                {upgradeLevel >= 2 && selectedCharacterList[2] !== -1 && (
-                  <img
-                    src={`/assets/images/characters/avatar/${selectedCharacterList[2]}.png`}
-                    alt=""
-                    className='absolute top-[-15px] mx-auto p-[30%] z-20 w-[120%] h-[115%]'
-                  />
-                )}
-                {upgradeLevel === 1 ? (
-                  <div className='text-center text-[11px] top-[50%] text-white absolute'>
-                    <Button
-                      sx={{
-                        position: 'relative',
-                        padding: '10px',
-                        height: '100%',
-                        marginLeft: 'auto',
-                        marginRight: 'auto',
-                      }}
-                    >
-                      <img src="/assets/images/upgrade btn.png" alt="" />
-                      <p className='absolute text-[15px] text-center text-[#e7e1e1]' style={{ fontFamily: 'Anime Ace' }} onClick={onUpgradeLevel}>Upgrade </p>
-                    </Button>
-                    <p>100 CSC</p>
-                    <p>NEED 3 LVL WALL</p>
-                  </div>
-                ) : null}
-              </Grid>
-            </Grid>
-            <Grid
-              container
-              spacing={2}
-              sx={{
-                padding: '0 6%',
-                width: '100%',
-                height: '20%',
-                margin: 0,
-                alignItems: 'center',
-              }}
-            >
-              <Grid
-                item
-                xs={5}
-                sx={{ padding: '0 !important', position: 'relative' }}
-              >
-                <Box sx={{ textAlign: 'center', color: 'white' }}>
-                  <p>Can Be Found:</p>
-                </Box>
-              </Grid>
-              <Grid
-                item
-                xs={7}
-                sx={{
-                  padding: '0 !important',
-                  position: 'relative',
-                  display: 'flex',
-                }}
-              >
-                <Button
-                  sx={{
-                    width: '33.33%',
-                    marginLeft: 'auto',
-                    marginRight: 'auto',
-                  }}
-                >
-                  <img src="/assets/images/roomBtn.png" alt="" />
-                  <p className='absolute text-[8px] text-center text-[#e7e1e1]' style={{ fontFamily: 'Anime Ace', }}>
-                    {claimBar.siren === -1 ? '5-15' : claimBar.siren !== -2 ? claimBar.siren : ''}<br />
-                    {claimBar.siren !== -2 ? 'CSC' : ""}
-                  </p>
-                </Button>
-                <Button
-                  sx={{
-                    width: '33.33%',
-                    marginLeft: 'auto',
-                    marginRight: 'auto',
-                  }}
-                >
-                  <img src="/assets/images/roomBtn.png" alt="" />
-                  <p className='absolute text-[8px] text-center text-[#e7e1e1]' style={{ fontFamily: 'Anime Ace', }}>
-                    {claimBar.egg === -1 ? '20-40' : claimBar.egg !== -2 ? claimBar.egg : ''}<br />
-                    {claimBar.egg !== -2 ? 'RES' : ""}
-                  </p>
-                </Button>
-                <Button
-                  sx={{
-                    width: '33.33%',
-                    marginLeft: 'auto',
-                    marginRight: 'auto',
-                  }}
-                >
-                  <img src="/assets/images/roomBtn.png" alt="" />
-                  <p
-                    className='flex justify-center absolute text-center text-[#e7e1e1] text-[14px]'
-                    style={{ fontFamily: 'Anime Ace', }}
-                  >
-                    {claimBar.claim === true ? (
-                      <img
-                        src="assets/item/box-closed.png"
-                        alt=""
-                        className='w-[55%] mt-[-20px]'
-                      />
-                    ) : (
-                      ''
-                    )}
-                  </p>
-                </Button>
-                <Button
-                  sx={{
-                    width: '33.33%',
-                    marginLeft: 'auto',
-                    marginRight: 'auto',
-                  }}
-                >
-                  <img src="/assets/images/roomBtn.png" alt="" />
-                  <p className='absolute text-[14px] text-center text-[#e7e1e1]' style={{ fontFamily: 'Anime Ace' }}> */}
-          {/* {claimBar[2]===true?
-                    <img src="assets/item/box-closed.png" alt="" style={{width:"100%",height:"100%",padding:"8%"}}/>
-                    :""} */}
-          {/* </p>
-                </Button>
-              </Grid>
-            </Grid>
-            <Grid
-              container
-              spacing={2}
-              sx={{
-                width: '100%',
-                margin: 0,
-                alignItems: 'center',
-              }}
-            >
-
-            </Grid>
-          </Box> */}
           <Box className='flex justify-center absolute -bottom-4 w-full'>
             <Button className='w-60' onClick={() => onBtnClick()}>
               <img alt="" draggable="false" src="/assets/images/big-button.png" />

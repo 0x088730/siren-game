@@ -15,13 +15,13 @@ interface HeaderProps {
   showAccount: any
   setShowAccount: any
   csc: any
-  eggs: any
+  water: any
   resource: any
   premiumStatus: any
   setPremiumStatus: any
 }
 
-const Header = ({ showAccount, setShowAccount, csc, eggs, resource, premiumStatus, setPremiumStatus }: HeaderProps) => {
+const Header = ({ showAccount, setShowAccount, csc, water, resource, premiumStatus, setPremiumStatus }: HeaderProps) => {
   const [searchParams] = useSearchParams()
   const ref = searchParams.get('ref')
 
@@ -121,11 +121,11 @@ const Header = ({ showAccount, setShowAccount, csc, eggs, resource, premiumStatu
       </p>
       <p className={styles.resource}>
         <img alt="" draggable="false" className='w-[25px] mx-[3px]' src="/images/res_res.png" />
-        Water: {resource}
+        Water: {water}
       </p>
       <p className={styles.resource}>
         <img alt="" draggable="false" className='w-[20px] mx-[3px]' src="/images/res_egg.png" />
-        Res: {eggs}
+        Res: {resource}
       </p>
     </Box>
   }

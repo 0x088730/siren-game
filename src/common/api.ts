@@ -12,7 +12,6 @@ export const getProfile = async (walletAddress: string, character: string) => {
         character
     })).data
     const user = data.user
-
     let currentCharacter = user.characters.filter((character: any) => character.characterName === global.currentCharacterName)[0]
     global.hp = currentCharacter.hp
     global.damage = currentCharacter.damage
@@ -31,8 +30,10 @@ export const getProfile = async (walletAddress: string, character: string) => {
     global.hunterLevel = user.hunterLevel
     global.sectionStatus = data.sectionStatus
     global.resource = user.resource
+    global.water = user.water
     global.referralCode = user.userRef
     global.referralCodeStatua = user.enterCodeStatus
+    global.weapons = user.weapons
     store.dispatch(setRememberCode(user.enterCodeStatus));
 }
 export const referalAdd = async () => {
@@ -105,6 +106,6 @@ export const energySwap = async (walletAddress: string, character: string, amoun
 
     cb({
         energy: currentCharacter.energy,
-        resource: data.resource,
+        water: data.water,
     });
 }

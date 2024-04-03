@@ -32,6 +32,7 @@ import RockModal from '../../components/Header/RockModal'
 import store from '../../store'
 import { setLoadingStatus } from '../../common/state/game/reducer'
 import Web3 from 'web3'
+import SupportModal from '../../components/Header/SupportModal'
 interface MainProps {
   showAccount: any
   setShowAccount: any
@@ -44,9 +45,8 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
   const userModule = useSelector((state: any) => state.userModule)
   const isLoading = useSelector((state: any) => state.app.game.isLoading)
   const { user } = userModule
-
-  const [Siren, setSiren] = useState(userModule.user.Siren)
-  const [eggs, setEggs] = useState(userModule.user.eggs)
+  console.log(user)
+  const [water, setWater] = useState(userModule.user.water)
   const [resource, setResource] = useState(userModule.user.resource)
   const [wallLevelState, setWallLevelState] = useState(userModule.user.wall)
   const [csc, setCsc] = useState(userModule.user.cscTokenAmount)
@@ -122,6 +122,7 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
   const [openUpgradeWall, setOpenUpgradeWall] = useState(false)
   const [openRock, setOpenRock] = useState(false)
   const [openDeposit, setOpenDeposit] = useState(false)
+  const [supportModalOpen, setSupportModalOpen] = useState(false);
   const [openMining, setOpenMining] = useState(false)
   const [levelState, setLevelState] = React.useState(global.level)
   const [wallHP, setWallHP] = useState(0);
@@ -369,197 +370,19 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
               showAccount={showAccount}
               setShowAccount={setShowAccount}
               csc={csc}
-              eggs={eggs}
+              water={water}
               resource={resource}
               premiumStatus={premiumStatus}
               setPremiumStatus={setPremiumStatus}
             />
-            <Modal
-              open={openBird}
-              // open={true}
-              onClose={handleBirdClose}
-              aria-labelledby="modal-modal-title"
-              aria-describedby="modal-modal-description"
-            >
-              <Box className='absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%] w-[665px] border-none outline-none overflow-[initial]'>
-                <Box
-                  sx={{
-                    position: 'relative',
-                  }}
-                >
-                  <img alt="" src="/images/support/support_md_bg.png" draggable="false" />
-                  <img
-                    draggable="false"
-                    alt=""
-                    src="/images/support/support_md_character.png"
-                    style={{
-                      position: 'absolute',
-                      top: 0,
-                      left: 0,
-                      height: '85%',
-                      transform: 'translate(-20%, 7%)',
-                    }}
-                  />
-                  <img
-                    draggable="false"
-                    alt=""
-                    src="/images/support/support_md_close_btn.png"
-                    style={{
-                      position: 'absolute',
-                      top: 0,
-                      right: 0,
-                      width: '6%',
-                      transform: 'translate(26%, -27%)',
-                      cursor: 'pointer',
-                      zIndex: 15,
-                    }}
-                    onClick={handleBirdClose}
-                  />
-                  <div className='absolute top-0 left-0 w-full h-full flex justify-center items-center p-6 ml-[1px] z-10'>
-                    <div className='w-full h-full bg-[#000000]/[0.9] rounded-lg flex justify-center items-center text-white'>
-                      BETA SOON
-                    </div>
-                  </div>
-                  <Box
-                    sx={{
-                      position: 'absolute',
-                      top: 0,
-                      left: 0,
-                      width: '100%',
-                      height: '100%',
-                    }}
-                  >
-                    <Grid
-                      container
-                      spacing={2}
-                      sx={{
-                        padding: '6% 6% 6% 12%',
-                        width: '100%',
-                        height: '100%',
-                        margin: 0,
-                      }}
-                    >
-                      <Grid item xs={3}></Grid>
-                      <Grid item xs={9} sx={{ padding: '0 !important' }}>
-                        <Stack
-                          spacing={2}
-                          sx={{
-                            fontFamily: 'Marko One, serif',
-                            fontSize: '16px',
-                            textTransform: 'uppercase',
-                            color: '#e7e1e1',
-                            lineHeight: '120%',
-                          }}
-                        >
-                          <Box>
-                            <p
-                              style={{
-                                fontFamily: 'Marko One, serif',
-                                fontSize: '45px',
-                                textTransform: 'uppercase',
-                                textAlign: 'center',
-                                marginRight: '16%',
-                                color: '#e7e1e1',
-                                lineHeight: '100%',
-                              }}
-                            >
-                              Support
-                            </p>
-                          </Box>
-                          <Box>
-                            <p>
-                              hire support to protect your land.
-                              <span
-                                style={{
-                                  // color: '#df0c0c',
-                                  color: 'rgb(119 9 9)',
-                                  fontFamily: 'Nosifer, cursive',
-                                }}
-                              >
-                                if you don't have a support, your buildings have a
-                                50% chance per day to break.
-                              </span>{' '}
-                              Support also can find resources.
-                            </p>
-                          </Box>
-                          <Box>
-                            <p>Price per day: 100 CSC,</p>
-                            <p>Chance; LVL 1 = 40% LVL 2 = 65%</p>
-                            <p>Amount: 150 resources</p>
-                          </Box>
-                          <Box
-                            sx={{
-                              display: 'flex',
-                              justifyContent: 'space-evenly',
-                            }}
-                          >
-                            <Button
-                              sx={{
-                                padding: 0,
-                                width: '40%',
-                              }}
-                              href="#outlined-buttons"
-                            >
-                              <img alt="" src="/assets/images/big-button.png" />
-                              <p
-                                style={{
-                                  position: 'absolute',
-                                  fontFamily: 'Marko One, serif',
-                                  fontSize: '16px',
-                                  textTransform: 'uppercase',
-                                  textAlign: 'center',
-                                  color: '#e7e1e1',
-                                  lineHeight: '100%',
-                                }}
-                              >
-                                Buy
-                              </p>
-                            </Button>
-                            <Button
-                              sx={{
-                                padding: 0,
-                                width: '40%',
-                              }}
-                              href="#outlined-buttons"
-                            >
-                              <img alt="" src="/assets/images/big-button.png" draggable="false" />
-                              <p
-                                style={{
-                                  position: 'absolute',
-                                  fontFamily: 'Marko One, serif',
-                                  fontSize: '16px',
-                                  textTransform: 'uppercase',
-                                  textAlign: 'center',
-                                  color: '#e7e1e1',
-                                  lineHeight: '100%',
-                                }}
-                              >
-                                Upgrade
-                              </p>
-                            </Button>
-                          </Box>
-                          <Box>
-                            <p>
-                              If you haven't hired a support and your buildings are
-                              broken you will need to pay 120 CSC to fix the
-                              buildings.
-                            </p>
-                          </Box>
-                        </Stack>
-                      </Grid>
-                    </Grid>
-                  </Box>
-                </Box>
-              </Box>
-            </Modal>
 
             <ExchangeModal
               open={openSwap}
               setOpen={setOpenSwap}
               csc={csc}
-              egg={eggs}
+              resource={resource}
               setCsc={setCsc}
-              setEgg={setEggs}
+              setResource={setResource}
             />
             <UpgradeWallModal
               open={openUpgradeWall}
@@ -572,15 +395,11 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
               selectedIndex={selectedIndex}
               csc={csc}
               setCsc={setCsc}
-              setResource={setResource}
+              setWater={setWater}
             />
             <DepositModal
               open={openDeposit}
               setOpen={setOpenDeposit}
-              resource={resource}
-              egg={eggs}
-              onExchange={onExchange}
-              onExchangeEgg={onExchangeEgg}
               csc={csc}
               setCsc={setCsc}
               premiumStatus={premiumStatus}
@@ -590,16 +409,15 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
               setOpen={setOpenMining}
               csc={csc}
               setCsc={setCsc}
-              resource={resource}
-              egg={eggs}
-              setEggs={setEggs}
               levelState={levelState}
               setLevelState={setLevelState}
-              onExchange={onExchange}
-              onExchangeEgg={onExchangeEgg}
             />
-
-            <InstructionModal open={openInstruction} setOpen={setOpenInstruction} />
+            <SupportModal
+              supportModalOpen={supportModalOpen}
+              setSupportModalOpen={setSupportModalOpen}
+              csc={csc}
+              setCsc={setCsc}
+            />
             <Box className='h-fit w-fit'>
               <img
                 alt="" draggable="false"
@@ -643,7 +461,7 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
                 alt="" draggable="false"
                 className={`${styles.item} absolute left-[50%] w-[10%] top-[57%] cursor-pointer`}
                 src={`/images/bird_place.png`}
-                onClick={(e) => { showBirdModal() }}
+                onClick={() => setSupportModalOpen(true)}
               />
             </Box>
             <Box className='z-20 h-fit w-fit'>
@@ -676,86 +494,6 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
             </Box>
             <Box className='z-20 h-fit w-fit'>
               <img alt="" draggable="false" className={`absolute w-[12%] right-[17%] ${styles.firemanPos}`} src={`/images/fireman.webp`} />
-            </Box>
-          </Box>
-          <Box
-            className={styles.loginbg}
-            sx={{
-              display: TEST_MODE || connected ? 'none' : 'block',
-              position: 'absolute',
-              top: 0,
-              width: '100%',
-              zIndex: 2,
-            }}
-          >
-            <Box
-              sx={{
-                position: 'absolute',
-                top: '50%',
-                transform: 'translate(0, -50%)',
-                justifyContent: 'center',
-                width: '100vw',
-                display: 'flex',
-              }}
-            >
-              <Box
-                sx={{
-                  width: '12vw',
-                  minWidth: '100px',
-                  maxWidth: '180px',
-                }}
-              >
-                <img alt="" src="/images/login_icon.png" draggable="false" />
-              </Box>
-              <Box
-                sx={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  justifyContent: 'center',
-                }}
-              >
-                <Box className={styles.icon_buttons}>
-                  <Button
-                    sx={{ mb: 1, width: '100%' }}
-                    variant="contained"
-                    color="success"
-                    onClick={(e) => {
-                      connect()
-                    }}
-                  >
-                    <img alt="" src="/images/icon_metamask.png" draggable="false" />
-                    Connect Metamask
-                  </Button>
-                </Box>
-                <Box className={styles.icon_buttons}>
-                  <a
-                    className={styles.link}
-                    href="https://pancakeswap.finance/swap?outputCurrency=BNB&inputCurrency=0xc6D542Ab6C9372a1bBb7ef4B26528039fEE5C09B"
-                  >
-                    <Button
-                      sx={{ width: '100%', justifyContent: 'left', mb: 1 }}
-                      variant="contained"
-                      color="success"
-                    >
-                      <img alt="" draggable="false" src="/images/icon_bcs.png" />
-                      Buy/Sell BCS
-                    </Button>
-                  </a>
-                </Box>
-                <Box className={styles.icon_buttons}>
-                  <Button
-                    sx={{ width: '100%', justifyContent: 'left', mb: 1 }}
-                    variant="contained"
-                    color="success"
-                    onClick={(e) => {
-                      setOpenInstruction(true)
-                    }}
-                  >
-                    <img alt="" draggable="false" src="/images/icon_youtube.png" />
-                    INSTRUCTION
-                  </Button>
-                </Box>
-              </Box>
             </Box>
           </Box>
         </>

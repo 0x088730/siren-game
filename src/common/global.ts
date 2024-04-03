@@ -40,6 +40,7 @@ export interface UserProfile {
   wall: number
   energy: number
   resource: Number
+  water: Number
   characters:
   | Array<{
     characterName: string
@@ -51,6 +52,12 @@ export interface UserProfile {
     exp: Number
     rarity: Number
     damage: Number
+  }>
+  | []
+  weapons:
+  | Array<{
+    attribute: string
+    weaponNo: number
   }>
   | []
   currentCharacterName: string | ''
@@ -107,7 +114,9 @@ export let global: UserProfile = {
   wall: 0,
   energy: 1000,
   resource: 0,
+  water: 0,
   characters: [],
+  weapons: [],
   currentCharacterName: 'siren-1',
   hunterLevel: 0,
   attacking: false,
@@ -127,6 +136,7 @@ export const changeItem = (resp: any) => {
   global.rarity = resp.characters.rarity
   global.energy = resp.characters.energy
   global.resource = resp.resource
+  global.water = resp.water
   global.currentCharacterName = resp.currentCharacterName
   global.level = resp.level
   global.wall = resp.wall

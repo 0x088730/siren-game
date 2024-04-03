@@ -27,7 +27,7 @@ const CharacterInfoModal = ({ openCharacterInfo, setOpenCharacterInfo, selectCha
     const [swapValue, setSwapValue] = useState("");
     const [userData, setUserData] = useState({
         energy: 0,
-        resource: 0,
+        water: 0,
         exp: 0,
         critical: 0,
         hp: 0,
@@ -52,7 +52,7 @@ const CharacterInfoModal = ({ openCharacterInfo, setOpenCharacterInfo, selectCha
         if (global.walletAddress !== "" && global.walletAddress !== null && global.walletAddress !== undefined) {
             setUserData({
                 energy: selectCharacter ? selectCharacter.energy : 0,
-                resource: !isNaN(Number(global.resource)) ? Number(global.resource) : 0,
+                water: !isNaN(Number(global.water)) ? Number(global.water) : 0,
                 exp: selectCharacter ? selectCharacter.exp : 0,
                 critical: selectCharacter ? selectCharacter.critical : 0,
                 hp: selectCharacter ? selectCharacter.hp : 0
@@ -79,18 +79,18 @@ const CharacterInfoModal = ({ openCharacterInfo, setOpenCharacterInfo, selectCha
         if (swapAmount === undefined || swapAmount === null || swapAmount === 0) {
             return
         }
-        if (Number(global.resource) < Number(swapAmount)) {
+        if (Number(global.water) < Number(swapAmount)) {
             alert('Water is less than Swap Amount!!!')
             return
         }
         energySwap(global.walletAddress, selectCharacter.characterName, swapAmount, (res: any) => {
-            global.resource = res.resource;
+            global.water = res.water;
             for (let i = 0; i < global.characters.length; i++) {
                 if (global.characters[i].characterName === selectCharacter.characterName) {
                     global.characters[i].energy = res.energy;
                 }
             }
-            setUserData({ ...userData, energy: res.energy, resource: res.resource })
+            setUserData({ ...userData, energy: res.energy, water: res.water })
         })
     }
     let embedStatus = false;
@@ -221,7 +221,7 @@ const CharacterInfoModal = ({ openCharacterInfo, setOpenCharacterInfo, selectCha
                     <div className={`w-[46%] h-full font-semibold text-white flex justify-center ${nav === "gem" ? "items-start" : "items-center"}`} style={{ backgroundImage: "url(assets/images/set2.png)", backgroundSize: '100% 100%' }}>
                         {nav === "energy" ?
                             <div className='h-[60%] flex flex-col justify-around items-center'>
-                                <div className='text-[27px] flex' style={{ textShadow: "1px 1px 3px #000000" }}>YOU HAVE: <div className='text-[#01c5e1] w-fit min-w-[100px]'>{String(userData.resource)}</div> WATER</div>
+                                <div className='text-[27px] flex' style={{ textShadow: "1px 1px 3px #000000" }}>YOU HAVE: <div className='text-[#01c5e1] w-fit min-w-[100px]'>{String(userData.water)}</div> WATER</div>
                                 <div>
                                     <input type='name' className='w-[118px] h-[50px] text-[30px] p-[8px] rounded-[8px] text-center text-black' onChange={(e) => setSwapValue(e.target.value)} />
                                     <div className='w-[118px] h-[46px] cursor-pointer my-4' style={{ backgroundImage: "url(assets/images/swap_btn.png)", backgroundSize: '100% 100%' }} onClick={onSwap}></div>
@@ -245,10 +245,10 @@ const CharacterInfoModal = ({ openCharacterInfo, setOpenCharacterInfo, selectCha
                                 :
                                 nav === "weapon" ?
                                     <Grid container className='w-full h-full'>
-                                        <Grid item xs={12} sm={12} md={12} style={{ display: "flex", flexWrap: 'wrap', justifyContent: 'space-around', alignItems: 'center', padding: "40px" }}>
-                                            {weaponImage.map((index) => (
+                                        <Grid item xs={12} sm={12} md={12} style={{ display: "flex", flexWrap: 'wrap', justifyContent: 'flex-start', alignItems: 'flex-start', gap: "7px", padding: "40px" }}>
+                                            {global.weapons && global.weapons.map((item, index) => (
                                                 <div className='flex-col' key={index}>
-                                                    {/* <img src={`/assets/item/weapon/${index}.png`} draggable="false" className='fit-content cursor-pointer w-[160px]' /> */}
+                                                    <img src={`/assets/item/weapon/${item.weaponNo}.png`} draggable="false" className='fit-content cursor-pointer w-[160px]' />
                                                 </div>
                                             ))}
                                         </Grid>

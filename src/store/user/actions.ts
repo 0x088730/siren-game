@@ -508,6 +508,14 @@ export async function getWithdrawAmount(address: string) {
   }
 }
 
+export async function setSupportCooldown(walletAddress: any, avatar: any) {
+  const res = await api(`user/setSupportCooldown`, `post`, {
+    walletAddress,
+    avatar,
+  })
+  return res;
+}
+
 export async function checkPremiumCooldown(walletAddress: string) {
   const res = await api(`user/checkPremiumCooldown`, `post`, {
     walletAddress,
