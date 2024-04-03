@@ -371,6 +371,8 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
               csc={csc}
               eggs={eggs}
               resource={resource}
+              premiumStatus={premiumStatus}
+              setPremiumStatus={setPremiumStatus}
             />
             <Modal
               open={openBird}

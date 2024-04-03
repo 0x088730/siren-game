@@ -70,7 +70,8 @@ export const HeaderComponent = ({ onModalShow }: HeaderProps) => {
               <img draggable="false" src='assets/images/discord.webp' alt='' className='cursor-pointer' onClick={() => goUrl("https://discord.gg/9FRAyNg9Qh")} />
             </div>
             <div className='flex-mid text-white text-[16px]'>
-              <img alt="" draggable="false" className='w-[23px] mx-1' src="/images/cryptoIcon.png" />{`CSC PRICE $${global.nowPrice.toFixed(2)}(CHART)`}
+              <img alt="" draggable="false" className='w-[23px] mx-1' src="/images/cryptoIcon.png" />{`CSC PRICE $${global.nowPrice.toFixed(2)}`}
+              <span className='cursor-pointer hover:underline hover:text-[#1766f7ea]' onClick={() => goUrl("https://dexscreener.com/bsc/0x40d670eb9644c12f42843138f1baf6957f699d7b")}>(CHART)</span>
             </div>
           </div>
           <div className="flex p-4 items-center">

@@ -1,7 +1,7 @@
-import { Box} from '@mui/material'
+import { Box } from '@mui/material'
 import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link, useSearchParams,} from 'react-router-dom'
+import { Link, useSearchParams, } from 'react-router-dom'
 import { useWeb3Context } from '../../hooks/web3Context'
 import { getResources } from '../../store/user/actions'
 import { onShowAlert } from '../../store/utiles/actions'
@@ -17,9 +17,11 @@ interface HeaderProps {
   csc: any
   eggs: any
   resource: any
+  premiumStatus: any
+  setPremiumStatus: any
 }
 
-const Header = ({ showAccount, setShowAccount, csc, eggs, resource }: HeaderProps) => {
+const Header = ({ showAccount, setShowAccount, csc, eggs, resource, premiumStatus, setPremiumStatus }: HeaderProps) => {
   const [searchParams] = useSearchParams()
   const ref = searchParams.get('ref')
 
@@ -138,7 +140,7 @@ const Header = ({ showAccount, setShowAccount, csc, eggs, resource }: HeaderProp
           openAccount={openAccount}
           setOpenAccount={handleOpenAccount}
         />
-        <PreniumModal open={openPremium} setOpen={setOpenPremium} />
+        <PreniumModal open={openPremium} setOpen={setOpenPremium} premiumStatus={premiumStatus} setPremiumStatus={setPremiumStatus} />
 
         {headerList()}
 

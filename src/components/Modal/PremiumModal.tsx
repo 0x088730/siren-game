@@ -19,9 +19,11 @@ import { convertSecToDHMS } from '../../utils/timer'
 interface Props {
   open: boolean
   setOpen: any
+  premiumStatus: any
+  setPremiumStatus: any
 }
 
-const PreniumModal = ({ open, setOpen }: Props) => {
+const PreniumModal = ({ open, setOpen, premiumStatus, setPremiumStatus }: Props) => {
   const { address } = useWeb3Context()
   const dispatch = useDispatch<any>()
 
@@ -90,7 +92,8 @@ const PreniumModal = ({ open, setOpen }: Props) => {
           transaction.transactionHash,
           (res: any) => {
             setRemainedTime(2592000);
-            setIsCooldownStarted(true)
+            setIsCooldownStarted(true);
+            setPremiumStatus(true);
             if (res.success) {
               dispatch(onShowAlert('Buy permium successfully', 'success'))
             } else {

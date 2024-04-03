@@ -63,7 +63,7 @@ const GuildModal = ({ openGuild, setOpenGuild }) => {
                             <img alt="" draggable="false" src="/assets/images/guild_title.webp" className='w-full h-full' />
                             <div className='flex-mid absolute right-20 items-start text-white'>
                                 <div>EVENT:</div>
-                                <div>TOP 3 CSC EARN GUILD OWNERS WILL RECEIVE 200$(CSC)<br />TOP 1: 1000$ TOP 2: 600$ TOP 3: 400$ | <span className='text-[#df9d25]'>APRIL 16</span></div>
+                                <div>TOP 3 CSC EARN GUILD OWNERS WILL RECEIVE 2000$(CSC)<br />TOP 1: 1000$ TOP 2: 600$ TOP 3: 400$ | <span className='text-[#df9d25]'>APRIL 16</span></div>
                             </div>
                         </div>
                     </div>
