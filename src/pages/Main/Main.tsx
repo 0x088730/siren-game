@@ -68,12 +68,15 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
       let cooldownSec = res.data.time;
       if (cooldownSec === 9999999) {
         setPremiumStatus(false);
+        setWallHP(Math.floor(6 + wallLevelState * 2));
       }
       else if (cooldownSec <= 0) {
         setPremiumStatus(false);
+        setWallHP(Math.floor(6 + wallLevelState * 2));
       }
       else {
         setPremiumStatus(true);
+        setWallHP(Math.floor((6 + wallLevelState * 2) * 1.2));
       }
     })
 
@@ -176,7 +179,7 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
   useEffect(() => {
     if (premiumStatus === true) setWallHP(Math.floor((6 + wallLevelState * 2) * 1.2));
     else setWallHP(Math.floor(6 + wallLevelState * 2));
-  }, [user, wallLevelState])
+  }, [wallLevelState, premiumStatus])
 
   const coolDownStatus = (cooldown: any) => {
     if (address !== "") {
