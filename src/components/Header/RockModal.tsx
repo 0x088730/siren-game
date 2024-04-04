@@ -153,7 +153,7 @@ const RockModal = ({
                   <div>
                     AMOUNT:
                   </div>
-                  <div><img alt="" draggable="false" className='w-[22px] mx-[3px] float-left' src="/images/res_res.png" />5 WATER</div>
+                  <div><img alt="" draggable="false" className='w-[22px] mx-[3px] float-left' src="/images/res_res.png" />10 WATER</div>
                 </div>
               </div>
             </div>

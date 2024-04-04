@@ -19,15 +19,15 @@ import SupportInfoModal from './SupportInfoModal'
 interface Props {
   supportModalOpen: any
   setSupportModalOpen: any
-  csc: any
-  setCsc: any
+  resource: any
+  setResource: any
 }
 
 const SupportModal = ({
   supportModalOpen,
   setSupportModalOpen,
-  csc,
-  setCsc,
+  resource,
+  setResource,
 }: Props) => {
   const { address } = useWeb3Context()
   const count = [0, 1, 2]
@@ -42,6 +42,7 @@ const SupportModal = ({
   const dispatch = useDispatch<any>()
   const [btnType, setBtnType] = useState('Start')
   const [avatar, setAvatar] = useState(["", "", ""]);
+
   const onBtnClick = () => {
     if (remainedTime > 0)
       return
@@ -51,13 +52,17 @@ const SupportModal = ({
         alert("Select Character")
         return
       }
+      if (resource < 2) {
+        alert("Not enough resource!");
+        return;
+      }
       setSupportCooldown(address, avatar).then((res: any) => {
-        console.log(res)
         if (res.data === false) {
           alert(res.message);
           return;
         }
-        setRemainedTime(res.data);
+        setRemainedTime(res.data.time);
+        setResource(res.data.resource);
         setIsCooldownStarted(true);
       })
     } else if (btnType === 'Claim') {
@@ -113,11 +118,6 @@ const SupportModal = ({
       alert("please get claim first")
       return
     }
-    if (csc < 100) {
-      alert("you need more csc")
-      return
-
-    }
     // dispatch(levelupHunter(address, (resp: any) => {
     //   if (resp) {
     //     setCsc(resp.data.csc)
@@ -170,7 +170,7 @@ const SupportModal = ({
             </div>
             <div className='flex justify-between items-center w-full my-2'>
               <div className='flex-mid text-white text-[14px]'>
-                WATER USED: <img alt="" draggable="false" className='w-[20px] mx-2' src="/images/res_res.png" /> 2
+                RESOURCE USED: <img alt="" draggable="false" className='w-[20px] mx-2' src="/assets/images/rock.png" /> 2
               </div>
               <div className='flex-mid text-white text-[14px]'>
                 CSC EARNED: <img alt="" draggable="false" className='w-[20px] mx-2' src="/images/cryptoIcon.png" /> 0
@@ -199,7 +199,7 @@ const SupportModal = ({
             <div className='flex-mid w-full my-4 text-[25px]'>{remainedTime <= 0 ? "00:00:00" : convertSecToHMS(remainedTime)}</div>
           </div>
           <Box className='flex justify-center absolute bottom-10 w-full text-[#e7e1e1]'>
-            PRICE: <img alt="" draggable="false" className='w-[20px] mx-2' src="/images/res_res.png" /> 2 RES FOR 1H
+            PRICE: <img alt="" draggable="false" className='w-[20px] mx-2' src="/assets/images/rock.png" /> 2 RES FOR 1H
           </Box>
           <Box className='flex justify-center absolute -bottom-4 w-full'>
             <Button className={`w-60 ${remainedTime > 0 ? "grayscale" : ""}`} onClick={() => remainedTime > 0 ? null : onBtnClick()}>

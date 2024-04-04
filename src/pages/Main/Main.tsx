@@ -33,6 +33,7 @@ import store from '../../store'
 import { setLoadingStatus } from '../../common/state/game/reducer'
 import Web3 from 'web3'
 import SupportModal from '../../components/Header/SupportModal'
+import BarbariansModal from '../../components/Header/BarbariansModal'
 interface MainProps {
   showAccount: any
   setShowAccount: any
@@ -41,17 +42,16 @@ interface MainProps {
 const Main = ({ showAccount, setShowAccount }: MainProps) => {
   const dispatch = useDispatch<any>()
   const navigate = useNavigate()
-  const { connected, chainID, address, connect } = useWeb3Context()
+  const { address } = useWeb3Context()
   const userModule = useSelector((state: any) => state.userModule)
   const isLoading = useSelector((state: any) => state.app.game.isLoading)
   const { user } = userModule
-  console.log(user)
+
   const [water, setWater] = useState(userModule.user.water)
   const [resource, setResource] = useState(userModule.user.resource)
   const [wallLevelState, setWallLevelState] = useState(userModule.user.wall)
   const [csc, setCsc] = useState(userModule.user.cscTokenAmount)
   const [premiumStatus, setPremiumStatus] = useState(false);
-  const [openInstruction, setOpenInstruction] = useState(false)
   const [windowSize, setWindowSize] = useState({
     width: window.innerWidth,
     height: window.innerHeight,
@@ -123,9 +123,11 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
   const [openRock, setOpenRock] = useState(false)
   const [openDeposit, setOpenDeposit] = useState(false)
   const [supportModalOpen, setSupportModalOpen] = useState(false);
+  const [barbaModalOpen, setBarbaModalOpen] = useState(false);
   const [openMining, setOpenMining] = useState(false)
   const [levelState, setLevelState] = React.useState(global.level)
   const [wallHP, setWallHP] = useState(0);
+  const [attackStatus, setAttackStatus] = useState(false);
 
   const [btnTitle, setBtnTitle] = useState("")
   const [items, setItems] = useState([
@@ -415,9 +417,15 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
             <SupportModal
               supportModalOpen={supportModalOpen}
               setSupportModalOpen={setSupportModalOpen}
-              csc={csc}
-              setCsc={setCsc}
+              resource={resource}
+              setResource={setResource}
             />
+            {/* <BarbariansModal
+              barbaModalOpen={barbaModalOpen}
+              setBarbaModalOpen={setBarbaModalOpen}
+              attackStatus={attackStatus}
+              setAttackStatus={setAttackStatus}
+            /> */}
             <Box className='h-fit w-fit'>
               <img
                 alt="" draggable="false"
@@ -493,7 +501,7 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
               <img className={`absolute left-[50%] w-[20%] ${styles.rockPos}`} draggable="false" alt="" src={`/images/rock.png`} />
             </Box>
             <Box className='z-20 h-fit w-fit'>
-              <img alt="" draggable="false" className={`absolute w-[12%] right-[17%] ${styles.firemanPos}`} src={`/images/fireman.webp`} />
+              <img alt="" draggable="false" className={`absolute w-[12%] right-[17%] cursor-pointer ${styles.firemanPos}`} src={`/images/fireman.webp`} onClick={() => setBarbaModalOpen(true)} />
             </Box>
           </Box>
         </>
