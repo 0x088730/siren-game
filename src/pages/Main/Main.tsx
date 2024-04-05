@@ -9,20 +9,13 @@ import { Outlet, useLocation, useNavigate } from 'react-router-dom'
 import ExchangeModal from '../../components/Header/ExchangeModal'
 import Header from '../../components/Header/Header'
 import DepositModal from '../../components/Modal/DepositModal'
-import InstructionModal from '../../components/Modal/InstructionModal'
 import MiningModal from '../../components/Modal/MiningModal'
-import { STAKE_TIMER } from '../../hooks/constants'
 import { useWeb3Context } from '../../hooks/web3Context'
 import {
-  claimBird,
-  claimDiamond,
-  stakeBird,
-  stakeDiamond,
-  swapEggs,
-  swapResources,
   upgradeWall,
-  checkCooldown,
-  checkPremiumCooldown
+  checkPremiumCooldown,
+  getBarbaStatus,
+  barbaAttackWall
 } from '../../store/user/actions'
 
 import styles from './Main.module.scss'
@@ -34,6 +27,7 @@ import { setLoadingStatus } from '../../common/state/game/reducer'
 import Web3 from 'web3'
 import SupportModal from '../../components/Header/SupportModal'
 import BarbariansModal from '../../components/Header/BarbariansModal'
+import RepairModal from '../../components/Header/RepairModal'
 interface MainProps {
   showAccount: any
   setShowAccount: any
@@ -45,40 +39,39 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
   const { address } = useWeb3Context()
   const userModule = useSelector((state: any) => state.userModule)
   const isLoading = useSelector((state: any) => state.app.game.isLoading)
-  const { user } = userModule
 
+  let walls = [1, 2, 3];
   const [water, setWater] = useState(userModule.user.water)
   const [resource, setResource] = useState(userModule.user.resource)
   const [wallLevelState, setWallLevelState] = useState(userModule.user.wall)
   const [csc, setCsc] = useState(userModule.user.cscTokenAmount)
   const [premiumStatus, setPremiumStatus] = useState(false);
-  const [windowSize, setWindowSize] = useState({
-    width: window.innerWidth,
-    height: window.innerHeight,
-  })
+  const [openSwap, setOpenSwap] = useState(false)
+  const [openUpgradeWall, setOpenUpgradeWall] = useState(false)
+  const [openRock, setOpenRock] = useState(false)
+  const [openDeposit, setOpenDeposit] = useState(false)
+  const [supportModalOpen, setSupportModalOpen] = useState(false);
+  const [barbaModalOpen, setBarbaModalOpen] = useState(false);
+  const [repairModalOpen, setRepairModalOpen] = useState(false);
+  const [openMining, setOpenMining] = useState(false)
+  const [levelState, setLevelState] = React.useState(global.level)
+  const [wallHP, setWallHP] = useState(0);
+  const [currentWallHP, setCurrentWallHP] = useState(0);
+  const [attackStatus, setAttackStatus] = useState(false);
+  const [remainedTime, setRemainedTime] = useState(0)
+  const [isCooldownStarted, setIsCooldownStarted] = useState(false)
+  const [startRemainTime, setStartRemainTime] = useState(0);
+  const [startCooldownStarted, setStartCooldownStarted] = useState(false)
+  const [selectedIndex, setSelectedIndex] = useState(0)
 
   useEffect(() => {
     if (address === undefined || address === null || address === "") {
       return navigate("/", { replace: true });
     }
-
     document.body.style.backgroundImage = "url(https://iksqvifj67dwchip.public.blob.vercel-storage.com/background/background-ZmVO9VcRcA8nQrT8efb1hyvB5ICiTw.jpg)";
 
-    checkPremiumCooldown(address).then((res: any) => {
-      let cooldownSec = res.data.time;
-      if (cooldownSec === 9999999) {
-        setPremiumStatus(false);
-        setWallHP(Math.floor(6 + wallLevelState * 2));
-      }
-      else if (cooldownSec <= 0) {
-        setPremiumStatus(false);
-        setWallHP(Math.floor(6 + wallLevelState * 2));
-      }
-      else {
-        setPremiumStatus(true);
-        setWallHP(Math.floor((6 + wallLevelState * 2) * 1.2));
-      }
-    })
+    getPremium();
+    getBarbarians();
 
     setTimeout(() => {
       if (address && wallLevelState !== 0) store.dispatch(setLoadingStatus(false));
@@ -87,183 +80,32 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
         store.dispatch(setLoadingStatus(false));
       }
     }, 2000)
-
-    if (global.wall === 0) {
-      history.back();
-    }
-    const handleWindowResize = () => {
-      setWindowSize({ width: window.innerWidth, height: window.innerHeight })
-    }
-
-    window.addEventListener('resize', handleWindowResize)
-
-    return () => {
-      window.removeEventListener('resize', handleWindowResize)
-    }
+    if (global.wall === 0) { history.back(); }
   }, [])
 
   useEffect(() => {
     if (global.walletAddress !== "") {
-      var priceInterval = setInterval(async () => { // Make the arrow function async
+      var priceInterval = setInterval(async () => {
         let web3 = new Web3(window.ethereum);
         const accounts = await web3.eth.getAccounts();
         if (global.walletAddress !== accounts[0]) {
           window.location.reload();
         }
       }, 1000);
-
       return () => clearInterval(priceInterval);
     }
   }, []);
 
-  const TEST_MODE = true
-  const MIN_SCREEN = 1200
-  const [openSwap, setOpenSwap] = useState(false)
-  const [openUpgradeWall, setOpenUpgradeWall] = useState(false)
-  const [openRock, setOpenRock] = useState(false)
-  const [openDeposit, setOpenDeposit] = useState(false)
-  const [supportModalOpen, setSupportModalOpen] = useState(false);
-  const [barbaModalOpen, setBarbaModalOpen] = useState(false);
-  const [openMining, setOpenMining] = useState(false)
-  const [levelState, setLevelState] = React.useState(global.level)
-  const [wallHP, setWallHP] = useState(0);
-  const [attackStatus, setAttackStatus] = useState(false);
-
-  const [btnTitle, setBtnTitle] = useState("")
-  const [items, setItems] = useState([
-    { counting: 0, timer: 0, },
-    { counting: 0, timer: 0, },
-    { counting: 0, timer: 0, },
-  ])
-
-  const [birds, setBirds] = useState([
-    { item: 0, timer: 0 },
-    { item: 0, timer: 0 },
-    { item: 0, timer: 0 },
-    { item: 0, timer: 0 },
-    { item: 0, timer: 0 },
-    { item: 0, timer: 0 },
-    { item: 0, timer: 0 },
-    { item: 0, timer: 0 },
-  ])
-  const diamonds = [1, 2]
-
-  const [selectedIndex, setSelectedIndex] = useState(0)
-
-  const showModal = (index: any) => {
-    setSelectedIndex(index)
-    setOpenRock(true)
-  }
-
-  const showBirdModal = () => {
-    handleBirdOpen()
-  }
-
-  const onRockStart = (cooldown: any) => {
-    if (address !== "") {
-      dispatch(
-        stakeDiamond(address, selectedIndex, cooldown, (res: any) => {
-          if (res.success === false) return
-          setCsc(res.data)
-          handleClose()
-          coolDownStatus(cooldown)
-        }),
-      )
-    }
-  }
-
-  useEffect(() => {
-    coolDownStatus(selectedIndex)
-  }, [selectedIndex])
 
   useEffect(() => {
     if (premiumStatus === true) setWallHP(Math.floor((6 + wallLevelState * 2) * 1.2));
     else setWallHP(Math.floor(6 + wallLevelState * 2));
   }, [wallLevelState, premiumStatus])
 
-  const coolDownStatus = (cooldown: any) => {
-    if (address !== "") {
-      dispatch(
-        checkCooldown(address, `diamond${selectedIndex + 1}`, (res: any) => {
-          let cooldownSec = res.data
-          const _items = [...items]
-          _items[selectedIndex].timer = res.data
-          _items[selectedIndex].counting = 1
-          setItems(_items)
-          if (cooldownSec === 999999) {
-            _items[selectedIndex].timer = 0
-            setBtnTitle("START")
-          }
-          else if (cooldownSec <= 0) {
-            _items[selectedIndex].timer = 0
-            setBtnTitle("CLAIM")
-          }
-          else {
-            _items[selectedIndex].timer = cooldownSec
-          }
-        }),
-      )
-    }
-  }
 
-  const setBirdItem = (index: any, item: any) => {
-    if (csc < 20) return
-    dispatch(
-      stakeBird(address, index, (res: any) => {
-        if (res.success === false) return
-        const _items = [...birds]
-        _items[index].item = item
-        _items[index].timer = STAKE_TIMER
-        setBirds(_items)
-      }),
-    )
-  }
-
-  const onRockClaim = () => {
-    if (items[selectedIndex].counting !== 0 && items[selectedIndex].timer === 0) {
-      setOpenRock(false)
-      onClaim(selectedIndex)
-    } else alert('please wait...')
-  }
-
-  const onClaim = (index: number) => {
-    if (address !== "") {
-      dispatch(
-        claimDiamond(address, index, (res: any) => {
-          if (res.success === false) return setResource(resource)
-          const _items = [...items]
-          _items[index].counting = 0
-          _items[index].timer = 0
-          if (typeof res.data.resource === 'number') setResource(res.data.resource)
-          setItems(_items)
-          setBtnTitle("START")
-        }),
-      )
-    }
-  }
-
-  const onClaimBird = (e: any, index: number) => {
-    e.stopPropagation()
-
-    dispatch(
-      claimBird(address, index, (res: any) => {
-        if (res.success === false) return
-        const _items = [...birds]
-        _items[index].item = 0
-        _items[index].timer = 0
-        setBirds(_items)
-      }),
-    )
-  }
-
-  const onExchange = (swapAmount: number) => {
-    dispatch(swapResources(address, swapAmount, (res: any) => { }))
-    setOpenSwap(false)
-  }
-
-  const onExchangeEgg = (swapAmount: number) => {
-    dispatch(swapEggs(address, swapAmount, (res: any) => { }))
-    setOpenSwap(false)
+  const showModal = (index: any) => {
+    setSelectedIndex(index)
+    setOpenRock(true)
   }
 
   const onUpgradeWall = () => {
@@ -279,85 +121,74 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
     }
   }
 
-  const [open, setOpen] = React.useState(false)
-  const handleOpen = () => setOpenRock(true)
-  const handleClose = () => setOpen(false)
-
-  const [openBird, setOpenBird] = React.useState(false)
-  const handleBirdOpen = () => setOpenBird(true)
-  const handleBirdClose = () => setOpenBird(false)
-  let timer: any = null
-  const startTimer = () => {
-    if (timer === null) {
-      timer = setInterval(() => {
-        setItems((prevItem) => {
-          let _item = [...prevItem]
-          _item = _item.map((value) => {
-            if (value.timer > 0) value.timer--
-            return value
-          })
-          return _item
-        })
-
-        setBirds((prevItem) => {
-          let _item = [...prevItem]
-          _item = _item.map((value) => {
-            if (value.timer > 0) value.timer--
-            return value
-          })
-          return _item
-        })
-      }, 1000)
-    }
+  const getPremium = () => {
+    checkPremiumCooldown(address).then((res: any) => {
+      let cooldownSec = res.data.time;
+      if (cooldownSec === 9999999) {
+        setPremiumStatus(false);
+        setWallHP(Math.floor(6 + wallLevelState * 2));
+      }
+      else if (cooldownSec <= 0) {
+        setPremiumStatus(false);
+        setWallHP(Math.floor(6 + wallLevelState * 2));
+      }
+      else {
+        setPremiumStatus(true);
+        setWallHP(Math.floor((6 + wallLevelState * 2) * 1.2));
+      }
+    })
+  }
+  const getBarbarians = () => {
+    getBarbaStatus(address).then(res => {
+      if (res.data === false) {
+        alert(res.message);
+        return;
+      }
+      setAttackStatus(res.attack);
+      setCurrentWallHP(res.wallHP);
+      if (res.startTime > 0) {
+        setStartRemainTime(res.startTime);
+        setStartCooldownStarted(true);
+      } else if (res.time > 0) {
+        setRemainedTime(res.time);
+        setIsCooldownStarted(true);
+      }
+    })
   }
 
   useEffect(() => {
-    startTimer()
-
-    return () => clearInterval(timer)
-  }, [JSON.stringify(items)])
-
-  // set staked diamond
-  useEffect(() => {
-    if (user.stakedDiamond && user.stakedDiamond.length > 0) {
-      const _items = [...items]
-      for (const dt of user.stakedDiamond) {
-        if (!dt || dt.position > 7) continue
-
-        const date = new Date()
-        const curSec = date.getTime()
-        const endSec = new Date(dt.staked_at).getTime()
-
-        const eDate = new Date(dt.staked_at)
-
-        _items[dt.position].counting = dt.diamond
-        _items[dt.position].timer =
-          STAKE_TIMER - Math.floor((curSec - endSec) / 1000)
-        if (_items[dt.position].timer < 0) _items[dt.position].timer = 0
-      }
-      setItems(_items)
+    if (startCooldownStarted) {
+      var startInterval = setInterval(() => {
+        setStartRemainTime((prevTime) => {
+          if (prevTime === 1) {
+            getBarbarians();
+          }
+          if (prevTime === 0) {
+            return 0
+          }
+          return prevTime - 1
+        })
+      }, 1000)
     }
-  }, [JSON.stringify(user.stakedDiamond)])
+    return () => clearInterval(startInterval);
+  }, [startCooldownStarted])
 
   useEffect(() => {
-    if (user.stakedBirds && user.stakedBirds.length > 0) {
-      const _items = [...birds]
-      for (const dt of user.stakedBirds) {
-        if (!dt) continue
-        if (dt.position >= 10) continue
-
-        const date = new Date()
-        const curSec = date.getTime()
-        const endSec = new Date(dt.staked_at).getTime()
-
-        _items[dt.position].item = 1
-        _items[dt.position].timer =
-          STAKE_TIMER - Math.floor((curSec - endSec) / 1000)
-        if (_items[dt.position].timer < 0) _items[dt.position].timer = 0
-      }
-      setBirds(_items)
+    if (isCooldownStarted) {
+      var attackCooldownInterval = setInterval(() => {
+        setRemainedTime((prevTime) => {
+          if (prevTime === 1) {
+            getBarbarians();
+          }
+          if (prevTime === 0) {
+            return 0
+          }
+          return prevTime - 1
+        })
+      }, 1000)
     }
-  }, [JSON.stringify(user.stakedBirds)])
+    return () => clearInterval(attackCooldownInterval)
+  }, [isCooldownStarted])
 
   return (
     <>
@@ -420,30 +251,39 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
               resource={resource}
               setResource={setResource}
             />
-            {/* <BarbariansModal
+            <BarbariansModal
               barbaModalOpen={barbaModalOpen}
               setBarbaModalOpen={setBarbaModalOpen}
               attackStatus={attackStatus}
               setAttackStatus={setAttackStatus}
-            /> */}
+            />
+            <RepairModal
+              repairModalOpen={repairModalOpen}
+              setRepairModalOpen={setRepairModalOpen}
+              csc={csc}
+              setCSC={setCsc}
+              currentWallHP={currentWallHP}
+              setCurrentWallHP={setCurrentWallHP}
+              getBarbarians={getBarbarians}
+            />
             <Box className='h-fit w-fit'>
               <img
                 alt="" draggable="false"
                 className={`${styles.item} absolute top-[7%] left-0 w-full h-full min-h-[900px] cursor-pointer`}
                 src={'assets/images/border' + wallLevelState + '.png'}
-                onClick={() => setOpenUpgradeWall(true)}
+                onClick={() => currentWallHP <= 0 ? setRepairModalOpen(true) : setOpenUpgradeWall(true)}
               />
             </Box>
             <Box className='z-20 h-fit w-fit'>
               <div className='absolute flex gap-[14%] left-[35%] top-[30%] w-1/3'>
-                {items.map((item, index) => (
+                {walls.map((item, index) => (
                   <img
                     key={index}
                     draggable="false"
                     alt=""
                     className={`${styles.item} w-[18%] cursor-pointer ${index === 1 ? "translate-y-[-20%]" : index === 2 ? "translate-y-[20%]" : ""}`}
                     src={`/images/place_1.png`}
-                    onClick={(e) => { showModal(index) }}
+                    onClick={(e) => currentWallHP <= 0 ? setRepairModalOpen(true) : showModal(index)}
                   />
                 ))}
               </div>
@@ -453,7 +293,7 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
                 alt="" draggable="false"
                 className={`${styles.item} absolute left-[19%] w-[12%] top-[36%] cursor-pointer`}
                 src={`/images/storage.png`}
-                onClick={(e) => setOpenSwap(true)}
+                onClick={(e) => currentWallHP <= 0 ? setRepairModalOpen(true) : setOpenSwap(true)}
               />
             </Box>
             <Box className='z-20 h-fit w-fit'>
@@ -469,7 +309,7 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
                 alt="" draggable="false"
                 className={`${styles.item} absolute left-[50%] w-[10%] top-[57%] cursor-pointer`}
                 src={`/images/bird_place.png`}
-                onClick={() => setSupportModalOpen(true)}
+                onClick={() => currentWallHP <= 0 ? setRepairModalOpen(true) : setSupportModalOpen(true)}
               />
             </Box>
             <Box className='z-20 h-fit w-fit'>
@@ -477,14 +317,14 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
                 alt="" draggable="false"
                 className={`${styles.item} absolute left-[68%] w-[14%] top-[24%] cursor-pointer`}
                 src={`/images/mining.png`}
-                onClick={(e) => setOpenMining(true)}
+                onClick={(e) => currentWallHP <= 0 ? setRepairModalOpen(true) : setOpenMining(true)}
               />
             </Box>
             <Box className='z-20 h-fit w-fit'>
               <div className={`absolute w-[8%] h-[4%] right-[26%] ${styles.hpPos}`}>
                 <div className='flex-mid relative w-full h-full'>
                   <img alt="" draggable="false" className='w-full h-full' src={`/images/hp_bg.png`} />
-                  <span className='absolute tracking-[2px] text-[0.8rem] text-[#22bc34] font-semibold'>{wallHP + "/" + wallHP + "HP"}</span>
+                  <span className='absolute tracking-[2px] text-[0.8rem] text-[#22bc34] font-semibold'>{currentWallHP + "/" + wallHP + "HP"}</span>
                 </div>
               </div>
             </Box>
@@ -501,7 +341,7 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
               <img className={`absolute left-[50%] w-[20%] ${styles.rockPos}`} draggable="false" alt="" src={`/images/rock.png`} />
             </Box>
             <Box className='z-20 h-fit w-fit'>
-              <img alt="" draggable="false" className={`absolute w-[12%] right-[17%] cursor-pointer ${styles.firemanPos}`} src={`/images/fireman.webp`} onClick={() => setBarbaModalOpen(true)} />
+              <img alt="" draggable="false" className={`${styles.item} absolute w-[12%] right-[17%] cursor-pointer ${styles.firemanPos}`} src={`/images/fireman.webp`} onClick={() => setBarbaModalOpen(true)} />
             </Box>
           </Box>
         </>

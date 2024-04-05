@@ -321,3 +321,8 @@ header {
   background-image: radial-gradient(#E7C92F, #000000);
   border-radius: 4px;
 }
+
+.skull {
+  -webkit-filter: drop-shadow(0px 0px 3px rgb(255, 38, 38)) drop-shadow(0px 0px 3px rgb(255, 38, 38));
+  filter: drop-shadow(0px 0px 3px rgb(255, 38, 38)) drop-shadow(0px 0px 3px rgb(255, 38, 38));
+}

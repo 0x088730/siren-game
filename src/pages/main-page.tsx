@@ -12,9 +12,10 @@ import { useNavigate } from 'react-router-dom'
 import { GameHeaderComponent } from '../components/game-header.component'
 import CharacterDetailModal from '../widgets/characterDetailModal'
 import InventoryModal from '../widgets/inventoryModal'
-import { addLoginHistory } from '../store/user/actions'
+import { addLoginHistory, getBarbaStatus } from '../store/user/actions'
 import GuildModal from '../widgets/guildModal'
 import Web3 from 'web3'
+import BarbariansModal from '../components/Header/BarbariansModal'
 
 interface HeaderProps {
     showAccount: any
@@ -50,12 +51,15 @@ export const MainPage = ({
     const display = useSelector((state: any) => state.app.game.display);
     const buttonView = useSelector((state: any) => state.app.game.buttonView);
     const rememberCode = useSelector((state: any) => state.app.game.rememberCode);
+    const attackAlert = useSelector((state: any) => state.app.game.attackAlert);
 
     const [openCharacter, setOpenCharacter] = useState(false);
     const [openGuild, setOpenGuild] = useState(false);
     const [openCharacterInfo, setOpenCharacterInfo] = useState(false);
     const [openInventory, setOpenInventory] = useState(false);
     const [code, setCode] = useState("");
+    const [attackStatus, setAttackStatus] = useState(false);
+    const [barbaModalOpen, setBarbaModalOpen] = useState(false);
 
     const { connected, chainID, address, connect } = useWeb3Context()
 
@@ -67,7 +71,22 @@ export const MainPage = ({
         if (gameState === 1) {
             document.body.style.backgroundImage = 'url(https://iksqvifj67dwchip.public.blob.vercel-storage.com/background/bg-Tb688buNrJp4hV2u8rPn8aPBG4lg5c.jpg)'
         }
+        if (global.walletAddress !== "") {
+            getBarbaStatus(global.walletAddress).then(res => {
+                if (res.data === false) {
+                    alert(res.message);
+                    return;
+                }
+                setAttackStatus(res.attack);
+            })
+        }
     }, [])
+
+    useEffect(() => {
+        if (attackStatus === true && attackAlert === false) {
+            setBarbaModalOpen(true);
+        }
+    }, [attackStatus])
 
     useEffect(() => {
         if (global.walletAddress !== "") {
@@ -363,6 +382,12 @@ export const MainPage = ({
                         </div>
                     </>}
             </div>
+            <BarbariansModal
+                barbaModalOpen={barbaModalOpen}
+                setBarbaModalOpen={setBarbaModalOpen}
+                attackStatus={attackStatus}
+                setAttackStatus={setAttackStatus}
+            />
         </>
     )
 }

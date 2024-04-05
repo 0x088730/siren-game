@@ -41,6 +41,7 @@ const SupportModal = ({
   const [isCooldownStarted, setIsCooldownStarted] = useState(false)
   const dispatch = useDispatch<any>()
   const [btnType, setBtnType] = useState('Start')
+  const [supportData, setSupportData] = useState({ csc: 0, res: 0 });
   const [avatar, setAvatar] = useState(["", "", ""]);
 
   const onBtnClick = () => {
@@ -61,9 +62,10 @@ const SupportModal = ({
           alert(res.message);
           return;
         }
-        setRemainedTime(res.data.time);
-        setResource(res.data.resource);
+        setRemainedTime(res.time);
+        setResource(res.resource);
         setIsCooldownStarted(true);
+        setSupportData(res.supportData);
       })
     } else if (btnType === 'Claim') {
     }
@@ -81,6 +83,7 @@ const SupportModal = ({
       var cooldownInterval = setInterval(() => {
         setRemainedTime((prevTime) => {
           if (prevTime === 1) {
+            getCooldown();
           }
           if (prevTime === 0) {
             return 0
@@ -93,38 +96,32 @@ const SupportModal = ({
   }, [isCooldownStarted])
   useEffect(() => {
     if (supportModalOpen === true)
-      dispatch(
-        checkCooldown(address, 'support', (res: any) => {
-          let cooldownSec = res.data.time
-          if (cooldownSec === 999999) {
-            setIsCooldownStarted(false)
-            setBtnType('Start')
-          } else if (cooldownSec <= 0) {
-            setBtnType('Claim')
-            setRemainedTime(-1)
-            setIsCooldownStarted(false)
-            setAvatar(res.data.avatar)
-          } else {
-            setRemainedTime(cooldownSec)
-            setIsCooldownStarted(true)
-            setAvatar(res.data.avatar)
-          }
-        }),
-      )
-  }, [supportModalOpen, dispatch])
+      getCooldown();
+  }, [supportModalOpen])
 
-  const onUpgradeLevel = () => {
-    if (btnType !== "Start" || remainedTime >= 0) {
-      alert("please get claim first")
-      return
-    }
-    // dispatch(levelupHunter(address, (resp: any) => {
-    //   if (resp) {
-    //     setCsc(resp.data.csc)
-    //     setUpgradeLevel(resp.data.upgradeLevel)
-    //     global.hunterLevel = resp.data.upgradeLevel
-    //   }
-    // }))
+  const getCooldown = () => {
+    dispatch(
+      checkCooldown(address, 'support', (res: any) => {
+        let cooldownSec = res.time
+        if (cooldownSec === 999999) {
+          setIsCooldownStarted(false)
+          setBtnType('Start')
+          setSupportData(res.supportData);
+          setAvatar(res.avatar);
+        } else if (cooldownSec <= 0) {
+          setBtnType('Start')
+          setRemainedTime(-1)
+          setIsCooldownStarted(false)
+          setSupportData(res.supportData);
+          setAvatar(["", "", ""])
+        } else {
+          setRemainedTime(cooldownSec)
+          setIsCooldownStarted(true)
+          setSupportData(res.supportData);
+          setAvatar(res.avatar);
+        }
+      }),
+    )
   }
 
   const selectCharacter = (item: any) => {
@@ -170,10 +167,10 @@ const SupportModal = ({
             </div>
             <div className='flex justify-between items-center w-full my-2'>
               <div className='flex-mid text-white text-[14px]'>
-                RESOURCE USED: <img alt="" draggable="false" className='w-[20px] mx-2' src="/assets/images/rock.png" /> 2
+                RESOURCE USED: <img alt="" draggable="false" className='w-[20px] mx-2' src="/assets/images/rock.png" /> {supportData.res}
               </div>
               <div className='flex-mid text-white text-[14px]'>
-                CSC EARNED: <img alt="" draggable="false" className='w-[20px] mx-2' src="/images/cryptoIcon.png" /> 0
+                CSC EARNED: <img alt="" draggable="false" className='w-[20px] mx-2' src="/images/cryptoIcon.png" /> {supportData.csc}
               </div>
               <Button className='w-40 p-0'>
                 <img alt="" draggable="false" src="/assets/images/tabbutton.png" />

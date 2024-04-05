@@ -87,6 +87,9 @@ export const gameSlice = createSlice({
     },
     setButtonView: (state: GameStateProps, action: PayloadAction<boolean>) => {
       state.buttonView = action.payload
+    },
+    setAttackAlert: (state: GameStateProps, action: PayloadAction<boolean>) => {
+      state.attackAlert = action.payload
     }
   },
 })
@@ -110,7 +113,8 @@ export const {
   openChapterPage,
   setDisplay,
   setRememberCode,
-  setButtonView
+  setButtonView,
+  setAttackAlert
 } = gameSlice.actions
 
 export default gameSlice.reducer

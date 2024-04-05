@@ -523,6 +523,13 @@ export async function checkPremiumCooldown(walletAddress: string) {
   return res;
 }
 
+export async function barbaAttackWall(walletAddress: string) {
+  const res = await api(`user/barbaAttackWall`, `post`, {
+    walletAddress,
+  })
+  return res;
+}
+
 export async function sectionManage(walletAddress: string, sectionNum: number) {
   const res = await api(`user/sectionManage`, `post`, {
     walletAddress,
@@ -648,17 +655,17 @@ export async function leaveGuild(walletAddress: string, guild: any) {
   })
   return res;
 }
-// export function addExp(address: any, amount: Number, cb: any) {
-//   return async (dispatch: any) => {
-//     const res = await api(`user/add/exp`, 'post', {
-//       walletAddress: address,
-//       amount: amount,
-//     })
-//     cb(res)
-//     dispatch({
-//       type: RESOURCE_CHANGE_SUCCESS,
-//       payload: { data: res },
-//     })
-//   }
-// }
 
+export async function restoreWall(walletAddress: any) {
+  const res = await api(`user/restoreWall`, `post`, {
+    walletAddress,
+  })
+  return res;
+}
+
+export async function getBarbaStatus(walletAddress: string) {
+  const res = await api(`user/getBarbaStatus`, `post`, {
+    walletAddress,
+  })
+  return res;
+}

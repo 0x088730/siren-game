@@ -32,6 +32,7 @@ export interface GameStateProps {
   display: string
   rememberCode: boolean
   buttonView: boolean
+  attackAlert: boolean
 }
 
 const gameInitialState: GameStateProps = {
@@ -66,6 +67,7 @@ const gameInitialState: GameStateProps = {
   display: "block",
   rememberCode: false,
   buttonView: true,
+  attackAlert: false,
 }
 
 export default gameInitialState
