@@ -3,6 +3,8 @@ import Button from '@mui/material/Button'
 import Modal from '@mui/material/Modal'
 import { useWeb3Context } from '../../hooks/web3Context'
 import { restoreWall } from '../../store/user/actions'
+import store from '../../store'
+import { setAttackAlert } from '../../common/state/game/reducer'
 
 interface Props {
   repairModalOpen: any
@@ -43,6 +45,7 @@ const RepairModal = ({
         setCurrentWallHP(res.wallHP)
         alert("Your wall successfully restored!!!")
         setRepairModalOpen(false);
+        store.dispatch(setAttackAlert(false));
         getBarbarians();
       })
     }

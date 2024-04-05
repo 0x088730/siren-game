@@ -21,7 +21,7 @@ const BarbariansModal = ({
   const skullLength = [1, 2, 3];
   const [successStatus, setSuccessStatus] = useState(false);
   useEffect(() => {
-    if (barbaModalOpen === true)
+    if (barbaModalOpen === true && attackStatus === true)
       store.dispatch(setAttackAlert(true));
   }, [barbaModalOpen])
 

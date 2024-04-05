@@ -138,6 +138,7 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
       }
     })
   }
+
   const getBarbarians = () => {
     getBarbaStatus(address).then(res => {
       if (res.data === false) {
