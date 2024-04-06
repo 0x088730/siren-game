@@ -13,18 +13,18 @@ const initialLevelData = [
     { level: 1, image: "assets/images/rock.png", value: "X30", getStatus: false, available: false, title1: "WIN 1 FIGHT IN PVE", title2: "30X RESOURCES" },
     { level: 2, image: "assets/images/cryptoIcon.png", value: "X15", getStatus: false, available: false, title1: "OPEN CHEST", title2: "15X CSC" },
     { level: 3, image: "assets/images/cryptoIcon.png", value: "X20", getStatus: false, available: false, title1: "BUY A TOWER", title2: "20X CSC" },
-    { level: 4, image: "assets/images/weapon/3.png", value: "", getStatus: false, available: false, title1: "GET 200 WATER", title2: "RANDOM WEAPON" },
+    { level: 4, image: "assets/images/weapon/10.png", value: "", getStatus: false, available: false, title1: "GET 200 WATER", title2: "WEAPON" },
     { level: 5, image: "assets/images/claim-box.png", value: "X2", getStatus: false, available: false, title1: "WIN IN 4 ROOMS IN THE FIRST LOCATION", title2: "2X CHESTS" },
     { level: 6, image: "assets/images/cryptoIcon.png", value: "X20", getStatus: false, available: false, title1: "WIN 20 BATTLES", title2: "20X CSC" },
-    { level: 7, image: "assets/images/rock.png", value: "X65", getStatus: false, available: false, title1: "EARN 1500 TEST CSC", title2: "65X RESOURCES" },
-    { level: 8, image: "assets/images/cryptoIcon.png", value: "X50", getStatus: false, available: false, title1: "BUY 110 CSC TOKEN", title2: "50X RESOURCES, 50X WATER, 50X CSC" },
+    { level: 7, image: "assets/images/rock.png", value: "X65", getStatus: false, available: false, title1: "EARN 1500 CSC", title2: "65X RESOURCES" },
+    { level: 8, image: "assets/images/cryptoIcon.png", value: "X50", getStatus: false, available: false, title1: "DEPOSIT 110 CSC TOKEN", title2: "50X RESOURCES, 50X WATER, 50X CSC" },
     { level: 9, image: "assets/images/claim-box.png", value: "X2", getStatus: false, available: false, title1: "OPEN 7 CHESTS", title2: "2X CHESTS" },
-    { level: 10, image: "assets/images/cryptoIcon.png", value: "X20", getStatus: false, available: false, title1: "EARN 3500 TEST CSC", title2: "20X CSC, 75X RESOURCES" },
-    { level: 11, image: "assets/images/weapon/6.png", value: "", getStatus: false, available: false, title1: "GET 500 WATER", title2: "RANDOM WEAPON" },
-    { level: 12, image: "assets/images/cryptoIcon.png", value: "X100", getStatus: false, available: false, title1: "BUY 220 CSC TOKEN", title2: "100X RESOURCES, 100X WATER, 100X CSC" },
-    { level: 13, image: "assets/images/claim-box.png", value: "X3, X50", getStatus: false, available: false, title1: "GET 5000 TEST CSC", title2: "3X CHESTS, 50X WATER" },
-    { level: 14, image: "assets/images/characters/avatar/2.png", value: "X1", getStatus: false, available: false, title1: "BUY 1110 CSC TOKEN", title2: "RANDOM CHARACTER" },
-    { level: 15, image: "assets/images/characters/avatar/4.png", value: "X1", getStatus: false, available: false, title1: "GET 7000 TEST CSC, 5000 WATER, BUY 200+ CSC", title2: "RANDOM CHARACTER" },
+    { level: 10, image: "assets/images/cryptoIcon.png", value: "X20", getStatus: false, available: false, title1: "EARN 3500 CSC", title2: "20X CSC, 75X RESOURCES" },
+    { level: 11, image: "assets/images/weapon/10.png", value: "", getStatus: false, available: false, title1: "GET 500 WATER", title2: "WEAPON" },
+    { level: 12, image: "assets/images/cryptoIcon.png", value: "X100", getStatus: false, available: false, title1: "DEPOSIT 220 CSC TOKEN", title2: "100X RESOURCES, 100X WATER, 100X CSC" },
+    { level: 13, image: "assets/images/claim-box.png", value: "X3, X50", getStatus: false, available: false, title1: "GET 5000 CSC", title2: "3X CHESTS, 50X WATER" },
+    { level: 14, image: "assets/images/characters/avatar/2.png", value: "X1", getStatus: false, available: false, title1: "DEPOSIT 1110 CSC TOKEN", title2: "RANDOM CHARACTER" },
+    { level: 15, image: "assets/images/characters/avatar/4.png", value: "X1", getStatus: false, available: false, title1: "GET 7000 CSC, 5000 WATER, DEPOSIT 200+ CSC", title2: "RANDOM CHARACTER" },
 ]
 
 export const BattlePass = (props) => {
@@ -221,8 +221,8 @@ export const BattlePass = (props) => {
                     <img src="assets/images/book.png" className="absolute -top-[3.5rem] translate-x-[250%] w-[15%]" alt="" draggable="false" />
                     <img src='assets/images/come-back.png' draggable="false" className='absolute top-0 right-[-1rem] cursor-pointer w-[5.5rem] z-10' onClick={() => onMain()} />
                     <div className="h-[45%] flex justify-center items-center pt-6 pl-12">
-                        <div className="w-[55%] flex flex-col justify-around h-full">
-                            <div className="text-[30px] italic">SEASON 0</div>
+                        <div className="w-[55%] flex flex-col justify-start gap-y-6 h-full">
+                            <div className="text-[30px] italic mt-6">SEASON 0</div>
                             <div className="flex items-center">
                                 <div className="me-4">
                                     <img src="assets/images/yellow_clock.png" className="w-[40px] h-full" alt="" draggable="false" />
@@ -232,14 +232,14 @@ export const BattlePass = (props) => {
                                     <div className="text-2xl text-[#ffff19]">{date.day + " DAYS " + date.hour + " HOURS"}</div>
                                 </div>
                             </div>
-                            <div className="flex items-center mt-4">
+                            {/* <div className="flex items-center mt-4">
                                 <div className="me-3 text-[#ffff19] text-5xl text-bold">!</div>
                                 <div className="tracking-[-1px] text-[0.9rem] font-[600]">
                                     ALL REWARDS RECEIVED REMAIN WITH YOU FOREVER.<br />
                                     ITEMS FROM BATTLE PASS WILL NOT BE REMOVED AT RELEASE.<br />
                                     <span className="text-[#b30606]" style={{ textShadow: "0 0 7px white" }}>YOU WILL RECEIVE REWARDS FROM BP AT THE BETA VERSION START.</span>
                                 </div>
-                            </div>
+                            </div> */}
                         </div>
                         <div className={`${styles.present} w-[45%] h-full p-4 pe-0`}>
                             <div className={`h-full w-full flex`}>
@@ -261,7 +261,8 @@ export const BattlePass = (props) => {
                                                 }
                                             >
                                                 {presentData.value === "" ?
-                                                    <img src={presentData.getStatus === true ? presentData.image : `assets/images/weapon/${presentData.level === 4 ? randomVal[0] : randomVal[1]}.png`} draggable="false" className="rounded-xl border-[1px] border-black w-full h-full" style={{ boxShadow: "0 0 5px #FFA723" }} alt="" />
+                                                    // <img src={presentData.getStatus === true ? presentData.image : `assets/images/weapon/${presentData.level === 4 ? randomVal[0] : randomVal[1]}.png`} draggable="false" className="rounded-xl border-[1px] border-black w-full h-full" style={{ boxShadow: "0 0 5px #FFA723" }} alt="" />
+                                                    <img src={presentData.getStatus === true ? presentData.image : `assets/images/weapon/10.png`} draggable="false" className="rounded-xl border-[1px] border-black w-full h-full" style={{ boxShadow: "0 0 5px #FFA723" }} alt="" />
                                                     :
                                                     <>
                                                         {
@@ -304,7 +305,8 @@ export const BattlePass = (props) => {
                                             className={`w-36 h-40 p-3 flex flex-col justify-center items-center cursor-pointer ${item.available === true ? styles.shine : null}`}
                                             onClick={() => setPresentData(item)}
                                         >
-                                            <img src={item.getStatus === true ? item.image : `assets/images/weapon/${item.level === 4 ? randomVal[0] : randomVal[1]}.png`} className={item.available === true ? `w-full h-full rounded-2xl` : `brightness-75 w-full h-full rounded-2xl`} alt="" draggable="false" />
+                                            {/* <img src={item.getStatus === true ? item.image : `assets/images/weapon/${item.level === 4 ? randomVal[0] : randomVal[1]}.png`} className={item.available === true ? `w-full h-full rounded-2xl` : `brightness-75 w-full h-full rounded-2xl`} alt="" draggable="false" /> */}
+                                            <img src={item.getStatus === true ? item.image : `assets/images/weapon/10.png`} className={item.available === true ? `w-full h-full rounded-2xl` : `brightness-75 w-full h-full rounded-2xl`} alt="" draggable="false" />
                                             {item.getStatus === true ? <div className="absolute text-[20px]">CLAIMED</div> : null}
                                         </div>
                                         :
