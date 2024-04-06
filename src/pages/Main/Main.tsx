@@ -245,6 +245,7 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
               setCsc={setCsc}
               levelState={levelState}
               setLevelState={setLevelState}
+              setWater={setWater}
             />
             <SupportModal
               supportModalOpen={supportModalOpen}

@@ -27,6 +27,7 @@ interface Props {
   setCsc: any
   levelState: number
   setLevelState: any
+  setWater: any
 }
 
 const MiningModal = ({
@@ -35,14 +36,15 @@ const MiningModal = ({
   csc,
   setCsc,
   levelState,
-  setLevelState
+  setLevelState,
+  setWater
 }: Props) => {
   const count = [1, 2, 3];
   const title = [
     { level: "LEVEL 1:", detail1: "9 CSC PER 12H", detail2: "CLAIM 9 CSC EACH 12H", price: "PRICE: 500 CSC" },
     { level: "LEVEL 1:", detail1: "9 CSC PER 12H", detail2: "CLAIM 9 CSC EACH 12H", price: "PRICE: 500 CSC" },
-    { level: "LEVEL 2:", detail1: "25 CSC PER 12H", detail2: "CLAIM 25 CSC EACH 12H", price: "PRICE: 900 CSC" },
-    { level: "LEVEL 3:", detail1: "50 CSC PER 12H", detail2: "CLAIM 50 CSC EACH 12H", price: "PRICE: 1750 CSC" },
+    { level: "LEVEL 2:", detail1: "25 CSC PER 12H", detail2: "CLAIM 25 CSC EACH 12H", price: "PRICE: 750 CSC" },
+    { level: "LEVEL 3:", detail1: "50 CSC PER 12H", detail2: "20 WATER PER 12H", price: "PRICE: 1200 CSC" },
   ]
   const { connected, chainID, address, connect } = useWeb3Context()
   const { user } = useSelector((state: any) => state.userModule)
@@ -196,6 +198,7 @@ const MiningModal = ({
             dispatch(claimSiren(address, false, (res: any) => {
               setCsc(res.data.csc)
               setBtnType('Start')
+              setWater(res.data.water)
             }))
           }
           else {
@@ -221,11 +224,11 @@ const MiningModal = ({
       alert("you don't have eough csc")
       return;
     }
-    if (levelState === 1 && csc < 900) {
+    if (levelState === 1 && csc < 750) {
       alert("you don't have eough csc")
       return;
     }
-    if (levelState === 2 && csc < 1750) {
+    if (levelState === 2 && csc < 1200) {
       alert("you don't have eough csc");
       return;
     }
@@ -325,6 +328,10 @@ const MiningModal = ({
                     <img draggable="false" src='assets/images/cryptoIcon.png' width={30} />
                     <p>{title[levelState].detail1}</p>
                   </div>
+                  <div className={`flex justify-center items-end ${levelState === 3 ? "" : "hidden"}`}>
+                    <img draggable="false" src='/images/res_res.png' width={30} />
+                    <p className='tracking-[-1px]'>{title[levelState].detail2}</p>
+                  </div>
                 </div>
               </div>
               <div className='flex flex-col justify-center items-center gap-y-6'>
@@ -362,12 +369,13 @@ const MiningModal = ({
               <div className='flex justify-evenly items-center w-full h-full'>
                 {count.map((item, index) => (
                   <div key={index} className='h-full w-48 flex flex-col justify-center items-center gap-y-2 rounded-2xl'>
-                    <div className={`${item === 1 ? styles.lvl1Box : item === 2 ? styles.lvl2Box : styles.lvl3Box} relative flex flex-col justify-center items-center px-[0.8rem] py-4 gap-y-2`}>
+                    <div className={`${item === 1 ? styles.lvl1Box : item === 2 ? styles.lvl2Box : styles.lvl3Box} relative flex flex-col justify-start items-center h-[17rem] px-[0.8rem] py-4 gap-y-2`}>
                       {/* <img alt="" src="assets/images/reward_bg_2.png" className='absolute top-0 w-full h-full' /> */}
-                      <img alt="" draggable="false" src={`assets/images/box${item}.png`} className='z-10 w-36 my-4' />
+                      <img alt="" draggable="false" src={`assets/images/box${item}.png`} className='z-10 w-36 my-2' />
                       <div className='flex flex-col justify-center items-center z-10 text-[15px]'>
                         <p>{title[item].level}</p>
                         <div className='flex justify-center'><img draggable="false" src='assets/images/cryptoIcon.png' width={20}></img><p>{title[item].detail1}</p></div>
+                        <div className={`flex justify-center ${item === 3 ? "" : "hidden"}`}><img draggable="false" src='/images/res_res.png' width={20}></img><p className='tracking-[-1.5px]'>{title[item].detail2}</p></div>
                       </div>
                     </div>
                     <div className='flex flex-col justify-end items-center gap-y-2 w-full h-20'>
