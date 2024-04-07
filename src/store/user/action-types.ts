@@ -32,6 +32,7 @@ export interface LoginInfo {
   wall: Number
   tokenAmount: any
   cscTokenAmount: Number
+  level: Number
 }
 
 export interface LoginState {

@@ -30,6 +30,7 @@ const initialState: LoginState = {
       usdt: 0
     },
     cscTokenAmount: 0,
+    level: 0,
   },
 }
 
@@ -66,6 +67,7 @@ export function userReducer(
       user.wall = data.wall
       user.tokenAmount = data.tokenAmount
       user.cscTokenAmount = data.cscTokenAmount
+      user.level = data.level
 
       return { user }
     }
@@ -98,7 +100,7 @@ export function userReducer(
       user.wall = data.wall? data.wall : user.wall
       user.tokenAmount = data.tokenAmount? data.tokenAmount : user.tokenAmount
       user.cscTokenAmount = data.cscTokenAmount? data.cscTokenAmount : user.cscTokenAmount
-
+      user.level = data.level? data.level : user.level
       return { user }
     }
 

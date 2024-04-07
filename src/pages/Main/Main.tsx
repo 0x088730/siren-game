@@ -54,7 +54,7 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
   const [barbaModalOpen, setBarbaModalOpen] = useState(false);
   const [repairModalOpen, setRepairModalOpen] = useState(false);
   const [openMining, setOpenMining] = useState(false)
-  const [levelState, setLevelState] = React.useState(global.level)
+  const [levelState, setLevelState] = React.useState(userModule.user.level)
   const [wallHP, setWallHP] = useState(0);
   const [currentWallHP, setCurrentWallHP] = useState(wallHP);
   const [attackStatus, setAttackStatus] = useState(false);
@@ -324,7 +324,7 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
                 className={`${styles.item} absolute left-[68%] w-[14%] top-[24%] cursor-pointer`}
                 src={`/images/mining.png`}
                 onClick={(e) => setOpenMining(true)}
-                // onClick={(e) => currentWallHP <= 0 ? setRepairModalOpen(true) : setOpenMining(true)}
+              // onClick={(e) => currentWallHP <= 0 ? setRepairModalOpen(true) : setOpenMining(true)}
               />
             </Box>
             <Box className='z-20 h-fit w-fit'>
