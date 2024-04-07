@@ -26,6 +26,10 @@ const CharacterModal = ({ openCharacter, setOpenCharacter, setPageStatus }: Prop
     }
 
     const onSection = (character: any) => {
+        if (character.energy < 10) {
+            alert('This character energy is less than 10. Please charge energy')
+            return
+        }
         global.currentCharacterName = character.characterName;
         setPageStatus("section");
     }

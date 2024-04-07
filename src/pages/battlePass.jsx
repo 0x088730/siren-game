@@ -178,7 +178,6 @@ export const BattlePass = (props) => {
     }
 
     const onClaim = (presentData) => {
-        console.log(presentData)
         if (presentData.level !== 1 && levelData[presentData.level - 2].getStatus === false) {
             alert("Can't claim reward of the level!");
             return;

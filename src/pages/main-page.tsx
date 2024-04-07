@@ -106,14 +106,11 @@ export const MainPage = ({
         if (global.wall === 0) {
             return
         }
-        if (global.energy < 10) {
-            alert('Your energy is less than 10. Please charge energy')
-            return
-        }
-        // store.dispatch(setGameStatus(1))
-        // store.dispatch(openChapterPage(true));
+        // if (global.energy < 10) {
+        //     alert('Your energy is less than 10. Please charge energy')
+        //     return
+        // }
         setPageStatus("chapter");
-        // onStart()
     }
     const inventory = () => {
         if (global.wall === 0) {
