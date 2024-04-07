@@ -18,22 +18,11 @@ const InventoryModal = ({ openInventory, setOpenInventory }: Props) => {
         { item: "", stock: 0 },
     ]);
 
-    const style = {
-        position: 'absolute' as const,
-        top: '50%',
-        left: '50%',
-        transform: 'translate(-50%, -50%)',
-        width: 700,
-        height: 550,
-        boxShadow: 24,
-        textAlign: 'center',
-    }
-
     useEffect(() => {
         if (global.walletAddress !== "" && global.walletAddress !== null && global.walletAddress !== undefined) {
             let gem = [];
             for (let i = 0; i < global.purchase.length; i++) {
-                if (global.purchase[i].stock === 0) continue;
+                if (global.purchase[i].stock <= 0) continue;
                 gem.push({ item: global.purchase[i].item.replace('_', '-'), stock: global.purchase[i].stock })
             }
             setGemList(gem);
@@ -57,7 +46,7 @@ const InventoryModal = ({ openInventory, setOpenInventory }: Props) => {
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
             >
-                <Box sx={style} className="w-[450px] flex" style={{ backgroundImage: "url(assets/images/set2.png)", backgroundSize: '100% 100%' }}>
+                <Box className="absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%] w-[700px] h-[550px] text-center flex" style={{ backgroundImage: "url(assets/images/set2.png)", backgroundSize: '100% 100%' }}>
                     <img
                         alt=""
                         src="/images/support/support_md_close_btn.png"
