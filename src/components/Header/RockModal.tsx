@@ -72,6 +72,7 @@ const RockModal = ({
   }, [isCooldownStarted])
 
   const onRockStart = () => {
+    if (remainedTime > 0) return;
     if (csc < 2) {
       alert("Not enough csc token!")
       return;
@@ -87,6 +88,7 @@ const RockModal = ({
   }
 
   const onClaim = () => {
+    if (remainedTime > 0) return;
     dispatch(
       checkCooldown(address, `diamond${Number(selectedIndex) + 1}`, (res: any) => {
         let cooldownSec = res.data

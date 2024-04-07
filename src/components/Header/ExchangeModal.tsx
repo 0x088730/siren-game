@@ -164,15 +164,15 @@ const ExchangeModal = ({
       alert("please get claim first")
       return
     }
-    if (csc < 100) {
+    if ((upgradeLevel === 0 && csc < 50) || (upgradeLevel > 0 && csc < 100)) {
       alert("you need more csc")
       return
     }
-    if (upgradeLevel === 0 && global.wall < 2) {
+    if (upgradeLevel === 1 && global.wall < 2) {
       alert("you have to reach level 2 of wall")
       return
     }
-    else if (upgradeLevel === 1 && global.wall < 3) {
+    else if (upgradeLevel === 2 && global.wall < 3) {
       alert("you have to reach level 3 of wall")
       return
 
@@ -188,21 +188,10 @@ const ExchangeModal = ({
 
   const selectCharacter = (item: any) => {
     if (remainedTime > 0 || btnType === "Claim") return;
-    if (item <= upgradeLevel) {
+    if (item < upgradeLevel) {
       setSelectedCharacterIndex(item);
       setOpenChraracterChoose(true)
     }
-  }
-
-  const style = {
-    position: 'absolute' as const,
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: {
-      xs: 180,
-      md: 700,
-    },
   }
 
   return (
@@ -213,7 +202,7 @@ const ExchangeModal = ({
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={style}>
+        <Box className='absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%] w-[700px]'>
           <img alt="" draggable="false" src="/images/support/support_md_bg.png" />
 
           <img
@@ -232,20 +221,41 @@ const ExchangeModal = ({
           <div className='absolute top-0 w-full h-full p-12 flex flex-col justify-start items-center text-[#e7e1e1] font-bold'>
             <div className='flex justify-between items-center w-full'>
               <div className={`relative w-48 h-48 border-4 rounded-lg ${avatar[0] === "" ? "border-[#ffffff]/[0.2]" : "border-[#FFE60A]"} flex justify-center items-center cursor-pointer text-[14px]`} onClick={() => { selectCharacter(0) }}>
-                <img alt="" draggable="false" src="assets/images/huntingImg1.png" className='w-full h-full border-2 border-black rounded-md' />
-                {avatar[0] === "" ?
+                {upgradeLevel > 0 ?
                   <>
-                    <img src="assets/images/shadow.png" alt="" draggable="false" className='absolute w-36' />
-                    <div className='absolute text-center'>CLICK TO SELECT<br />CHARACTER</div>
+                    <img alt="" draggable="false" src="assets/images/huntingImg1.png" className='w-full h-full border-2 border-black rounded-md' />
+                    {avatar[0] === "" ?
+                      <>
+                        <img src="assets/images/shadow.png" alt="" draggable="false" className='absolute w-36' />
+                        <div className='absolute text-center'>CLICK TO SELECT<br />CHARACTER</div>
+                      </>
+                      :
+                      <div className={`${styles.characterBox} absolute w-full h-full border-[3px] border-[#605a20]/[0.7] rounded-[1.2rem] flex justify-center items-center cursor-pointer`}>
+                        <img draggable="false" src={avatar[0]} alt="" className='absolute w-36' />
+                      </div>
+                    }
                   </>
                   :
-                  <div className={`${styles.characterBox} absolute w-full h-full border-[3px] border-[#605a20]/[0.7] rounded-[1.2rem] flex justify-center items-center cursor-pointer`}>
-                    <img draggable="false" src={avatar[0]} alt="" className='absolute w-36' />
-                  </div>
+                  <>
+                    <img alt="" draggable="false" src="assets/images/huntingImg2.png" className='w-full h-full border-2 border-black rounded-md' />
+                    <img draggable="false" src="assets/images/shadow.png" alt="" className='absolute w-36' />
+                    <div className='absolute w-full flex flex-col justify-center items-center gap-y-4'>
+                      <div className='flex justify-center items-center'><img draggable="false" src='assets/images/cryptoIcon.png' width={25} />50 CSC</div>
+                      <div className={`relative flex justify-center items-center w-3/4`}>
+                        <img draggable="false" src="/assets/images/upgrade btn.png" alt="" className='w-full' />
+                        <div
+                          className={`absolute`}
+                          onClick={() => onUpgradeLevel()}
+                        >
+                          UPGRADE
+                        </div>
+                      </div>
+                    </div>
+                  </>
                 }
               </div>
               <div className={`relative w-48 h-48 border-4 rounded-lg ${avatar[1] === "" ? "border-[#ffffff]/[0.2]" : "border-[#FFE60A]"} flex justify-center items-center cursor-pointer text-[14px]`} onClick={() => { selectCharacter(1) }}>
-                {upgradeLevel >= 1 ?
+                {upgradeLevel > 1 ?
                   <>
                     <img alt="" draggable="false" src="assets/images/huntingImg1.png" className='w-full h-full border-2 border-black rounded-md' />
                     {avatar[1] === "" ?
@@ -265,13 +275,13 @@ const ExchangeModal = ({
                     <img draggable="false" src="assets/images/shadow.png" alt="" className='absolute w-36' />
                     <div className='absolute w-full flex flex-col justify-center items-center gap-y-4'>
                       <div className='flex justify-center items-center'><img draggable="false" src='assets/images/cryptoIcon.png' width={25} />100 CSC</div>
-                      <div className={`relative flex justify-center items-center w-3/4`}>
+                      <div className={`relative flex justify-center items-center w-3/4 ${upgradeLevel === 1 ? "" : "grayscale"}`}>
                         <img draggable="false" src="/assets/images/upgrade btn.png" alt="" className='w-full' />
                         <div
                           className={`absolute`}
-                          onClick={() => onUpgradeLevel()}
+                          onClick={() => upgradeLevel === 1 ? onUpgradeLevel() : null}
                         >
-                          UPGRADE
+                          {upgradeLevel === 1 ? "UPGRADE" : "UNLOCK"}
                         </div>
                       </div>
                     </div>
@@ -280,7 +290,7 @@ const ExchangeModal = ({
                 }
               </div>
               <div className={`relative w-48 h-48 border-4 rounded-lg ${avatar[2] === "" ? "border-[#ffffff]/[0.2]" : "border-[#FFE60A]"} flex justify-center items-center cursor-pointer text-[14px]`} onClick={() => { selectCharacter(2) }}>
-                {upgradeLevel >= 2 ?
+                {upgradeLevel > 2 ?
                   <>
                     <img alt="" draggable="false" src="assets/images/huntingImg1.png" className='w-full h-full border-2 border-black rounded-md' />
                     {avatar[2] === "" ?
@@ -300,13 +310,13 @@ const ExchangeModal = ({
                     <img src="assets/images/shadow.png" alt="" draggable="false" className='absolute w-36' />
                     <div className='absolute w-full flex flex-col justify-center items-center gap-y-4'>
                       <div className='flex justify-center items-center'><img draggable="false" src='assets/images/cryptoIcon.png' width={25} />100 CSC</div>
-                      <div className={`relative flex justify-center items-center w-3/4 ${upgradeLevel === 1 ? "" : "grayscale"}`}>
+                      <div className={`relative flex justify-center items-center w-3/4 ${upgradeLevel === 2 ? "" : "grayscale"}`}>
                         <img draggable="false" src="/assets/images/upgrade btn.png" alt="" className='w-full' />
                         <div
                           className={`absolute`}
-                          onClick={() => { if (upgradeLevel === 1) onUpgradeLevel() }}
+                          onClick={() => { if (upgradeLevel === 2) onUpgradeLevel() }}
                         >
-                          {upgradeLevel === 1 ? "UPGRADE" : "UNLOCK"}
+                          {upgradeLevel === 2 ? "UPGRADE" : "UNLOCK"}
                         </div>
                       </div>
                     </div>
