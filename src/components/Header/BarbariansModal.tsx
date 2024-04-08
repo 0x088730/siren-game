@@ -88,7 +88,7 @@ const BarbariansModal = ({
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box className='absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%] w-[700px]'>
+        <Box className='absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%] w-[780px]'>
           <img alt="" draggable="false" src="/images/support/support_md_bg.png" />
 
           <img
@@ -103,10 +103,10 @@ const BarbariansModal = ({
             <img alt="" draggable="false" src="assets/images/head-bg.png" className='w-72 -mt-12' />
             <p className={`absolute text-[20px] text-center -mt-2 tracking-[-2px]`}>BARBARIANS</p>
           </div>
-          <div className='flex-mid flex-col absolute w-[40.5rem] h-[26.5rem] top-[1.6rem] left-[1.7rem] rounded-xl'>
+          <div className='flex-mid flex-col absolute w-[45.1rem] h-[29.6em] top-[1.8rem] left-[1.9rem] rounded-xl'>
             <div className='font-bold w-full px-12 mb-2 text-white'>STATUS: <span className={`${attackStatus ? "text-[#e92d2d]" : "text-[#2de964]"}`}>{attackStatus ? "ATTACK" : "CALM"}</span></div>
             <div className='flex-mid'>
-              <div className={`${styles.lvl1Box} flex-mid flex-col w-52 h-80`}>
+              <div className={`${styles.lvl1Box} flex-mid flex-col w-60 h-[23rem]`}>
                 <div className='flex-mid gap-x-1'>
                   {skullLength.map((item) => (
                     <img key={item} alt="" draggable="false" src="/assets/images/skull.webp" className={`${item <= skullCount ? styles.skull : ""} w-12`} />
@@ -114,11 +114,11 @@ const BarbariansModal = ({
                 </div>
                 <img alt="" draggable="false" className={``} src={`/assets/images/barbarian.webp`} />
               </div>
-              <div className='flex-mid flex-col gap-y-4 w-96 text-[10px] leading-tight'>
+              <div className='flex-mid flex-col gap-y-4 w-[27rem] text-[12px] leading-tight'>
                 {!attackStatus ?
                   <>
                     <div className='text-white text-center bg-[#0000007d] p-3'>
-                      BARBARIANS CAN ATTACK YOUR LAND AT A RANDOM TIME ONCE EVERY 48 HOURS. TO PROTECCT YOURSELF FROM<br />BARBARIANS, SEND YOUR HEROES TO DEFEND YOU CAN <br />MAKE IT IN THE <span className='text-[#4dd3ff] font-bold'>"SUPPORT"</span> BUILDING
+                      BARBARIANS CAN ATTACK YOUR LAND AT A RANDOM TIME ONCE EVERY 48 HOURS. TO PROTECCT YOURSELF FROM BARBARIANS, SEND YOUR HEROES TO DEFEND YOU CAN MAKE IT IN THE <span className='text-[#4dd3ff] font-bold'>"SUPPORT"</span> BUILDING
                     </div>
                     <div className='text-white text-center bg-[#0000007d] p-3'>
                       BARBARIANS GET STRONGET OVER TIME. AT THE START YOU WILL BE ATTACKED BY WEAK BARBARIANS(1 SKULL), BUT OVER TIME THE BARBARIANS WILL BECOME STRONGER(2.3 SKULLS) UNTIL THE NEXT UP:<br />

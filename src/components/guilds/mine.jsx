@@ -1,8 +1,8 @@
 import Button from '@mui/material/Button'
 import { useEffect, useState } from 'react';
 import { global } from '../../common/global';
-import { addMessage, leaveGuild } from '../../store/user/actions';
-import { convertSecToHMS } from '../../utils/timer';
+import { addMessage, kickGuild, leaveGuild } from '../../store/user/actions';
+import { convertSecToHMS, showYMD } from '../../utils/timer';
 
 const MinePart = (props) => {
     const { guildList, setGuildList, nav, setNav, userGuild, setUserGuild, userStatus, setUserStatus } = props;
@@ -12,6 +12,7 @@ const MinePart = (props) => {
     const [msgData, setMsgData] = useState([])
     const [remainTime, setRemainTime] = useState(0);
     const [isCooldownStarted, setIsCooldownStarted] = useState(false);
+    const [overObj, setOverObj] = useState(-1);
 
     useEffect(() => {
         if (global.walletAddress !== '' && nav === "mine") {
@@ -78,6 +79,21 @@ const MinePart = (props) => {
         if (time > 3600) return Math.floor(time / 3600) + " HOURS " + Math.floor(Math.floor(time % 3600) / 60) + " MINS AGO"
         if (time > 60) return Math.floor(time / 60) + " MINS AGO"
         if (time < 60) return "NOW"
+    }
+
+    const kickMember = (creator, address) => {
+        if (creator === address) return;
+        kickGuild(creator, address).then(res => {
+            console.log(res)
+            if (res.data === false) {
+                alert(res.message);
+                return;
+            }
+            setGuildList(res.data.guildList);
+            setUserGuild(res.data.userGuild);
+            setUserStatus(res.data.userStatus);
+            setMsgData(res.data.userGuild.messages);
+        })
     }
 
     return (
@@ -169,9 +185,23 @@ const MinePart = (props) => {
                                 <div className='text-[12px]'>{userGuild.members.length}/{userGuild.totalMembers}</div>
                             </div>
                             {userGuild.members.map((item, index) => (
-                                <div key={index} className='flex-mid justify-between p-2 bg-[#9C97B5]/[0.4] border-[1px] border-[#16171D]/[0.5] rounded-lg w-full h-10 mt-[0.1rem]'>
-                                    <div className={`text-[14px] ${userGuild.creator === item.address.toLowerCase() ? "text-[#2ac736] font-bold" : ""}`}>{item.address.slice(0, 4) + " ... " + item.address.slice(-4)}</div>
-                                    <div className='flex-mid text-[12px]'>EARN: <img alt="" draggable="false" className='w-[20px] mx-2' src="/images/cryptoIcon.png" /> {item.earn} CSC</div>
+                                <div
+                                    key={index}
+                                    className='flex-mid justify-between p-2 bg-[#9C97B5]/[0.4] border-[1px] border-[#16171D]/[0.5] rounded-lg w-full h-10 mt-[0.1rem] cursor-pointer'
+                                    onMouseOver={() => userGuild.creator === global.walletAddress.toLowerCase() ? setOverObj(index) : null}
+                                    onMouseOut={() => userGuild.creator === global.walletAddress.toLowerCase() ? setOverObj(-1) : null}
+                                >
+                                    {index !== overObj || userGuild.creator === item.address.toLowerCase() ?
+                                        <>
+                                            <div className={`text-[14px] ${userGuild.creator === item.address.toLowerCase() ? "text-[#2ac736] font-bold" : ""}`}>{item.address.slice(0, 4) + " ... " + item.address.slice(-4)}</div>
+                                            <div className='flex-mid text-[12px]'>EARN: <img alt="" draggable="false" className='w-[20px] mx-2' src="/images/cryptoIcon.png" /> {item.earn} CSC</div>
+                                        </>
+                                        :
+                                        <>
+                                            <div className={`text-[16px] text-[#ff0000] font-bold}`} onClick={() => kickMember(userGuild.creator, item.address)}>KICK</div>
+                                            <div className='flex-mid text-[12px]'>JOIN DATE: {showYMD(item.joinedAt)}</div>
+                                        </>
+                                    }
                                 </div>
                             ))}
                         </div>

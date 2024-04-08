@@ -656,6 +656,14 @@ export async function leaveGuild(walletAddress: string, guild: any) {
   return res;
 }
 
+export async function kickGuild(creator: string, address: string) {
+  const res = await api(`user/kickGuild`, `post`, {
+    creator,
+    address,
+  })
+  return res;
+}
+
 export async function restoreWall(walletAddress: any) {
   const res = await api(`user/restoreWall`, `post`, {
     walletAddress,
