@@ -16,10 +16,10 @@ export async function getPrice() {
         await tokenPrice().then(res => {
             token = res[1] / (res[0] * 1000000000)
         })
-        await axios.get(`https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=binancecoin`, {})
-            .then(response => {
-                token = token * (response.data[0].current_price)
-            })
+        // await axios.get(`https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=binancecoin`, {})
+        //     .then(response => {
+        //         token = token * (response.data[0].current_price)
+        //     })
     } catch (e) {
         throw (e);
         return false;

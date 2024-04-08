@@ -12,7 +12,7 @@ import { useNavigate } from 'react-router-dom'
 import { GameHeaderComponent } from '../components/game-header.component'
 import CharacterDetailModal from '../widgets/characterDetailModal'
 import InventoryModal from '../widgets/inventoryModal'
-import { addLoginHistory, getBarbaStatus } from '../store/user/actions'
+import { addLoginHistory, getBarbaStatus, setSkullCooldown } from '../store/user/actions'
 import GuildModal from '../widgets/guildModal'
 import Web3 from 'web3'
 import BarbariansModal from '../components/Header/BarbariansModal'
@@ -78,6 +78,8 @@ export const MainPage = ({
                     return;
                 }
                 setAttackStatus(res.attack);
+            })
+            setSkullCooldown(global.walletAddress).then(res => {
             })
         }
     }, [])

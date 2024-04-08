@@ -5,6 +5,10 @@ import styles from "./Header.module.scss"
 import { useEffect, useState } from 'react'
 import store from '../../store'
 import { setAttackAlert } from '../../common/state/game/reducer'
+import { checkCooldown } from '../../store/user/actions'
+import { useDispatch } from 'react-redux'
+import { useWeb3Context } from '../../hooks/web3Context'
+import { convertSecToDHMS } from '../../utils/timer'
 interface Props {
   barbaModalOpen: any
   setBarbaModalOpen: any
@@ -18,12 +22,54 @@ const BarbariansModal = ({
   attackStatus,
   setAttackStatus,
 }: Props) => {
+  const { address } = useWeb3Context();
+  const dispatch = useDispatch<any>();
   const skullLength = [1, 2, 3];
   const [successStatus, setSuccessStatus] = useState(false);
+  const [remainedTime, setRemainedTime] = useState(0)
+  const [isCooldownStarted, setIsCooldownStarted] = useState(false)
+  const [skullCount, setSkullCount] = useState(1);
+
   useEffect(() => {
     if (barbaModalOpen === true && attackStatus === true)
       store.dispatch(setAttackAlert(true));
+    dispatch(
+      checkCooldown(address, 'skull', (res: any) => {
+        let cooldownSec = res.time
+        if (cooldownSec === 999999999) {
+          setSkullCount(res.skull)
+        } else if (cooldownSec <= 0) {
+          setRemainedTime(0);
+          setSkullCount(3);
+          setIsCooldownStarted(false)
+        } else {
+          setRemainedTime(cooldownSec)
+          setSkullCount(res.skull)
+          setIsCooldownStarted(true)
+        }
+      }),
+    )
   }, [barbaModalOpen])
+
+  useEffect(() => {
+    if (isCooldownStarted) {
+      var skullCooldownInterval = setInterval(() => {
+        setRemainedTime((prevTime) => {
+          if (prevTime === 1 || prevTime === 7 * 86400) {
+            dispatch(checkCooldown(address, 'skull', (res: any) => {
+              setSkullCount(res.skull)
+              setRemainedTime(res.time);
+            }))
+          }
+          if (prevTime === 0) {
+            return 0
+          }
+          return prevTime - 1
+        })
+      }, 1000)
+    }
+    return () => clearInterval(skullCooldownInterval)
+  }, [isCooldownStarted])
 
   const onAttack = (type: any) => {
     if (type === "start") {
@@ -58,12 +104,12 @@ const BarbariansModal = ({
             <p className={`absolute text-[20px] text-center -mt-2 tracking-[-2px]`}>BARBARIANS</p>
           </div>
           <div className='flex-mid flex-col absolute w-[40.5rem] h-[26.5rem] top-[1.6rem] left-[1.7rem] rounded-xl'>
-            <div className='font-bold w-full px-12 mb-2'>STATUS: <span className={`${attackStatus ? "text-[#e92d2d]" : "text-[#2de964]"}`}>{attackStatus ? "ATTACK" : "CALM"}</span></div>
+            <div className='font-bold w-full px-12 mb-2 text-white'>STATUS: <span className={`${attackStatus ? "text-[#e92d2d]" : "text-[#2de964]"}`}>{attackStatus ? "ATTACK" : "CALM"}</span></div>
             <div className='flex-mid'>
               <div className={`${styles.lvl1Box} flex-mid flex-col w-52 h-80`}>
                 <div className='flex-mid gap-x-1'>
                   {skullLength.map((item) => (
-                    <img key={item} alt="" draggable="false" src="/assets/images/skull.webp" className={`${item === 1 ? styles.skull : ""} w-12`} />
+                    <img key={item} alt="" draggable="false" src="/assets/images/skull.webp" className={`${item <= skullCount ? styles.skull : ""} w-12`} />
                   ))}
                 </div>
                 <img alt="" draggable="false" className={``} src={`/assets/images/barbarian.webp`} />
@@ -77,7 +123,7 @@ const BarbariansModal = ({
                     <div className='text-white text-center bg-[#0000007d] p-3'>
                       BARBARIANS GET STRONGET OVER TIME. AT THE START YOU WILL BE ATTACKED BY WEAK BARBARIANS(1 SKULL), BUT OVER TIME THE BARBARIANS WILL BECOME STRONGER(2.3 SKULLS) UNTIL THE NEXT UP:<br />
                       <span className='flex-mid text-[#ffa742] font-bold'>
-                        <img alt="" draggable="false" src="/assets/images/skull.webp" className={`${styles.skull} w-10 h-8`} />6D | 23H
+                        <img alt="" draggable="false" src="/assets/images/skull.webp" className={`${styles.skull} w-10 h-8`} />{convertSecToDHMS(remainedTime, "barb")}
                       </span>
                     </div>
                     <div className='text-white text-center bg-[#0000007d] p-3'>

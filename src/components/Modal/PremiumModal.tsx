@@ -151,7 +151,7 @@ const PreniumModal = ({ open, setOpen, premiumStatus, setPremiumStatus }: Props)
                   onClick={(e) => onBuyPremium()}
                 >
                   <div className='text-white'>
-                    {remainedTime > 0 ? convertSecToDHMS(remainedTime) : "buy"}
+                    {remainedTime > 0 ? convertSecToDHMS(remainedTime, "prem") : "buy"}
                   </div>
                 </Button>
                 <h2 className="font-bold text-[20px] mb-0 mt-4 text-white upgrade-label text-center" style={{ fontFamily: 'Anime Ace' }}>

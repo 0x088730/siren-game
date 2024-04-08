@@ -669,3 +669,10 @@ export async function getBarbaStatus(walletAddress: string) {
   })
   return res;
 }
+
+export async function setSkullCooldown(walletAddress: string) {
+  const res = await api(`user/setSkullCooldown`, `post`, {
+    walletAddress,
+  })
+  return res;
+}
