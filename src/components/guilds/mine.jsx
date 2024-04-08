@@ -84,7 +84,6 @@ const MinePart = (props) => {
     const kickMember = (creator, address) => {
         if (creator === address) return;
         kickGuild(creator, address).then(res => {
-            console.log(res)
             if (res.data === false) {
                 alert(res.message);
                 return;
