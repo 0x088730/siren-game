@@ -68,7 +68,7 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
     if (address === undefined || address === null || address === "") {
       return navigate("/", { replace: true });
     }
-    document.body.style.backgroundImage = "url(https://iksqvifj67dwchip.public.blob.vercel-storage.com/background/background-ZmVO9VcRcA8nQrT8efb1hyvB5ICiTw.jpg)";
+    document.body.style.backgroundImage = "";
 
     getPremium();
     getBarbarians();
@@ -199,7 +199,8 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
         </>
         :
         <>
-          <Box className="Main">
+          <Box className="Main relative">
+            <img src="https://iksqvifj67dwchip.public.blob.vercel-storage.com/background/background-ZmVO9VcRcA8nQrT8efb1hyvB5ICiTw.jpg" className="main-image" />
             <Header
               showAccount={showAccount}
               setShowAccount={setShowAccount}

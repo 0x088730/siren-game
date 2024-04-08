@@ -131,7 +131,7 @@ const Header = ({ showAccount, setShowAccount, csc, water, resource, premiumStat
   }
 
   return (
-    <header>
+    <header className='absolute top-0'>
       <Box className={styles.contents}
         sx={{
           zIndex: 100
