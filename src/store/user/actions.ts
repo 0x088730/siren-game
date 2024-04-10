@@ -678,8 +678,29 @@ export async function getBarbaStatus(walletAddress: string) {
   return res;
 }
 
+export async function preventAttack(walletAddress: string) {
+  const res = await api(`user/preventAttack`, `post`, {
+    walletAddress,
+  })
+  return res;
+}
+
 export async function setSkullCooldown(walletAddress: string) {
   const res = await api(`user/setSkullCooldown`, `post`, {
+    walletAddress,
+  })
+  return res;
+}
+
+export async function checkStartCooldown(walletAddress: string) {
+  const res = await api(`user/checkStartCooldown`, `post`, {
+    walletAddress,
+  })
+  return res;
+}
+
+export async function checkAttackCooldown(walletAddress: string) {
+  const res = await api(`user/checkAttackCooldown`, `post`, {
     walletAddress,
   })
   return res;

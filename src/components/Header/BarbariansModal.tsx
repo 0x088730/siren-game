@@ -5,7 +5,7 @@ import styles from "./Header.module.scss"
 import { useEffect, useState } from 'react'
 import store from '../../store'
 import { setAttackAlert } from '../../common/state/game/reducer'
-import { checkCooldown } from '../../store/user/actions'
+import { checkCooldown, preventAttack } from '../../store/user/actions'
 import { useDispatch } from 'react-redux'
 import { useWeb3Context } from '../../hooks/web3Context'
 import { convertSecToDHMS } from '../../utils/timer'
@@ -73,10 +73,13 @@ const BarbariansModal = ({
 
   const onAttack = (type: any) => {
     if (type === "start") {
+      preventAttack(address).then(res => {
+        console.log(res)
+      })
       setSuccessStatus(true);
     }
     if (type === "okay") {
-      setSuccessStatus(false);
+      setBarbaModalOpen(false);
     }
   }
 

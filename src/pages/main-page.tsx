@@ -72,23 +72,23 @@ export const MainPage = ({
             document.body.style.backgroundImage = 'url(https://iksqvifj67dwchip.public.blob.vercel-storage.com/background/bg-Tb688buNrJp4hV2u8rPn8aPBG4lg5c.jpg)'
         }
         if (global.walletAddress !== "") {
-            getBarbaStatus(global.walletAddress).then(res => {
-                if (res.data === false) {
-                    alert(res.message);
-                    return;
-                }
-                setAttackStatus(res.attack);
-            })
+            // getBarbaStatus(global.walletAddress).then(res => {
+            //     if (res.data === false) {
+            //         alert(res.message);
+            //         return;
+            //     }
+            //     setAttackStatus(res.attack);
+            // })
             setSkullCooldown(global.walletAddress).then(res => {
             })
         }
     }, [])
 
-    useEffect(() => {
-        if (attackStatus === true && attackAlert === false) {
-            setBarbaModalOpen(true);
-        }
-    }, [attackStatus])
+    // useEffect(() => {
+    //     if (attackStatus === true && attackAlert === false) {
+    //         setBarbaModalOpen(true);
+    //     }
+    // }, [attackStatus])
 
     useEffect(() => {
         if (global.walletAddress !== "") {
