@@ -30,6 +30,7 @@ import Web3 from 'web3'
 import SupportModal from '../../components/Header/SupportModal'
 import BarbariansModal from '../../components/Header/BarbariansModal'
 import RepairModal from '../../components/Header/RepairModal'
+import { convertSecToHMS } from '../../utils/timer'
 interface MainProps {
   showAccount: any
   setShowAccount: any
@@ -167,17 +168,29 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
         alert(res.message);
         return;
       }
+      setCurrentWallHP(res.wallHP);
       if (res.time > 0) {
         setStartRemainTime(res.time);
         setStartCooldownStarted(true);
       } else if (res.time <= 0) {
-        checkAttackCooldown(address).then(res => {
-          console.log(res)
-        })
+        checkAttack();
       }
     })
   }
-  console.log(startRemainTime)
+
+  const checkAttack = () => {
+    checkAttackCooldown(address).then(res => {
+      console.log(res)
+      if (res.data === false) {
+        alert(res.message);
+        return;
+      }
+      setCurrentWallHP(res.wallHP);
+      setRemainedTime(res.time);
+      setIsCooldownStarted(true);
+    })
+  }
+
   useEffect(() => {
     if (startCooldownStarted) {
       var startInterval = setInterval(() => {
@@ -186,6 +199,7 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
             // getBarbarians();
           }
           if (prevTime === 0) {
+            checkStart();
             return 0
           }
           return prevTime - 1
@@ -200,7 +214,8 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
       var attackCooldownInterval = setInterval(() => {
         setRemainedTime((prevTime) => {
           if (prevTime === 1) {
-            getBarbarians();
+            // getBarbarians();
+            checkAttack();
           }
           if (prevTime === 0) {
             return 0
@@ -290,6 +305,12 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
               setCurrentWallHP={setCurrentWallHP}
               getBarbarians={getBarbarians}
             />
+            {/* <Box className='h-fit w-fit'>
+              <div className='absolute top-0 left-0 z-50'>{convertSecToHMS(remainedTime)}</div>
+            </Box>
+            <Box className='h-fit w-fit'>
+              <div className='absolute top-0 right-0 z-50'>{convertSecToHMS(startRemainTime)}</div>
+            </Box> */}
             <Box className='h-fit w-fit'>
               <img
                 alt="" draggable="false"
