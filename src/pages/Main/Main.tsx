@@ -153,6 +153,10 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
         setAttackStatus(false);
         return;
       }
+      if (res.wallHP <= 0) {
+        setAttackStatus(false);
+        return;
+      }
       setCurrentWallHP(res.wallHP);
       if (res.time > 0) {
         setStartRemainTime(res.time);
@@ -380,7 +384,12 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
               <img className={`absolute left-[50%] w-[20%] ${styles.rockPos}`} draggable="false" alt="" src={`/images/rock.png`} />
             </Box>
             <Box className='z-20 h-fit w-fit'>
-              <img alt="" draggable="false" className={`${styles.item} absolute w-[12%] right-[17%] cursor-pointer ${styles.firemanPos}`} src={`/images/fireman.webp`} onClick={() => setBarbaModalOpen(true)} />
+              <img alt="" draggable="false"
+                className={`${styles.item} absolute w-[12%] right-[17%] cursor-pointer ${styles.firemanPos}`}
+                src={`/images/fireman.webp`}
+                // onClick={() => setBarbaModalOpen(true)}
+                onClick={(e) => currentWallHP <= 0 ? setRepairModalOpen(true) : setBarbaModalOpen(true)}
+              />
             </Box>
           </Box>
         </>
