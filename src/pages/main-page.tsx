@@ -2,7 +2,7 @@ import { useSelector } from 'react-redux'
 import { useState, useEffect } from 'react'
 import { global } from '../common/global'
 import store from '../store'
-import { setButtonView, setLoadingStatus, setRememberCode } from '../common/state/game/reducer'
+import { setButtonView, setLoadingStatus, setRememberCode, setSkullSet } from '../common/state/game/reducer'
 import styles from './Main/Main.module.scss'
 import { Button } from '@mui/material'
 import InforModal from '../components/Header/InforModal'
@@ -52,6 +52,7 @@ export const MainPage = ({
     const buttonView = useSelector((state: any) => state.app.game.buttonView);
     const rememberCode = useSelector((state: any) => state.app.game.rememberCode);
     const attackAlert = useSelector((state: any) => state.app.game.attackAlert);
+    const skullSet = useSelector((state: any) => state.app.game.skullSet);
 
     const [openCharacter, setOpenCharacter] = useState(false);
     const [openGuild, setOpenGuild] = useState(false);
@@ -73,8 +74,11 @@ export const MainPage = ({
         }
         if (global.walletAddress !== "") {
             checkStart();
-            setSkullCooldown(global.walletAddress).then(res => {
-            })
+            if (skullSet === false) {
+                setSkullCooldown(global.walletAddress).then(res => {
+                    store.dispatch(setSkullSet(true));
+                })
+            }
         }
     }, [])
 

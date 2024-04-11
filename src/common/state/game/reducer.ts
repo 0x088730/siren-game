@@ -90,6 +90,9 @@ export const gameSlice = createSlice({
     },
     setAttackAlert: (state: GameStateProps, action: PayloadAction<boolean>) => {
       state.attackAlert = action.payload
+    },
+    setSkullSet: (state: GameStateProps, action: PayloadAction<boolean>) => {
+      state.skullSet = action.payload
     }
   },
 })
@@ -114,7 +117,8 @@ export const {
   setDisplay,
   setRememberCode,
   setButtonView,
-  setAttackAlert
+  setAttackAlert,
+  setSkullSet
 } = gameSlice.actions
 
 export default gameSlice.reducer

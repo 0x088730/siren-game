@@ -35,6 +35,7 @@ export const getProfile = async (walletAddress: string, character: string) => {
     global.referralCodeStatua = user.enterCodeStatus
     global.weapons = user.weapons
     store.dispatch(setRememberCode(user.enterCodeStatus));
+    global.skull = user.skull
 }
 export const referalAdd = async () => {
     await axios.post('/user/referal', {

@@ -33,6 +33,7 @@ export interface GameStateProps {
   rememberCode: boolean
   buttonView: boolean
   attackAlert: boolean
+  skullSet: boolean
 }
 
 const gameInitialState: GameStateProps = {
@@ -68,6 +69,7 @@ const gameInitialState: GameStateProps = {
   rememberCode: false,
   buttonView: true,
   attackAlert: false,
+  skullSet: false,
 }
 
 export default gameInitialState
