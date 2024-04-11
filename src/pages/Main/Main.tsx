@@ -14,7 +14,6 @@ import { useWeb3Context } from '../../hooks/web3Context'
 import {
   upgradeWall,
   checkPremiumCooldown,
-  getBarbaStatus,
   barbaAttackWall,
   checkStartCooldown,
   checkAttackCooldown
@@ -74,8 +73,7 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
     document.body.style.backgroundImage = "";
 
     getPremium();
-    // getBarbarians();
-    // checkStart();
+    checkStart();
 
     setTimeout(() => {
       if (address && wallLevelState !== 0) store.dispatch(setLoadingStatus(false));
@@ -143,29 +141,15 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
     })
   }
 
-  const getBarbarians = () => {
-    getBarbaStatus(address).then(res => {
+  const checkStart = () => {
+    checkStartCooldown(address).then(res => {
       if (res.data === false) {
         alert(res.message);
         return;
       }
-      setAttackStatus(res.attack);
-      setCurrentWallHP(res.wallHP);
-      if (res.startTime > 0) {
-        setStartRemainTime(res.startTime);
-        setStartCooldownStarted(true);
-      } else if (res.time > 0) {
-        setRemainedTime(res.time);
-        setIsCooldownStarted(true);
-      }
-    })
-  }
-
-  const checkStart = () => {
-    checkStartCooldown(address).then(res => {
-      console.log(res)
-      if (res.data === false) {
-        alert(res.message);
+      if (res.attack && res.attack === false) {
+        setCsc(res.data.cscTokenAmount);
+        checkStart();
         return;
       }
       setCurrentWallHP(res.wallHP);
@@ -180,10 +164,14 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
 
   const checkAttack = () => {
     checkAttackCooldown(address).then(res => {
-      console.log(res)
       if (res.data === false) {
         alert(res.message);
         return;
+      }
+      if (res.attack && res.attack === false) {
+        setCsc(res.data.cscTokenAmount);
+        checkStart();
+        return
       }
       setCurrentWallHP(res.wallHP);
       setRemainedTime(res.time);
@@ -196,10 +184,9 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
       var startInterval = setInterval(() => {
         setStartRemainTime((prevTime) => {
           if (prevTime === 1) {
-            // getBarbarians();
+            checkStart();
           }
           if (prevTime === 0) {
-            checkStart();
             return 0
           }
           return prevTime - 1
@@ -214,7 +201,6 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
       var attackCooldownInterval = setInterval(() => {
         setRemainedTime((prevTime) => {
           if (prevTime === 1) {
-            // getBarbarians();
             checkAttack();
           }
           if (prevTime === 0) {
@@ -295,6 +281,7 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
               setBarbaModalOpen={setBarbaModalOpen}
               attackStatus={attackStatus}
               setAttackStatus={setAttackStatus}
+              checkStart={checkStart}
             />
             <RepairModal
               repairModalOpen={repairModalOpen}
@@ -303,7 +290,7 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
               setCSC={setCsc}
               currentWallHP={currentWallHP}
               setCurrentWallHP={setCurrentWallHP}
-              getBarbarians={getBarbarians}
+              checkStart={checkStart}
             />
             {/* <Box className='h-fit w-fit'>
               <div className='absolute top-0 left-0 z-50'>{convertSecToHMS(remainedTime)}</div>
@@ -316,8 +303,8 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
                 alt="" draggable="false"
                 className={`${styles.item} absolute top-[7%] left-0 w-full h-full min-h-[900px] cursor-pointer`}
                 src={'assets/images/border' + wallLevelState + '.png'}
-                // onClick={() => currentWallHP <= 0 ? setRepairModalOpen(true) : setOpenUpgradeWall(true)}
-                onClick={() => setOpenUpgradeWall(true)}
+                onClick={() => currentWallHP <= 0 ? setRepairModalOpen(true) : setOpenUpgradeWall(true)}
+              // onClick={() => setOpenUpgradeWall(true)}
               />
             </Box>
             <Box className='z-20 h-fit w-fit'>
@@ -329,8 +316,8 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
                     alt=""
                     className={`${styles.item} w-[18%] cursor-pointer ${index === 1 ? "translate-y-[-20%]" : index === 2 ? "translate-y-[20%]" : ""}`}
                     src={`/images/place_1.png`}
-                    // onClick={(e) => currentWallHP <= 0 ? setRepairModalOpen(true) : showModal(index)}
-                    onClick={(e) => showModal(index)}
+                    onClick={(e) => currentWallHP <= 0 ? setRepairModalOpen(true) : showModal(index)}
+                  // onClick={(e) => showModal(index)}
                   />
                 ))}
               </div>
@@ -340,8 +327,8 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
                 alt="" draggable="false"
                 className={`${styles.item} absolute left-[19%] w-[12%] top-[36%] cursor-pointer`}
                 src={`/images/storage.png`}
-                // onClick={(e) => currentWallHP <= 0 ? setRepairModalOpen(true) : setOpenSwap(true)}
-                onClick={(e) => setOpenSwap(true)}
+                onClick={(e) => currentWallHP <= 0 ? setRepairModalOpen(true) : setOpenSwap(true)}
+              // onClick={(e) => setOpenSwap(true)}
               />
             </Box>
             <Box className='z-20 h-fit w-fit'>
@@ -357,8 +344,8 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
                 alt="" draggable="false"
                 className={`${styles.item} absolute left-[50%] w-[10%] top-[57%] cursor-pointer`}
                 src={`/images/bird_place.png`}
-                // onClick={() => currentWallHP <= 0 ? setRepairModalOpen(true) : setSupportModalOpen(true)}
-                onClick={() => setSupportModalOpen(true)}
+                onClick={() => currentWallHP <= 0 ? setRepairModalOpen(true) : setSupportModalOpen(true)}
+              // onClick={() => setSupportModalOpen(true)}
               />
             </Box>
             <Box className='z-20 h-fit w-fit'>
@@ -366,15 +353,15 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
                 alt="" draggable="false"
                 className={`${styles.item} absolute left-[68%] w-[14%] top-[24%] cursor-pointer`}
                 src={`/images/mining.png`}
-                onClick={(e) => setOpenMining(true)}
-              // onClick={(e) => currentWallHP <= 0 ? setRepairModalOpen(true) : setOpenMining(true)}
+                // onClick={(e) => setOpenMining(true)}
+                onClick={(e) => currentWallHP <= 0 ? setRepairModalOpen(true) : setOpenMining(true)}
               />
             </Box>
             <Box className='z-20 h-fit w-fit'>
               <div className={`absolute w-[8%] h-[4%] right-[26%] ${styles.hpPos}`}>
                 <div className='flex-mid relative w-full h-full'>
                   <img alt="" draggable="false" className='w-full h-full' src={`/images/hp_bg.png`} />
-                  <span className='absolute tracking-[2px] text-[0.8rem] text-[#22bc34] font-semibold'>{wallHP + "/" + wallHP + "HP"}</span>
+                  <span className='absolute tracking-[2px] text-[0.8rem] text-[#22bc34] font-semibold'>{currentWallHP + "/" + wallHP + "HP"}</span>
                 </div>
               </div>
             </Box>

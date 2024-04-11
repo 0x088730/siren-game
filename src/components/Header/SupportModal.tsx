@@ -45,7 +45,6 @@ const SupportModal = ({
   const [avatar, setAvatar] = useState(["", "", ""]);
 
   const onBtnClick = () => {
-    return
     if (remainedTime > 0)
       return
     if (btnType === 'Start') {

@@ -671,13 +671,6 @@ export async function restoreWall(walletAddress: any) {
   return res;
 }
 
-export async function getBarbaStatus(walletAddress: string) {
-  const res = await api(`user/getBarbaStatus`, `post`, {
-    walletAddress,
-  })
-  return res;
-}
-
 export async function preventAttack(walletAddress: string) {
   const res = await api(`user/preventAttack`, `post`, {
     walletAddress,

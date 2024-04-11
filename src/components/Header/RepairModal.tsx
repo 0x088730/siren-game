@@ -13,7 +13,7 @@ interface Props {
   setCSC: any
   currentWallHP: any
   setCurrentWallHP: any
-  getBarbarians: any
+  checkStart: any
 }
 
 const RepairModal = ({
@@ -23,7 +23,7 @@ const RepairModal = ({
   setCSC,
   currentWallHP,
   setCurrentWallHP,
-  getBarbarians
+  checkStart
 }: Props) => {
   const { address } = useWeb3Context()
   const restore = () => {
@@ -46,7 +46,7 @@ const RepairModal = ({
         alert("Your wall successfully restored!!!")
         setRepairModalOpen(false);
         store.dispatch(setAttackAlert(false));
-        getBarbarians();
+        checkStart();
       })
     }
   }

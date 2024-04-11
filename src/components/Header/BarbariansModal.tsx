@@ -14,6 +14,7 @@ interface Props {
   setBarbaModalOpen: any
   attackStatus: any
   setAttackStatus: any
+  checkStart: any
 }
 
 const BarbariansModal = ({
@@ -21,6 +22,7 @@ const BarbariansModal = ({
   setBarbaModalOpen,
   attackStatus,
   setAttackStatus,
+  checkStart
 }: Props) => {
   const { address } = useWeb3Context();
   const dispatch = useDispatch<any>();
@@ -74,12 +76,15 @@ const BarbariansModal = ({
   const onAttack = (type: any) => {
     if (type === "start") {
       preventAttack(address).then(res => {
-        console.log(res)
+        if (res.data === true) {
+          setSuccessStatus(true);
+          checkStart();
+        }
       })
-      setSuccessStatus(true);
     }
     if (type === "okay") {
       setBarbaModalOpen(false);
+      setAttackStatus(false);
     }
   }
 
@@ -87,7 +92,7 @@ const BarbariansModal = ({
     <>
       <Modal
         open={barbaModalOpen}
-        onClose={() => setBarbaModalOpen(false)}
+        // onClose={() => setBarbaModalOpen(false)}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
@@ -98,7 +103,10 @@ const BarbariansModal = ({
             alt="" draggable="false"
             src="/images/support/support_md_close_btn.png"
             className='absolute top-0 right-0 w-[7%] cursor-pointer translate-x-[26%] translate-y-[-27%] z-20'
-            onClick={() => setBarbaModalOpen(false)}
+            onClick={() => {
+              setBarbaModalOpen(false);
+              if (successStatus === true) setAttackStatus(false);
+            }}
           />
           <div className='absolute top-0 font-bold text-[#e7e1e1] leading-[100%] flex justify-center w-full z-10'
             style={{ fontFamily: 'Anime Ace' }}

@@ -12,7 +12,7 @@ import { useNavigate } from 'react-router-dom'
 import { GameHeaderComponent } from '../components/game-header.component'
 import CharacterDetailModal from '../widgets/characterDetailModal'
 import InventoryModal from '../widgets/inventoryModal'
-import { addLoginHistory, getBarbaStatus, setSkullCooldown } from '../store/user/actions'
+import { addLoginHistory, checkStartCooldown, setSkullCooldown } from '../store/user/actions'
 import GuildModal from '../widgets/guildModal'
 import Web3 from 'web3'
 import BarbariansModal from '../components/Header/BarbariansModal'
@@ -72,23 +72,32 @@ export const MainPage = ({
             document.body.style.backgroundImage = 'url(https://iksqvifj67dwchip.public.blob.vercel-storage.com/background/bg-Tb688buNrJp4hV2u8rPn8aPBG4lg5c.jpg)'
         }
         if (global.walletAddress !== "") {
-            // getBarbaStatus(global.walletAddress).then(res => {
-            //     if (res.data === false) {
-            //         alert(res.message);
-            //         return;
-            //     }
-            //     setAttackStatus(res.attack);
-            // })
+            checkStart();
             setSkullCooldown(global.walletAddress).then(res => {
             })
         }
     }, [])
 
-    // useEffect(() => {
-    //     if (attackStatus === true && attackAlert === false) {
-    //         setBarbaModalOpen(true);
-    //     }
-    // }, [attackStatus])
+    const checkStart = () => {
+        checkStartCooldown(global.walletAddress).then(res => {
+            if (res.data === false) {
+                alert(res.message);
+                return;
+            }
+            if (res.attack && res.attack === false) {
+                setAttackStatus(false);
+                return
+            }
+            if (res.wallHP <= 0) {
+                setAttackStatus(false);
+                return;
+            } else if (res.time <= 0) {
+                if (attackAlert === false)
+                    setBarbaModalOpen(true);
+                setAttackStatus(true)
+            }
+        })
+    }
 
     useEffect(() => {
         if (global.walletAddress !== "") {
@@ -386,6 +395,7 @@ export const MainPage = ({
                 setBarbaModalOpen={setBarbaModalOpen}
                 attackStatus={attackStatus}
                 setAttackStatus={setAttackStatus}
+                checkStart={checkStart}
             />
         </>
     )
