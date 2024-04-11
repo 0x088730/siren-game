@@ -150,6 +150,7 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
       if (res.attack && res.attack === false) {
         setCsc(res.data.cscTokenAmount);
         checkStart();
+        setAttackStatus(false);
         return;
       }
       setCurrentWallHP(res.wallHP);
@@ -158,6 +159,7 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
         setStartCooldownStarted(true);
       } else if (res.time <= 0) {
         checkAttack();
+        setAttackStatus(true)
       }
     })
   }
