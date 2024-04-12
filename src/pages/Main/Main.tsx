@@ -178,9 +178,11 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
         alert(res.message);
         return;
       }
-      if (res.attack && res.attack === false) {
+      if (res.attack === false) {
         setCsc(res.data.cscTokenAmount);
+        setCurrentWallHP(res.data.wallHP)
         checkStart();
+        setAttackStatus(false);
         return
       }
       setCurrentWallHP(res.wallHP);
