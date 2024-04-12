@@ -365,7 +365,7 @@ const DepositModal = ({
                   </div>
                   <input className='border-black border-2 w-full rounded-md bg-[#6F5241] text-white'
                     style={{ boxShadow: "inset 0 0px 4px 0 #000000" }}
-                    name="Siren"
+                    name="CSC"
                     value={cscTokenAmount}
                     onChange={setWithdrawAmount}
                   />

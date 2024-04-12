@@ -87,10 +87,7 @@ const Header = ({ showAccount, setShowAccount, csc, water, resource, premiumStat
   }, [userModule])
 
   const headerList = () => {
-    return <Box
-      className={styles.Siren}
-      sx={{ display: 'flex', alignItems: 'center' }}
-    >
+    return <Box className='flex items-center text-white'>
       {!ispremium && (
         <button
           onClick={getPremium}
@@ -144,10 +141,7 @@ const Header = ({ showAccount, setShowAccount, csc, water, resource, premiumStat
 
         {headerList()}
 
-        <Box
-          className={styles.Siren}
-          sx={{ display: 'flex', alignItems: 'center' }}
-        >
+        <Box className='flex items-center text-white'>
           <Link to="/" className="button muted-button">
             <button className='w-[115px] h-10 bg-no-repeat'
               style={{ backgroundImage: 'url(/images/back_btn.png)', backgroundSize: "100% 100%" }}

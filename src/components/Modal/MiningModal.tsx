@@ -11,11 +11,9 @@ import {
   buyLevel,
   checkCooldown,
   checkUpgradeAvailable,
-  claimSiren,
+  claimCSC,
   setCooldown,
 } from '../../store/user/actions'
-import { checkPremium } from '../../utils/checkPremium'
-import { getWithdrewSirenAmount } from '../../utils/user'
 import { global } from '../../common/global'
 import styles from "../Header/Header.module.scss"
 import { convertSecToHMS } from '../../utils/timer'
@@ -109,19 +107,10 @@ const MiningModal = ({
 
     return () => clearInterval(cooldownInterval)
   }, [isCooldownStarted])
-  useEffect(() => {
-    ; (async () => {
-      const withdrewsirenAmount = getWithdrewSirenAmount(user.withdraws) // Siren
-      const bcsPrice = 1
-      const maxAmount =
-        (checkPremium(user.premium).isPremium ? 10 : 5) / bcsPrice
-    })()
-  }, [user.withdraws])
-
 
   const onButtonClick = async () => {
     if (remainedTime > 0 && btnType === "Claim") {
-      dispatch(claimSiren(address, true, (res: any) => {
+      dispatch(claimCSC(address, true, (res: any) => {
         setCsc(res.data.csc)
       }))
     }
@@ -195,7 +184,7 @@ const MiningModal = ({
             setBtnType('Start')
           }
           else if (cooldownSec <= 0) {
-            dispatch(claimSiren(address, false, (res: any) => {
+            dispatch(claimCSC(address, false, (res: any) => {
               setCsc(res.data.csc)
               setBtnType('Start')
               setWater(res.data.water)
@@ -213,7 +202,7 @@ const MiningModal = ({
 
   const onUpgrade = () => {
     if (remainedTime > 0 && btnType === "Claim") {
-      dispatch(claimSiren(address, true, (res: any) => {
+      dispatch(claimCSC(address, true, (res: any) => {
         setCsc(res.data.csc)
       }))
     }
