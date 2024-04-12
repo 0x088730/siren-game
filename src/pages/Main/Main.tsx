@@ -119,6 +119,7 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
           setWallLevelState(res.wall)
           global.wall = res.wall
           setCsc(res.cscTokenAmount)
+          setCurrentWallHP(res.wallHP)
         }),
       )
       setOpenUpgradeWall(false)
