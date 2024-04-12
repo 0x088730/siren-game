@@ -516,6 +516,13 @@ export async function setSupportCooldown(walletAddress: any, avatar: any) {
   return res;
 }
 
+export async function stopSupportCooldown(walletAddress: any) {
+  const res = await api(`user/stopSupportCooldown`, `post`, {
+    walletAddress,
+  })
+  return res;
+}
+
 export async function checkPremiumCooldown(walletAddress: string) {
   const res = await api(`user/checkPremiumCooldown`, `post`, {
     walletAddress,

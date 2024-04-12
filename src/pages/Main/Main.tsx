@@ -16,7 +16,8 @@ import {
   checkPremiumCooldown,
   barbaAttackWall,
   checkStartCooldown,
-  checkAttackCooldown
+  checkAttackCooldown,
+  checkCooldown
 } from '../../store/user/actions'
 
 import styles from './Main.module.scss'
@@ -72,6 +73,7 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
     }
     document.body.style.backgroundImage = "";
 
+    checkSupport();
     getPremium();
     checkStart();
 
@@ -147,8 +149,9 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
         alert(res.message);
         return;
       }
-      if (res.attack && res.attack === false) {
+      if (res.attack === false) {
         setCsc(res.data.cscTokenAmount);
+        setCurrentWallHP(res.data.wallHP)
         checkStart();
         setAttackStatus(false);
         return;
@@ -218,6 +221,18 @@ const Main = ({ showAccount, setShowAccount }: MainProps) => {
     }
     return () => clearInterval(attackCooldownInterval)
   }, [isCooldownStarted])
+
+  const checkSupport = () => {
+    dispatch(
+      checkCooldown(address, 'support', (res: any) => {
+        if (res.data === false) {
+          alert(res.message);
+          return;
+        }
+        setResource(res.resource)
+      }),
+    )
+  }
 
   return (
     <>

@@ -10,6 +10,7 @@ import {
   levelupHunter,
   setSupportCooldown,
   startHunterUpgradeCooldown,
+  stopSupportCooldown,
 } from '../../store/user/actions'
 import { useWeb3Context } from '../../hooks/web3Context'
 import { global } from '../../common/global'
@@ -45,30 +46,38 @@ const SupportModal = ({
   const [avatar, setAvatar] = useState(["", "", ""]);
 
   const onBtnClick = () => {
-    if (remainedTime > 0)
+    if (remainedTime > 0) return;
+    let userCount = selectedCharacterList.filter(characterNo => characterNo !== -1).length
+    if (userCount === 0) {
+      alert("Select Character")
       return
-    if (btnType === 'Start') {
-      let userCount = selectedCharacterList.filter(characterNo => characterNo !== -1).length
-      if (userCount === 0) {
-        alert("Select Character")
-        return
-      }
-      if (resource < 2) {
-        alert("Not enough resource!");
+    }
+    if (resource < 2) {
+      alert("Not enough resource!");
+      return;
+    }
+    setSupportCooldown(address, avatar).then((res: any) => {
+      if (res.data === false) {
+        alert(res.message);
         return;
       }
-      setSupportCooldown(address, avatar).then((res: any) => {
-        if (res.data === false) {
-          alert(res.message);
-          return;
-        }
-        setRemainedTime(res.time);
-        setResource(res.resource);
-        setIsCooldownStarted(true);
-        setSupportData(res.supportData);
-      })
-    } else if (btnType === 'Claim') {
-    }
+      setRemainedTime(res.time);
+      setResource(res.resource);
+      setIsCooldownStarted(true);
+      setSupportData(res.supportData);
+    })
+  }
+
+  const onStopCooldown = () => {
+    if (remainedTime === 0) return;
+    stopSupportCooldown(address).then((res: any) => {
+      if (res.data === false) {
+        alert(res.message);
+        return;
+      }
+      setRemainedTime(0);
+      setAvatar(["", "", ""])
+    })
   }
 
   useEffect(() => {
@@ -102,23 +111,22 @@ const SupportModal = ({
   const getCooldown = () => {
     dispatch(
       checkCooldown(address, 'support', (res: any) => {
-        let cooldownSec = res.time
-        if (cooldownSec === 999999) {
-          setIsCooldownStarted(false)
-          setBtnType('Start')
-          setSupportData(res.supportData);
-          setAvatar(res.avatar);
-        } else if (cooldownSec <= 0) {
-          setBtnType('Start')
-          setRemainedTime(-1)
+        if (res.time === 999999) {
           setIsCooldownStarted(false)
           setSupportData(res.supportData);
-          setAvatar(["", "", ""])
+          setAvatar(["", "", ""]);
+          setResource(res.resource);
+        } else if (res.time <= 0) {
+          setIsCooldownStarted(false);
+          setSupportData(res.supportData);
+          setAvatar(["", "", ""]);
+          setResource(res.resource);
         } else {
-          setRemainedTime(cooldownSec)
+          setRemainedTime(res.time)
           setIsCooldownStarted(true)
           setSupportData(res.supportData);
           setAvatar(res.avatar);
+          setResource(res.resource);
         }
       }),
     )
@@ -199,12 +207,12 @@ const SupportModal = ({
             PRICE: <img alt="" draggable="false" className='w-[20px] mx-2' src="/assets/images/rock.png" /> 2 RES FOR 1H
           </Box>
           <Box className='flex justify-center absolute -bottom-4 w-full'>
-            <Button className={`w-60 ${remainedTime > 0 ? "grayscale" : ""}`} onClick={() => remainedTime > 0 ? null : onBtnClick()}>
+            <Button className={`w-60`} onClick={() => remainedTime > 0 ? onStopCooldown() : onBtnClick()}>
               <img alt="" draggable="false" src="/assets/images/big-button.png" />
               <p className='absolute text-[14px] text-center text-[#e7e1e1] font-bold'
                 style={{ fontFamily: 'Anime Ace' }}
               >
-                {remainedTime <= 0 ? btnType : "STOP"}
+                {remainedTime <= 0 ? "START" : "STOP"}
               </p>
             </Button>
           </Box>
