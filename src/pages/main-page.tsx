@@ -373,7 +373,7 @@ export const MainPage = ({
                                         </div>
                                     )}
                                 </div>
-                                {gameState === 1 && global.currentCharacterName === 'siren-4' && (
+                                {/* {gameState === 1 && global.currentCharacterName === 'siren-4' && (
                                     <>
                                         <GameHeaderComponent />
                                         {!turn && atkBtnState && (
@@ -389,7 +389,7 @@ export const MainPage = ({
                                             </div>
                                         )}
                                     </>
-                                )}
+                                )} */}
                             </div>
                         </div>
                     </>}
