@@ -20,6 +20,7 @@ interface HeaderProps {
   setShowAccount: Function
   onStart: any
   onAttack: any
+  onAttack1: any
   onInventory: any
   onCharacter: any
 }
@@ -28,6 +29,7 @@ export const GamePage = ({
   setShowAccount,
   onStart,
   onAttack,
+  onAttack1,
   onInventory,
   onCharacter,
 }: HeaderProps) => {
@@ -72,6 +74,7 @@ export const GamePage = ({
           setShowAccount={setShowAccount}
           onStart={onStart}
           onAttack={onAttack}
+          onAttack1={onAttack1}
           onInventory={onInventory}
           onCharacter={onCharacter}
         />

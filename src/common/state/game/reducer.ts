@@ -5,6 +5,7 @@ import api from '../../../utils/callApi'
 import type { GameStateProps, StockProps } from './state'
 import initialState from './state'
 import { useWeb3Context } from '../../../hooks/web3Context'
+import { global } from '../../global'
 
 export const gameSlice = createSlice({
   // `createSlice` will infer the state type from the `initialState` argument
@@ -60,8 +61,13 @@ export const gameSlice = createSlice({
     addTurn: (state: GameStateProps) => {
       if (state.secondTurn !== 0)
         state.secondTurn = Math.floor((state.secondTurn + 1) % 4)
-      if (state.thirdTurn !== 0)
-        state.thirdTurn = Math.floor((state.thirdTurn + 1) % 5)
+      if (state.thirdTurn !== 0) {
+        if (global.currentCharacterName === "siren-1") {
+          state.thirdTurn = Math.floor((state.thirdTurn + 1) % 5)
+        } else if (global.currentCharacterName === "siren-2") {
+          state.thirdTurn = Math.floor((state.thirdTurn + 1) % 4)
+        }
+      }
     },
     setThirdTurn: (state: GameStateProps) => {
       state.thirdTurn = 1

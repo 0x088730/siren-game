@@ -585,11 +585,11 @@ export async function addLoginHistory(walletAddress: string, referCode: string) 
   return res;
 }
 
-export async function buyCharacterAndWeapon(walletAddress: string, object: string, number: number) {
+export async function buyCharacterAndWeapon(walletAddress: string, from: string, obj: any) {
   const res = await api(`user/buyCharacterAndWeapon`, `post`, {
     walletAddress,
-    object,
-    number
+    from,
+    obj
   })
   return res;
 }

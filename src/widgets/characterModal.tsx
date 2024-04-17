@@ -30,8 +30,13 @@ const CharacterModal = ({ openCharacter, setOpenCharacter, setPageStatus }: Prop
             alert('This character energy is less than 10. Please charge energy')
             return
         }
-        global.currentCharacterName = character.characterName;
-        setPageStatus("section");
+        if (character.characterName === "siren-1" || global.walletAddress === "0x2710A268e7e5084bf26F5c3FD38bfb0D7b7703D2" || global.walletAddress === "0x1cb6FC66926224EE12d4714a2A1E8F2ca509f0c1") {
+            global.currentCharacterName = character.characterName;
+            setPageStatus("section");
+        } else {
+            alert('Please wait...')
+            return
+        }
     }
 
     return (

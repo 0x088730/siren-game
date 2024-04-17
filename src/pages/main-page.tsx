@@ -22,6 +22,7 @@ interface HeaderProps {
     setShowAccount: Function
     onStart: any
     onAttack: any
+    onAttack1: any
     onInventory: any
     onCharacter: any
     pageStatus: any
@@ -32,6 +33,7 @@ export const MainPage = ({
     setShowAccount,
     onStart,
     onAttack,
+    onAttack1,
     onInventory,
     onCharacter,
     pageStatus,
@@ -144,10 +146,8 @@ export const MainPage = ({
         setOpenCharacter(true);
     }
     const guild = () => {
-        // if (global.walletAddress === "0x2710A268e7e5084bf26F5c3FD38bfb0D7b7703D2" || global.walletAddress === "0x1cb6FC66926224EE12d4714a2A1E8F2ca509f0c1") {
         store.dispatch(setButtonView(false));
         setOpenGuild(true);
-        // }
     }
     const onLand = () => {
         store.dispatch(setLoadingStatus(true));
@@ -156,23 +156,25 @@ export const MainPage = ({
     const onBattlePass = () => {
         navigate("/battlepass", { replace: true });
     }
-    const normalAttack = () => {
-        if (!connected) {
-            return
-        }
-        onAttack(1)
+
+
+    const onMarket = () => {
+        if (global.walletAddress === "0x2710A268e7e5084bf26F5c3FD38bfb0D7b7703D2" || global.walletAddress === "0x1cb6FC66926224EE12d4714a2A1E8F2ca509f0c1")
+            navigate("/market", { replace: true });
     }
-    const secondAttack = () => {
+
+    const sakuraAttack = (type: number) => {
         if (!connected) {
             return
         }
-        onAttack(2)
+        onAttack(type)
     }
-    const thirdAttack = () => {
+
+    const renaAttack = (type: number) => {
         if (!connected) {
             return
         }
-        onAttack(3)
+        onAttack1(type);
     }
 
     const goUrl = (url: any) => {
@@ -275,7 +277,7 @@ export const MainPage = ({
                                                                 <div draggable="false" className='cursor-pointer bg-[#111111]/[0.9] w-80 h-40 flex justify-start items-center px-16 rounded-l-xl' onClick={() => rememberCode ? onBattlePass() : null}>
                                                                     <img draggable="false" src="assets/images/book.png" className={`${styles.item} w-40`} />
                                                                 </div>
-                                                                <div draggable="false" className='cursor-pointer bg-[#111111]/[0.9] w-80 h-40 flex justify-start items-center px-16 rounded-l-xl'>
+                                                                <div draggable="false" className='cursor-pointer bg-[#111111]/[0.9] w-80 h-40 flex justify-start items-center px-16 rounded-l-xl' onClick={() => rememberCode ? onMarket() : null}>
                                                                     <div className='relative w-full h-full flex justify-start items-center'>
                                                                         <img draggable="false" src="assets/images/box.png" className='absolute w-40' />
                                                                         <img draggable="false" src="assets/images/lock.png" className='absolute w-32 ml-6' />
@@ -322,7 +324,11 @@ export const MainPage = ({
                                                     <button className='absolute right-[200px] bottom-[50px]'
                                                         onClick={() => {
                                                             if (thirdTurn === 0) {
-                                                                thirdAttack()
+                                                                if (global.currentCharacterName === "siren-1") {
+                                                                    sakuraAttack(3);
+                                                                } else {
+                                                                    renaAttack(3);
+                                                                }
                                                             }
                                                         }}
                                                     >
@@ -336,14 +342,20 @@ export const MainPage = ({
                                                             {thirdTurn !== 0 && (
                                                                 <h1 className='absolute text-[60px] text-white left-[30px] top-[30px]'
                                                                     style={{ fontFamily: 'Anime Ace' }}
-                                                                >{`${5 - thirdTurn}T`}</h1>
+                                                                >
+                                                                    {global.currentCharacterName === "siren-1" ? `${5 - thirdTurn}T` : `${4 - thirdTurn}T`}
+                                                                </h1>
                                                             )}
                                                         </div>
                                                     </button>
                                                     <button className='absolute right-[90px] bottom-[210px]'
                                                         onClick={() => {
                                                             if (secondTurn === 0) {
-                                                                secondAttack()
+                                                                if (global.currentCharacterName === "siren-1") {
+                                                                    sakuraAttack(2);
+                                                                } else {
+                                                                    renaAttack(2);
+                                                                }
                                                             }
                                                         }}
                                                     >
@@ -362,7 +374,7 @@ export const MainPage = ({
                                                         </div>
                                                     </button>
                                                     <button className='absolute right-[10px] bottom-[50px]'
-                                                        onClick={normalAttack}
+                                                        onClick={() => global.currentCharacterName === "siren-1" ? sakuraAttack(1) : renaAttack(1)}
                                                     >
                                                         <div className="w-[129px]">
                                                             <img src="assets/images/btn_attack.png" draggable="false" />

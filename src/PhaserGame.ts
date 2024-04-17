@@ -32,7 +32,7 @@ const config: Phaser.Types.Core.GameConfig = {
     mode: Phaser.Scale.ScaleModes.FIT,
     width: 1920,
   },
-  scene: [Bootstrap, Game, Battle, Battle2], // Include Battle2 scene in the game configuration
+  scene: [Bootstrap, Game, Battle, Battle2],
   transparent: true,
   type: Phaser.AUTO,
 }

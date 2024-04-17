@@ -4,26 +4,19 @@ import { global } from "../common/global";
 import { LazyLoadImage } from "react-lazy-load-image-component"
 import 'react-lazy-load-image-component/src/effects/blur.css';
 import Web3 from 'web3'
+import { buyCharacterAndWeapon } from "../store/user/actions";
+import { useWeb3Context } from "../hooks/web3Context";
+import { HeaderComponent } from "../components";
+import { useNavigate } from "react-router-dom";
 
 export const MarketPage = (props) => {
-    useEffect(() => {
-        if (global.walletAddress !== "") {
-            var priceInterval = setInterval(async () => { // Make the arrow function async
-                let web3 = new Web3(window.ethereum);
-                const accounts = await web3.eth.getAccounts();
-                if (global.walletAddress !== accounts[0]) {
-                    window.location.reload();
-                }
-            }, 1000);
-
-            return () => clearInterval(priceInterval);
-        }
-    }, []);
+    const navigate = useNavigate();
+    const { address } = useWeb3Context()
     const characterData = [
-        { characterNo: 1, src: "https://iksqvifj67dwchip.public.blob.vercel-storage.com/1-dxSqH5RqoAF0FmHDZDZtoNZqshr4MZ.gif", price: 1000 },
-        { characterNo: 2, src: "https://iksqvifj67dwchip.public.blob.vercel-storage.com/2-eqE9y7IXKZRou5NJf6LGHgPgoivqgY.gif", price: 2000 },
-        { characterNo: 3, src: "https://iksqvifj67dwchip.public.blob.vercel-storage.com/3-Enr2FgCVbtXJTKmB3a7rEDZ7lpFkE8.gif", price: 3000 },
-        { characterNo: 4, src: "https://iksqvifj67dwchip.public.blob.vercel-storage.com/4-fIWCjNpJg2gJHqstmQk6VlVsjHYxwz.gif", price: 4000 },
+        { characterNo: 1, name: "Sakura", src: "https://iksqvifj67dwchip.public.blob.vercel-storage.com/1-dxSqH5RqoAF0FmHDZDZtoNZqshr4MZ.gif", price: 300, common: 0, rare: 80, legend: 20 },
+        { characterNo: 2, name: "Rena", src: "https://iksqvifj67dwchip.public.blob.vercel-storage.com/2-eqE9y7IXKZRou5NJf6LGHgPgoivqgY.gif", price: 200, common: 70, rare: 20, legend: 10 },
+        { characterNo: 3, name: "Motoko", src: "https://iksqvifj67dwchip.public.blob.vercel-storage.com/3-Enr2FgCVbtXJTKmB3a7rEDZ7lpFkE8.gif", price: 3000, common: 0, rare: 0, legend: 0 },
+        { characterNo: 4, name: "Hayate", src: "https://iksqvifj67dwchip.public.blob.vercel-storage.com/4-fIWCjNpJg2gJHqstmQk6VlVsjHYxwz.gif", price: 4000, common: 0, rare: 0, legend: 0 },
     ]
     const weaponData = [
         { weaponNo: 1, src: "https://iksqvifj67dwchip.public.blob.vercel-storage.com/weapon/1-wealNs0p2pcxIkp2aYyaIf3KVy5Th4.png", price: 1000 },
@@ -45,7 +38,24 @@ export const MarketPage = (props) => {
     const [loaded2, setLoaded2] = useState(false)
     const [loaded3, setLoaded3] = useState(false)
     const [loaded4, setLoaded4] = useState(false)
+    const [rarityStatus, setRarityStatus] = useState(-1);
+    const [purchasedCha, setPurchasedCha] = useState([]);
 
+    useEffect(() => {
+        if (global.walletAddress !== "") {
+            const cur = global.characters.map(character => character.characterNo);
+            setPurchasedCha(cur);
+            var priceInterval = setInterval(async () => { // Make the arrow function async
+                let web3 = new Web3(window.ethereum);
+                const accounts = await web3.eth.getAccounts();
+                if (global.walletAddress !== accounts[0]) {
+                    window.location.reload();
+                }
+            }, 1000);
+
+            return () => clearInterval(priceInterval);
+        }
+    }, []);
     const onPrevious = (from) => {
         if (from === "character") {
             if (characterIndex.first <= 0) return;
@@ -72,21 +82,36 @@ export const MarketPage = (props) => {
         }
     }
 
-    const onBuy = (object, number) => {
-        // buyCharacterAndWeapon(global.walletAddress, object, number).then(res => {
-        //     console.log(res)
-        // })
+    const onBuy = (from, obj) => {
+        if (obj.characterNo >= 3) {
+            alert("Please wait...")
+            return;
+        }
+        buyCharacterAndWeapon(address, from, obj).then(res => {
+            if (res.data === false) {
+                alert(res.message);
+                return;
+            }
+            console.log(res)
+            global.characters = res.data.characters;
+        })
     }
 
     useEffect(() => {
-        console.log(loaded1, loaded2, loaded3, loaded4)
+        // console.log(loaded1, loaded2, loaded3, loaded4)
     }, [presentCharacter])
     const setLoading = (index) => {
         console.log(index)
     }
 
+    const onMain = () => {
+        navigate("/", { replace: true });
+    }
+
     return (
         <>
+            {!address && <div className="absolute w-full"><HeaderComponent onModalShow={props.onModalShow} /></div>}
+            <img src='assets/images/come-back.png' draggable="false" className='absolute top-12 right-12 cursor-pointer w-[5.5rem] z-10' onClick={() => onMain()} />
             <div className="marketPage w-full h-full min-w-[1600px] min-h-[900px] overflow-auto text-white font-semibold flex flex-col justify-center items-center">
                 <div className="flex justify-start items-center gap-x-4 translate-y-8 w-[900px] z-10">
                     <div className={`relative w-[160px] h-[50px] flex justify-center items-center cursor-pointer duration-300 ${nav === "market" ? "" : "brightness-50 opacity-80 text-[#d5d5d5]"}`} onClick={() => setNav("market")}>
@@ -112,7 +137,7 @@ export const MarketPage = (props) => {
                                         <div className="absolute top-0 w-full h-8 rounded-t-lg bg-[#000000]/[0.6] flex justify-between items-center">
                                             <div className="w-[145px] h-full flex justify-center items-center">
                                                 <img src={`assets/images/name-bg.webp`} draggable="false" className="w-full h-full" />
-                                                <div className="absolute">{"PERSON " + item.characterNo}</div>
+                                                <div className="absolute">{item.name}</div>
                                             </div>
                                             <div className="flex justify-center items-center text-[12px] me-2">
                                                 <img alt="" className='w-[18px] mx-[7px]' src="assets/images/cryptoIcon.png" />
@@ -120,10 +145,33 @@ export const MarketPage = (props) => {
                                             </div>
                                         </div>
                                         <div className={`absolute top-16 ${(item.characterNo === 1 || item.characterNo === 4) ? "w-40" : item.characterNo === 2 ? "w-32" : "w-56"}`}>
-                                            <LazyLoadImage key={item.src} src={item.src} loading="lazy" effect="blur" draggable="false" className="w-full h-full" />
+                                            <LazyLoadImage
+                                                key={item.src} src={item.src} loading="lazy" effect="blur" draggable="false" className="w-full h-full"
+                                                onMouseOver={() => setRarityStatus(index)}
+                                                onMouseOut={() => setRarityStatus(-1)}
+                                            />
+                                        </div>
+                                        <div className={`absolute ${rarityStatus === index ? "" : "hidden"} ${styles.icons} bottom-20 text-[1.3rem]`}
+                                            onMouseOver={() => setRarityStatus(index)}
+                                            onMouseOut={() => setRarityStatus(-1)}
+                                        >
+                                            <div className={`${item.common === 0 ? "hidden" : ""}`}>COMMON-{item.common}%</div>
+                                            <div className={`${item.rare === 0 ? "hidden" : ""}`}>RARE-{item.rare}%</div>
+                                            <div className={`${item.legend === 0 ? "hidden" : ""}`}>LEGENDARY-{item.legend}%</div>
                                         </div>
                                         <div className="w-full h-[18%] flex justify-center items-center">
-                                            <img src={`assets/images/buy-button.png`} draggable="false" className={`cursor-pointer ${item.characterNo === 1 ? "hidden" : ""}`} onClick={() => onBuy("character", item.characterNo)} />
+                                            {global.characters.some(character => character.characterNo === item.characterNo - 1 && character.rarity >= 2) ?
+                                                <img
+                                                    src={`assets/images/buy-button.png`} draggable="false"
+                                                    className={`cursor-pointer grayscale`}
+                                                />
+                                                :
+                                                <img
+                                                    src={`assets/images/buy-button.png`} draggable="false"
+                                                    className={`cursor-pointer ${global.characters.some(character => character.characterNo === item.characterNo - 1 && character.rarity >= 2) ? "grayscale" : ""}`}
+                                                    onClick={() => onBuy("character", item)}
+                                                />
+                                            }
                                         </div>
                                     </div>
                                 ))}
@@ -146,7 +194,7 @@ export const MarketPage = (props) => {
                                                 <img alt="" className='w-[18px]' src="assets/images/cryptoIcon.png" />
                                                 {item.price} CSC
                                             </div>
-                                            <img src={`assets/images/buy-button.png`} draggable="false" className="cursor-pointer w-28" onClick={() => onBuy("character", item.weaponNo)} />
+                                            <img src={`assets/images/buy-button.png`} draggable="false" className="cursor-pointer w-28" onClick={() => onBuy("weapon", item)} />
                                         </div>
                                     </div>
                                 ))}

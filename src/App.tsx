@@ -7,6 +7,7 @@ import './App.css'
 
 import phaserGame from './PhaserGame'
 import type Battle from './scenes/battle.scene'
+import type Battle2 from './scenes/battle.scene2'
 import type Game from './scenes/game.scene'
 import store from './store'
 import { global } from './common/global'
@@ -19,6 +20,11 @@ const MarketPage = React.lazy(() => import('./pages/marketPage').then(module => 
 
 const onAttack = (type: number) => {
   const battle = phaserGame.scene.keys.battle as Battle
+  battle.attack(type)
+}
+
+const onAttack1 = (type: number) => {
+  const battle = phaserGame.scene.keys.battle2 as Battle2
   battle.attack(type)
 }
 
@@ -61,6 +67,7 @@ const App: React.FC = () => {
                           showAccount={showAccount}
                           setShowAccount={openModal}
                           onAttack={onAttack}
+                          onAttack1={onAttack1}
                           onStart={onStart}
                           onInventory={onInventory}
                           onCharacter={onCharacter}

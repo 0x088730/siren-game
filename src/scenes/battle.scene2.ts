@@ -1,26 +1,23 @@
-import { createCharacterAnims } from '../anims/CharacterAnims'
 import { setGameStatus, increment, addExp, setSecondTurn, setThirdTurn, addTurn, setTurnFormat, setAtkBtnState, setGameTurn, getCharacterStatus, setLoadingStatus, setDisplay } from '../common/state/game/reducer'
 import {
-  SIREN_SPINE, SIREN_ATTACK1, SIREN_ATTACK2, SIREN_ATTACK3, SIREN_DAMAGE, SIREN_DEAD,
   ENEMY_SPINE, ENEMY_ATTACK1, ENEMY_ATTACK2, ENEMY_ATTACK3, ENEMY_DAMAGE, ENEMY_DEAD,
-  ENEMY_1_SPINE, ENEMY_1_ATTACK1, ENEMY_1_ATTACK2, ENEMY_1_ATTACK3, ENEMY_1_DAMAGE, ENEMY_1_DEAD,
+  ENEMY_1_SPINE, ENEMY_1_ATTACK1, ENEMY_1_ATTACK2, ENEMY_1_ATTACK3, ENEMY_1_DAMAGE, ENEMY_1_DEAD, RENA_ATTACK1, RENA_ATTACK2, RENA_ATTACK3,
 } from '../config/const'
 import Character from '../objects/character'
 import store from '../store'
 import ResultWidget from '../widgets/resultWidget'
+import { useWeb3Context } from '../hooks/web3Context'
 import { itemModify } from '../common/api'
 import { changeItem, global } from '../common/global'
+import { useDispatch, useSelector } from 'react-redux'
 
 export default class Battle2 extends Phaser.Scene {
-  // myPlayer!: MyPlayer
-  // mysprite: Phaser.Physics.Arcade.Sprite
   mysprite!: Phaser.GameObjects.Sprite
-  sirenSpine!: SpineGameObject
-  sirenAttack1!: SpineGameObject
-  sirenAttack2!: SpineGameObject
+  renaIdle!: SpineGameObject
+  renaAttack!: SpineGameObject
+  renaDefence!: SpineGameObject
   sirenAttack3!: SpineGameObject
-  sirenDamage!: SpineGameObject
-  sirenDead!: SpineGameObject
+  renaDead!: SpineGameObject
   sirenAvatar!: Phaser.GameObjects.Sprite
   sirenHP!: Phaser.GameObjects.Sprite
   sirenHPFrame!: Phaser.GameObjects.Sprite
@@ -29,12 +26,14 @@ export default class Battle2 extends Phaser.Scene {
   siren!: Character
   robotAnimation!: Phaser.GameObjects.Sprite
   sirenAnimation!: Phaser.GameObjects.Sprite
-  sirenAttack!: SpineGameObject
 
   enemySpine!: SpineGameObject
   enemyAttack1!: SpineGameObject
   enemyDamage!: SpineGameObject
   enemyDead!: SpineGameObject
+  enemyWaterIdle!: SpineGameObject
+  enemyWaterDead!: SpineGameObject
+  enemyWaterDamage!: SpineGameObject
   enemyAvatar!: Phaser.GameObjects.Sprite
   enemyHP!: Phaser.GameObjects.Sprite
   enemyHPFrame!: Phaser.GameObjects.Sprite
@@ -78,6 +77,9 @@ export default class Battle2 extends Phaser.Scene {
   enemy_damage: number = 150
   enemy_damage1: number = 150
 
+  secondTurn: number = 0
+  thirdTurn: number = 0
+
   constructor() {
     super('battle2')
   }
@@ -120,12 +122,9 @@ export default class Battle2 extends Phaser.Scene {
 
   loadSirenSpine() {
     this.load.setPath('assets/character/spine')
-    this.load.spine(SIREN_SPINE, 'siren1/idle/sakura.json', 'siren1/idle/sakura.atlas')
-    this.load.spine(SIREN_ATTACK1, 'siren2/attack1/ewrhuiwe.json', 'siren2/attack1/ewrhuiwe.atlas')
-    this.load.spine(SIREN_ATTACK2, 'siren1/attack2/sakura.json', 'siren1/attack2/sakura.atlas')
-    this.load.spine(SIREN_ATTACK3, 'siren1/attack3/sakura.json', 'siren1/attack3/sakura.atlas')
-    this.load.spine(SIREN_DAMAGE, 'siren1/damage/sakura.json', 'siren1/damage/sakura.atlas')
-    this.load.spine(SIREN_DEAD, 'siren1/dead/sakura.json', 'siren1/dead/sakura.atlas')
+    this.load.spine(RENA_ATTACK1, 'siren2/attack1/attack1.json', 'siren2/attack1/attack1.atlas.txt')
+    this.load.spine(RENA_ATTACK2, 'siren2/attack2/attack2.json', 'siren2/attack2/attack2.atlas.txt')
+    this.load.spine(RENA_ATTACK3, 'siren2/attack3/attack3.json', 'siren2/attack3/attack3.atlas.txt')
   }
   loadSpine() {
     this.load.setPath('assets/character/spine')
@@ -306,40 +305,35 @@ export default class Battle2 extends Phaser.Scene {
   }
 
   createCharacter() {
-    this.sirenSpine = this.add
-      .spine(400, 950, SIREN_SPINE, 'idle', true)
+    this.renaAttack = this.add
+      .spine(400, 950, RENA_ATTACK1, 'attack', true)
+      .setScale(0.3)
+      .setVisible(false)
+    this.renaDefence = this.add
+      .spine(400, 950, RENA_ATTACK2, 'defence', true)
+      .setScale(0.3)
+      .setVisible(false)
+    this.renaIdle = this.add
+      .spine(400, 950, RENA_ATTACK1, 'idle', true)
       .setScale(0.3)
       .setVisible(true)
-    this.sirenAttack1 = this.add
-      .spine(400, 950, SIREN_ATTACK1, 'attack1')
-      .setScale(0.3)
-      .setVisible(false)
-    this.sirenAttack2 = this.add
-      .spine(400, 950, SIREN_ATTACK2, 'idle')
-      .setScale(0.3)
-      .setVisible(false)
-    this.sirenAttack3 = this.add
-      .spine(400, 950, SIREN_ATTACK3, 'idle')
-      .setScale(0.3)
-      .setVisible(false)
-    this.sirenDamage = this.add
-      .spine(400, 950, SIREN_DAMAGE, 'idle')
-      .setScale(0.3)
-      .setVisible(false)
-    this.sirenDead = this.add
-      .spine(400, 950, SIREN_DEAD, 'idle')
+    this.renaDead = this.add
+      .spine(1330, 950, RENA_ATTACK3, 'damage', true)
       .setScale(0.3)
       .setVisible(false)
 
-    const attack1Anim = this.sirenAttack1.findAnimation('attack1')
-    attack1Anim.duration = 1.00
-
-    const attack2Anim = this.sirenAttack2.findAnimation('attack2')
-    attack2Anim.duration = 2.75
-
-    const attack3Anim = this.sirenAttack3.findAnimation('attack3')
-    attack3Anim.duration = 1.1
-
+    this.enemyWaterIdle = this.add
+      .spine(1330, 950, RENA_ATTACK3, 'idle', true)
+      .setScale(-0.3, 0.3)
+      .setVisible(false)
+    this.enemyWaterDead = this.add
+      .spine(1330, 950, RENA_ATTACK3, 'dead', true)
+      .setScale(-0.3, 0.3)
+      .setVisible(false)
+    this.enemyWaterDamage = this.add
+      .spine(1330, 950, RENA_ATTACK3, 'damage', true)
+      .setScale(-0.3, 0.3)
+      .setVisible(false)
     this.siren = new Character(
       this,
       global.hp,
@@ -348,9 +342,9 @@ export default class Battle2 extends Phaser.Scene {
       2,
       this.sirenHP,
       this.sirenHPLabel,
-      this.sirenSpine,
-      this.sirenAttack1,
-      this.sirenAttack2,
+      this.renaIdle,
+      this.renaAttack,
+      this.renaDefence,
       this.sirenAnimation,
       1,
     )
@@ -467,8 +461,8 @@ export default class Battle2 extends Phaser.Scene {
       this.enemyHP,
       this.enemyHPLabel,
       this.enemySpine,
-      this.sirenAttack1,
-      this.sirenAttack2,
+      this.renaAttack,
+      this.renaDefence,
       this.robotAnimation,
       2,
     )
@@ -482,41 +476,76 @@ export default class Battle2 extends Phaser.Scene {
       this.enemyHP_1,
       this.enemyHPLabel_1,
       this.enemySpine_1,
-      this.sirenAttack1,
-      this.sirenAttack2,
+      this.renaAttack,
+      this.renaDefence,
       this.robotAnimation,
       3,
     )
   }
 
   attack(type: number) {
-    switch (type) {
-      case 1: this.sirenAttack = this.sirenAttack1
-        break
-      case 2: this.sirenAttack = this.sirenAttack2
-        break
-      case 3: this.sirenAttack = this.sirenAttack3
-        break
-    }
     this.attackType = type
     this.turnCount()
-    if (this.attacking === false) {
-      this.attacking = true
-      store.dispatch(setAtkBtnState(false))
-      this.sirenSpine.setVisible(false)
-      this.sirenAttack.setVisible(true)
-      let animFlag = true;
-      this.sirenAttack.play(`attack${type}`)
-        .on('complete', () => {
-          if (animFlag === true) {
-            this.sirenAttack.setVisible(false)
-            this.sirenSpine.setVisible(true)
-            this.enemySpine.setVisible(false)
-            this.enemyDamage.setVisible(true)
-            this.enemyGetDamaged()
-            animFlag = false
-          }
-        })
+    console.log(this.secondTurn, this.thirdTurn)
+    if (type === 1) {
+      if (this.attacking === false) {
+        this.attacking = true
+        this.renaIdle.setVisible(false);
+        this.renaAttack.setVisible(true);
+        this.renaDefence.setVisible(false);
+        store.dispatch(setAtkBtnState(false))
+        let animFlag = true;
+        this.renaAttack.play(`attack`)
+          .on('complete', () => {
+            if (animFlag === true) {
+              if (this.thirdTurn <= 0) {
+                this.renaIdle.setVisible(true);
+                this.renaDefence.setVisible(false);
+              }
+              else {
+                this.renaDefence.setVisible(true);
+                this.renaIdle.setVisible(false);
+              }
+              this.renaAttack.setVisible(false);
+              this.enemySpine.setVisible(false);
+              this.enemyWaterIdle.setVisible(false);
+              this.enemyDamage.setVisible(true);
+              this.enemyGetDamaged()
+              animFlag = false
+            }
+          })
+      }
+    } else if (type === 3) {
+      if (this.attacking === false) {
+        this.attacking = true
+        this.renaIdle.setVisible(false);
+        this.renaDefence.setVisible(true);
+        store.dispatch(setAtkBtnState(false))
+        let animFlag = true;
+        this.renaDefence.play(`defence`, true)
+          .on('complete', () => {
+            if (animFlag === true) {
+              this.enemyAttackingSiren()
+              animFlag = false
+            }
+          })
+      }
+    } else if (type === 2) {
+      if (this.attacking === false) {
+        this.attacking = true
+        this.enemyWaterIdle.setVisible(true);
+        this.enemySpine.setVisible(false);
+        store.dispatch(setAtkBtnState(false))
+        let animFlag = true;
+        this.enemyWaterIdle.play(`idle`, true)
+          .on('complete', () => {
+            if (animFlag === true) {
+              this.enemyWaterIdle.setVisible(false);
+              this.enemyAttackingSiren()
+              animFlag = false
+            }
+          })
+      }
     }
   }
 
@@ -547,7 +576,9 @@ export default class Battle2 extends Phaser.Scene {
         this.enemyDamage.play('damage')
           .on('complete', () => {
             if (animFlag === true) {
-              this.damageControl(2, 1)
+              if (this.attackType === 1) {
+                this.damageControl(2, 1)
+              }
               this.enemyAttackingSiren()
               this.enemyDamage.setVisible(false)
               animFlag = false
@@ -561,7 +592,9 @@ export default class Battle2 extends Phaser.Scene {
         this.enemyDamage_1.play('damage')
           .on('complete', () => {
             if (animFlag === true) {
-              this.damageControl(3, 1)
+              if (this.attackType === 1) {
+                this.damageControl(3, 1)
+              }
               if (this.enemy_1_die === true) {
                 this.enemySpine.setVisible(false)
                 this.enemyAttackingSiren()
@@ -573,7 +606,7 @@ export default class Battle2 extends Phaser.Scene {
                 this.enemyAttack1_1.play('attack1')
                   .on('complete', () => {
                     if (animFlag1 === true) {
-                      this.sirenGetDamaged(3)
+                      // this.sirenGetDamaged(3)
                       this.enemyAttack1_1.setVisible(false)
                       this.enemySpine_1.setVisible(true)
                       this.time.addEvent({
@@ -587,7 +620,7 @@ export default class Battle2 extends Phaser.Scene {
                       this.enemyAttack1.play('attack1')
                         .on('complete', () => {
                           if (animFlag2 === true) {
-                            this.sirenGetDamaged(2)
+                            // this.sirenGetDamaged(2)
                             this.enemyAttack1.setVisible(false)
                             if (this.enemy_die === false) {
                               this.enemySpine.setVisible(true)
@@ -607,12 +640,14 @@ export default class Battle2 extends Phaser.Scene {
     }
     else {
       let animFlag = true;
-      this.enemyDamage.play('damage')
+      this.enemyDamage.play('damage', true)
         .on('complete', () => {
           if (animFlag === true) {
             this.enemyDamage.setVisible(false)
             this.enemySpine.setVisible(true)
-            this.damageControl(2, 1)
+            if (this.attackType === 1) {
+              this.damageControl(2, 1)
+            }
             this.enemyAttackingSiren()
             animFlag = false
           }
@@ -627,6 +662,7 @@ export default class Battle2 extends Phaser.Scene {
         callback: () => {
           this.enemyAttack1.setVisible(true)
           this.enemySpine.setVisible(false)
+          this.enemyWaterIdle.setVisible(false);
         },
       })
       this.enemyAttack1.play('attack1')
@@ -635,7 +671,13 @@ export default class Battle2 extends Phaser.Scene {
             this.sirenGetDamaged(2)
             this.enemyAttack1.setVisible(false)
             if (this.enemy_die === false) {
-              this.enemySpine.setVisible(true)
+              if (this.secondTurn > 0) {
+                this.enemyWaterIdle.setVisible(true);
+                this.enemySpine.setVisible(false)
+              } else {
+                this.enemyWaterIdle.setVisible(false);
+                this.enemySpine.setVisible(true)
+              }
             }
             animFlag = false
           }
@@ -645,19 +687,25 @@ export default class Battle2 extends Phaser.Scene {
   sirenGetDamaged(type: number) {
     let animFlag = true;
     if (this.attacking === true) {
-      if (this.siren.hp < global.damage) {
-        const damageAnim = this.sirenDamage.findAnimation('damage')
-        damageAnim.duration = 0.05
-      }
-      this.sirenSpine.setVisible(false)
-      this.sirenDamage.setVisible(true)
-      this.sirenDamage.play('damage')
+      // if (this.siren.hp < global.damage) {
+      //   const damageAnim = this.enemyWaterDead.findAnimation('damage')
+      //   damageAnim.duration = 0.05
+      // }
+      this.renaIdle.setVisible(false)
+      // this.enemyWaterDead.setVisible(true)
+      this.enemyWaterDead.play('dead')
         .on('complete', () => {
           if (animFlag === true) {
             this.damageControl(1, type)
-            this.sirenDamage.setVisible(false)
+            this.enemyWaterDead.setVisible(false)
             if (this.siren.hp > 0) {
-              this.sirenSpine.setVisible(true)
+              if (this.thirdTurn > 0) {
+                this.renaIdle.setVisible(false)
+                this.renaDefence.setVisible(true)
+              } else {
+                this.renaIdle.setVisible(true)
+                this.renaDefence.setVisible(false);
+              }
             }
             if (global.section === 3 || global.section === 4) {
               if (this.enemy_1_die === true) {
@@ -677,9 +725,17 @@ export default class Battle2 extends Phaser.Scene {
   }
 
   turnCount() {
+    this.secondTurn = this.secondTurn - 1;
+    this.thirdTurn = this.thirdTurn - 1;
     store.dispatch(addTurn())
-    if (this.attackType === 2) store.dispatch(setSecondTurn())
-    if (this.attackType === 3) store.dispatch(setThirdTurn())
+    if (this.attackType === 2) {
+      store.dispatch(setSecondTurn());
+      this.secondTurn = 3;
+    }
+    if (this.attackType === 3) {
+      store.dispatch(setThirdTurn());
+      this.thirdTurn = 3;
+    }
   }
   damagePlay(critical: boolean, owner: number, damage: any) {
     this.damageLabel.setText(`${damage}`)
@@ -734,25 +790,37 @@ export default class Battle2 extends Phaser.Scene {
   }
 
   damageControl(owner: number, attacker: number) {
-    this.sirenDamage.setVisible(false)
-    this.sirenSpine.setVisible(true)
+    this.enemyWaterDead.setVisible(false)
+    this.renaIdle.setVisible(true)
     const unit = global.rooms.filter(obj => obj.chapter === global.chapter && obj.section === global.section).at(0)
     const unit1 = global.rooms.filter(obj => obj.chapter === global.chapter && obj.section === global.section).at(1)
 
-    let damage = 150
+    let damage = 190
     if (this.attackType === 1) damage = global.damage
-    else if (this.attackType === 2) damage = global.damage + 120
-    else if (this.attackType === 3) damage = global.damage + 70
+    else if (this.attackType === 2) damage = global.damage + 30
+    else if (this.attackType === 3) damage = global.damage + 80
     // let damage = (this.attackType === 2 || this.attackType === 3) ? (global.damage + 40) :global.damage
     let enemy_damage = unit?.damage
     let enemy_damage1 = unit1?.damage
+    if (this.thirdTurn > 0) {
+      const r = Math.floor(Math.random() * 20) + 30;
+      if (typeof enemy_damage !== 'undefined') {
+        enemy_damage = Math.floor(enemy_damage * r / 100);
+      }
+    }
 
     let critical = false
-    const r = Math.random()
-    if (global.critical > r * 100 && this.attackType === 1) {
-      damage *= 1.5
-      damage = Math.floor(damage)
-      critical = true
+    if (owner === 2 || owner === 3) {
+      const r = Math.random()
+      if (global.critical > r * 100 && this.attackType === 1) {
+        damage *= 2
+        damage = Math.floor(damage)
+        critical = true
+      }
+      if (this.secondTurn > 0) {
+        const r = Math.floor(Math.random() * 40) + 20;
+        damage = damage + r;
+      }
     }
 
     if (owner === this.siren.owner) {
@@ -766,12 +834,12 @@ export default class Battle2 extends Phaser.Scene {
         this.siren.getDamaged(enemy_damage1)
       }
       if (this.siren.hp <= 0) {
-        this.sirenSpine.setVisible(false)
-        this.sirenAttack1.setVisible(false)
-        this.sirenAttack2.setVisible(false)
+        this.renaIdle.setVisible(false)
+        this.renaAttack.setVisible(false)
+        this.renaDefence.setVisible(false)
         this.sirenAttack3.setVisible(false)
-        this.sirenDamage.setVisible(false)
-        this.sirenDead
+        this.enemyWaterDead.setVisible(false)
+        this.renaDead
           .setVisible(true)
           .play('dead')
         this.attacking = false
@@ -818,11 +886,13 @@ export default class Battle2 extends Phaser.Scene {
   onEnemyDead() {
     this.createHud("win");
     this.resultWidget.show(1)
+    store.dispatch(getCharacterStatus(false))
   }
 
   onSirenDead(type: any) {
     this.createHud("lose");
     this.resultWidget.show(type)
+    store.dispatch(getCharacterStatus(false))
   }
 
   createHud(winStatus: string) {
@@ -839,8 +909,8 @@ export default class Battle2 extends Phaser.Scene {
     }
     this.resultWidget = new ResultWidget(this, 950, 500).setVisible(false)
     this.resultWidget.on('claim', () => {
+      global.currentCharacterName = "siren-1"
       store.dispatch(setGameStatus(0))
-      store.dispatch(getCharacterStatus(false))
       // getProfile(global.walletAddress, 'siren-1')
       this.scene.start('game')
       store.dispatch(setDisplay("block"))
